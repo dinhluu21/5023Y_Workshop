@@ -172,11 +172,13 @@ more-than-one-grouping-variable
 using-group_by-with-mutate
 remove-group_by
 dealing-with-data-part-2---week-nine
+expanding-the-data-toolkit
 pipes
 strings
 separate
 more-stringr
 dates-and-times
+calculations-with-dates
 pivot
 summing-up-1
 what-we-learned-4

@@ -4428,6 +4428,9 @@ Look at this output - you can see the information on groups has now been removed
 \hypertarget{dealing-with-data-part-2---week-nine}{%
 \chapter{Dealing with data part 2 - Week Nine}\label{dealing-with-data-part-2---week-nine}}
 
+\hypertarget{expanding-the-data-toolkit}{%
+\section{Expanding the data toolkit}\label{expanding-the-data-toolkit}}
+
 In this chapter we go through some more miscellaneous topics around dealing with data.
 
 \hypertarget{pipes}{%
@@ -4463,9 +4466,9 @@ Or\ldots{}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(species, sex) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{drop\_na}\NormalTok{(sex) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(flipper\_length\_mm))}
+  \FunctionTok{group\_by}\NormalTok{(., species, sex) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{drop\_na}\NormalTok{(., sex) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(., }\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(flipper\_length\_mm))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4473,17 +4476,43 @@ Or\ldots{}
 **Note - check for yourself whether the outcome is identical
 \end{quote}
 
+The pipe is becoming increasingly popular - because it makes code so much more readable. The newest versions of base R (4.1 and above) have even incorporate their own version of a pipe \texttt{\textbar{}\textgreater{}} (\url{https://michaelbarrowman.co.uk/post/the-new-base-pipe/}).
+
+But how does the pipe actually work? Well whenever you include a pipe in your code, it signals to take everything on the left-hand side of the pipe and place it as an ``argument'' in the code which then comes on the right hand side. The . in the code above shows you the placeholder where the argument is placed.
+
+When you use the pipe (as you have been doing previously), you don't actually need to include the . for most functions. If you don't put it in, the pipe will simply place it into the \emph{first argument} position. For this reason you will see that all dplyr functions have the first argument as the data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(species, sex) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{drop\_na}\NormalTok{(sex) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(flipper\_length\_mm))}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{strings}{%
 \section{Strings}\label{strings}}
 
-Datasets often contain words, and we call these words ``strings''. Often these aren't quite how we want them to be, but we can manipulate these as much as we like.
+Datasets often contain words, and we call these words ``strings''. Often these aren't quite how we want them to be, but we can manipulate these as much as we like. Functions in the package \texttt{stringr} \citet{R-stringr}, are fantastic. And the number of different types of manipulations are endless
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str\_replace\_all}\NormalTok{(}\FunctionTok{names}\NormalTok{(penguins), }\FunctionTok{c}\NormalTok{(}\StringTok{"e"}\OtherTok{=} \StringTok{"E"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{separate}{%
 \subsection{separate}\label{separate}}
 
+Sometimes a string might contain two pieces of information in one. This does not confirm to our tidy data principles. But we can easily separate the information with \texttt{separate} from \texttt{tidyr} \citet{R-tidyr}
+
+First we produce some made-up data
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{label=}\FunctionTok{c}\NormalTok{(}\StringTok{"a{-}1"}\NormalTok{, }\StringTok{"a{-}2"}\NormalTok{, }\StringTok{"a{-}3"}\NormalTok{))}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{label=}\FunctionTok{c}\NormalTok{(}\StringTok{"a{-}1"}\NormalTok{, }\StringTok{"a{-}2"}\NormalTok{, }\StringTok{"a{-}3"}\NormalTok{)) }
+\CommentTok{\#make a one column tibble}
 \NormalTok{df}
 \end{Highlighting}
 \end{Shaded}
@@ -4517,11 +4546,121 @@ Check out (\url{https://stringr.tidyverse.org/index.html}) \citet{R-stringr}
 \end{Highlighting}
 \end{Shaded}
 
+We can also trim leading or trailing empty spaces with \texttt{str\_trim}. These are often problematic and difficult to spot e.g.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df2 }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{label=}\FunctionTok{c}\NormalTok{(}\StringTok{"penguin"}\NormalTok{, }\StringTok{" penguin"}\NormalTok{, }\StringTok{"penguin "}\NormalTok{)) }
+\NormalTok{df2}
+\end{Highlighting}
+\end{Shaded}
+
+We can easily imagine a scenario where data is manually input, and trailing or leading spaces are left in. These are difficult to spot by eye - but problematic because as far as R is concerned these are different values. We can use the function \texttt{distinct} to return the names of all the different levels it can find in this dataframe.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+If we pipe the data throught the \texttt{str\_trim} function to remove any gaps, then pipe this on to \texttt{distinct} again - by removing the whitespace, R now recognised just one level to this data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{label=}\FunctionTok{str\_trim}\NormalTok{(label, }\AttributeTok{side=}\StringTok{"both"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+A quick example of how to extract partial strings according to a pattern is to use \texttt{grepl}. Combined with \texttt{filter} it is possible to subset dataframe by searching for all the strings that match provided information, such as all the penguin IDs that start with ``N1''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"N1"}\NormalTok{, individual\_id)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(individual\_id)}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{dates-and-times}{%
 \section{Dates and times}\label{dates-and-times}}
 
+Dates and times are difficult.
+
+There's a lot of different ways to write the same date
+
+13-10-2019
+
+10-13-2019
+
+13-10-19
+
+13th Oct 2019
+
+2019-10-13
+
+This variability makes it difficult to tell our software how to read the information, luckily we can use \texttt{lubridate} \citet{R-lubridate}. We can tell R the order of our date (or time) data.
+
+Back in the last chapter (\ref{mutate}), we used \texttt{mutate} and \texttt{lubridate} to convert date data which had been parsed as a string, into date format with the function \texttt{dmy()}. Depending on how we interpret the date ordering in a file, we can use \texttt{ymd}, \texttt{ydm}, \texttt{mdy} etc.
+
+If you get a warning that some dates could not be parsed, then you might find the date date has been inconsistently entered into the dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(date\_egg, date\_egg\_proper) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Once we have established our date data, we are able to perform calculations. Such as the date range across which our data was collected. Try this with our variable in string form and it will provide the alphabetical order instead.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min\_date=}\FunctionTok{min}\NormalTok{(date\_egg\_proper),}
+            \AttributeTok{max\_date=}\FunctionTok{max}\NormalTok{(date\_egg\_proper))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{calculations-with-dates}{%
+\subsection{Calculations with dates}\label{calculations-with-dates}}
+
+How many times was each penguin measured, and across what total time period?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(individual\_id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(date\_egg\_proper), }
+            \AttributeTok{max=}\FunctionTok{max}\NormalTok{(date\_egg\_proper), }
+            \AttributeTok{difference =}\NormalTok{ max}\SpecialCharTok{{-}}\NormalTok{min, }
+            \AttributeTok{n=}\FunctionTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+Cool we can also convert intervals such as days into weeks, months or years with \texttt{dweeks(1)}, \texttt{dmonths(1)}, \texttt{dyears(1)}.
+
+As with all cool functions, you should check out the RStudio cheat sheet for more information
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(individual\_id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(date\_egg\_proper), }
+            \AttributeTok{max=}\FunctionTok{max}\NormalTok{(date\_egg\_proper), }
+            \AttributeTok{years =}\NormalTok{ (max}\SpecialCharTok{{-}}\NormalTok{min)}\SpecialCharTok{/}\FunctionTok{dyears}\NormalTok{(}\DecValTok{1}\NormalTok{),}
+            \AttributeTok{n=}\FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(difference))}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{pivot}{%
 \section{Pivot}\label{pivot}}
+
+\includegraphics[width=29.15in]{images/original-dfs-tidy}
 
 \hypertarget{summing-up-1}{%
 \section{Summing up}\label{summing-up-1}}
