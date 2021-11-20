@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2021-11-18" />
+<meta name="date" content="2021-11-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -528,7 +528,7 @@ The opposite of this function is <code>unite()</code></p>
 <span id="cb179-5"><a href="dealing-with-data-part-2-week-nine.html#cb179-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">difference =</span> max<span class="sc">-</span>min, </span>
 <span id="cb179-6"><a href="dealing-with-data-part-2-week-nine.html#cb179-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n=</span><span class="fu">n</span>())</span></code></pre></div>
 <p>Cool we can also convert intervals such as days into weeks, months or years with <code>dweeks(1)</code>, <code>dmonths(1)</code>, <code>dyears(1)</code>.</p>
-<p>As with all cool functions, you should check out the RStudio cheat sheet for more information</p>
+<p>As with all cool functions, you should check out the RStudio cheat sheet for more information. Date type data is common in datasets, and learning to work with it is a uesful skill.</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="dealing-with-data-part-2-week-nine.html#cb180-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb180-2"><a href="dealing-with-data-part-2-week-nine.html#cb180-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(individual_id) <span class="sc">%&gt;%</span> </span>
 <span id="cb180-3"><a href="dealing-with-data-part-2-week-nine.html#cb180-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min=</span><span class="fu">min</span>(date_egg_proper), </span>
@@ -540,12 +540,54 @@ The opposite of this function is <code>unite()</code></p>
 </div>
 <div id="pivot" class="section level2" number="9.5">
 <h2><span class="header-section-number">9.5</span> Pivot</h2>
+<p>In the previous chapters we discussed the principles of tidy data (<a href="workflow-part-one-week-two.html#tidy-data">3.3.1</a>), tidy data is easy to analyse, but not always the format you will find data in.</p>
+<p>The most likely format you will find data in is a “wide format,” where we have columns of related data. Luckily <code>tidyr</code> contains a number of <strong>pivot</strong> functions</p>
 <p><img src="images/original-dfs-tidy.png" width="1050" /></p>
+<p>Let’s start with some dummy data - we will make a dataframe of three penguins and the number of three types of prey they are observed to eat over a week:</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="dealing-with-data-part-2-week-nine.html#cb181-1" aria-hidden="true" tabindex="-1"></a>penguin_id <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;N1A1&quot;</span>,<span class="st">&quot;N1A2&quot;</span>,<span class="st">&quot;N2A1&quot;</span>)</span>
+<span id="cb181-2"><a href="dealing-with-data-part-2-week-nine.html#cb181-2" aria-hidden="true" tabindex="-1"></a>krill <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">70</span>,<span class="dv">20</span>,<span class="dv">43</span>)</span>
+<span id="cb181-3"><a href="dealing-with-data-part-2-week-nine.html#cb181-3" aria-hidden="true" tabindex="-1"></a>fish <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">19</span>,<span class="dv">4</span>)</span>
+<span id="cb181-4"><a href="dealing-with-data-part-2-week-nine.html#cb181-4" aria-hidden="true" tabindex="-1"></a>squid <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">11</span>,<span class="dv">5</span>,<span class="dv">0</span>)</span>
+<span id="cb181-5"><a href="dealing-with-data-part-2-week-nine.html#cb181-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-6"><a href="dealing-with-data-part-2-week-nine.html#cb181-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-7"><a href="dealing-with-data-part-2-week-nine.html#cb181-7" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(penguin_id, krill, fish, squid)</span>
+<span id="cb181-8"><a href="dealing-with-data-part-2-week-nine.html#cb181-8" aria-hidden="true" tabindex="-1"></a>df3</span></code></pre></div>
+<p>This dataset is perfectly legible, but does not confirm to tidy data principles, each row is not a unique observation, but instead contains three observations of types of prey eaten.
+Most of the time, we can make data “tidy” but pivoting wide data into a long format. In this example we should rearrange the data to produce a longer dataframe with fewer columns. We should make a new column for prey “type” and a column for “amount”</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="dealing-with-data-part-2-week-nine.html#cb182-1" aria-hidden="true" tabindex="-1"></a>df3_long <span class="ot">&lt;-</span> df3 <span class="sc">%&gt;%</span> </span>
+<span id="cb182-2"><a href="dealing-with-data-part-2-week-nine.html#cb182-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>(krill<span class="sc">:</span>squid), <span class="at">names_to =</span> <span class="st">&quot;prey_type&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;consumption_per_week&quot;</span>)</span>
+<span id="cb182-3"><a href="dealing-with-data-part-2-week-nine.html#cb182-3" aria-hidden="true" tabindex="-1"></a>df3_long</span></code></pre></div>
+<p>It then becomes extremely easy to plot this data:</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="dealing-with-data-part-2-week-nine.html#cb183-1" aria-hidden="true" tabindex="-1"></a>df3_long <span class="sc">%&gt;%</span> </span>
+<span id="cb183-2"><a href="dealing-with-data-part-2-week-nine.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>penguin_id, <span class="at">y=</span>consumption_per_week, <span class="at">fill=</span>prey_type))<span class="sc">+</span></span>
+<span id="cb183-3"><a href="dealing-with-data-part-2-week-nine.html#cb183-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">position=</span><span class="fu">position_dodge</span>())</span></code></pre></div>
+<p>Once again, there’s an RStudio cheatsheet for this, so check it out!</p>
+<p>You may very occasionally need to use <code>pivot_wider()</code> to generate tidy data, but it’s unusual, the above scenario is the most likely messy data you will encounter!</p>
 </div>
 <div id="summing-up-1" class="section level2" number="9.6">
 <h2><span class="header-section-number">9.6</span> Summing up</h2>
 <div id="what-we-learned-4" class="section level3" number="9.6.1">
 <h3><span class="header-section-number">9.6.1</span> What we learned</h3>
+<p>You have learned:</p>
+<p>The most common data manipulation functions you will need to import and tidy data, and the way in which they operate.</p>
+<ul>
+<li><p>How to create new columns as products of functions or calculations</p></li>
+<li><p>How to select and filter data to access the subsets you are interested in</p></li>
+<li><p>How to apply functions to data groups</p></li>
+<li><p>How the pipe works, and why we use it</p></li>
+<li><p>How to deal with data subtypes like strings and dates</p></li>
+<li><p>How to reshape data with pivot</p></li>
+</ul>
+<p>You have used <code>tidyverse</code> and the functions made available from:</p>
+<ul>
+<li><p><code>dplyr</code> <span class="citation"><a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al.</a> (<a href="references.html#ref-R-dplyr" role="doc-biblioref">2020</a>)</span></p></li>
+<li><p><code>tidyr</code> <span class="citation"><a href="references.html#ref-R-tidyr" role="doc-biblioref">Wickham</a> (<a href="references.html#ref-R-tidyr" role="doc-biblioref">2020</a>)</span></p></li>
+</ul>
+<p>You have also used two packages, which are also installed as part of the tidyverse, but have to be called with separate library() functions</p>
+<ul>
+<li><p><code>lubridate</code> <span class="citation"><a href="references.html#ref-R-lubridate" role="doc-biblioref">Spinu, Grolemund, and Wickham</a> (<a href="references.html#ref-R-lubridate" role="doc-biblioref">2020</a>)</span></p></li>
+<li><p><code>stringr</code> <span class="citation"><a href="references.html#ref-R-stringr" role="doc-biblioref">Wickham</a> (<a href="references.html#ref-R-stringr" role="doc-biblioref">2019</a>)</span></p></li>
+</ul>
 </div>
 <div id="further-reading-guides-and-tips-3" class="section level3" number="9.6.2">
 <h3><span class="header-section-number">9.6.2</span> Further Reading, Guides and tips</h3>

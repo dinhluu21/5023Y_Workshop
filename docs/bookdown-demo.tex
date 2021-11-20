@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2021-11-18}
+\date{2021-11-20}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2021-11-18
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2021-11-20
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -4643,7 +4643,7 @@ How many times was each penguin measured, and across what total time period?
 
 Cool we can also convert intervals such as days into weeks, months or years with \texttt{dweeks(1)}, \texttt{dmonths(1)}, \texttt{dyears(1)}.
 
-As with all cool functions, you should check out the RStudio cheat sheet for more information
+As with all cool functions, you should check out the RStudio cheat sheet for more information. Date type data is common in datasets, and learning to work with it is a uesful skill.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4660,13 +4660,94 @@ As with all cool functions, you should check out the RStudio cheat sheet for mor
 \hypertarget{pivot}{%
 \section{Pivot}\label{pivot}}
 
+In the previous chapters we discussed the principles of tidy data (\ref{tidy-data}), tidy data is easy to analyse, but not always the format you will find data in.
+
+The most likely format you will find data in is a ``wide format'', where we have columns of related data. Luckily \texttt{tidyr} contains a number of \textbf{pivot} functions
+
 \includegraphics[width=29.15in]{images/original-dfs-tidy}
+
+Let's start with some dummy data - we will make a dataframe of three penguins and the number of three types of prey they are observed to eat over a week:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguin\_id }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"N1A1"}\NormalTok{,}\StringTok{"N1A2"}\NormalTok{,}\StringTok{"N2A1"}\NormalTok{)}
+\NormalTok{krill }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{70}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{43}\NormalTok{)}
+\NormalTok{fish }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{19}\NormalTok{,}\DecValTok{4}\NormalTok{)}
+\NormalTok{squid }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{11}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+
+
+\NormalTok{df3 }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(penguin\_id, krill, fish, squid)}
+\NormalTok{df3}
+\end{Highlighting}
+\end{Shaded}
+
+This dataset is perfectly legible, but does not confirm to tidy data principles, each row is not a unique observation, but instead contains three observations of types of prey eaten.
+Most of the time, we can make data ``tidy'' but pivoting wide data into a long format. In this example we should rearrange the data to produce a longer dataframe with fewer columns. We should make a new column for prey ``type'' and a column for ``amount''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df3\_long }\OtherTok{\textless{}{-}}\NormalTok{ df3 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\NormalTok{(krill}\SpecialCharTok{:}\NormalTok{squid), }\AttributeTok{names\_to =} \StringTok{"prey\_type"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"consumption\_per\_week"}\NormalTok{)}
+\NormalTok{df3\_long}
+\end{Highlighting}
+\end{Shaded}
+
+It then becomes extremely easy to plot this data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df3\_long }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{penguin\_id, }\AttributeTok{y=}\NormalTok{consumption\_per\_week, }\AttributeTok{fill=}\NormalTok{prey\_type))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{, }\AttributeTok{position=}\FunctionTok{position\_dodge}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+Once again, there's an RStudio cheatsheet for this, so check it out!
+
+You may very occasionally need to use \texttt{pivot\_wider()} to generate tidy data, but it's unusual, the above scenario is the most likely messy data you will encounter!
 
 \hypertarget{summing-up-1}{%
 \section{Summing up}\label{summing-up-1}}
 
 \hypertarget{what-we-learned-4}{%
 \subsection{What we learned}\label{what-we-learned-4}}
+
+You have learned:
+
+The most common data manipulation functions you will need to import and tidy data, and the way in which they operate.
+
+\begin{itemize}
+\item
+  How to create new columns as products of functions or calculations
+\item
+  How to select and filter data to access the subsets you are interested in
+\item
+  How to apply functions to data groups
+\item
+  How the pipe works, and why we use it
+\item
+  How to deal with data subtypes like strings and dates
+\item
+  How to reshape data with pivot
+\end{itemize}
+
+You have used \texttt{tidyverse} and the functions made available from:
+
+\begin{itemize}
+\item
+  \texttt{dplyr} \citet{R-dplyr}
+\item
+  \texttt{tidyr} \citet{R-tidyr}
+\end{itemize}
+
+You have also used two packages, which are also installed as part of the tidyverse, but have to be called with separate library() functions
+
+\begin{itemize}
+\item
+  \texttt{lubridate} \citet{R-lubridate}
+\item
+  \texttt{stringr} \citet{R-stringr}
+\end{itemize}
 
 \hypertarget{further-reading-guides-and-tips-3}{%
 \subsection{Further Reading, Guides and tips}\label{further-reading-guides-and-tips-3}}

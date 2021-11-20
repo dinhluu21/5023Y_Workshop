@@ -563,7 +563,7 @@ penguins %>%
 
 Cool we can also convert intervals such as days into weeks, months or years with `dweeks(1)`, `dmonths(1)`, `dyears(1)`.
 
-As with all cool functions, you should check out the RStudio cheat sheet for more information
+As with all cool functions, you should check out the RStudio cheat sheet for more information. Date type data is common in datasets, and learning to work with it is a uesful skill. 
 
 
 ```{r}
@@ -579,17 +579,51 @@ penguins %>%
 
 ## Pivot
 
+In the previous chapters we discussed the principles of tidy data (\@ref(tidy-data)), tidy data is easy to analyse, but not always the format you will find data in.
+
+The most likely format you will find data in is a "wide format", where we have columns of related data. Luckily `tidyr` contains a number of **pivot** functions
+
+
 ```{r , echo=FALSE, eval=TRUE}
 knitr::include_graphics("images/original-dfs-tidy.png")
 ```
 
 
+Let's start with some dummy data - we will make a dataframe of three penguins and the number of three types of prey they are observed to eat over a week:
+
+```{r}
+
+penguin_id <- c("N1A1","N1A2","N2A1")
+krill <- c(70,20,43)
+fish <- c(5, 19,4)
+squid <- c(11,5,0)
 
 
+df3 <- tibble(penguin_id, krill, fish, squid)
+df3
+```
 
+This dataset is perfectly legible, but does not confirm to tidy data principles, each row is not a unique observation, but instead contains three observations of types of prey eaten.
+Most of the time, we can make data "tidy" but pivoting wide data into a long format. In this example we should rearrange the data to produce a longer dataframe with fewer columns. We should make a new column for prey "type" and a column for "amount"
 
+```{r}
+df3_long <- df3 %>% 
+  pivot_longer(cols=(krill:squid), names_to = "prey_type", values_to = "consumption_per_week")
+df3_long
+```
 
+It then becomes extremely easy to plot this data:
 
+```{r}
+df3_long %>% 
+  ggplot(aes(x=penguin_id, y=consumption_per_week, fill=prey_type))+
+  geom_bar(stat="identity", position=position_dodge())
+
+```
+
+Once again, there's an RStudio cheatsheet for this, so check it out!
+
+You may very occasionally need to use `pivot_wider()` to generate tidy data, but it's unusual, the above scenario is the most likely messy data you will encounter!
 
 
 
@@ -598,7 +632,33 @@ knitr::include_graphics("images/original-dfs-tidy.png")
 
 ### What we learned
 
+You have learned:
 
+The most common data manipulation functions you will need to import and tidy data, and the way in which they operate. 
+
+* How to create new columns as products of functions or calculations
+
+* How to select and filter data to access the subsets you are interested in
+
+* How to apply functions to data groups
+
+* How the pipe works, and why we use it
+
+* How to deal with data subtypes like strings and dates
+
+* How to reshape data with pivot
+
+You have used `tidyverse` and the functions made available from:
+
+* `dplyr` @R-dplyr
+
+* `tidyr` @R-tidyr
+
+You have also used two packages, which are also installed as part of the tidyverse, but have to be called with separate library() functions
+
+* `lubridate` @R-lubridate
+
+* `stringr` @R-stringr
 
 
 ### Further Reading, Guides and tips
