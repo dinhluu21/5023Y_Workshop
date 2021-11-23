@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2021-11-20}
+\date{2021-11-23}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2021-11-20
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2021-11-23
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -4579,8 +4579,8 @@ A quick example of how to extract partial strings according to a pattern is to u
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"N1"}\NormalTok{, individual\_id)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{distinct}\NormalTok{(individual\_id)}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"N1"}\NormalTok{, penguin\_id)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(penguin\_id)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4610,7 +4610,7 @@ If you get a warning that some dates could not be parsed, then you might find th
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{select}\NormalTok{(date\_egg, date\_egg\_proper) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(date, date\_proper) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{head}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -4620,8 +4620,8 @@ Once we have established our date data, we are able to perform calculations. Suc
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min\_date=}\FunctionTok{min}\NormalTok{(date\_egg\_proper),}
-            \AttributeTok{max\_date=}\FunctionTok{max}\NormalTok{(date\_egg\_proper))}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min\_date=}\FunctionTok{min}\NormalTok{(date\_proper),}
+            \AttributeTok{max\_date=}\FunctionTok{max}\NormalTok{(date\_proper))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4633,9 +4633,9 @@ How many times was each penguin measured, and across what total time period?
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(individual\_id) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(date\_egg\_proper), }
-            \AttributeTok{max=}\FunctionTok{max}\NormalTok{(date\_egg\_proper), }
+  \FunctionTok{group\_by}\NormalTok{(penguin\_id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(date\_proper), }
+            \AttributeTok{max=}\FunctionTok{max}\NormalTok{(date\_proper), }
             \AttributeTok{difference =}\NormalTok{ max}\SpecialCharTok{{-}}\NormalTok{min, }
             \AttributeTok{n=}\FunctionTok{n}\NormalTok{())}
 \end{Highlighting}
@@ -4648,10 +4648,10 @@ As with all cool functions, you should check out the RStudio cheat sheet for mor
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(individual\_id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(penguin\_id) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(date\_egg\_proper), }
             \AttributeTok{max=}\FunctionTok{max}\NormalTok{(date\_egg\_proper), }
-            \AttributeTok{years =}\NormalTok{ (max}\SpecialCharTok{{-}}\NormalTok{min)}\SpecialCharTok{/}\FunctionTok{dyears}\NormalTok{(}\DecValTok{1}\NormalTok{),}
+            \AttributeTok{difference =}\NormalTok{ (max}\SpecialCharTok{{-}}\NormalTok{min)}\SpecialCharTok{/}\FunctionTok{dyears}\NormalTok{(}\DecValTok{1}\NormalTok{),}
             \AttributeTok{n=}\FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(difference))}
 \end{Highlighting}

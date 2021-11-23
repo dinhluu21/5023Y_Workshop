@@ -505,8 +505,8 @@ A quick example of how to extract partial strings according to a pattern is to u
 
 ```{r}
 penguins %>% 
-  filter(grepl("N1", individual_id)) %>% 
-  distinct(individual_id)
+  filter(grepl("N1", penguin_id)) %>% 
+  distinct(penguin_id)
 
 ```
 
@@ -535,7 +535,7 @@ If you get a warning that some dates could not be parsed, then you might find th
 
 ```{r}
 penguins %>% 
-  select(date_egg, date_egg_proper) %>% 
+  select(date, date_proper) %>% 
   head()
 
 ```
@@ -544,8 +544,8 @@ Once we have established our date data, we are able to perform calculations. Suc
 
 ```{r}
 penguins %>% 
-  summarise(min_date=min(date_egg_proper),
-            max_date=max(date_egg_proper))
+  summarise(min_date=min(date_proper),
+            max_date=max(date_proper))
 ```
 
 ### Calculations with dates
@@ -554,9 +554,9 @@ How many times was each penguin measured, and across what total time period?
 
 ```{r}
 penguins %>% 
-  group_by(individual_id) %>% 
-  summarise(min=min(date_egg_proper), 
-            max=max(date_egg_proper), 
+  group_by(penguin_id) %>% 
+  summarise(min=min(date_proper), 
+            max=max(date_proper), 
             difference = max-min, 
             n=n())
 ```
@@ -568,10 +568,10 @@ As with all cool functions, you should check out the RStudio cheat sheet for mor
 
 ```{r}
 penguins %>% 
-  group_by(individual_id) %>% 
+  group_by(penguin_id) %>% 
   summarise(min=min(date_egg_proper), 
             max=max(date_egg_proper), 
-            years = (max-min)/dyears(1),
+            difference = (max-min)/dyears(1),
             n=n()) %>% 
   arrange(desc(difference))
 

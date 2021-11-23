@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2021-11-20" />
+<meta name="date" content="2021-11-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -495,8 +495,8 @@ The opposite of this function is <code>unite()</code></p>
 <span id="cb175-3"><a href="dealing-with-data-part-2-week-nine.html#cb175-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code></pre></div>
 <p>A quick example of how to extract partial strings according to a pattern is to use <code>grepl</code>. Combined with <code>filter</code> it is possible to subset dataframe by searching for all the strings that match provided information, such as all the penguin IDs that start with “N1”</p>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="dealing-with-data-part-2-week-nine.html#cb176-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
-<span id="cb176-2"><a href="dealing-with-data-part-2-week-nine.html#cb176-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;N1&quot;</span>, individual_id)) <span class="sc">%&gt;%</span> </span>
-<span id="cb176-3"><a href="dealing-with-data-part-2-week-nine.html#cb176-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(individual_id)</span></code></pre></div>
+<span id="cb176-2"><a href="dealing-with-data-part-2-week-nine.html#cb176-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;N1&quot;</span>, penguin_id)) <span class="sc">%&gt;%</span> </span>
+<span id="cb176-3"><a href="dealing-with-data-part-2-week-nine.html#cb176-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(penguin_id)</span></code></pre></div>
 </div>
 </div>
 <div id="dates-and-times" class="section level2" number="9.4">
@@ -512,28 +512,28 @@ The opposite of this function is <code>unite()</code></p>
 <p>Back in the last chapter (<a href="dealing-with-data-dplyr-week-eight.html#mutate">8.4</a>), we used <code>mutate</code> and <code>lubridate</code> to convert date data which had been parsed as a string, into date format with the function <code>dmy()</code>. Depending on how we interpret the date ordering in a file, we can use <code>ymd</code>, <code>ydm</code>, <code>mdy</code> etc.</p>
 <p>If you get a warning that some dates could not be parsed, then you might find the date date has been inconsistently entered into the dataset.</p>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="dealing-with-data-part-2-week-nine.html#cb177-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
-<span id="cb177-2"><a href="dealing-with-data-part-2-week-nine.html#cb177-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date_egg, date_egg_proper) <span class="sc">%&gt;%</span> </span>
+<span id="cb177-2"><a href="dealing-with-data-part-2-week-nine.html#cb177-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date, date_proper) <span class="sc">%&gt;%</span> </span>
 <span id="cb177-3"><a href="dealing-with-data-part-2-week-nine.html#cb177-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <p>Once we have established our date data, we are able to perform calculations. Such as the date range across which our data was collected. Try this with our variable in string form and it will provide the alphabetical order instead.</p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="dealing-with-data-part-2-week-nine.html#cb178-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
-<span id="cb178-2"><a href="dealing-with-data-part-2-week-nine.html#cb178-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_date=</span><span class="fu">min</span>(date_egg_proper),</span>
-<span id="cb178-3"><a href="dealing-with-data-part-2-week-nine.html#cb178-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_date=</span><span class="fu">max</span>(date_egg_proper))</span></code></pre></div>
+<span id="cb178-2"><a href="dealing-with-data-part-2-week-nine.html#cb178-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_date=</span><span class="fu">min</span>(date_proper),</span>
+<span id="cb178-3"><a href="dealing-with-data-part-2-week-nine.html#cb178-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_date=</span><span class="fu">max</span>(date_proper))</span></code></pre></div>
 <div id="calculations-with-dates" class="section level3" number="9.4.1">
 <h3><span class="header-section-number">9.4.1</span> Calculations with dates</h3>
 <p>How many times was each penguin measured, and across what total time period?</p>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="dealing-with-data-part-2-week-nine.html#cb179-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
-<span id="cb179-2"><a href="dealing-with-data-part-2-week-nine.html#cb179-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(individual_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb179-3"><a href="dealing-with-data-part-2-week-nine.html#cb179-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min=</span><span class="fu">min</span>(date_egg_proper), </span>
-<span id="cb179-4"><a href="dealing-with-data-part-2-week-nine.html#cb179-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">max=</span><span class="fu">max</span>(date_egg_proper), </span>
+<span id="cb179-2"><a href="dealing-with-data-part-2-week-nine.html#cb179-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(penguin_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb179-3"><a href="dealing-with-data-part-2-week-nine.html#cb179-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min=</span><span class="fu">min</span>(date_proper), </span>
+<span id="cb179-4"><a href="dealing-with-data-part-2-week-nine.html#cb179-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">max=</span><span class="fu">max</span>(date_proper), </span>
 <span id="cb179-5"><a href="dealing-with-data-part-2-week-nine.html#cb179-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">difference =</span> max<span class="sc">-</span>min, </span>
 <span id="cb179-6"><a href="dealing-with-data-part-2-week-nine.html#cb179-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n=</span><span class="fu">n</span>())</span></code></pre></div>
 <p>Cool we can also convert intervals such as days into weeks, months or years with <code>dweeks(1)</code>, <code>dmonths(1)</code>, <code>dyears(1)</code>.</p>
 <p>As with all cool functions, you should check out the RStudio cheat sheet for more information. Date type data is common in datasets, and learning to work with it is a uesful skill.</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="dealing-with-data-part-2-week-nine.html#cb180-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
-<span id="cb180-2"><a href="dealing-with-data-part-2-week-nine.html#cb180-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(individual_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb180-2"><a href="dealing-with-data-part-2-week-nine.html#cb180-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(penguin_id) <span class="sc">%&gt;%</span> </span>
 <span id="cb180-3"><a href="dealing-with-data-part-2-week-nine.html#cb180-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min=</span><span class="fu">min</span>(date_egg_proper), </span>
 <span id="cb180-4"><a href="dealing-with-data-part-2-week-nine.html#cb180-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">max=</span><span class="fu">max</span>(date_egg_proper), </span>
-<span id="cb180-5"><a href="dealing-with-data-part-2-week-nine.html#cb180-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">years =</span> (max<span class="sc">-</span>min)<span class="sc">/</span><span class="fu">dyears</span>(<span class="dv">1</span>),</span>
+<span id="cb180-5"><a href="dealing-with-data-part-2-week-nine.html#cb180-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">difference =</span> (max<span class="sc">-</span>min)<span class="sc">/</span><span class="fu">dyears</span>(<span class="dv">1</span>),</span>
 <span id="cb180-6"><a href="dealing-with-data-part-2-week-nine.html#cb180-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">n=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
 <span id="cb180-7"><a href="dealing-with-data-part-2-week-nine.html#cb180-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(difference))</span></code></pre></div>
 </div>
