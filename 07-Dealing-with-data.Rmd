@@ -46,7 +46,7 @@ Make sure you are using the [R Cheat Sheets for dplyr](https://www.rstudio.com/r
 
 Start by setting up the packages you will need for this session
 
-```{r}
+```{r, eval=TRUE}
 library(tidyverse)
 library(lubridate)
 
@@ -676,6 +676,14 @@ You have also used two packages, which are also installed as part of the tidyver
 
 # Deeper data insights part 1 - Week Ten
 
+```{r , echo=FALSE, eval=TRUE, include=TRUE}
+klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = 'copy to clipboard', tooltip_success = 'Copied!')
+```
+
+```{r include=FALSE}
+knitr::opts_chunk$set(eval=FALSE)
+```
+
 In these last chapters on generating data insights we are going to cover
 
 * Types of variable
@@ -688,9 +696,7 @@ In these last chapters on generating data insights we are going to cover
 
 Before we dive into this it is important to understand where this data has come from, is it a single study? Is it a lab experiment, fieldwork survey, exploratory work or from a carefully designed study?
 
-You should also play close attention to the data, and remind yourself **frequently** how many variables do you have and what are their names? 
-
-How many rows/observations do you have?
+You should also play close attention to the data, and remind yourself **frequently** how many variables do you have and what are their names? How many rows/observations do you have?
 
 ## Variables
 
@@ -730,13 +736,12 @@ mutate(species = factor(species,
 
 ## Understanding Numerical variables
 
-Bill length
+Let's take a look at some of our variables
 
-body mass
-
-```{r}
+```{r, eval=TRUE}
 glimpse(penguins)
 ```
+
 We can see that bill length contains numbers, and that many of these are fractions, but only down to 0.1mm. By comparison body mass all appear to be discrete number variables. Does this make body mass an integer? The underlying quantity (bodyweight) is clearly continuous, it is clearly possible for a penguin to weigh 3330.7g but it might *look* like an integer because of the way it was measured. This illustrates the importance of understanding the the type of variable you are working with - just looking at the values isn't enough. 
 
 On the other hand, how we choose to measure and record data *can* change the way it is presented in a dataset. If the researchers had decided to simply record small, medium and large classes of bodyweight, then we would be dealing with ordinal categorical variables. These distinctions can become less clear if we start to deal with multiple classes of ordinal categories - for example if the researchers were measuring body mass to the nearest 10g. It might be reasonable to treat these as integers...
@@ -772,7 +777,7 @@ adelie_summary <- adelie_penguins %>%
   summarise(mean=mean(body_mass_g, 
                       na.rm=TRUE),
             median=median(body_mass_g,
-                          na.rm))
+                          na.rm=TRUE))
 
 ggplot()+
   geom_histogram(data= adelie_penguins,
@@ -806,7 +811,7 @@ ggplot()+
 
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
 ggplot()+
   geom_histogram(data=adelie_penguins,
                  aes(x=body_mass_g),
@@ -864,7 +869,7 @@ ggplot()+
                                     y=sex),
                                     alpha=0.8)
 ```
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
 adelie_penguins %>% 
   drop_na(sex) %>% 
 ggplot()+
@@ -887,7 +892,7 @@ In the next section we will use the median and interquartile ranges as effective
 
 We can find both the mean and median easily with the summarise function.
 
-```{r}
+```{r, eval=TRUE}
 penguin_body_mass_summary <- penguins %>% 
   summarise(mean_body_mass=mean(body_mass_g, na.rm=T),
             median_body_mass=median(body_mass_g, na.rm=T))
@@ -896,13 +901,8 @@ penguin_body_mass_summary
 
 ```
 
-```
-# A tibble: 1 x 2
-  mean_body_mass median_body_mass
-           <dbl>            <dbl>
-1          4202.             4050
-```
-```{r, echo=FALSE, eval=TRUE}
+
+```{r, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
 penguins %>% 
 ggplot()+
   geom_density(aes(x=body_mass_g),
@@ -918,5 +918,371 @@ ggplot()+
 ```
 
 
-If we do this for the entire penguins dataset - we can clearly see that the mean value has bee significantly "right-shifted" by the long tail of the data distribution. However,this is much less apparent for the median. In this way we can say that the median is less sensitive to the distribution of the data. 
+If we do this for the entire penguins dataset - we can clearly see that the mean value has bee significantly "right-shifted" by the long tail of the data distribution. However,this is much less apparent for the median. In this way we can say that the median is less sensitive to the distribution of the data than the mean is.
 
+### Dispersion
+
+Dispersion (how spread out the data is) is an important component towards understanding any numeric variable. Important measures for statistics are **variance** and **standard deviation**. These are both non-negative, smaller values indicate observations tend to be similar in value, while high values indicate these observations are more spread out. We can quickly calculate these with `var` and `sd` - but they probably aren't the best place to *start* exploring your data from. 
+
+Variance is not an intuitive measure - calculated from squaring the deviation of each data point from the sample mean - it gives no overall insight into the shape of the distribution, and it is on a different scale to the original measurements. Standard deviation is the square root of the variance. This means it is on the same scale as the observation, making it easier to interpret, but just like variance it doesn't provide much insight into the overall shape of the distribution, and like the mean can be affected by outliers. 
+
+When trying to understand data it can be simpler and easier to use a measure that does not suffer from these issues outlined above. Instead we can use the **interquartile range**. 
+
+The interquartile range (IQR) is the range that contains the "middle 50%" of our data sample. This is given as the difference between the third and first quartiles. The reason we like to use the IQR is that the more spread out the data is, the larger the IQR. It will also indicate the shape of the distribution and is less affected by outliers than variance. 
+
+
+We can use the IQR function to find the interquartile range of the body mass variable
+
+```{r}
+penguins %>% 
+  summarise(IQR_body_mass = IQR(body_mass_g, na.rm=TRUE))
+```
+
+The IQR is also useful when applied to the summary plots 'box and whisker plots'. We can also calculate the values of the IQR margins, and add labels with `scales` @R-scales. 
+
+```{r}
+penguins %>%
+  summarise(q_body_mass = quantile(body_mass_g, c(0.25, 0.5, 0.75), na.rm=TRUE),
+            quantile = scales::percent(c(0.25, 0.5, 0.75))) # scales package allows easy converting from data values to perceptual properties
+
+```
+
+```
+# A tibble: 3 x 2
+  q_body_mass quantile
+        <dbl> <chr>   
+1        3550 25%     
+2        4050 50%     
+3        4750 75%    
+```
+
+We can see for ourselves the IQR is obtained by subtracting the body mass at tht 75% quantile from the 25% quantile (4750-3550 = 1200).
+
+### Visualising dispersion
+
+```{r}
+penguins %>% 
+  ggplot()+
+  geom_boxplot(aes(x="",
+                   y= body_mass_g),
+               fill="darkorange",
+               colour="steelblue",
+               width=0.4)+
+  labs(x= "Bodyweight",
+       y = "Mass (g)")+
+  theme_minimal()
+
+```
+```{r, echo=FALSE, eval=TRUE, fig.cap = "A boxplot of the body mass variable showing the medan and IQR", warning=FALSE, message=FALSE}
+penguins %>% 
+  ggplot()+
+  geom_boxplot(aes(x="",
+                   y= body_mass_g),
+               fill="darkorange",
+               colour="steelblue",
+               width=0.4)+
+  labs(x= "Bodyweight",
+       y = "Mass (g)")+
+  theme_minimal()
+
+```
+
+> **Note - we forced ggplot2 to hide the tick mark label on the x axis by coding a dummy label with x = " "
+
+We now have several compact representations of the body_mass_g including a histogram, boxplot and summary calculations. You can *and should* generate the same summaries for your other numeric variables. These tables and graphs provide the detail you need to understand the central tendency and dispersion of numeric variables. 
+
+### Combining histograms and boxplots
+
+```{r}
+
+library(patchwork) # put this at the TOP of your script
+
+penguins_na_sex <- penguins %>% 
+  drop_na(sex)
+
+colours <-  c("darkorange", "cyan") # set colour scheme here to save on repeating code
+lims <- c(3000,6000) # set axis limits here to save on repeating code
+
+  p1 <- ggplot(data = penguins_na_sex,
+    aes(x = species,
+             y = body_mass_g,
+             fill = sex))+
+      geom_boxplot()+
+    scale_fill_manual(values = colours)+
+    scale_y_continuous(limits=lims)+
+    labs(x="",
+         y="")+
+        coord_flip()+ # rotate box plot 90 degrees
+    theme_minimal()+
+    theme(legend.position="none")
+
+  p2 <- ggplot(data = penguins_na_sex,
+         aes(x = body_mass_g,
+             y = species,
+             fill = sex))+
+    ggridges::stat_density_ridges(quantile_lines = TRUE)+
+        scale_fill_manual(values = colours)+
+    scale_x_continuous(limits=lims)+
+    labs(y="",
+         x = "Body Mass (g)")+
+    theme_minimal()
+  
+  (p1/p2) # patchwork command to layer one plot above the other
+
+```
+
+
+```{r, eval=TRUE, echo=FALSE, fig.cap = "This figure shows the use of patchwork to combine two ggplots, demonstrating the boxplot and geom density figures show the same distributions of the data", warning=FALSE, message=FALSE}
+
+library(patchwork) # put this at the TOP of your script
+
+penguins_na_sex <- penguins %>% 
+  drop_na(sex)
+
+colours <-  c("darkorange", "cyan")
+lims <- c(3000,6000)
+
+  p1 <- ggplot(data = penguins_na_sex,
+    aes(x = species,
+             y = body_mass_g,
+             fill = sex))+
+      geom_boxplot()+
+    scale_fill_manual(values = colours)+
+    scale_y_continuous(limits=lims)+
+    labs(x="",
+         y="")+
+        coord_flip()+
+    theme_minimal()+
+    theme(legend.position="none")
+
+  p2 <- ggplot(data = penguins_na_sex,
+         aes(x = body_mass_g,
+             y = species,
+             fill = sex))+
+    ggridges::stat_density_ridges(quantile_lines = TRUE)+
+        scale_fill_manual(values = colours)+
+    scale_x_continuous(limits=lims)+
+    labs(y="",
+         x = "Body Mass (g)")+
+    theme_minimal()
+  
+  (p1/p2)
+```
+
+### Missing values
+
+We first met `NA` back in (\@ref(missing-values---na)) and you will hopefully have noticed, either here or in those previous chapters, that missing values `NA` can really mess up our calculations. There are a few different ways we can deal with missing data:
+
+* `drop_na()` on everything before we start. This runs the risk that we lose **a lot** of data as *every* row, with an NA in *any column* will be removed
+
+* `drop_na()` on a particular variable. This is fine, but we should approach this cautiously - if we do this in a way where we write this data into a new object e.g. `penguins <- penguins %>% drop_na(body_mass_g)` then we have removed this data forever - perhaps we only want to drop those rows for a specific calculation - again they might contain useful information in other variables. 
+
+* `drop_na()` for a specific task - this is a more cautious approach **but** we need to be aware of another phenomena. Is the data **missing at random**? You might need to investigate *where* your missing values are in a dataset. Data that is truly **missing at random** can be removed from a dataset without introducing bias. However, if bad weather conditions meant that researchers could not get to a particular island to measure one set of penguins that data is **missing not at random** this should be treated with caution. If that island contained one particular species of penguin, it might mean we have complete data for only two out of three penguin species. There is nothing you can do about incomplete data other than be aware that data not missing at random could influence your distributions. 
+
+
+## Categorical variables
+
+Ok that was a lot of information - well done - have some praise.
+
+```{r}
+praise::praise()
+# have some praise
+```
+
+Now let's look at categorical variables  -remember these can be **ordinal** or **nominal**. We don't have anything we would classify as ordinal data in the penguins dataset.
+
+We can look at species with the function `distinct`:
+
+```{r}
+penguins %>% 
+  distinct(species)
+
+```
+
+```
+# A tibble: 3 x 1
+  species  
+  <chr>    
+1 Adelie   
+2 Gentoo   
+3 Chinstrap
+```
+ We can clearly see there would be no sense to applying an order to these three categories, we can order them in whatever way suits best when presenting our data. 
+ 
+ 
+### Summaries
+
+
+```{r}
+penguins %>% 
+  count(species, sort=TRUE)
+
+```
+```
+# A tibble: 3 x 2
+  species       n
+  <chr>     <int>
+1 Adelie      152
+2 Gentoo      124
+3 Chinstrap    68
+```
+
+It might be useful for us to make some quick data summaries here
+
+```{r, eval=TRUE}
+prob_obs_species <- penguins %>% 
+  count(species, sort=TRUE) %>% 
+  mutate(prob_obs = n/sum(n))
+
+prob_obs_species
+
+```
+So about 44% of our sample is made up of observations from Adelie penguins. When it comes to making summaries about categorical data, that's about the best we can do, we can make observations about the most common categorical observations, and the relative proportions. 
+
+```{r}
+penguins %>% 
+  ggplot()+
+  geom_bar(aes(x=species))
+```
+
+```{r, echo=FALSE, eval=TRUE}
+penguins %>% 
+  ggplot()+
+  geom_bar(aes(x=species))
+```
+
+This chart is ok - but can we make anything better?
+
+We could go for a stacked bar approach
+
+```{r}
+penguins %>% 
+  ggplot(aes(x="",
+             fill=species))+ # specify fill = species to ensure colours are defined by species
+  geom_bar(position="fill")+ # specify fill forces geom_bar to calculate percentages
+  scale_y_continuous(labels=scales::percent)+ #use scales package to turn y axis into percentages easily
+  labs(x="",
+       y="")+
+  theme_minimal()
+
+```
+
+```{r, echo=FALSE, eval=TRUE}
+penguins %>% 
+  ggplot(aes(x="",
+             fill=species))+ # specify fill = species to ensure colours are defined by species
+  geom_bar(position="fill")+ # specify fill forces geom_bar to calculate percentages
+  scale_y_continuous(labels=scales::percent)+ #use scales package to turn y axis into percentages easily
+  labs(x="",
+       y="")+
+  theme_minimal()
+
+```
+
+This graph is OK but not great, the height of each section of the bar represents the relative proportions of each species in the dataset, but this type of chart becomes increasingly difficult to read as more categories are included. Colours become increasingly samey,and it is difficult to read where on the y-axis a category starts and stops, you then have to do some subtraction to work out the values. 
+
+The best graph is then probably the first one we made - with a few minor tweak we can rapidly improve this. 
+
+```{r}
+penguins %>% 
+  mutate(species=factor(species, levels=c("Adelie",
+                                          "Gentoo",
+                                          "Chinstrap"))) %>% # set as factor and provide levels
+  ggplot()+
+  geom_bar(aes(x=species),
+           fill="steelblue",
+           width=0.8)+
+  labs(x="Species",
+       y = "Number of observations")+
+  geom_text(data=prob_obs_species,
+            aes(y=(n+10),
+                x=species,
+                label=scales::percent(prob_obs)))+
+  coord_flip()+
+  theme_minimal()
+
+```
+
+```{r, echo=FALSE, eval=TRUE}
+penguins %>% 
+  mutate(species=factor(species, levels=c("Adelie",
+                                          "Gentoo",
+                                          "Chinstrap"))) %>% # set as factor and provide levels
+  ggplot()+
+  geom_bar(aes(x=species),
+           fill="steelblue",
+           width=0.8)+
+  labs(x="Species",
+       y = "Number of observations")+
+  geom_text(data=prob_obs_species,
+            aes(y=(n+10),
+                x=species,
+                label=scales::percent(prob_obs)))+
+  coord_flip()+
+  theme_minimal()
+
+```
+
+
+## Summing up
+
+In this chapter we have really focused on single variables, understanding variable types and their distributions. We learned 
+
+* About different types of data
+
+* How to estimate central tendencies
+
+* Dispersions of numeric and categorical variables
+
+* How to visualise metrics
+
+You have primarily used `tidyverse` packages, but also: 
+
+* `ggridges` @R-ggridges
+
+* `scales` @R-scales
+
+In the next chapter we will look at generating insights around the relationships between variables. Now is a good time to review earlier chapters such as (\@ref(workflow-part-one---week-two)), and think about how we ask questions of our data. 
+
+
+
+### Reward
+
+Haven't you done well???
+
+Enjoy this stupid reward from @R-ggcats
+
+```{r, eval=TRUE}
+library(Ecdat)
+data(incomeInequality)
+
+library(ggcats)
+library(gganimate)
+
+ dat <-
+   incomeInequality %>%
+   select(Year, P99, median) %>%
+   rename(income_median = median,
+          income_99percent = P99) %>%
+   pivot_longer(cols = starts_with("income"),
+                names_to = "income",
+                names_prefix = "income_")
+
+dat$cat <- rep(NA, 132)
+
+dat$cat[which(dat$income == "median")] <- "nyancat"
+dat$cat[which(dat$income == "99percent")] <- rep(c("pop_close", "pop"), 33)
+
+ggplot(dat, aes(x = Year, y = value, group = income, color = income)) +
+   geom_line(size = 2) +
+   ggtitle("ggcats, a core package of the memeverse") +
+   geom_cat(aes(cat = cat), size = 5) +
+   xlab("Cats") +
+   ylab("Cats") +
+   theme(legend.position = "none",
+         plot.title = element_text(size = 20),
+         axis.text = element_blank(),
+         axis.ticks = element_blank()) +
+   transition_reveal(Year)
+
+```
