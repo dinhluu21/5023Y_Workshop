@@ -1,5 +1,5 @@
 
-# Workflow Part One - Week Two
+# Workflow Part One: Week Two
 
 ```{r , echo=FALSE, eval=TRUE, include=TRUE}
 klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = 'copy to clipboard', tooltip_success = 'Copied!')
@@ -551,7 +551,7 @@ penguins %>%
 ```
 Here if someone had mistyped e.g. 'FMALE' it would be obvious. We could do the same thing (and probably should have before we changed the names) for species. 
 
-### Missing values - NA
+### Missing values: NA
 
 There are multiple ways to check for missing values in our data
 

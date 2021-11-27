@@ -22,7 +22,7 @@ an-intro-to-rstudio
 using-r-studio-cloud
 reading
 get-help
-getting-to-know-r---week-one
+getting-to-know-r-week-one
 your-first-r-command
 typos
 more-simple-arithmetic
@@ -43,7 +43,7 @@ more-fun-with-functions
 packages
 my-first-data-visualisation
 quitting
-workflow-part-one---week-two
+workflow-part-one-week-two
 meet-the-penguins
 insights-from-data
 the-question
@@ -66,11 +66,11 @@ dates
 rename-some-values
 check-for-duplication
 check-for-typos-or-implausible-values
-missing-values---na
+missing-values-na
 summing-up
 what-we-learned
 quitting-1
-workflow-part-two---week-three
+workflow-part-two-week-three
 initial-insights
 numbers-and-sex-of-the-penguins
 making-a-simple-figure
@@ -89,7 +89,7 @@ sex-interactions
 making-our-graphs-more-attractive
 saving-your-output
 quitting-2
-ggplot2-a-grammar-of-graphics---week-four
+ggplot2-a-grammar-of-graphics-week-four
 intro-to-grammar
 building-a-plot
 plot-background
@@ -116,7 +116,7 @@ quitting-3
 summing-up-ggplot
 what-we-learned-1
 further-reading-guides-and-tips
-reports-with-rmarkdown---week-five
+reports-with-rmarkdown-week-five
 format
 background-to-rmarkdown
 starting-a-new-rmd-file
@@ -139,7 +139,7 @@ exercise---make-your-own-rmd-document
 summing-up-rmarkdown
 what-we-learned-2
 further-reading-guides-and-tips-1
-version-control-with-github---week-six
+version-control-with-github-week-six
 lets-git-it-started
 will-this-be-fun
 the-payoff
@@ -159,7 +159,7 @@ glossary-github
 summing-up-github
 what-we-learned-3
 further-reading-guides-and-tips-2
-dealing-with-data-dplyr---week-eight
+dealing-with-data-dplyr-week-eight
 lets-get-going
 introduction-to-dplyr
 select
@@ -173,7 +173,7 @@ group_by-summary
 more-than-one-grouping-variable
 using-group_by-with-mutate
 remove-group_by
-dealing-with-data-part-2---week-nine
+dealing-with-data-part-2-week-nine
 expanding-the-data-toolkit
 pipes
 strings
@@ -185,7 +185,7 @@ pivot
 summing-up-1
 what-we-learned-4
 further-reading-guides-and-tips-3
-deeper-data-insights-part-1---week-ten
+deeper-data-insights-part-1-week-ten
 variables
 numerical
 categorical

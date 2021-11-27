@@ -1,5 +1,5 @@
 
-# Getting to know R - Week One
+# Getting to know R: Week One
 
 ```{r , echo=FALSE, eval=TRUE, include=TRUE}
 klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = 'copy to clipboard', tooltip_success = 'Copied!')

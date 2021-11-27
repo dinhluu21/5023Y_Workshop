@@ -1,5 +1,5 @@
 
-# Dealing with data: dplyr - Week Eight
+# Dealing with data: dplyr: Week Eight
 
 ```{r , echo=FALSE, eval=TRUE, include=TRUE}
 klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = 'copy to clipboard', tooltip_success = 'Copied!')
@@ -377,7 +377,7 @@ centered_penguins %>%
 
 Look at this output - you can see the information on groups has now been removed from the data. 
 
-# Dealing with data part 2 - Week Nine
+# Dealing with data part 2: Week Nine
 
 ```{r , echo=FALSE, eval=TRUE, include=TRUE}
 klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = 'copy to clipboard', tooltip_success = 'Copied!')
@@ -674,7 +674,7 @@ You have also used two packages, which are also installed as part of the tidyver
 [R Cheat Sheets](https://www.rstudio.com/resources/cheatsheets/)
 
 
-# Deeper data insights part 1 - Week Ten
+# Deeper data insights part 1: Week Ten
 
 ```{r , echo=FALSE, eval=TRUE, include=TRUE}
 klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = 'copy to clipboard', tooltip_success = 'Copied!')
@@ -1071,7 +1071,7 @@ lims <- c(3000,6000)
 
 ### Missing values
 
-We first met `NA` back in (\@ref(missing-values---na)) and you will hopefully have noticed, either here or in those previous chapters, that missing values `NA` can really mess up our calculations. There are a few different ways we can deal with missing data:
+We first met `NA` back in Chapter \@ref(missing-values-na) and you will hopefully have noticed, either here or in those previous chapters, that missing values `NA` can really mess up our calculations. There are a few different ways we can deal with missing data:
 
 * `drop_na()` on everything before we start. This runs the risk that we lose **a lot** of data as *every* row, with an NA in *any column* will be removed
 
@@ -1242,7 +1242,7 @@ You have primarily used `tidyverse` packages, but also:
 
 * `scales` @R-scales
 
-In the next chapter we will look at generating insights around the relationships between variables. Now is a good time to review earlier chapters such as (\@ref(workflow-part-one---week-two)), and think about how we ask questions of our data. 
+In the next chapter we will look at generating insights around the relationships between variables. Now is a good time to review earlier chapters such as Chapter \@ref(workflow-part-one-week-two), and think about how we ask questions of our data. 
 
 
 
