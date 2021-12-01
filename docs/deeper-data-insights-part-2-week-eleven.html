@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 Deeper data insights part 2: Week Eleven | Data Science for Biologists - 5023Y</title>
+  <meta name="description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 11 Deeper data insights part 2: Week Eleven | Data Science for Biologists - 5023Y" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 11 Deeper data insights part 2: Week Eleven | Data Science for Biologists - 5023Y" />
+  
+  <meta name="twitter:description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  
+
+<meta name="author" content="Philip Leftwich" />
+
+
+<meta name="date" content="2021-12-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="deeper-data-insights-part-1-week-ten.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#approach-and-style"><i class="fa fa-check"></i><b>1.1</b> Approach and style</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#teaching"><i class="fa fa-check"></i><b>1.2</b> Teaching</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#workshops"><i class="fa fa-check"></i><b>1.2.1</b> Workshops</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#introduction-to-r"><i class="fa fa-check"></i><b>1.3</b> Introduction to R</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#getting-around-on-rstudio"><i class="fa fa-check"></i><b>1.4</b> Getting around on RStudio</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#an-intro-to-rstudio"><i class="fa fa-check"></i><b>1.4.1</b> An intro to RStudio</a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#using-r-studio-cloud"><i class="fa fa-check"></i><b>1.4.2</b> Using R Studio Cloud</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#reading"><i class="fa fa-check"></i><b>1.5</b> Reading</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#get-help"><i class="fa fa-check"></i><b>1.6</b> Get Help!</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html"><i class="fa fa-check"></i><b>2</b> Getting to know R: Week One</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#your-first-r-command"><i class="fa fa-check"></i><b>2.1</b> Your first R command</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#typos"><i class="fa fa-check"></i><b>2.1.1</b> Typos</a></li>
+<li class="chapter" data-level="2.1.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-simple-arithmetic"><i class="fa fa-check"></i><b>2.1.2</b> More simple arithmetic</a></li>
+<li class="chapter" data-level="2.1.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#try-some-maths"><i class="fa fa-check"></i><b>2.1.3</b> Try some maths</a></li>
+<li class="chapter" data-level="2.1.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#perform-some-combos"><i class="fa fa-check"></i><b>2.1.4</b> Perform some combos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#true-or-false-data"><i class="fa fa-check"></i><b>2.2</b> “true or false” data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#assessing-mathematical-truths"><i class="fa fa-check"></i><b>2.2.1</b> Assessing mathematical truths</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-outputs"><i class="fa fa-check"></i><b>2.3</b> Storing outputs</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#choosing-names"><i class="fa fa-check"></i><b>2.3.1</b> Choosing names</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#writing-scripts"><i class="fa fa-check"></i><b>2.4</b> Writing scripts</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#commenting-on-scripts"><i class="fa fa-check"></i><b>2.4.1</b> Commenting on scripts</a></li>
+<li class="chapter" data-level="2.4.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#running-your-script"><i class="fa fa-check"></i><b>2.4.2</b> Running your script</a></li>
+<li class="chapter" data-level="2.4.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#saving-your-script"><i class="fa fa-check"></i><b>2.4.3</b> Saving your script</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#error"><i class="fa fa-check"></i><b>2.5</b> Error</a></li>
+<li class="chapter" data-level="2.6" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-the-output-of-functions"><i class="fa fa-check"></i><b>2.6.1</b> Storing the output of functions</a></li>
+<li class="chapter" data-level="2.6.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-fun-with-functions"><i class="fa fa-check"></i><b>2.6.2</b> More fun with functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#packages"><i class="fa fa-check"></i><b>2.7</b> Packages</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#my-first-data-visualisation"><i class="fa fa-check"></i><b>2.8</b> My first data visualisation</a></li>
+<li class="chapter" data-level="2.9" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#quitting"><i class="fa fa-check"></i><b>2.9</b> Quitting</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html"><i class="fa fa-check"></i><b>3</b> Workflow Part One: Week Two</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#meet-the-penguins"><i class="fa fa-check"></i><b>3.1</b> Meet the Penguins</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#insights-from-data"><i class="fa fa-check"></i><b>3.1.1</b> Insights from data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-question"><i class="fa fa-check"></i><b>3.2</b> The Question?</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#hypotheses"><i class="fa fa-check"></i><b>3.2.1</b> Hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#preparing-the-data"><i class="fa fa-check"></i><b>3.3</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy-data"><i class="fa fa-check"></i><b>3.3.1</b> Tidy data</a></li>
+<li class="chapter" data-level="3.3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-dataset"><i class="fa fa-check"></i><b>3.3.2</b> The dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#prepare-the-rstudio-workspace"><i class="fa fa-check"></i><b>3.4</b> Prepare the RStudio workspace</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#organise"><i class="fa fa-check"></i><b>3.4.1</b> Organise</a></li>
+<li class="chapter" data-level="3.4.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#create-a-new-r-script"><i class="fa fa-check"></i><b>3.4.2</b> Create a new R script</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#get-the-data-into-r"><i class="fa fa-check"></i><b>3.5</b> Get the data into R</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#view-and-refine"><i class="fa fa-check"></i><b>3.5.1</b> View and refine</a></li>
+<li class="chapter" data-level="3.5.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#data-management"><i class="fa fa-check"></i><b>3.5.2</b> Data management</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dataframes-and-tibbles"><i class="fa fa-check"></i><b>3.6</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="3.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean-and-tidy"><i class="fa fa-check"></i><b>3.7</b> Clean and tidy</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy"><i class="fa fa-check"></i><b>3.7.1</b> Tidy</a></li>
+<li class="chapter" data-level="3.7.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean"><i class="fa fa-check"></i><b>3.7.2</b> Clean</a></li>
+<li class="chapter" data-level="3.7.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#refine-variable-names"><i class="fa fa-check"></i><b>3.7.3</b> Refine variable names</a></li>
+<li class="chapter" data-level="3.7.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dates"><i class="fa fa-check"></i><b>3.7.4</b> Dates</a></li>
+<li class="chapter" data-level="3.7.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#rename-some-values"><i class="fa fa-check"></i><b>3.7.5</b> Rename some values</a></li>
+<li class="chapter" data-level="3.7.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-duplication"><i class="fa fa-check"></i><b>3.7.6</b> Check for duplication</a></li>
+<li class="chapter" data-level="3.7.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-typos-or-implausible-values"><i class="fa fa-check"></i><b>3.7.7</b> Check for typos or implausible values</a></li>
+<li class="chapter" data-level="3.7.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#missing-values-na"><i class="fa fa-check"></i><b>3.7.8</b> Missing values: NA</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#summing-up"><i class="fa fa-check"></i><b>3.8</b> Summing up</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#what-we-learned"><i class="fa fa-check"></i><b>3.8.1</b> What we learned</a></li>
+<li class="chapter" data-level="3.8.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#quitting-1"><i class="fa fa-check"></i><b>3.8.2</b> Quitting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html"><i class="fa fa-check"></i><b>4</b> Workflow Part Two: Week Three</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-insights"><i class="fa fa-check"></i><b>4.1</b> Initial insights</a></li>
+<li class="chapter" data-level="4.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#numbers-and-sex-of-the-penguins"><i class="fa fa-check"></i><b>4.2</b> Numbers and sex of the penguins</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-a-simple-figure"><i class="fa fa-check"></i><b>4.2.1</b> Making a simple figure</a></li>
+<li class="chapter" data-level="4.2.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#challenge"><i class="fa fa-check"></i><b>4.2.2</b> Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions"><i class="fa fa-check"></i><b>4.3</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#insights"><i class="fa fa-check"></i><b>4.3.1</b> Insights</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#more-distributions"><i class="fa fa-check"></i><b>4.4</b> More distributions</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-conclusions"><i class="fa fa-check"></i><b>4.4.1</b> Initial conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#data-transformation"><i class="fa fa-check"></i><b>4.5</b> Data transformation</a></li>
+<li class="chapter" data-level="4.6" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#developing-insights"><i class="fa fa-check"></i><b>4.6</b> Developing insights</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions-of-the-relative-bill-length"><i class="fa fa-check"></i><b>4.6.1</b> Distributions of the relative bill length</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#relationshipdifferences"><i class="fa fa-check"></i><b>4.7</b> Relationship/differences</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#differences"><i class="fa fa-check"></i><b>4.7.1</b> Differences</a></li>
+<li class="chapter" data-level="4.7.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#associations"><i class="fa fa-check"></i><b>4.7.2</b> Associations</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#sex-interactions"><i class="fa fa-check"></i><b>4.8</b> Sex interactions</a></li>
+<li class="chapter" data-level="4.9" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-our-graphs-more-attractive"><i class="fa fa-check"></i><b>4.9</b> Making our graphs more attractive</a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#saving-your-output"><i class="fa fa-check"></i><b>4.9.1</b> Saving your output</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#quitting-2"><i class="fa fa-check"></i><b>4.10</b> Quitting</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html"><i class="fa fa-check"></i><b>5</b> ggplot2 A grammar of graphics: Week Four</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#intro-to-grammar"><i class="fa fa-check"></i><b>5.1</b> Intro to grammar</a></li>
+<li class="chapter" data-level="5.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#building-a-plot"><i class="fa fa-check"></i><b>5.2</b> Building a plot</a></li>
+<li class="chapter" data-level="5.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#plot-background"><i class="fa fa-check"></i><b>5.3</b> Plot background</a></li>
+<li class="chapter" data-level="5.4" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#aesthetics---aes"><i class="fa fa-check"></i><b>5.4</b> Aesthetics - aes()</a></li>
+<li class="chapter" data-level="5.5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#geometric-representations---geom"><i class="fa fa-check"></i><b>5.5</b> Geometric representations - geom()</a></li>
+<li class="chapter" data-level="5.6" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#and"><i class="fa fa-check"></i><b>5.6</b> %&gt;% and +</a></li>
+<li class="chapter" data-level="5.7" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#colour"><i class="fa fa-check"></i><b>5.7</b> Colour</a></li>
+<li class="chapter" data-level="5.8" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-layers"><i class="fa fa-check"></i><b>5.8</b> More layers</a></li>
+<li class="chapter" data-level="5.9" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#facets"><i class="fa fa-check"></i><b>5.9</b> Facets</a></li>
+<li class="chapter" data-level="5.10" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#co-ordinate-space"><i class="fa fa-check"></i><b>5.10</b> Co-ordinate space</a></li>
+<li class="chapter" data-level="5.11" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#labels"><i class="fa fa-check"></i><b>5.11</b> Labels</a></li>
+<li class="chapter" data-level="5.12" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#themes"><i class="fa fa-check"></i><b>5.12</b> Themes</a></li>
+<li class="chapter" data-level="5.13" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#jitter"><i class="fa fa-check"></i><b>5.13</b> Jitter</a></li>
+<li class="chapter" data-level="5.14" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#boxplots"><i class="fa fa-check"></i><b>5.14</b> Boxplots</a></li>
+<li class="chapter" data-level="5.15" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#density-and-histogram"><i class="fa fa-check"></i><b>5.15</b> Density and histogram</a></li>
+<li class="chapter" data-level="5.16" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-colours"><i class="fa fa-check"></i><b>5.16</b> More Colours</a>
+<ul>
+<li class="chapter" data-level="5.16.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#assign-colours-to-variables"><i class="fa fa-check"></i><b>5.16.1</b> Assign colours to variables</a></li>
+<li class="chapter" data-level="5.16.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#accessibility"><i class="fa fa-check"></i><b>5.16.2</b> Accessibility</a></li>
+<li class="chapter" data-level="5.16.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#guides-to-visual-accessibility"><i class="fa fa-check"></i><b>5.16.3</b> Guides to visual accessibility</a></li>
+</ul></li>
+<li class="chapter" data-level="5.17" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#patchwork"><i class="fa fa-check"></i><b>5.17</b> Patchwork</a></li>
+<li class="chapter" data-level="5.18" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#test"><i class="fa fa-check"></i><b>5.18</b> Test</a></li>
+<li class="chapter" data-level="5.19" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#saving"><i class="fa fa-check"></i><b>5.19</b> Saving</a></li>
+<li class="chapter" data-level="5.20" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#quitting-3"><i class="fa fa-check"></i><b>5.20</b> Quitting</a></li>
+<li class="chapter" data-level="5.21" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#summing-up-ggplot"><i class="fa fa-check"></i><b>5.21</b> Summing up ggplot</a>
+<ul>
+<li class="chapter" data-level="5.21.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#what-we-learned-1"><i class="fa fa-check"></i><b>5.21.1</b> What we learned</a></li>
+<li class="chapter" data-level="5.21.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#further-reading-guides-and-tips"><i class="fa fa-check"></i><b>5.21.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html"><i class="fa fa-check"></i><b>6</b> Reports with Rmarkdown: Week Five</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#format"><i class="fa fa-check"></i><b>6.0.1</b> Format</a></li>
+<li class="chapter" data-level="6.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#background-to-rmarkdown"><i class="fa fa-check"></i><b>6.1</b> Background to Rmarkdown</a></li>
+<li class="chapter" data-level="6.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#starting-a-new-rmd-file"><i class="fa fa-check"></i><b>6.2</b> Starting a new Rmd file</a></li>
+<li class="chapter" data-level="6.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#r-markdown-parts"><i class="fa fa-check"></i><b>6.3</b> R Markdown parts</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#yaml"><i class="fa fa-check"></i><b>6.3.1</b> YAML</a></li>
+<li class="chapter" data-level="6.3.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#text"><i class="fa fa-check"></i><b>6.3.2</b> Text</a></li>
+<li class="chapter" data-level="6.3.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#code-chunks"><i class="fa fa-check"></i><b>6.3.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="6.3.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#here"><i class="fa fa-check"></i><b>6.3.4</b> Here</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#images"><i class="fa fa-check"></i><b>6.4</b> Images</a></li>
+<li class="chapter" data-level="6.5" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables</a></li>
+<li class="chapter" data-level="6.6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#self-contained-documents"><i class="fa fa-check"></i><b>6.6</b> Self-contained documents</a></li>
+<li class="chapter" data-level="6.7" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#source-files"><i class="fa fa-check"></i><b>6.7</b> Source files</a></li>
+<li class="chapter" data-level="6.8" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#exercise---make-your-own-rmd-document"><i class="fa fa-check"></i><b>6.8</b> Exercise - Make your own Rmd document</a></li>
+<li class="chapter" data-level="6.9" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#summing-up-rmarkdown"><i class="fa fa-check"></i><b>6.9</b> Summing up Rmarkdown</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#what-we-learned-2"><i class="fa fa-check"></i><b>6.9.1</b> What we learned</a></li>
+<li class="chapter" data-level="6.9.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#further-reading-guides-and-tips-1"><i class="fa fa-check"></i><b>6.9.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html"><i class="fa fa-check"></i><b>7</b> Version control with GitHub: Week Six</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#lets-git-it-started"><i class="fa fa-check"></i><b>7.1</b> Let’s Git it started</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#will-this-be-fun"><i class="fa fa-check"></i><b>7.1.1</b> Will this be fun?</a></li>
+<li class="chapter" data-level="7.1.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#the-payoff"><i class="fa fa-check"></i><b>7.1.2</b> The Payoff</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#set-up-github"><i class="fa fa-check"></i><b>7.2</b> Set up GitHub</a></li>
+<li class="chapter" data-level="7.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-1.-fork-clone-an-existing-repo-on-github-make-edits-push-back"><i class="fa fa-check"></i><b>7.3</b> <strong>Exercise 1.</strong> Fork &amp; clone an existing repo on GitHub, make edits, push back</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-the-hell-is-a-fork"><i class="fa fa-check"></i><b>7.3.1</b> What the hell is a fork?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#talking-to-github"><i class="fa fa-check"></i><b>7.4</b> Talking to GitHub</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#see-changes"><i class="fa fa-check"></i><b>7.4.1</b> See changes</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#how-to-use-version-control---when-to-commit-push-and-pull"><i class="fa fa-check"></i><b>7.5</b> How to use version control - when to commit, push and pull</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#commit"><i class="fa fa-check"></i><b>7.5.1</b> Commit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#push"><i class="fa fa-check"></i><b>7.5.2</b> Push</a></li>
+<li class="chapter" data-level="7.5.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#a-couple-of-general-tips"><i class="fa fa-check"></i><b>7.5.3</b> A couple of general tips:</a></li>
+<li class="chapter" data-level="7.5.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#turn-back-time-with-git"><i class="fa fa-check"></i><b>7.5.4</b> Turn back time with Git</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-2.-github-classrooms-enabled-r-projects-with-subfolders"><i class="fa fa-check"></i><b>7.6</b> <strong>Exercise 2.</strong> GitHub Classrooms enabled R Projects with subfolders</a></li>
+<li class="chapter" data-level="7.7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#find-your-classroom-repos"><i class="fa fa-check"></i><b>7.7</b> Find your classroom repos</a></li>
+<li class="chapter" data-level="7.8" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#glossary-github"><i class="fa fa-check"></i><b>7.8</b> Glossary-GitHub</a></li>
+<li class="chapter" data-level="7.9" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#summing-up-github"><i class="fa fa-check"></i><b>7.9</b> Summing up GitHub</a>
+<ul>
+<li class="chapter" data-level="7.9.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-we-learned-3"><i class="fa fa-check"></i><b>7.9.1</b> What we learned</a></li>
+<li class="chapter" data-level="7.9.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#further-reading-guides-and-tips-2"><i class="fa fa-check"></i><b>7.9.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html"><i class="fa fa-check"></i><b>8</b> Dealing with data: dplyr: Week Eight</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#lets-get-going"><i class="fa fa-check"></i><b>8.1</b> Let’s get going</a></li>
+<li class="chapter" data-level="8.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#introduction-to-dplyr"><i class="fa fa-check"></i><b>8.2</b> Introduction to dplyr</a></li>
+<li class="chapter" data-level="8.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#select"><i class="fa fa-check"></i><b>8.3</b> select</a></li>
+<li class="chapter" data-level="8.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#mutate"><i class="fa fa-check"></i><b>8.4</b> mutate</a></li>
+<li class="chapter" data-level="8.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#filter"><i class="fa fa-check"></i><b>8.5</b> filter</a></li>
+<li class="chapter" data-level="8.6" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#arrange"><i class="fa fa-check"></i><b>8.6</b> arrange</a></li>
+<li class="chapter" data-level="8.7" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group-and-summarise"><i class="fa fa-check"></i><b>8.7</b> Group and summarise</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#using-summarise"><i class="fa fa-check"></i><b>8.7.1</b> Using summarise</a></li>
+<li class="chapter" data-level="8.7.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summarize-all-columns"><i class="fa fa-check"></i><b>8.7.2</b> Summarize all columns</a></li>
+<li class="chapter" data-level="8.7.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group_by-summary"><i class="fa fa-check"></i><b>8.7.3</b> group_by summary</a></li>
+<li class="chapter" data-level="8.7.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>8.7.4</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="8.7.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#remove-group_by"><i class="fa fa-check"></i><b>8.7.5</b> remove group_by</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html"><i class="fa fa-check"></i><b>9</b> Dealing with data part 2: Week Nine</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#expanding-the-data-toolkit"><i class="fa fa-check"></i><b>9.1</b> Expanding the data toolkit</a></li>
+<li class="chapter" data-level="9.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pipes"><i class="fa fa-check"></i><b>9.2</b> Pipes</a></li>
+<li class="chapter" data-level="9.3" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#strings"><i class="fa fa-check"></i><b>9.3</b> Strings</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#separate"><i class="fa fa-check"></i><b>9.3.1</b> separate</a></li>
+<li class="chapter" data-level="9.3.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#more-stringr"><i class="fa fa-check"></i><b>9.3.2</b> More stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#dates-and-times"><i class="fa fa-check"></i><b>9.4</b> Dates and times</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#calculations-with-dates"><i class="fa fa-check"></i><b>9.4.1</b> Calculations with dates</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pivot"><i class="fa fa-check"></i><b>9.5</b> Pivot</a></li>
+<li class="chapter" data-level="9.6" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#summing-up-1"><i class="fa fa-check"></i><b>9.6</b> Summing up</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#what-we-learned-4"><i class="fa fa-check"></i><b>9.6.1</b> What we learned</a></li>
+<li class="chapter" data-level="9.6.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#further-reading-guides-and-tips-3"><i class="fa fa-check"></i><b>9.6.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html"><i class="fa fa-check"></i><b>10</b> Deeper data insights part 1: Week Ten</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#variables"><i class="fa fa-check"></i><b>10.1</b> Variables</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#numerical"><i class="fa fa-check"></i><b>10.1.1</b> Numerical</a></li>
+<li class="chapter" data-level="10.1.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical"><i class="fa fa-check"></i><b>10.1.2</b> Categorical</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#understanding-numerical-variables"><i class="fa fa-check"></i><b>10.2</b> Understanding Numerical variables</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#graphing-a-numeric-variable"><i class="fa fa-check"></i><b>10.2.1</b> Graphing a numeric variable</a></li>
+<li class="chapter" data-level="10.2.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#insights-about-body-mass"><i class="fa fa-check"></i><b>10.2.2</b> Insights about body mass</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#descriptive-statistics"><i class="fa fa-check"></i><b>10.3</b> Descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#central-tendency"><i class="fa fa-check"></i><b>10.3.1</b> Central tendency</a></li>
+<li class="chapter" data-level="10.3.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#dispersion"><i class="fa fa-check"></i><b>10.3.2</b> Dispersion</a></li>
+<li class="chapter" data-level="10.3.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#visualising-dispersion"><i class="fa fa-check"></i><b>10.3.3</b> Visualising dispersion</a></li>
+<li class="chapter" data-level="10.3.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#combining-histograms-and-boxplots"><i class="fa fa-check"></i><b>10.3.4</b> Combining histograms and boxplots</a></li>
+<li class="chapter" data-level="10.3.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#missing-values"><i class="fa fa-check"></i><b>10.3.5</b> Missing values</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical-variables"><i class="fa fa-check"></i><b>10.4</b> Categorical variables</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summaries"><i class="fa fa-check"></i><b>10.4.1</b> Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summing-up-2"><i class="fa fa-check"></i><b>10.5</b> Summing up</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#reward"><i class="fa fa-check"></i><b>10.5.1</b> Reward</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html"><i class="fa fa-check"></i><b>11</b> Deeper data insights part 2: Week Eleven</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-numerical-variables"><i class="fa fa-check"></i><b>11.1</b> Associations between numerical variables</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#correlations"><i class="fa fa-check"></i><b>11.1.1</b> Correlations</a></li>
+<li class="chapter" data-level="11.1.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#non-linear-correlations"><i class="fa fa-check"></i><b>11.1.2</b> Non-linear correlations</a></li>
+<li class="chapter" data-level="11.1.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#graphical-summaries-between-numeric-variables"><i class="fa fa-check"></i><b>11.1.3</b> Graphical summaries between numeric variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-variables"><i class="fa fa-check"></i><b>11.2</b> Associations between categorical variables</a></li>
+<li class="chapter" data-level="11.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-numerical-variables"><i class="fa fa-check"></i><b>11.3</b> Associations between Categorical-numerical variables</a></li>
+<li class="chapter" data-level="11.4" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#complexity"><i class="fa fa-check"></i><b>11.4</b> Complexity</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#simpsons-paradox"><i class="fa fa-check"></i><b>11.4.1</b> Simpson’s Paradox</a></li>
+<li class="chapter" data-level="11.4.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#three-or-more-variables"><i class="fa fa-check"></i><b>11.4.2</b> Three or more variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#summing-up-3"><i class="fa fa-check"></i><b>11.5</b> Summing up</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science for Biologists - 5023Y</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="deeper-data-insights-part-2-week-eleven" class="section level1" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Deeper data insights part 2: Week Eleven</h1>
+<script>
+  addClassKlippyTo("pre.r, pre.bash");
+  addKlippy('right', 'top', 'auto', '1', 'copy to clipboard', 'Copied!');
+</script>
+<p>In the previous chapter we looked at individual variables, and understanding the different types of data. We made numeric and graphical summaries of the distributions of features within each variable. This week we will continue to work in the same space, and extend our understanding to include relationships between variables.</p>
+<p>Understanding the relationship between two or more variables is often the basis of most of our scientific questions. These might include comparing variables of the same type (numeric against numeric) or different types (numeric against categorical). In this chapter we will see how we can use descriptive statistics and visuals to explore associations</p>
+<div id="associations-between-numerical-variables" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> Associations between numerical variables</h2>
+<div id="correlations" class="section level3" number="11.1.1">
+<h3><span class="header-section-number">11.1.1</span> Correlations</h3>
+<p>A common measure of association between two numerical variables is the <strong>correlation coefficient</strong>. The correlation metric is a numerical measure of the <em>strength of an association</em></p>
+<p>There are several measures of correlation including:</p>
+<ul>
+<li><p><strong>Pearson’s correlation coefficient</strong> : good for describing linear associations</p></li>
+<li><p><strong>Spearman’s rank correlation coefficient</strong>: a rank ordered correlation - good for when the assumptions for Pearson’s correlation is not met.</p></li>
+</ul>
+<p>Pearson’s correlation coefficient <em>r</em> is designed to measure the strength of a linear (straight line) association. Pearson’s takes a value between -1 and 1.</p>
+<ul>
+<li><p>A value of 0 means there is no linear association between the variables</p></li>
+<li><p>A value of 1 means there is a perfect <em>positive</em> association between the variables</p></li>
+<li><p>A value of -1 means there is a perfect <em>negative</em> association between the variables</p></li>
+</ul>
+<p>A <em>perfect</em> association is one where we can predict the value of one variable with complete accuracy, just by knowing the value of the other variable.</p>
+<p>We can use the <code>cor</code> function in R to calculate Pearson’s correlation coefficient.</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
+<span id="cb209-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb209-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb209-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb209-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb209-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor_test</span>(bill_length_mm, bill_depth_mm)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 8
+##   var1          var2           cor statistic         p conf.low conf.high method
+##   &lt;chr&gt;         &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; 
+## 1 bill_length_~ bill_depth_~ -0.24     -4.46 0.0000112   -0.333    -0.132 Pears~</code></pre>
+<p>This tells us two features of the association. It’s <em>sign</em> and <em>magnitude</em>. The coefficient is negative, so as bill length increases, bill depth decreases. The value -0.22 indicates that only about 22% of the variation in bill length can be explained by changes in bill depth (and <em>vice-versa</em>), suggesting that the variables are not closely related.</p>
+<div class="figure"><span id="fig:unnamed-chunk-310"></span>
+<img src="images/correlation_examples.png" alt="Different relationships between two numeric variables. Each number represents the Pearson's correlation coefficient of each association" width="80%" />
+<p class="caption">
+Figure 11.1: Different relationships between two numeric variables. Each number represents the Pearson’s correlation coefficient of each association
+</p>
+</div>
+<ul>
+<li><p>Because Pearson’s coefficient is designed to summarise the strength of a linear relationship, this can be misleading if the relationship is <em>not linear</em> e.g. curved or humped. This is why it’s always a good idea to plot the relationship <em>first</em> (see above).</p></li>
+<li><p>Even when the relationship is linear, it doesn’t tell us anything about the steepness of the association (see above). It <em>only</em> tells us how often a change in one variable can predict the change in the other <em>not</em> the value of that change.</p></li>
+</ul>
+<p>This can be difficult to understand at first, so carefully consider the figure above.</p>
+<ul>
+<li><p>The first row above shows differing levels of the strength of association. If we drew a perfect straight line between two variables, how closely do the data points fit around this line.</p></li>
+<li><p>The second row shows a series of <em>perfect</em> linear relationships. We can accurately predict the value of one variable just by knowing the value of the other variable, but the steepness of the relationship in each example is very different. This is <strong>important</strong> because it means a perfect association can still have a small effect.</p></li>
+<li><p>The third row shows a series of associations where there is <em>clearly</em> a relationship between the two variables, but it is also not linear so would be inappropriate for a Pearson’s correlation.</p></li>
+</ul>
+</div>
+<div id="non-linear-correlations" class="section level3" number="11.1.2">
+<h3><span class="header-section-number">11.1.2</span> Non-linear correlations</h3>
+<p>So what should we do if the relationship between our variables is non-linear? Instead of using Pearson’s correlation coefficient we can calculate something called a <strong>rank correlation</strong>.</p>
+<p>Instead of working with the raw values of our two variables we can use rank ordering instead. The idea is pretty simple if we start with the lowest vaule in a variable and order it as ‘1,’ then assign labels ‘2,’ ‘3’ etc. as we ascend in rank order. We can see a way that this could be applied manually with the function <code>dense_rank</code> from dplyr below:</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb211-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> <span class="fu">select</span>(bill_length_mm, </span>
+<span id="cb211-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb211-2" aria-hidden="true" tabindex="-1"></a>                    bill_depth_mm) <span class="sc">%&gt;%</span> </span>
+<span id="cb211-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb211-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb211-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb211-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank_length=</span><span class="fu">dense_rank</span>((bill_length_mm)), </span>
+<span id="cb211-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb211-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">rank_depth=</span><span class="fu">dense_rank</span>((bill_depth_mm)))</span></code></pre></div>
+<pre><code>## # A tibble: 342 x 4
+##    bill_length_mm bill_depth_mm rank_length rank_depth
+##             &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;      &lt;int&gt;
+##  1           39.1          18.7          43         57
+##  2           39.5          17.4          46         44
+##  3           40.3          18            52         50
+##  4           36.7          19.3          23         63
+##  5           39.3          20.6          45         75
+##  6           38.9          17.8          41         48
+##  7           39.2          19.6          44         66
+##  8           34.1          18.1           5         51
+##  9           42            20.2          66         72
+## 10           37.8          17.1          32         41
+## # ... with 332 more rows</code></pre>
+<p>Measures of rank correlation then are just a comparison of the rank orders between two variables, with a value between -1 and 1 just like Pearsons’s. We already know from our Pearson’s correlation coefficient, that we expect this relationship to be negative. So it should come as no surprise that the highest rank order values for bill_length_mm appear to be associated with lower rank order values for bill_depth_mm.</p>
+<p>To calculate Spearman’s <span class="math inline">\(\rho\)</span> ‘rho’ is pretty easy, you can use the cor functions again, but this time specify a hidden argument to <code>method="spearman"</code>.</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb213-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb213-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb213-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor_test</span>(bill_length_mm, bill_depth_mm, <span class="at">method=</span><span class="st">&quot;spearman&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 6
+##   var1           var2            cor statistic         p method  
+##   &lt;chr&gt;          &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   
+## 1 bill_length_mm bill_depth_mm -0.22  8145268. 0.0000351 Spearman</code></pre>
+<p>What we can see in this example is that Pearson’s <em>r</em> and Spearman’s <span class="math inline">\(\rho\)</span> are basically identical.</p>
+</div>
+<div id="graphical-summaries-between-numeric-variables" class="section level3" number="11.1.3">
+<h3><span class="header-section-number">11.1.3</span> Graphical summaries between numeric variables</h3>
+<p>Correlation coefficients are a quick and simple way to attach a metric to the level of association between two variables. They are limited however in that a single number can never capture the every aspect of their relationship. This is why we visualise our data.</p>
+<p>We have already covered scatter plots and <code>ggplot2()</code> extensively in previous chapters, so here we will just cover some of the different ways in which you could present the nature of a relationship</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb215-1" aria-hidden="true" tabindex="-1"></a>length_depth_scatterplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x=</span> bill_length_mm, </span>
+<span id="cb215-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb215-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y=</span> bill_depth_mm)) <span class="sc">+</span></span>
+<span id="cb215-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb215-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span>
+<span id="cb215-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb215-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb215-5" aria-hidden="true" tabindex="-1"></a>length_depth_scatterplot</span></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-313"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-313-1.png" alt="A scatter plot of bill depth against bill length in mm" width="672" />
+<p class="caption">
+Figure 11.2: A scatter plot of bill depth against bill length in mm
+</p>
+</div>
+<blockquote>
+<p>**Note - Remember there are a number of different options available when constructing a plot including changing alpha to produce transparency if plots are lying on top of each other, colours (and shapes) to separate subgroups and ways to present third numerical variables such as setting aes(size=body_mass_g).</p>
+</blockquote>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork) <span class="co"># package calls should be placed at the TOP of your script</span></span>
+<span id="cb216-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-3" aria-hidden="true" tabindex="-1"></a>bill_depth_marginal <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb216-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb216-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm), <span class="at">fill=</span><span class="st">&quot;darkgrey&quot;</span>)<span class="sc">+</span></span>
+<span id="cb216-6"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
+<span id="cb216-7"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="co"># this graph needs to be rotated</span></span>
+<span id="cb216-8"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-9"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-9" aria-hidden="true" tabindex="-1"></a>bill_length_marginal <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb216-10"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb216-11"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm), <span class="at">fill=</span><span class="st">&quot;darkgrey&quot;</span>)<span class="sc">+</span></span>
+<span id="cb216-12"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb216-13"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-14"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-14" aria-hidden="true" tabindex="-1"></a>layout <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb216-15"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-15" aria-hidden="true" tabindex="-1"></a><span class="st">AA#</span></span>
+<span id="cb216-16"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-16" aria-hidden="true" tabindex="-1"></a><span class="st">BBC</span></span>
+<span id="cb216-17"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-17" aria-hidden="true" tabindex="-1"></a><span class="st">BBC&quot;</span></span>
+<span id="cb216-18"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-18" aria-hidden="true" tabindex="-1"></a><span class="co"># layout is easiest to organise using a text distribution, where ABC equal the three plots in order, and the grid is how much space they take up. We could easily make the main plot bigger and marginals smaller with</span></span>
+<span id="cb216-19"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-20"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-20" aria-hidden="true" tabindex="-1"></a><span class="co"># layout &lt;- &quot;</span></span>
+<span id="cb216-21"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-21" aria-hidden="true" tabindex="-1"></a><span class="co"># AAA#</span></span>
+<span id="cb216-22"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-22" aria-hidden="true" tabindex="-1"></a><span class="co"># BBBC</span></span>
+<span id="cb216-23"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-23" aria-hidden="true" tabindex="-1"></a><span class="co"># BBBC&quot;</span></span>
+<span id="cb216-24"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-24" aria-hidden="true" tabindex="-1"></a><span class="co"># BBBC</span></span>
+<span id="cb216-25"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-26"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-26" aria-hidden="true" tabindex="-1"></a>bill_length_marginal<span class="sc">+</span>length_depth_scatterplot<span class="sc">+</span>bill_depth_marginal<span class="sc">+</span> <span class="co"># order of plots is important</span></span>
+<span id="cb216-27"><a href="deeper-data-insights-part-2-week-eleven.html#cb216-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">design=</span>layout) <span class="co"># uses the layout argument defined above to arrange the size and position of plots</span></span></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-314"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-314-1.png" alt="Using patchwork we can easily arrange extra plots to fit as marginals - these could be boxplots, histograms or density plots" width="672" />
+<p class="caption">
+Figure 11.3: Using patchwork we can easily arrange extra plots to fit as marginals - these could be boxplots, histograms or density plots
+</p>
+</div>
+<p>These efforts allow us to capture details about the spread and distribution of both variables <strong>and</strong> how they relate to each other. This figure provides us with insights into</p>
+<ul>
+<li><p>The central tendency of each variable</p></li>
+<li><p>The spread of data in each variable</p></li>
+<li><p>The correlation between the two variables</p></li>
+</ul>
+</div>
+</div>
+<div id="associations-between-categorical-variables" class="section level2" number="11.2">
+<h2><span class="header-section-number">11.2</span> Associations between categorical variables</h2>
+<p>Exploring associations between different categorical variables is not quite as simple as the previous numeric-numeric examples. Generally speaking we are interested in whether different combinations of categories are uniformally distributed or show evidence of clustering leading to <em>over- or under-represented</em> combinations.
+The simplest way to investigate this is to use <code>group_by</code> and <code>summarise</code> as we have used previously.</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb217-1" aria-hidden="true" tabindex="-1"></a>island_species_summary <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb217-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb217-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(island, species) <span class="sc">%&gt;%</span> </span>
+<span id="cb217-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb217-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb217-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb217-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_distinct=</span><span class="fu">n_distinct</span>(penguin_id)) <span class="sc">%&gt;%</span> </span>
+<span id="cb217-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb217-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="co"># needed to remove group calculations</span></span>
+<span id="cb217-6"><a href="deeper-data-insights-part-2-week-eleven.html#cb217-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">freq=</span>n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="co"># then calculates percentage of each group across WHOLE dataset</span></span>
+<span id="cb217-7"><a href="deeper-data-insights-part-2-week-eleven.html#cb217-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb217-8"><a href="deeper-data-insights-part-2-week-eleven.html#cb217-8" aria-hidden="true" tabindex="-1"></a>island_species_summary</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 5
+##   island    species       n n_distinct  freq
+##   &lt;chr&gt;     &lt;chr&gt;     &lt;int&gt;      &lt;int&gt; &lt;dbl&gt;
+## 1 Biscoe    Adelie       44         44 0.128
+## 2 Biscoe    Gentoo      124         94 0.360
+## 3 Dream     Adelie       56         56 0.163
+## 4 Dream     Chinstrap    68         58 0.198
+## 5 Torgersen Adelie       52         52 0.151</code></pre>
+<blockquote>
+<p>**Note - remember that group_by() applies functions which comes after it in a group-specific pattern.</p>
+</blockquote>
+<p>What does the above tell us, that 168 observations were made on the Island of Biscoe, with three times as many Gentoo penguin observations made as Adelie penguins (remeber this is observations made, not individual penguins). When we account for penguin ID we see there are around twice as many Gentoo penguins recorded. We can see there are no Chinstrap penguins recorded on Biscoe. Conversely we can see that Gentoo penguins are <strong>only</strong> observed on Biscoe.
+The island of Dream has two populations of Adelie and Chinstrap penguins of roughly equal size, while the island of Torgensen appears to have a population comprised only of Adelie penguins.</p>
+<p>We could also use a bar chart in ggplot to represent this count data.</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb219-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">%&gt;%</span> </span>
+<span id="cb219-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb219-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species))<span class="sc">+</span></span>
+<span id="cb219-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb219-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="fu">position_dodge</span>())<span class="sc">+</span></span>
+<span id="cb219-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb219-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-316-1.png" width="672" /></p>
+<p>This is fine, but it looks a bit odd, because the bars expand to fill the available space on the category axis. Luckily there is an advanced version of the postion_dodge argument.</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb220-1" aria-hidden="true" tabindex="-1"></a>penguins<span class="sc">%&gt;%</span> </span>
+<span id="cb220-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb220-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species))<span class="sc">+</span></span>
+<span id="cb220-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb220-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="fu">position_dodge2</span>(<span class="at">preserve=</span><span class="st">&quot;single&quot;</span>))<span class="sc">+</span> </span>
+<span id="cb220-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb220-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#keeps bars to appropriate widths</span></span>
+<span id="cb220-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb220-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-317-1.png" width="672" />
+&gt; **Note the default for bar charts would have been a stacked option, but we have already seen how that can produce graphs that are difficult to read.</p>
+<p>An alternative approach would be to look at the ‘relative proportions’ of each population in our overall dataset. Using the same methods as we used previously when looking at single variables. Let’s add in a few aesthetic tweaks to improve the look.</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb221-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>island, <span class="at">fill=</span>species))<span class="sc">+</span></span>
+<span id="cb221-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="fu">position_dodge2</span>(<span class="at">preserve=</span><span class="st">&quot;single&quot;</span>))<span class="sc">+</span> </span>
+<span id="cb221-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#keeps bars to appropriate widths</span></span>
+<span id="cb221-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Island&quot;</span>,</span>
+<span id="cb221-6"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Number of observations&quot;</span>)<span class="sc">+</span></span>
+<span id="cb221-7"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>island_species_summary, <span class="co"># use the data from the summarise object</span></span>
+<span id="cb221-8"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x=</span>island,</span>
+<span id="cb221-9"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">y=</span> n<span class="sc">+</span><span class="dv">10</span>, <span class="co"># offset text to be slightly to the right of bar</span></span>
+<span id="cb221-10"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">group=</span>species, <span class="co"># need species group to separate text</span></span>
+<span id="cb221-11"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">label=</span>scales<span class="sc">::</span><span class="fu">percent</span>(freq) <span class="co"># automatically add %</span></span>
+<span id="cb221-12"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-12" aria-hidden="true" tabindex="-1"></a>                ),</span>
+<span id="cb221-13"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">position=</span><span class="fu">position_dodge2</span>(<span class="at">width=</span><span class="fl">0.8</span>))<span class="sc">+</span> <span class="co"># set width of dodge</span></span>
+<span id="cb221-14"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;cyan&quot;</span>,</span>
+<span id="cb221-15"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-15" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;darkorange&quot;</span>,</span>
+<span id="cb221-16"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-16" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;purple&quot;</span></span>
+<span id="cb221-17"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-17" aria-hidden="true" tabindex="-1"></a>                            ))<span class="sc">+</span></span>
+<span id="cb221-18"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
+<span id="cb221-19"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb221-20"><a href="deeper-data-insights-part-2-week-eleven.html#cb221-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="co"># put legend at the bottom of the graph</span></span></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-318"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-318-1.png" alt="A dodged barplot showing the numbers and relative proportions of data observations recorded by penguin species and location" width="672" />
+<p class="caption">
+Figure 11.4: A dodged barplot showing the numbers and relative proportions of data observations recorded by penguin species and location
+</p>
+</div>
+</div>
+<div id="associations-between-categorical-numerical-variables" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Associations between Categorical-numerical variables</h2>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb222-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb222-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb222-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>species,</span>
+<span id="cb222-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb222-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>body_mass_g))<span class="sc">+</span></span>
+<span id="cb222-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb222-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb222-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb222-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Body mass (g)&quot;</span>,</span>
+<span id="cb222-6"><a href="deeper-data-insights-part-2-week-eleven.html#cb222-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x=</span> <span class="st">&quot;Species&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-319-1.png" width="672" /></p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb223-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb223-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb223-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>body_mass_g,</span>
+<span id="cb223-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb223-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill=</span>species))<span class="sc">+</span></span>
+<span id="cb223-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb223-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha=</span><span class="fl">0.6</span>,</span>
+<span id="cb223-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb223-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">bins=</span><span class="dv">30</span>,</span>
+<span id="cb223-6"><a href="deeper-data-insights-part-2-week-eleven.html#cb223-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">position=</span><span class="st">&quot;identity&quot;</span>)<span class="sc">+</span></span>
+<span id="cb223-7"><a href="deeper-data-insights-part-2-week-eleven.html#cb223-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species,</span>
+<span id="cb223-8"><a href="deeper-data-insights-part-2-week-eleven.html#cb223-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-320-1.png" width="672" /></p>
+</div>
+<div id="complexity" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> Complexity</h2>
+<div id="simpsons-paradox" class="section level3" number="11.4.1">
+<h3><span class="header-section-number">11.4.1</span> Simpson’s Paradox</h3>
+<p>Remember when we first correlated bill length and bill depth against each other we found an overall negative correlation of -0.22. However, this is because of a confounding variable we had not accounted for - species.</p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-321-1.png" width="672" /></p>
+<p>This is another example of why carefully studying your data - and carefully considering those variables which are likely to affect each other are studied or controlled for. It is an entirely reasonable hypothesis that different penguin species might have different bill shapes that might make an overall trend misleading. We can easily check the effect of a categoricial variable on our two numeric variables by assigning the aesthetic colour.</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-1" aria-hidden="true" tabindex="-1"></a>colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;cyan&quot;</span>,</span>
+<span id="cb224-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;darkorange&quot;</span>,</span>
+<span id="cb224-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;purple&quot;</span>)</span>
+<span id="cb224-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-5" aria-hidden="true" tabindex="-1"></a>length_depth_scatterplot_2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x=</span> bill_length_mm, </span>
+<span id="cb224-6"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y=</span> bill_depth_mm,</span>
+<span id="cb224-7"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour=</span>species)) <span class="sc">+</span></span>
+<span id="cb224-8"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb224-9"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb224-10"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">se=</span><span class="cn">FALSE</span>)<span class="sc">+</span></span>
+<span id="cb224-11"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span>colours)<span class="sc">+</span></span>
+<span id="cb224-12"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb224-13"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
+<span id="cb224-14"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Bill length (mm)&quot;</span>,</span>
+<span id="cb224-15"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">y=</span><span class="st">&quot;Bill depth (mm)&quot;</span>)</span>
+<span id="cb224-16"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-17"><a href="deeper-data-insights-part-2-week-eleven.html#cb224-17" aria-hidden="true" tabindex="-1"></a>length_depth_scatterplot</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-322-1.png" width="672" /></p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-1" aria-hidden="true" tabindex="-1"></a>bill_depth_marginal_2 <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb225-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb225-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_depth_mm,</span>
+<span id="cb225-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill=</span>species),</span>
+<span id="cb225-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb225-6"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span>colours)<span class="sc">+</span></span>
+<span id="cb225-7"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
+<span id="cb225-8"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="co"># this graph needs to be rotated</span></span>
+<span id="cb225-9"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-10"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-10" aria-hidden="true" tabindex="-1"></a>bill_length_marginal_2 <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb225-11"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb225-12"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,</span>
+<span id="cb225-13"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-13" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill=</span>species),</span>
+<span id="cb225-14"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb225-15"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span>colours)<span class="sc">+</span></span>
+<span id="cb225-16"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
+<span id="cb225-17"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb225-18"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-19"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-19" aria-hidden="true" tabindex="-1"></a>layout2 <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb225-20"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-20" aria-hidden="true" tabindex="-1"></a><span class="st">AAA#</span></span>
+<span id="cb225-21"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-21" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC</span></span>
+<span id="cb225-22"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-22" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC</span></span>
+<span id="cb225-23"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-23" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC&quot;</span></span>
+<span id="cb225-24"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-25"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-25" aria-hidden="true" tabindex="-1"></a>bill_length_marginal_2<span class="sc">+</span>length_depth_scatterplot_2<span class="sc">+</span>bill_depth_marginal_2<span class="sc">+</span> <span class="co"># order of plots is important</span></span>
+<span id="cb225-26"><a href="deeper-data-insights-part-2-week-eleven.html#cb225-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">design=</span>layout2) <span class="co"># uses the layout argument defined above to arrange the size and position of plots</span></span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-322-2.png" width="672" /></p>
+<p>We now clearly see a striking reversal of our previous trend, that in fact <em>within</em> each species of penguin there is an overall positive association between bill length and depth.</p>
+<p>This should prompt us to re-evaluate our correlation metrics:</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb226-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb226-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb226-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb226-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb226-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor_test</span>(bill_length_mm, bill_depth_mm)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 9
+##   species  var1      var2       cor statistic        p conf.low conf.high method
+##   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; 
+## 1 Adelie   bill_len~ bill_de~  0.39      5.19 6.67e- 7    0.247     0.519 Pears~
+## 2 Chinstr~ bill_len~ bill_de~  0.65      7.01 1.53e- 9    0.492     0.772 Pears~
+## 3 Gentoo   bill_len~ bill_de~  0.64      9.24 1.02e-15    0.526     0.737 Pears~</code></pre>
+<p>We now see that the correlation values for all three species is &gt;0.22 - indicating these associations are much closer than previously estimated.</p>
+</div>
+<div id="three-or-more-variables" class="section level3" number="11.4.2">
+<h3><span class="header-section-number">11.4.2</span> Three or more variables</h3>
+<p>In the above example therefore, we saw the importance of exploring relationships among more than two variables at once. Broadly speaking there are two ways top do this</p>
+<ol style="list-style-type: decimal">
+<li><p>Layer an extra aesthetic mapping onto ggplot - such as size, colour, or shape</p></li>
+<li><p>Use facets to construct multipanel plots according to the values of a categorical variable</p></li>
+</ol>
+<p>If we want we can also adopt both of these approaches at the same time:</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb228-2"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb228-3"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span> bill_length_mm, </span>
+<span id="cb228-4"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y=</span> bill_depth_mm,</span>
+<span id="cb228-5"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour=</span>sex)) <span class="sc">+</span> <span class="co"># colour aesthetic set to sex</span></span>
+<span id="cb228-6"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb228-7"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb228-8"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">se=</span><span class="cn">FALSE</span>)<span class="sc">+</span></span>
+<span id="cb228-9"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;#1B9E77&quot;</span>, <span class="st">&quot;#D95F02&quot;</span>))<span class="sc">+</span> <span class="co"># pick two colour scheme</span></span>
+<span id="cb228-10"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb228-11"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
+<span id="cb228-12"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Bill length (mm)&quot;</span>,</span>
+<span id="cb228-13"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">y=</span><span class="st">&quot;Bill depth (mm)&quot;</span>)<span class="sc">+</span></span>
+<span id="cb228-14"><a href="deeper-data-insights-part-2-week-eleven.html#cb228-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol=</span><span class="dv">1</span>) <span class="co"># specify plots are stacked split by species</span></span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-324-1.png" width="672" /></p>
+<p>Here we can see that the trends are the same across the different penguin sexes. Although by comparing the slopes of the lines, lengths of the lines and amounts of overlap we can make insights into how “sexually dimorphic” these different species are e.g. in terms of beak morphology do some species show greater differences between males and females than others?</p>
+</div>
+</div>
+<div id="summing-up-3" class="section level2" number="11.5">
+<h2><span class="header-section-number">11.5</span> Summing up</h2>
+<p>This is our last data handling workshop. We have built up towards being able to discover and examine relationships and differences among variables in our data. You now have the skills to handle many different types of data, tidy it, and produce visuals to generate insight and communicate this to others.</p>
+<p>A note of caution is required - it is very easy to spot and identify patterns.</p>
+<p>When you do spot a trend, difference or relationship, it is important to recognise that you may not have enough evidence to assign a reason behind this observation. As scientists it is important to develope hypotheses based on knowledge and understanding, this can help (sometimes) with avoiding spurious associations.</p>
+<p>Sometimes we may see a pattern in our data, but it has likely occurred due to random chance, rather than as a result of an underlying process. This is where formal statistical analysis, to quantitatively assess the evidence, assess probability and study effect sizes can be incredibly powerful. We will delve into these exciting topics next term.</p>
+<p>That’s it! Thank you for taking the time to get this far. Be kind to yourself if you found it difficult. You have done incredibly well.</p>
+<p>Have some more praise!!!!</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="deeper-data-insights-part-2-week-eleven.html#cb229-1" aria-hidden="true" tabindex="-1"></a>praise<span class="sc">::</span><span class="fu">praise</span>()</span></code></pre></div>
+<pre><code>[1] &quot;You are spectaculaR!&quot;</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="deeper-data-insights-part-1-week-ten.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/07-Dealing-with-data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

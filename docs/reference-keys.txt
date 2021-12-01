@@ -12,6 +12,10 @@ fig:unnamed-chunk-107
 fig:unnamed-chunk-111
 fig:unnamed-chunk-293
 fig:unnamed-chunk-295
+fig:unnamed-chunk-310
+fig:unnamed-chunk-313
+fig:unnamed-chunk-314
+fig:unnamed-chunk-318
 introduction
 approach-and-style
 teaching
@@ -202,3 +206,14 @@ categorical-variables
 summaries
 summing-up-2
 reward
+deeper-data-insights-part-2-week-eleven
+associations-between-numerical-variables
+correlations
+non-linear-correlations
+graphical-summaries-between-numeric-variables
+associations-between-categorical-variables
+associations-between-categorical-numerical-variables
+complexity
+simpsons-paradox
+three-or-more-variables
+summing-up-3
