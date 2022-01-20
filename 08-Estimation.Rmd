@@ -1,0 +1,763 @@
+
+# Introduction to Statistics - Spring Week One
+
+```{r , echo=FALSE, eval=TRUE, include=TRUE}
+klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = 'copy to clipboard', tooltip_success = 'Copied!')
+```
+
+```{r include=FALSE}
+knitr::opts_chunk$set(eval=FALSE)
+```
+
+
+## Introduction to statistics
+
+Welcome back! Last term we worked on developing our data manipulation, organisation, reproducibility and visualisation skills. 
+
+This term we will be focusing more on *statistics*. We actually did quite a lot of *descriptive statistics* work last term. Every time we summarised or described our data, by calculating a **mean**, **median**, **standard deviation**, **frequency/count**, or **distribution** we were carrying out *descriptive statistics* that helped us understand our data better. 
+
+We are building on this to develop our skills in *inferential statistics*. Inferential statistics allow us to make generalisations - taking a descriptive statistics from our data such as the **sample mean**, and using it to say something about a population parameter (i.e. the **population mean**).
+
+For example we might measure the measure the heights of some plants that have been outcrossed and inbred and make some summaries and figures to construct an average difference in height (this is **descriptive**). Or we could use this to produce some estimates of the general effect of outcrossing vs inbreeding on plant heights (this is **inferential**). 
+
+In fact that gives me an idea...
+
+## Darwin's maize data
+
+Loss of genetic diversity is an important issue in the conservation of species. Declines in population size due to over exploitation, habitat fragmentation lead to loss of genetic diversity. Even populations restored to viable numbers through conservation efforts may suffer from continued loss of population fitness because of inbreeding depression @Rescue. 
+
+Charles Darwin even wrote a book on the subject *The Effects of Cross and Self-Fertilisation in the Vegetable Kingdom* @Cross. In this he describes how he produced seeds of maize (*Zea mays*) that were fertilised with pollen from the same individual or from a different plant. The height of the seedlings that were produced from these were then measured as a proxy for their evolutionary fitness.
+
+Darwin wanted to know whether inbreeding reduced the fitness of the selfed plants - this was his **hypothesis**. The data we are going to use today is from Darwin's original dataset.
+
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+
+darwin <- read_csv("data/darwin.csv")
+
+```
+
+```
+# A tibble: 6 x 5
+   ...1 pot    pair type  height
+  <dbl> <chr> <dbl> <chr>  <dbl>
+1     1 I         1 Cross   23.5
+2     2 I         1 Self    17.4
+3     3 I         2 Cross   12  
+4     4 I         2 Self    20.4
+5     5 I         3 Cross   21  
+6     6 I         3 Self    20 
+```
+
+```{block, type="rmdwarning"}
+
+Before you go any further - make sure your basic R project set up is up to scratch. Do you know where the data file is saved? Have you got separate subfolders set up within your project? 
+
+You should have a script set up to put your work from today into - use this to write instructions and store comments. Use the File > New Script menu item and select an R Script.
+
+```
+
+### Description
+
+The first thing we should know by now is to always start by exploring our data. If you want to stretch yourself, see if you can perform a basic data check **without** prompts. 
+
+If you need a little help with remembering what to check, but would like to try and adapt scripts go to \@ref(view-and-refine) from workflow 1. 
+
+If you got completely stuck, or had a go but want to check your answers follow below:
+
+```{r}
+# check the structure of the data
+glimpse(darwin)
+
+# check data is in a tidy format
+head(darwin)
+
+# check variable names
+colnames(darwin)
+
+# check for duplication
+darwin %>% 
+  duplicated() %>% 
+  sum()
+
+# check for typos - by looking at impossible values
+darwin %>% 
+  summarise(min=min(height, na.rm=TRUE), 
+            max=max(height, na.rm=TRUE))
+
+# check for typos by looking at distinct characters/values
+darwin %>% 
+  distinct(pot)
+
+darwin %>% 
+  distinct(pair)
+
+darwin %>% 
+  distinct(type)
+
+# missing values
+darwin %>% 
+  is.na() %>% 
+  sum()
+
+# quick summary
+
+summary(darwin)
+
+```
+
+Now seems like a good time for our first data visualisation
+
+```{r, eval=TRUE}
+darwin %>% 
+  ggplot(aes(x=type,
+         y=height))+
+  geom_point()
+
+# you could also substitute (or combine) other geoms including
+# geom_boxplot()
+# geom_violin()
+
+```
+
+The graph clearly shows that the average height of the 'crossed' plants is greater than that of the 'selfed' plants. But we need to investigate further in order to determine whether the signal (any apparent differences in mean values) is greater than the level of noise (variance within the different groups). 
+
+The variance appears to be roughly similar between the two groups - though by making a graph we can now clearly see that in the crossed group, there is a *potential* outlier with a value of 12. 
+
+### Comparing groups
+
+As we have seen previously we can use various tidy functions to determine the mean and standard deviations of our groups. 
+
+
+
+```{r}
+darwin %>% 
+  group_by(type) %>% 
+  summarise(mean=mean(height),
+            sd=sd(height))
+
+```
+
+```
+# A tibble: 2 x 3
+  type   mean    sd
+  <chr> <dbl> <dbl>
+1 Cross  20.2  3.62
+2 Self   17.6  2.05
+
+```
+> **Note - You should (re)familiarise yourself with how (and why) we calculate standard deviation. 
+
+
+Summary statistics like these could be presented as figures or tables. We normally reserve tables for **very** simple sets of numbers, and this instance we could present both.
+
+```{r, eval=T, message=FALSE, warning=FALSE}
+
+# make a new object
+darwin_summary <-darwin %>% 
+  group_by(type) %>% 
+  summarise(mean=mean(height),
+            sd=sd(height))
+
+# make a summary plot
+darwin_summary %>% 
+  ggplot(aes(x=type,
+             y=mean))+
+  geom_pointrange(aes(ymin=mean-sd, ymax=mean+sd))+
+  theme_bw()
+
+# put this at top of script
+library(kableExtra)
+
+# use kable extra functions to make a nice table (could be replaced with kable() if needed)
+darwin_summary %>% 
+    kbl(caption="Table 1. Summary statistics of crossed and selfed maize plants") %>% 
+  kable_styling(bootstrap_options = "striped", full_width = T, position = "left")
+
+```
+
+Descriptive statistics and careful data checking are often skipped steps in the rush to answer the **big** questions. However, description is an essential part of early phase analysis. 
+
+## Estimation
+
+In the section above we concentrated on description. But the hypothesis Darwin aimed to test was whether 'inbreeding reduced the fitness of the selfed plants'. To do this we will use the height of the plants as a proxy for fitness and explicitly address whether there is a **difference** in the mean heights of the plants between these two groups. 
+
+Our goal is to: 
+
+* Estimate the mean heights of the plants in these two groups
+
+* Estimate the mean *difference* in heights between these two groups
+
+* Quantify our *confidence* in these differences
+
+### Differences between groups
+
+Darwin's data used match pairs - each pair shared one parent. So that in pair 1 the same parent plant was either 'selfed'or 'crossed' to produce offspring. This is a powerful approach to experimental design, as it means that we can look at the differences in heights across each of the 15 pairs of plants - rather than having to infer differences from two randomly derived groups. 
+
+In order to calculate the differences in height between each pair we need to do some data wrangling
+
+```{r}
+# pivot data to wide format then subtract Selfed plant heights from Crossed plant heights
+darwin_wide <- darwin %>% 
+  pivot_wider(names_from=type, values_from=height, id_cols=pair) %>% 
+  mutate(difference=Cross-Self)
+
+```
+
+```
+# A tibble: 15 x 4
+    pair Cross  Self difference
+   <dbl> <dbl> <dbl>      <dbl>
+ 1     1  23.5  17.4       6.12
+ 2     2  12    20.4      -8.38
+ 3     3  21    20         1   
+ 4     4  22    20         2   
+ 
+```
+
+
+```{r}
+difference_summary <- darwin_wide %>% 
+  summarise(mean=mean(difference),
+            sd=sd(difference),
+            n=n())
+
+difference_summary
+
+```
+
+```
+# A tibble: 1 x 2
+   mean    sd
+  <dbl> <dbl>
+1  2.62  4.72
+
+```
+
+```{block, type="rmdwarning"}
+
+What we have just calculated is the average difference in height between these groups of plants and the standard deviation of the difference
+Moving forward we will be working a lot with estimating our confidence in differences between groups
+
+```
+
+### Standard error of the difference
+
+Remember standard deviation is a *descriptive* statistic - it measures the variance within our dataset - e.g. how closely do datapoints fit to the mean. However for *inferential* statistics we are more interested in our confidence in our estimation of the mean. This is where standard error comes in. 
+
+We can think of error as a standard deviation of the mean. The mean we have calculated is an estimate based on one sample of data. We would expect that if we sampled another 30 plants these would have a different sample mean. Standard error describes the variability we would expect among sample means if we repeated this experiment many times. So we can think of it as a measure of the confidence we have in our estimate of a **true population mean**. 
+
+$$
+SE = \frac{s}{\sqrt(n)}
+$$
+
+As sample size increases the standard error should reduce - reflecting an increasing confidence in our estimate. 
+
+We can calculate the standard error for our sample as follows
+
+```{r}
+difference_summary %>% 
+  mutate(se=sd/sqrt(n))
+
+```
+
+```
+# A tibble: 1 x 4
+   mean    sd     n    se
+  <dbl> <dbl> <int> <dbl>
+1  2.62  4.72    15  1.22
+```
+
+Our estimate of the mean is not really very useful without an accompanying measuring of *uncertainty* like the standard error, in fact estimates of averages or differences should **always** be accompanied by their measure of uncertainty. 
+
+<details><summary>**With the information above, how would you present a short sentence describing the average different in height?**</summary>
+
+*... the average difference in height was 2.62 ± 1.22 inches (mean ± SE).*
+
+</details>
+
+With a mean and standard error of the difference in heights between inbred and crossed plants - how do we work out how much confidence we have in their being a difference between our **population means**? 
+
+Standard error is a measure of uncertainty, the larger the standard error the more *noise* around our data and the more uncertainty we have. The smaller the standard error the more confidence we can have that our difference in means is *real*. 
+
+* Null hypothesis - there is no difference in the mean height of self vs crossed plants
+
+* Alternate hypothesis - inbreeding reduces the fitness of the selfed plants, observed as selfed plants on average being smaller than crossed plants
+
+
+```{block, type="rmdnote"}
+
+A statistical way of thinking about our inferences is in terms of confidence around keeping or rejecting the null hypothesis. The (alternate) hypothesis is simply one that contradicts the null. 
+
+When we decide whether we have enough confidence that a difference is real (e.g. we could reject the null hypothesis), we cannot ever be 100% certain that this isn't a false positive (also known as a Type I error). More on this later
+
+```
+
+### Normal distribution
+
+```{r, eval=TRUE}
+#Create a sequence of 100 equally spaced numbers between -4 and 4
+x <- seq(-4, 4, length=100)
+
+#create a vector of values that shows the height of the probability distribution
+#for each value in x
+y <- dnorm(x)
+
+#plot x and y as a scatterplot with connected lines (type = "l") and add
+#an x-axis with custom labels
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "", ylab = "")
+axis(1, at = -3:3, labels = c("-3s", "-2s", "-1s", "mean", "1s", "2s", "3s"))
+```
+
+
+```{r, eval=TRUE, echo=FALSE}
+plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "difference in height (inches)", ylab = "")
+axis(1, at = -3:3, labels = c("", "0", "", "2.5", "", "5", ""))
+
+```
+
+### Confidence Intervals
+
+
+## Summary
+
+
+# Keeping code DRY - Spring Week One
+
+```{r , echo=FALSE, eval=TRUE, include=TRUE}
+klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = 'copy to clipboard', tooltip_success = 'Copied!')
+```
+
+```{r include=FALSE}
+knitr::opts_chunk$set(eval=FALSE)
+```
+
+You can keep working in the same project workspace as @ref-Estimates, but I would advise you start a new script to work on iteration. 
+
+
+
+## Functions
+
+Most of the time when we work in R, we will use functions; either pre-written functions or ones we write ourselves. **Functions** make it easy to use sets of code instructions repeatedly (without filling our scripts with the code underlying the function) and help us carry out multiple tasks in a single step without having to go through the details of how the steps are executed.
+
+### Common functions
+
+You have been using functions in R from week one, we type the name of the function followed by parentheses e.g. `read_csv()`. Within the parentheses is where we will specify the function input and options, separated by commas `,`. One function you will use a lot is the **combine function** `c()`, which as the name suggests lets you concatenate different types of values into a **vector**.
+
+* Complete the script below to combine a set of numerical values using `c()`. 
+
+* Then use the `sum()` function to add them together
+
+```{r}
+
+my_combined_values <- c(,) 
+sum(my_combined_values)
+
+```
+
+
+### Write your own function
+
+R makes it easy to create user defined functions by using `function()`. Here is how it works:
+
+* Give your function an object name and assign the function to it, e.g. `my_function_name <- function()`.
+
+* Within the parentheses you specify inputs and options just like how pre-written functions work, e.g. `function(input_data)`.
+
+* Next, put all the code you want your function to execute inside curly brackets like this: `function(input_data){code to 
+run}`
+
+* Use `return()` to specify what you want to your function to output once it is done running the code.
+
+Use the following instructions to complete the function in the window below:
+
+* I’ve started writing a function for you that will sum up values and take the square root of the sum. To take the square root, we use the `sqrt()` function.
+
+* Complete this function by filling in input_data for the `sum()`, and then filling in the remaining empty parentheses with the appropriate object names.
+
+    *Now create an object containing a set of numerical values and call it `my_combined_values`. Then try out your new function on this object, which will compute the square root of the object’s sum.
+    
+```{r}
+# Use the instructions above to complete the function below
+my_function_name <- function(input_data){
+  s <- sum( )
+  ss <- sqrt( )
+  return( )
+}
+
+# Create a new object and try out your new function
+my_combined_values <- c(,) 
+
+my_function_name(my_combined_values)
+
+```
+
+```{block, type="rmdnote"}
+
+A general rule of thumb. If you end up repeating a line of code more than three times in a script - you should write a function to do the work instead. And write clear comments on its use!
+Why?
+It reduces the numbers of lines of code in your script, it reduces the amount of repetition in the code, if you need to make changes you can change the function without having to hunt through all of your code. 
+
+A really good way to organise your functions is to organise them into a separate script to the rest of your analysis. Write functions in a separate script and use source("scripts/functions.R")
+
+```
+
+```{r, eval=TRUE, echo=FALSE, out.width="80%", fig.cap = "An example of a typical R project set-up"}
+knitr::include_graphics("images/project.png")
+```
+
+It might suprise you to know that there is no prebuilt function for standard error in R
+
+```{r}
+se <- function(x) {
+  sd(x)/(sqrt(length(x)))
+  }
+
+```
+
+
+```{r}
+# The seq R function generates a sequence of numeric values
+x <- seq(8, 20, length=100)
+
+# use the mean function to calculate average for x
+mean(x)
+
+# use our custom function to calculate se for x
+se(x)
+
+# could be used in the group_by and summarise pipes we are used to using
+darwin_wide %>% 
+  summarise(mean=mean(difference),
+            sd=sd(difference),
+            n=n(),
+            se=se(difference))
+
+```
+
+
+### Custom ggplot themes
+
+It is often the case that we start to default to a particular 'style' for our figures, or you may be making several similar figures within a research paper. Creating custom functions can extend to making our own custom ggplot themes. You have probably already used theme variants such as `theme_bw()`, `theme_void()`, `theme_minimal()` - these are incredibly useful, but you might find you still wish to make consistent changes. 
+
+Here is a plot we made in the previous chapter
+
+```{r, eval=TRUE}
+plot <- darwin %>% 
+  ggplot(aes(x=type,
+         y=height))+
+  geom_point()
+
+plot
+
+```
+With the addition of a title and `theme_classic()` we can improve the style quickly
+
+```{r, eval=TRUE}
+
+plot+
+  ggtitle("Comparison of heights between \nCrossed and Selfed Maize plants")+
+  theme_classic()
+
+```
+But I still want to make some more changes, rather than do this work for one figure, and potentially have to repeat this several times for subsequent figures, I can decide to make a new function instead. 
+
+```{r, eval=TRUE}
+
+# custom theme sets defaults for font and size, but these can be changed without changing the function
+theme_custom <- function(base_size=14, base_family="serif"){
+  theme_classic(base_size = base_size, 
+                base_family = base_family,
+                ) +
+# update theme minimal 
+theme(
+  # specify default settings for plot titles - use rel to set titles relative to base size
+  plot.title=element_text(size=rel(1.5),
+      face="bold",
+      family=base_family),
+  #specify defaults for axis titles
+  axis.title=element_text(
+    size=rel(1.2),
+    family=base_family),
+  # specify position for y axis title
+  axis.title.y=element_text(margin = margin(r = 10, l= 10)),
+  # specify position for x axis title
+  axis.title.x = element_text(margin = margin( t = 10, b = 10)),
+  # set major y grid lines
+  panel.grid.major.y = element_line(colour="gray", size=0.5),
+  # add axis lines
+  axis.line=element_line(),
+   # Adding a 0.5cm margin around the plot
+  plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = , "cm"),    
+   # Setting the font for the legend text
+  legend.text = element_text(face = "italic"),   
+    # Removing the legend title
+          legend.title = element_blank(),    
+   # Setting the position for the legend - 0 is left/bottom, 1 is top/right
+          legend.position = c(0.9, 0.8)             
+)
+}
+      
+
+```
+
+
+With this function set, I can now use it for as many figures as I wish. To use it in the future I should probably save it in a unique script, with a clear title and comments for future use. 
+
+```{r, eval=TRUE}
+plot+
+ggtitle("Comparison of heights between \nCrossed and Selfed Maize plants")+
+theme_custom()
+
+```
+
+
+## Iteration
+
+We’ve seen how to write a function and how they can be used to create concise re-usable operations that can be applied multiple times in a script without having to copy and paste, but where functions really come into their own is when combined with iteration. Iteration is the process of running the same operation on a group of objects, further minimising code replication. 
+
+### iteration in tidyverse
+
+You have already used functions within tidyverse that allow you to perform iteration. For example we have the used the function `group_by()` many times. It allows us to subset our data, then command R to perform subsequent functions on each group separately. Sometimes however, you might want to use iteration more explicitly. 
+
+### For Loops
+
+A for loop has three core parts:
+
+1) The sequence of items to iterate through
+
+2) The operations to conduct per item in the sequence
+
+3) The container for the results (optional)
+
+The basic syntax is: for (item in sequence) {do operations using item}. Note the parentheses and the curly brackets. The results could be printed to console, or stored in a container R object.
+
+```
+for(i in list){
+    # PERFORM SOME ACTION
+}
+```
+
+A simple for loop **example** is below. For every number in the vector add 2. 
+
+```{r}
+for (num in c(1,2,3,4,5)) {  # the SEQUENCE is defined (numbers 1 to 5) and loop is opened with "{"
+  print(num + 2)             # The OPERATIONS (add two to each sequence number and print)
+}                            # The loop is closed with "}"                            
+
+```
+```
+[1] 3
+[1] 4
+[1] 5
+[1] 6
+[1] 7
+```
+
+```{r}
+# a simple tibble
+df <- tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+
+```
+
+
+```{r}
+median(df$a)
+# [1] 0.3085154
+median(df$b)
+# [1] 0.5429483
+median(df$c)
+# [1] -0.5137691
+median(df$d)
+# [1] 0.04415608
+
+```
+
+```{r}
+output <- vector("double", ncol(df))  # 1. output having a predefined empty list of the right size works best
+for (i in seq_along(df)) {            # 2. sequence - determines what to loop over
+  output[[i]] <- median(df[[i]])      # 3. body - each time the loop runs it allocates a value to output, 
+}
+output
+# [1]  0.30851540  0.54294832 -0.51376911  0.0441560
+
+```
+
+### Exercise for For Loops
+
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
+LPI <- read_csv("data/LPI_data_loops.csv")
+
+
+```
+
+```{r, eval=TRUE, message=FALSE}
+vulture <- filter(LPI, Common.Name == "Griffon vulture / Eurasian griffon")
+vultureITCR <- filter(vulture, Country.list == c("Croatia", "Italy"))
+
+vulture_scatter <- ggplot(vultureITCR, aes(x = year, y = abundance, colour = Country.list)) +
+    geom_point(size = 2) +                                              # Changing point size
+    geom_smooth(method = lm, aes(fill = Country.list)) +                # Adding a linear model fit and colour-coding by country
+    scale_fill_manual(values = c("#EE7600", "#00868B")) +               # Adding custom colours
+    scale_colour_manual(values = c("#EE7600", "#00868B"),               # Adding custom colours
+                        labels = c("Croatia", "Italy")) +               # Adding labels for the legend
+    ylab("Griffon vulture abundance\n") +                             
+    xlab("\nYear")  +
+		theme_bw() 
+
+vulture_scatter
+```
+
+```{r}
+vulture_scatter+theme_custom()
+```
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
+LPI_UK <- filter(LPI, Country.list == "United Kingdom")
+
+# Pick 4 species and make scatterplots with linear model fits that show how the population has varied through time
+# Careful with the spelling of the names, it needs to match the names of the species in the LPI.UK dataframe
+
+house_sparrow <- filter(LPI_UK, Common.Name == "House sparrow")
+great_tit <- filter(LPI_UK, Common.Name == "Great tit")
+corn_bunting <- filter(LPI_UK, Common.Name == "Corn bunting")
+reed_bunting <- filter(LPI_UK, Common.Name == "Reed bunting")
+meadow_pipit <- filter(LPI_UK, Common.Name == "Meadow pipit")
+
+```
+
+
+```{r, eval=TRUE}
+house_sparrow_scatter <- ggplot(house_sparrow, aes (x = year, y = abundance)) +
+    geom_point(size = 2, colour = "#00868B") +                                                
+    geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +          
+    theme_custom() +
+    labs(y = "Abundance\n", x = "", title = "House sparrow")
+
+great_tit_scatter <- ggplot(great_tit, aes (x = year, y = abundance)) +
+    geom_point(size = 2, colour = "#00868B") +                                                
+    geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +          
+    theme_custom() +
+    labs(y = "Abundance\n", x = "", title = "Great tit")
+
+corn_bunting_scatter <- ggplot(corn_bunting, aes (x = year, y = abundance)) +
+    geom_point(size = 2, colour = "#00868B") +                                                
+    geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +          
+    theme_custom() +
+    labs(y = "Abundance\n", x = "", title = "Corn bunting")
+
+meadow_pipit_scatter <- ggplot(meadow_pipit, aes (x = year, y = abundance)) +
+    geom_point(size = 2, colour = "#00868B") +                                                
+    geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +          
+    theme_custom() +
+    labs(y = "Abundance\n", x = "", title = "Meadow pipit")
+
+```
+
+
+```{r, eval=TRUE, message=FALSE, warning=FALSE}
+# put at the top of your script
+library(patchwork)
+
+layout <- "AABB
+           CCDD"
+house_sparrow_scatter+great_tit_scatter+corn_bunting_scatter+meadow_pipit_scatter+plot_layout(design=layout)
+
+
+```
+
+This is ok, but arguably still requires a lot of code repetition. 
+
+```{r}
+Sp_list <- list(house_sparrow, great_tit, corn_bunting, meadow_pipit)
+```
+
+```{r}
+my_plots <- list(length(Sp_list))
+
+for (i in 1:length(Sp_list)) {                                    # For every item along the length of Sp_list we want R to perform the following functions
+  data <- as.data.frame(Sp_list[i])                               # Create a dataframe for each species
+  sp.name <- unique(data$Common.Name)                             # Create an object that holds the species name, so that we can title each graph
+  plot <- ggplot(data, aes (x = year, y = abundance)) +               # Make the plots and add our customised theme
+    geom_point(size = 2, colour = "#00868B") +                                                
+    geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +          
+    theme_custom() +
+    labs(y = "Abundance\n", x = "", title = sp.name)
+  my_plots[[i]] <- plot # makes a list of all the plots generates
+  print(plot) # prints each plot out as it is made
+}
+```
+
+```{r}
+wrap_plots(my_plots)+plot_layout(design=layout) #wrap_plots function from patchwork can take a list of ggplots
+
+```
+
+<details><summary>**What if you want to write a loop to save all four plots at once - can you modify the script to do this?**</summary>
+
+```{r}
+for (i in 1:length(Sp_list)) {                                    # For every item along the length of Sp_list we want R to perform the following functions
+  data <- as.data.frame(Sp_list[i])                               # Create a dataframe for each species
+  sp.name <- unique(data$Common.Name)                             # Create an object that holds the species name, so that we can title each graph
+  plot <- ggplot(data, aes (x = year, y = abundance)) +               # Make the plots and add our customised theme
+    geom_point(size = 2, colour = "#00868B") +                                                
+    geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +          
+    theme_custom() +
+    labs(y = "Abundance\n", x = "", title = sp.name)
+  
+    if(i %% 1==0){    # The %% operator is the remainder, this handy if line prints a number every time it completes a loop
+    print(i)
+    }
+
+  ggsave(plot, file=paste("figure/", sp.name, ".png", sep=''), dpi=900) # use paste to automatically add filename
+}
+```
+
+</details>
+
+### Learning to **purr**
+
+Another approach to iterative operations is the purrr package - it is the tidyverse approach to iteration.
+
+If you are faced with performing the same task several times, it is probably worth creating a generalised solution that you can use across many inputs. For example, producing plots for multiple jurisdictions, or importing and combining many files.
+
+There are also a few other advantages to purrr - you can use it with pipes %>%, it handles errors better than normal for loops, and the syntax is quite clean and simple! If you are using a for loop, you can probably do it more clearly and succinctly with purrr!
+
+**Remember** purrr is a very tidyverse focused method of iteration, so understanding for loops can be useful if you end up learning other programming languages in the future. 
+
+```{r}
+
+my_plots_2 <- map(Sp_list, ~ggplot(data, aes (x = year, y = abundance)) +              
+                      geom_point(size = 2, colour = "#00868B") +                                                
+                      geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +          
+                      theme_custom() +
+                      labs(y = "Abundance\n", x = "", title = sp.name)) 
+
+
+wrap_plots(my_plots_2)+plot_layout(design=layout)
+
+```
+
+
+## Summary
+
+Making functions and iterations are advanced R skills, and can often seem daunting. I do not expect you to HAVE to implement these for this course, but I do want to give you an insight into some core programming skills that you might be interested in and want to develop. 
+
+
+https://www.rstudio.com/resources/cheatsheets/
+
+
+
+
+https://r4ds.had.co.nz/program-intro.html
+
+
+- Coding club. https://ourcodingclub.github.io/tutorials/funandloops/#function
+
+https://epirhandbook.com/en/iteration-loops-and-lists.html
+
+
