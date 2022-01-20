@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2021-12-01}
+\date{2022-01-20}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2021-12-01
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-01-20
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -4832,15 +4832,15 @@ Let's take a look at some of our variables
 \begin{verbatim}
 ## Rows: 344
 ## Columns: 9
-## $ species           <chr> "Adelie", "Adelie", "Adelie", "Adelie", "Adelie",...
-## $ island            <chr> "Torgersen", "Torgersen", "Torgersen", "Torgersen...
-## $ bill_length_mm    <dbl> 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34....
-## $ bill_depth_mm     <dbl> 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18....
-## $ flipper_length_mm <dbl> 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, ...
-## $ body_mass_g       <dbl> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 347...
-## $ sex               <chr> "male", "female", "female", NA, "female", "male",...
-## $ date              <chr> "11/11/2007", "11/11/2007", "16/11/2007", "16/11/...
-## $ penguin_id        <chr> "N1A1", "N1A2", "N2A1", "N2A2", "N3A1", "N3A2", "...
+## $ species           <chr> "Adelie", "Adelie", "Adelie", "Adelie", "Adelie", "A~
+## $ island            <chr> "Torgersen", "Torgersen", "Torgersen", "Torgersen", ~
+## $ bill_length_mm    <dbl> 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, ~
+## $ bill_depth_mm     <dbl> 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, ~
+## $ flipper_length_mm <dbl> 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186~
+## $ body_mass_g       <dbl> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, ~
+## $ sex               <chr> "male", "female", "female", NA, "female", "male", "f~
+## $ date              <chr> "11/11/2007", "11/11/2007", "16/11/2007", "16/11/200~
+## $ penguin_id        <chr> "N1A1", "N1A2", "N2A1", "N2A2", "N3A1", "N3A2", "N4A~
 \end{verbatim}
 
 We can see that bill length contains numbers, and that many of these are fractions, but only down to 0.1mm. By comparison body mass all appear to be discrete number variables. Does this make body mass an integer? The underlying quantity (bodyweight) is clearly continuous, it is clearly possible for a penguin to weigh 3330.7g but it might \emph{look} like an integer because of the way it was measured. This illustrates the importance of understanding the the type of variable you are working with - just looking at the values isn't enough.
@@ -5379,9 +5379,9 @@ We can use the \texttt{cor} function in R to calculate Pearson's correlation coe
 
 \begin{verbatim}
 ## # A tibble: 1 x 8
-##   var1          var2           cor statistic         p conf.low conf.high method
-##   <chr>         <chr>        <dbl>     <dbl>     <dbl>    <dbl>     <dbl> <chr> 
-## 1 bill_length_~ bill_depth_~ -0.24     -4.46 0.0000112   -0.333    -0.132 Pears~
+##   var1           var2            cor statistic       p conf.low conf.high method
+##   <chr>          <chr>         <dbl>     <dbl>   <dbl>    <dbl>     <dbl> <chr> 
+## 1 bill_length_mm bill_depth_mm -0.24     -4.46 1.12e-5   -0.333    -0.132 Pears~
 \end{verbatim}
 
 This tells us two features of the association. It's \emph{sign} and \emph{magnitude}. The coefficient is negative, so as bill length increases, bill depth decreases. The value -0.22 indicates that only about 22\% of the variation in bill length can be explained by changes in bill depth (and \emph{vice-versa}), suggesting that the variables are not closely related.
@@ -5750,11 +5750,11 @@ This should prompt us to re-evaluate our correlation metrics:
 
 \begin{verbatim}
 ## # A tibble: 3 x 9
-##   species  var1      var2       cor statistic        p conf.low conf.high method
-##   <chr>    <chr>     <chr>    <dbl>     <dbl>    <dbl>    <dbl>     <dbl> <chr> 
-## 1 Adelie   bill_len~ bill_de~  0.39      5.19 6.67e- 7    0.247     0.519 Pears~
-## 2 Chinstr~ bill_len~ bill_de~  0.65      7.01 1.53e- 9    0.492     0.772 Pears~
-## 3 Gentoo   bill_len~ bill_de~  0.64      9.24 1.02e-15    0.526     0.737 Pears~
+##   species   var1     var2       cor statistic        p conf.low conf.high method
+##   <chr>     <chr>    <chr>    <dbl>     <dbl>    <dbl>    <dbl>     <dbl> <chr> 
+## 1 Adelie    bill_le~ bill_de~  0.39      5.19 6.67e- 7    0.247     0.519 Pears~
+## 2 Chinstrap bill_le~ bill_de~  0.65      7.01 1.53e- 9    0.492     0.772 Pears~
+## 3 Gentoo    bill_le~ bill_de~  0.64      9.24 1.02e-15    0.526     0.737 Pears~
 \end{verbatim}
 
 We now see that the correlation values for all three species is \textgreater0.22 - indicating these associations are much closer than previously estimated.
@@ -5821,6 +5821,841 @@ Have some more praise!!!!
 \begin{verbatim}
 [1] "You are spectaculaR!"
 \end{verbatim}
+
+\hypertarget{introduction-to-statistics---spring-week-one}{%
+\chapter{Introduction to Statistics - Spring Week One}\label{introduction-to-statistics---spring-week-one}}
+
+\hypertarget{introduction-to-statistics}{%
+\section{Introduction to statistics}\label{introduction-to-statistics}}
+
+Welcome back! Last term we worked on developing our data manipulation, organisation, reproducibility and visualisation skills.
+
+This term we will be focusing more on \emph{statistics}. We actually did quite a lot of \emph{descriptive statistics} work last term. Every time we summarised or described our data, by calculating a \textbf{mean}, \textbf{median}, \textbf{standard deviation}, \textbf{frequency/count}, or \textbf{distribution} we were carrying out \emph{descriptive statistics} that helped us understand our data better.
+
+We are building on this to develop our skills in \emph{inferential statistics}. Inferential statistics allow us to make generalisations - taking a descriptive statistics from our data such as the \textbf{sample mean}, and using it to say something about a population parameter (i.e.~the \textbf{population mean}).
+
+For example we might measure the measure the heights of some plants that have been outcrossed and inbred and make some summaries and figures to construct an average difference in height (this is \textbf{descriptive}). Or we could use this to produce some estimates of the general effect of outcrossing vs inbreeding on plant heights (this is \textbf{inferential}).
+
+In fact that gives me an idea\ldots{}
+
+\hypertarget{darwins-maize-data}{%
+\section{Darwin's maize data}\label{darwins-maize-data}}
+
+Loss of genetic diversity is an important issue in the conservation of species. Declines in population size due to over exploitation, habitat fragmentation lead to loss of genetic diversity. Even populations restored to viable numbers through conservation efforts may suffer from continued loss of population fitness because of inbreeding depression \citet{Rescue}.
+
+Charles Darwin even wrote a book on the subject \emph{The Effects of Cross and Self-Fertilisation in the Vegetable Kingdom} \citet{Cross}. In this he describes how he produced seeds of maize (\emph{Zea mays}) that were fertilised with pollen from the same individual or from a different plant. The height of the seedlings that were produced from these were then measured as a proxy for their evolutionary fitness.
+
+Darwin wanted to know whether inbreeding reduced the fitness of the selfed plants - this was his \textbf{hypothesis}. The data we are going to use today is from Darwin's original dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{darwin }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/darwin.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 6 x 5
+   ...1 pot    pair type  height
+  <dbl> <chr> <dbl> <chr>  <dbl>
+1     1 I         1 Cross   23.5
+2     2 I         1 Self    17.4
+3     3 I         2 Cross   12  
+4     4 I         2 Self    20.4
+5     5 I         3 Cross   21  
+6     6 I         3 Self    20 
+\end{verbatim}
+
+\begin{rmdwarning}
+Before you go any further - make sure your basic R project set up is up
+to scratch. Do you know where the data file is saved? Have you got
+separate subfolders set up within your project?
+
+You should have a script set up to put your work from today into - use
+this to write instructions and store comments. Use the File
+\textgreater{} New Script menu item and select an R Script.
+\end{rmdwarning}
+
+\hypertarget{description}{%
+\subsection{Description}\label{description}}
+
+The first thing we should know by now is to always start by exploring our data. If you want to stretch yourself, see if you can perform a basic data check \textbf{without} prompts.
+
+If you need a little help with remembering what to check, but would like to try and adapt scripts go to \ref{view-and-refine} from workflow 1.
+
+If you got completely stuck, or had a go but want to check your answers follow below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check the structure of the data}
+\FunctionTok{glimpse}\NormalTok{(darwin)}
+
+\CommentTok{\# check data is in a tidy format}
+\FunctionTok{head}\NormalTok{(darwin)}
+
+\CommentTok{\# check variable names}
+\FunctionTok{colnames}\NormalTok{(darwin)}
+
+\CommentTok{\# check for duplication}
+\NormalTok{darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{duplicated}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{sum}\NormalTok{()}
+
+\CommentTok{\# check for typos {-} by looking at impossible values}
+\NormalTok{darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(height, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{), }
+            \AttributeTok{max=}\FunctionTok{max}\NormalTok{(height, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{))}
+
+\CommentTok{\# check for typos by looking at distinct characters/values}
+\NormalTok{darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(pot)}
+
+\NormalTok{darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(pair)}
+
+\NormalTok{darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(type)}
+
+\CommentTok{\# missing values}
+\NormalTok{darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{is.na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{sum}\NormalTok{()}
+
+\CommentTok{\# quick summary}
+
+\FunctionTok{summary}\NormalTok{(darwin)}
+\end{Highlighting}
+\end{Shaded}
+
+Now seems like a good time for our first data visualisation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{type,}
+         \AttributeTok{y=}\NormalTok{height))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-331-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# you could also substitute (or combine) other geoms including}
+\CommentTok{\# geom\_boxplot()}
+\CommentTok{\# geom\_violin()}
+\end{Highlighting}
+\end{Shaded}
+
+The graph clearly shows that the average height of the `crossed' plants is greater than that of the `selfed' plants. But we need to investigate further in order to determine whether the signal (any apparent differences in mean values) is greater than the level of noise (variance within the different groups).
+
+The variance appears to be roughly similar between the two groups - though by making a graph we can now clearly see that in the crossed group, there is a \emph{potential} outlier with a value of 12.
+
+\hypertarget{comparing-groups}{%
+\subsection{Comparing groups}\label{comparing-groups}}
+
+As we have seen previously we can use various tidy functions to determine the mean and standard deviations of our groups.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(type) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(height),}
+            \AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(height))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2 x 3
+  type   mean    sd
+  <chr> <dbl> <dbl>
+1 Cross  20.2  3.62
+2 Self   17.6  2.05
+\end{verbatim}
+
+\begin{quote}
+**Note - You should (re)familiarise yourself with how (and why) we calculate standard deviation.
+\end{quote}
+
+Summary statistics like these could be presented as figures or tables. We normally reserve tables for \textbf{very} simple sets of numbers, and this instance we could present both.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make a new object}
+\NormalTok{darwin\_summary }\OtherTok{\textless{}{-}}\NormalTok{darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(type) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(height),}
+            \AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(height))}
+
+\CommentTok{\# make a summary plot}
+\NormalTok{darwin\_summary }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{type,}
+             \AttributeTok{y=}\NormalTok{mean))}\SpecialCharTok{+}
+  \FunctionTok{geom\_pointrange}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin=}\NormalTok{mean}\SpecialCharTok{{-}}\NormalTok{sd, }\AttributeTok{ymax=}\NormalTok{mean}\SpecialCharTok{+}\NormalTok{sd))}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-333-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# put this at top of script}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+
+\CommentTok{\# use kable extra functions to make a nice table (could be replaced with kable() if needed)}
+\NormalTok{darwin\_summary }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{kbl}\NormalTok{(}\AttributeTok{caption=}\StringTok{"Table 1. Summary statistics of crossed and selfed maize plants"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{bootstrap\_options =} \StringTok{"striped"}\NormalTok{, }\AttributeTok{full\_width =}\NormalTok{ T, }\AttributeTok{position =} \StringTok{"left"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-333}Table 1. Summary statistics of crossed and selfed maize plants}
+\begin{tabu} to \linewidth {>{\raggedright}X>{\raggedleft}X>{\raggedleft}X}
+\hline
+type & mean & sd\\
+\hline
+Cross & 20.19167 & 3.616945\\
+\hline
+Self & 17.57500 & 2.051676\\
+\hline
+\end{tabu}
+\end{table}
+
+Descriptive statistics and careful data checking are often skipped steps in the rush to answer the \textbf{big} questions. However, description is an essential part of early phase analysis.
+
+\hypertarget{estimation}{%
+\section{Estimation}\label{estimation}}
+
+In the section above we concentrated on description. But the hypothesis Darwin aimed to test was whether `inbreeding reduced the fitness of the selfed plants'. To do this we will use the height of the plants as a proxy for fitness and explicitly address whether there is a \textbf{difference} in the mean heights of the plants between these two groups.
+
+Our goal is to:
+
+\begin{itemize}
+\item
+  Estimate the mean heights of the plants in these two groups
+\item
+  Estimate the mean \emph{difference} in heights between these two groups
+\item
+  Quantify our \emph{confidence} in these differences
+\end{itemize}
+
+\hypertarget{differences-between-groups}{%
+\subsection{Differences between groups}\label{differences-between-groups}}
+
+Darwin's data used match pairs - each pair shared one parent. So that in pair 1 the same parent plant was either `selfed'or 'crossed' to produce offspring. This is a powerful approach to experimental design, as it means that we can look at the differences in heights across each of the 15 pairs of plants - rather than having to infer differences from two randomly derived groups.
+
+In order to calculate the differences in height between each pair we need to do some data wrangling
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# pivot data to wide format then subtract Selfed plant heights from Crossed plant heights}
+\NormalTok{darwin\_wide }\OtherTok{\textless{}{-}}\NormalTok{ darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from=}\NormalTok{type, }\AttributeTok{values\_from=}\NormalTok{height, }\AttributeTok{id\_cols=}\NormalTok{pair) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{difference=}\NormalTok{Cross}\SpecialCharTok{{-}}\NormalTok{Self)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 15 x 4
+    pair Cross  Self difference
+   <dbl> <dbl> <dbl>      <dbl>
+ 1     1  23.5  17.4       6.12
+ 2     2  12    20.4      -8.38
+ 3     3  21    20         1   
+ 4     4  22    20         2   
+ 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{difference\_summary }\OtherTok{\textless{}{-}}\NormalTok{ darwin\_wide }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(difference),}
+            \AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(difference),}
+            \AttributeTok{n=}\FunctionTok{n}\NormalTok{())}
+
+\NormalTok{difference\_summary}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 2
+   mean    sd
+  <dbl> <dbl>
+1  2.62  4.72
+\end{verbatim}
+
+\begin{rmdwarning}
+What we have just calculated is the average difference in height between
+these groups of plants and the standard deviation of the difference
+Moving forward we will be working a lot with estimating our confidence
+in differences between groups
+\end{rmdwarning}
+
+\hypertarget{standard-error-of-the-difference}{%
+\subsection{Standard error of the difference}\label{standard-error-of-the-difference}}
+
+Remember standard deviation is a \emph{descriptive} statistic - it measures the variance within our dataset - e.g.~how closely do datapoints fit to the mean. However for \emph{inferential} statistics we are more interested in our confidence in our estimation of the mean. This is where standard error comes in.
+
+We can think of error as a standard deviation of the mean. The mean we have calculated is an estimate based on one sample of data. We would expect that if we sampled another 30 plants these would have a different sample mean. Standard error describes the variability we would expect among sample means if we repeated this experiment many times. So we can think of it as a measure of the confidence we have in our estimate of a \textbf{true population mean}.
+
+\[
+SE = \frac{s}{\sqrt(n)}
+\]
+
+As sample size increases the standard error should reduce - reflecting an increasing confidence in our estimate.
+
+We can calculate the standard error for our sample as follows
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{difference\_summary }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{se=}\NormalTok{sd}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 4
+   mean    sd     n    se
+  <dbl> <dbl> <int> <dbl>
+1  2.62  4.72    15  1.22
+\end{verbatim}
+
+Our estimate of the mean is not really very useful without an accompanying measuring of \emph{uncertainty} like the standard error, in fact estimates of averages or differences should \textbf{always} be accompanied by their measure of uncertainty.
+
+\textbf{With the information above, how would you present a short sentence describing the average different in height?}
+
+\emph{\ldots{} the average difference in height was 2.62 ± 1.22 inches (mean ± SE).}
+
+With a mean and standard error of the difference in heights between inbred and crossed plants - how do we work out how much confidence we have in their being a difference between our \textbf{population means}?
+
+Standard error is a measure of uncertainty, the larger the standard error the more \emph{noise} around our data and the more uncertainty we have. The smaller the standard error the more confidence we can have that our difference in means is \emph{real}.
+
+\begin{itemize}
+\item
+  Null hypothesis - there is no difference in the mean height of self vs crossed plants
+\item
+  Alternate hypothesis - inbreeding reduces the fitness of the selfed plants, observed as selfed plants on average being smaller than crossed plants
+\end{itemize}
+
+\begin{rmdnote}
+A statistical way of thinking about our inferences is in terms of
+confidence around keeping or rejecting the null hypothesis. The
+(alternate) hypothesis is simply one that contradicts the null.
+
+When we decide whether we have enough confidence that a difference is
+real (e.g.~we could reject the null hypothesis), we cannot ever be 100\%
+certain that this isn't a false positive (also known as a Type I error).
+More on this later
+\end{rmdnote}
+
+\hypertarget{normal-distribution}{%
+\subsection{Normal distribution}\label{normal-distribution}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Create a sequence of 100 equally spaced numbers between {-}4 and 4}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\AttributeTok{length=}\DecValTok{100}\NormalTok{)}
+
+\CommentTok{\#create a vector of values that shows the height of the probability distribution}
+\CommentTok{\#for each value in x}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{dnorm}\NormalTok{(x)}
+
+\CommentTok{\#plot x and y as a scatterplot with connected lines (type = "l") and add}
+\CommentTok{\#an x{-}axis with custom labels}
+\FunctionTok{plot}\NormalTok{(x,y, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{axes =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{xlab =} \StringTok{""}\NormalTok{, }\AttributeTok{ylab =} \StringTok{""}\NormalTok{)}
+\FunctionTok{axis}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{at =} \SpecialCharTok{{-}}\DecValTok{3}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"{-}3s"}\NormalTok{, }\StringTok{"{-}2s"}\NormalTok{, }\StringTok{"{-}1s"}\NormalTok{, }\StringTok{"mean"}\NormalTok{, }\StringTok{"1s"}\NormalTok{, }\StringTok{"2s"}\NormalTok{, }\StringTok{"3s"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-339-1.pdf}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-340-1.pdf}
+
+\hypertarget{confidence-intervals}{%
+\subsection{Confidence Intervals}\label{confidence-intervals}}
+
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
+\hypertarget{keeping-code-dry---spring-week-one}{%
+\chapter{Keeping code DRY - Spring Week One}\label{keeping-code-dry---spring-week-one}}
+
+You can keep working in the same project workspace as \citet{ref-Estimates}, but I would advise you start a new script to work on iteration.
+
+\hypertarget{functions-1}{%
+\section{Functions}\label{functions-1}}
+
+Most of the time when we work in R, we will use functions; either pre-written functions or ones we write ourselves. \textbf{Functions} make it easy to use sets of code instructions repeatedly (without filling our scripts with the code underlying the function) and help us carry out multiple tasks in a single step without having to go through the details of how the steps are executed.
+
+\hypertarget{common-functions}{%
+\subsection{Common functions}\label{common-functions}}
+
+You have been using functions in R from week one, we type the name of the function followed by parentheses e.g.~\texttt{read\_csv()}. Within the parentheses is where we will specify the function input and options, separated by commas \texttt{,}. One function you will use a lot is the \textbf{combine function} \texttt{c()}, which as the name suggests lets you concatenate different types of values into a \textbf{vector}.
+
+\begin{itemize}
+\item
+  Complete the script below to combine a set of numerical values using \texttt{c()}.
+\item
+  Then use the \texttt{sum()} function to add them together
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_combined\_values }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(,) }
+\FunctionTok{sum}\NormalTok{(my\_combined\_values)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{write-your-own-function}{%
+\subsection{Write your own function}\label{write-your-own-function}}
+
+R makes it easy to create user defined functions by using \texttt{function()}. Here is how it works:
+
+\begin{itemize}
+\item
+  Give your function an object name and assign the function to it, e.g.~\texttt{my\_function\_name\ \textless{}-\ function()}.
+\item
+  Within the parentheses you specify inputs and options just like how pre-written functions work, e.g.~\texttt{function(input\_data)}.
+\item
+  Next, put all the code you want your function to execute inside curly brackets like this: \texttt{function(input\_data)\{code\ to\ \ run\}}
+\item
+  Use \texttt{return()} to specify what you want to your function to output once it is done running the code.
+\end{itemize}
+
+Use the following instructions to complete the function in the window below:
+
+\begin{itemize}
+\item
+  I've started writing a function for you that will sum up values and take the square root of the sum. To take the square root, we use the \texttt{sqrt()} function.
+\item
+  Complete this function by filling in input\_data for the \texttt{sum()}, and then filling in the remaining empty parentheses with the appropriate object names.
+
+  *Now create an object containing a set of numerical values and call it \texttt{my\_combined\_values}. Then try out your new function on this object, which will compute the square root of the object's sum.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Use the instructions above to complete the function below}
+\NormalTok{my\_function\_name }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input\_data)\{}
+\NormalTok{  s }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{( )}
+\NormalTok{  ss }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{( )}
+  \FunctionTok{return}\NormalTok{( )}
+\NormalTok{\}}
+
+\CommentTok{\# Create a new object and try out your new function}
+\NormalTok{my\_combined\_values }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(,) }
+
+\FunctionTok{my\_function\_name}\NormalTok{(my\_combined\_values)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{rmdnote}
+A general rule of thumb. If you end up repeating a line of code more
+than three times in a script - you should write a function to do the
+work instead. And write clear comments on its use! Why? It reduces the
+numbers of lines of code in your script, it reduces the amount of
+repetition in the code, if you need to make changes you can change the
+function without having to hunt through all of your code.
+
+A really good way to organise your functions is to organise them into a
+separate script to the rest of your analysis. Write functions in a
+separate script and use source(``scripts/functions.R'')
+\end{rmdnote}
+
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{images/project} \caption{An example of a typical R project set-up}\label{fig:unnamed-chunk-346}
+\end{figure}
+
+It might suprise you to know that there is no prebuilt function for standard error in R
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{se }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+  \FunctionTok{sd}\NormalTok{(x)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{length}\NormalTok{(x)))}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The seq R function generates a sequence of numeric values}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{20}\NormalTok{, }\AttributeTok{length=}\DecValTok{100}\NormalTok{)}
+
+\CommentTok{\# use the mean function to calculate average for x}
+\FunctionTok{mean}\NormalTok{(x)}
+
+\CommentTok{\# use our custom function to calculate se for x}
+\FunctionTok{se}\NormalTok{(x)}
+
+\CommentTok{\# could be used in the group\_by and summarise pipes we are used to using}
+\NormalTok{darwin\_wide }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(difference),}
+            \AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(difference),}
+            \AttributeTok{n=}\FunctionTok{n}\NormalTok{(),}
+            \AttributeTok{se=}\FunctionTok{se}\NormalTok{(difference))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{custom-ggplot-themes}{%
+\subsection{Custom ggplot themes}\label{custom-ggplot-themes}}
+
+It is often the case that we start to default to a particular `style' for our figures, or you may be making several similar figures within a research paper. Creating custom functions can extend to making our own custom ggplot themes. You have probably already used theme variants such as \texttt{theme\_bw()}, \texttt{theme\_void()}, \texttt{theme\_minimal()} - these are incredibly useful, but you might find you still wish to make consistent changes.
+
+Here is a plot we made in the previous chapter
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot }\OtherTok{\textless{}{-}}\NormalTok{ darwin }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{type,}
+         \AttributeTok{y=}\NormalTok{height))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+
+\NormalTok{plot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-349-1.pdf}
+With the addition of a title and \texttt{theme\_classic()} we can improve the style quickly
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Comparison of heights between }\SpecialCharTok{\textbackslash{}n}\StringTok{Crossed and Selfed Maize plants"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-350-1.pdf}
+But I still want to make some more changes, rather than do this work for one figure, and potentially have to repeat this several times for subsequent figures, I can decide to make a new function instead.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# custom theme sets defaults for font and size, but these can be changed without changing the function}
+\NormalTok{theme\_custom }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{base\_size=}\DecValTok{14}\NormalTok{, }\AttributeTok{base\_family=}\StringTok{"serif"}\NormalTok{)\{}
+  \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =}\NormalTok{ base\_size, }
+                \AttributeTok{base\_family =}\NormalTok{ base\_family,}
+\NormalTok{                ) }\SpecialCharTok{+}
+\CommentTok{\# update theme minimal }
+\FunctionTok{theme}\NormalTok{(}
+  \CommentTok{\# specify default settings for plot titles {-} use rel to set titles relative to base size}
+  \AttributeTok{plot.title=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\FunctionTok{rel}\NormalTok{(}\FloatTok{1.5}\NormalTok{),}
+      \AttributeTok{face=}\StringTok{"bold"}\NormalTok{,}
+      \AttributeTok{family=}\NormalTok{base\_family),}
+  \CommentTok{\#specify defaults for axis titles}
+  \AttributeTok{axis.title=}\FunctionTok{element\_text}\NormalTok{(}
+    \AttributeTok{size=}\FunctionTok{rel}\NormalTok{(}\FloatTok{1.2}\NormalTok{),}
+    \AttributeTok{family=}\NormalTok{base\_family),}
+  \CommentTok{\# specify position for y axis title}
+  \AttributeTok{axis.title.y=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{margin =} \FunctionTok{margin}\NormalTok{(}\AttributeTok{r =} \DecValTok{10}\NormalTok{, }\AttributeTok{l=} \DecValTok{10}\NormalTok{)),}
+  \CommentTok{\# specify position for x axis title}
+  \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{margin =} \FunctionTok{margin}\NormalTok{( }\AttributeTok{t =} \DecValTok{10}\NormalTok{, }\AttributeTok{b =} \DecValTok{10}\NormalTok{)),}
+  \CommentTok{\# set major y grid lines}
+  \AttributeTok{panel.grid.major.y =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{colour=}\StringTok{"gray"}\NormalTok{, }\AttributeTok{size=}\FloatTok{0.5}\NormalTok{),}
+  \CommentTok{\# add axis lines}
+  \AttributeTok{axis.line=}\FunctionTok{element\_line}\NormalTok{(),}
+   \CommentTok{\# Adding a 0.5cm margin around the plot}
+  \AttributeTok{plot.margin =} \FunctionTok{unit}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }\AttributeTok{units =}\NormalTok{ , }\StringTok{"cm"}\NormalTok{),    }
+   \CommentTok{\# Setting the font for the legend text}
+  \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"italic"}\NormalTok{),   }
+    \CommentTok{\# Removing the legend title}
+          \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),    }
+   \CommentTok{\# Setting the position for the legend {-} 0 is left/bottom, 1 is top/right}
+          \AttributeTok{legend.position =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.9}\NormalTok{, }\FloatTok{0.8}\NormalTok{)             }
+\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+With this function set, I can now use it for as many figures as I wish. To use it in the future I should probably save it in a unique script, with a clear title and comments for future use.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot}\SpecialCharTok{+}
+\FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Comparison of heights between }\SpecialCharTok{\textbackslash{}n}\StringTok{Crossed and Selfed Maize plants"}\NormalTok{)}\SpecialCharTok{+}
+\FunctionTok{theme\_custom}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-352-1.pdf}
+
+\hypertarget{iteration}{%
+\section{Iteration}\label{iteration}}
+
+We've seen how to write a function and how they can be used to create concise re-usable operations that can be applied multiple times in a script without having to copy and paste, but where functions really come into their own is when combined with iteration. Iteration is the process of running the same operation on a group of objects, further minimising code replication.
+
+\hypertarget{iteration-in-tidyverse}{%
+\subsection{iteration in tidyverse}\label{iteration-in-tidyverse}}
+
+You have already used functions within tidyverse that allow you to perform iteration. For example we have the used the function \texttt{group\_by()} many times. It allows us to subset our data, then command R to perform subsequent functions on each group separately. Sometimes however, you might want to use iteration more explicitly.
+
+\hypertarget{for-loops}{%
+\subsection{For Loops}\label{for-loops}}
+
+A for loop has three core parts:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  The sequence of items to iterate through
+\item
+  The operations to conduct per item in the sequence
+\item
+  The container for the results (optional)
+\end{enumerate}
+
+The basic syntax is: for (item in sequence) \{do operations using item\}. Note the parentheses and the curly brackets. The results could be printed to console, or stored in a container R object.
+
+\begin{verbatim}
+for(i in list){
+    # PERFORM SOME ACTION
+}
+\end{verbatim}
+
+A simple for loop \textbf{example} is below. For every number in the vector add 2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (num }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{)) \{  }\CommentTok{\# the SEQUENCE is defined (numbers 1 to 5) and loop is opened with "\{"}
+  \FunctionTok{print}\NormalTok{(num }\SpecialCharTok{+} \DecValTok{2}\NormalTok{)             }\CommentTok{\# The OPERATIONS (add two to each sequence number and print)}
+\NormalTok{\}                            }\CommentTok{\# The loop is closed with "\}"                            }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3
+[1] 4
+[1] 5
+[1] 6
+[1] 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# a simple tibble}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{a =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{),}
+  \AttributeTok{b =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{),}
+  \AttributeTok{c =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{),}
+  \AttributeTok{d =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{median}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{a)}
+\CommentTok{\# [1] 0.3085154}
+\FunctionTok{median}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{b)}
+\CommentTok{\# [1] 0.5429483}
+\FunctionTok{median}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{c)}
+\CommentTok{\# [1] {-}0.5137691}
+\FunctionTok{median}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{d)}
+\CommentTok{\# [1] 0.04415608}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{output }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\StringTok{"double"}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(df))  }\CommentTok{\# 1. output having a predefined empty list of the right size works best}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(df)) \{            }\CommentTok{\# 2. sequence {-} determines what to loop over}
+\NormalTok{  output[[i]] }\OtherTok{\textless{}{-}} \FunctionTok{median}\NormalTok{(df[[i]])      }\CommentTok{\# 3. body {-} each time the loop runs it allocates a value to output, }
+\NormalTok{\}}
+\NormalTok{output}
+\CommentTok{\# [1]  0.30851540  0.54294832 {-}0.51376911  0.0441560}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercise-for-for-loops}{%
+\subsection{Exercise for For Loops}\label{exercise-for-for-loops}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LPI }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/LPI\_data\_loops.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vulture }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(LPI, Common.Name }\SpecialCharTok{==} \StringTok{"Griffon vulture / Eurasian griffon"}\NormalTok{)}
+\NormalTok{vultureITCR }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(vulture, Country.list }\SpecialCharTok{==} \FunctionTok{c}\NormalTok{(}\StringTok{"Croatia"}\NormalTok{, }\StringTok{"Italy"}\NormalTok{))}
+
+\NormalTok{vulture\_scatter }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(vultureITCR, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ abundance, }\AttributeTok{colour =}\NormalTok{ Country.list)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}                                              \CommentTok{\# Changing point size}
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill =}\NormalTok{ Country.list)) }\SpecialCharTok{+}                \CommentTok{\# Adding a linear model fit and colour{-}coding by country}
+    \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#EE7600"}\NormalTok{, }\StringTok{"\#00868B"}\NormalTok{)) }\SpecialCharTok{+}               \CommentTok{\# Adding custom colours}
+    \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#EE7600"}\NormalTok{, }\StringTok{"\#00868B"}\NormalTok{),               }\CommentTok{\# Adding custom colours}
+                        \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Croatia"}\NormalTok{, }\StringTok{"Italy"}\NormalTok{)) }\SpecialCharTok{+}               \CommentTok{\# Adding labels for the legend}
+    \FunctionTok{ylab}\NormalTok{(}\StringTok{"Griffon vulture abundance}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{) }\SpecialCharTok{+}                             
+    \FunctionTok{xlab}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Year"}\NormalTok{)  }\SpecialCharTok{+}
+        \FunctionTok{theme\_bw}\NormalTok{() }
+
+\NormalTok{vulture\_scatter}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-358-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vulture\_scatter}\SpecialCharTok{+}\FunctionTok{theme\_custom}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LPI\_UK }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(LPI, Country.list }\SpecialCharTok{==} \StringTok{"United Kingdom"}\NormalTok{)}
+
+\CommentTok{\# Pick 4 species and make scatterplots with linear model fits that show how the population has varied through time}
+\CommentTok{\# Careful with the spelling of the names, it needs to match the names of the species in the LPI.UK dataframe}
+
+\NormalTok{house\_sparrow }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(LPI\_UK, Common.Name }\SpecialCharTok{==} \StringTok{"House sparrow"}\NormalTok{)}
+\NormalTok{great\_tit }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(LPI\_UK, Common.Name }\SpecialCharTok{==} \StringTok{"Great tit"}\NormalTok{)}
+\NormalTok{corn\_bunting }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(LPI\_UK, Common.Name }\SpecialCharTok{==} \StringTok{"Corn bunting"}\NormalTok{)}
+\NormalTok{reed\_bunting }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(LPI\_UK, Common.Name }\SpecialCharTok{==} \StringTok{"Reed bunting"}\NormalTok{)}
+\NormalTok{meadow\_pipit }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(LPI\_UK, Common.Name }\SpecialCharTok{==} \StringTok{"Meadow pipit"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{house\_sparrow\_scatter }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(house\_sparrow, }\FunctionTok{aes}\NormalTok{ (}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ abundance)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}                                                
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}          
+    \FunctionTok{theme\_custom}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Abundance}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{title =} \StringTok{"House sparrow"}\NormalTok{)}
+
+\NormalTok{great\_tit\_scatter }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(great\_tit, }\FunctionTok{aes}\NormalTok{ (}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ abundance)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}                                                
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}          
+    \FunctionTok{theme\_custom}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Abundance}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{title =} \StringTok{"Great tit"}\NormalTok{)}
+
+\NormalTok{corn\_bunting\_scatter }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(corn\_bunting, }\FunctionTok{aes}\NormalTok{ (}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ abundance)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}                                                
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}          
+    \FunctionTok{theme\_custom}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Abundance}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{title =} \StringTok{"Corn bunting"}\NormalTok{)}
+
+\NormalTok{meadow\_pipit\_scatter }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(meadow\_pipit, }\FunctionTok{aes}\NormalTok{ (}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ abundance)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}                                                
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}          
+    \FunctionTok{theme\_custom}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Abundance}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{title =} \StringTok{"Meadow pipit"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# put at the top of your script}
+\FunctionTok{library}\NormalTok{(patchwork)}
+
+\NormalTok{layout }\OtherTok{\textless{}{-}} \StringTok{"AABB}
+\StringTok{           CCDD"}
+\NormalTok{house\_sparrow\_scatter}\SpecialCharTok{+}\NormalTok{great\_tit\_scatter}\SpecialCharTok{+}\NormalTok{corn\_bunting\_scatter}\SpecialCharTok{+}\NormalTok{meadow\_pipit\_scatter}\SpecialCharTok{+}\FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{design=}\NormalTok{layout)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-362-1.pdf}
+
+This is ok, but arguably still requires a lot of code repetition.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Sp\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(house\_sparrow, great\_tit, corn\_bunting, meadow\_pipit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_plots }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\FunctionTok{length}\NormalTok{(Sp\_list))}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(Sp\_list)) \{                                    }\CommentTok{\# For every item along the length of Sp\_list we want R to perform the following functions}
+\NormalTok{  data }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(Sp\_list[i])                               }\CommentTok{\# Create a dataframe for each species}
+\NormalTok{  sp.name }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Common.Name)                             }\CommentTok{\# Create an object that holds the species name, so that we can title each graph}
+\NormalTok{  plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{ (}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ abundance)) }\SpecialCharTok{+}               \CommentTok{\# Make the plots and add our customised theme}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}                                                
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}          
+    \FunctionTok{theme\_custom}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Abundance}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{title =}\NormalTok{ sp.name)}
+\NormalTok{  my\_plots[[i]] }\OtherTok{\textless{}{-}}\NormalTok{ plot }\CommentTok{\# makes a list of all the plots generates}
+  \FunctionTok{print}\NormalTok{(plot) }\CommentTok{\# prints each plot out as it is made}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{wrap\_plots}\NormalTok{(my\_plots)}\SpecialCharTok{+}\FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{design=}\NormalTok{layout) }\CommentTok{\#wrap\_plots function from patchwork can take a list of ggplots}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{What if you want to write a loop to save all four plots at once - can you modify the script to do this?}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(Sp\_list)) \{                                    }\CommentTok{\# For every item along the length of Sp\_list we want R to perform the following functions}
+\NormalTok{  data }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(Sp\_list[i])                               }\CommentTok{\# Create a dataframe for each species}
+\NormalTok{  sp.name }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{Common.Name)                             }\CommentTok{\# Create an object that holds the species name, so that we can title each graph}
+\NormalTok{  plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{ (}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ abundance)) }\SpecialCharTok{+}               \CommentTok{\# Make the plots and add our customised theme}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}                                                
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}          
+    \FunctionTok{theme\_custom}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Abundance}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{title =}\NormalTok{ sp.name)}
+  
+    \ControlFlowTok{if}\NormalTok{(i }\SpecialCharTok{\%\%} \DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{    }\CommentTok{\# The \%\% operator is the remainder, this handy if line prints a number every time it completes a loop}
+    \FunctionTok{print}\NormalTok{(i)}
+\NormalTok{    \}}
+
+  \FunctionTok{ggsave}\NormalTok{(plot, }\AttributeTok{file=}\FunctionTok{paste}\NormalTok{(}\StringTok{"figure/"}\NormalTok{, sp.name, }\StringTok{".png"}\NormalTok{, }\AttributeTok{sep=}\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{), }\AttributeTok{dpi=}\DecValTok{900}\NormalTok{) }\CommentTok{\# use paste to automatically add filename}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{learning-to-purr}{%
+\subsection{\texorpdfstring{Learning to \textbf{purr}}{Learning to purr}}\label{learning-to-purr}}
+
+Another approach to iterative operations is the purrr package - it is the tidyverse approach to iteration.
+
+If you are faced with performing the same task several times, it is probably worth creating a generalised solution that you can use across many inputs. For example, producing plots for multiple jurisdictions, or importing and combining many files.
+
+There are also a few other advantages to purrr - you can use it with pipes \%\textgreater\%, it handles errors better than normal for loops, and the syntax is quite clean and simple! If you are using a for loop, you can probably do it more clearly and succinctly with purrr!
+
+\textbf{Remember} purrr is a very tidyverse focused method of iteration, so understanding for loops can be useful if you end up learning other programming languages in the future.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_plots\_2 }\OtherTok{\textless{}{-}} \FunctionTok{map}\NormalTok{(Sp\_list, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{ (}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ abundance)) }\SpecialCharTok{+}              
+                      \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}                                                
+                      \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{colour =} \StringTok{"\#00868B"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#00868B"}\NormalTok{) }\SpecialCharTok{+}          
+                      \FunctionTok{theme\_custom}\NormalTok{() }\SpecialCharTok{+}
+                      \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Abundance}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{title =}\NormalTok{ sp.name)) }
+
+
+\FunctionTok{wrap\_plots}\NormalTok{(my\_plots\_2)}\SpecialCharTok{+}\FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{design=}\NormalTok{layout)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{summary-1}{%
+\section{Summary}\label{summary-1}}
+
+Making functions and iterations are advanced R skills, and can often seem daunting. I do not expect you to HAVE to implement these for this course, but I do want to give you an insight into some core programming skills that you might be interested in and want to develop.
+
+\url{https://www.rstudio.com/resources/cheatsheets/}
+
+\url{https://r4ds.had.co.nz/program-intro.html}
+
+\begin{itemize}
+\tightlist
+\item
+  Coding club. \url{https://ourcodingclub.github.io/tutorials/funandloops/\#function}
+\end{itemize}
+
+\url{https://epirhandbook.com/en/iteration-loops-and-lists.html}
 
 *\href{https://www.rstudio.com/resources/cheatsheets/}{R Cheat Sheets}
 

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Keeping code DRY - Spring Week One | Data Science for Biologists - 5023Y</title>
+  <meta name="description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Keeping code DRY - Spring Week One | Data Science for Biologists - 5023Y" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Keeping code DRY - Spring Week One | Data Science for Biologists - 5023Y" />
+  
+  <meta name="twitter:description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  
+
+<meta name="author" content="Philip Leftwich" />
+
+
+<meta name="date" content="2022-01-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-to-statistics-spring-week-one.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#approach-and-style"><i class="fa fa-check"></i><b>1.1</b> Approach and style</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#teaching"><i class="fa fa-check"></i><b>1.2</b> Teaching</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#workshops"><i class="fa fa-check"></i><b>1.2.1</b> Workshops</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#introduction-to-r"><i class="fa fa-check"></i><b>1.3</b> Introduction to R</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#getting-around-on-rstudio"><i class="fa fa-check"></i><b>1.4</b> Getting around on RStudio</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#an-intro-to-rstudio"><i class="fa fa-check"></i><b>1.4.1</b> An intro to RStudio</a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#using-r-studio-cloud"><i class="fa fa-check"></i><b>1.4.2</b> Using R Studio Cloud</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#reading"><i class="fa fa-check"></i><b>1.5</b> Reading</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#get-help"><i class="fa fa-check"></i><b>1.6</b> Get Help!</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html"><i class="fa fa-check"></i><b>2</b> Getting to know R: Week One</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#your-first-r-command"><i class="fa fa-check"></i><b>2.1</b> Your first R command</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#typos"><i class="fa fa-check"></i><b>2.1.1</b> Typos</a></li>
+<li class="chapter" data-level="2.1.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-simple-arithmetic"><i class="fa fa-check"></i><b>2.1.2</b> More simple arithmetic</a></li>
+<li class="chapter" data-level="2.1.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#try-some-maths"><i class="fa fa-check"></i><b>2.1.3</b> Try some maths</a></li>
+<li class="chapter" data-level="2.1.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#perform-some-combos"><i class="fa fa-check"></i><b>2.1.4</b> Perform some combos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#true-or-false-data"><i class="fa fa-check"></i><b>2.2</b> “true or false” data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#assessing-mathematical-truths"><i class="fa fa-check"></i><b>2.2.1</b> Assessing mathematical truths</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-outputs"><i class="fa fa-check"></i><b>2.3</b> Storing outputs</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#choosing-names"><i class="fa fa-check"></i><b>2.3.1</b> Choosing names</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#writing-scripts"><i class="fa fa-check"></i><b>2.4</b> Writing scripts</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#commenting-on-scripts"><i class="fa fa-check"></i><b>2.4.1</b> Commenting on scripts</a></li>
+<li class="chapter" data-level="2.4.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#running-your-script"><i class="fa fa-check"></i><b>2.4.2</b> Running your script</a></li>
+<li class="chapter" data-level="2.4.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#saving-your-script"><i class="fa fa-check"></i><b>2.4.3</b> Saving your script</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#error"><i class="fa fa-check"></i><b>2.5</b> Error</a></li>
+<li class="chapter" data-level="2.6" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-the-output-of-functions"><i class="fa fa-check"></i><b>2.6.1</b> Storing the output of functions</a></li>
+<li class="chapter" data-level="2.6.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-fun-with-functions"><i class="fa fa-check"></i><b>2.6.2</b> More fun with functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#packages"><i class="fa fa-check"></i><b>2.7</b> Packages</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#my-first-data-visualisation"><i class="fa fa-check"></i><b>2.8</b> My first data visualisation</a></li>
+<li class="chapter" data-level="2.9" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#quitting"><i class="fa fa-check"></i><b>2.9</b> Quitting</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html"><i class="fa fa-check"></i><b>3</b> Workflow Part One: Week Two</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#meet-the-penguins"><i class="fa fa-check"></i><b>3.1</b> Meet the Penguins</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#insights-from-data"><i class="fa fa-check"></i><b>3.1.1</b> Insights from data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-question"><i class="fa fa-check"></i><b>3.2</b> The Question?</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#hypotheses"><i class="fa fa-check"></i><b>3.2.1</b> Hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#preparing-the-data"><i class="fa fa-check"></i><b>3.3</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy-data"><i class="fa fa-check"></i><b>3.3.1</b> Tidy data</a></li>
+<li class="chapter" data-level="3.3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-dataset"><i class="fa fa-check"></i><b>3.3.2</b> The dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#prepare-the-rstudio-workspace"><i class="fa fa-check"></i><b>3.4</b> Prepare the RStudio workspace</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#organise"><i class="fa fa-check"></i><b>3.4.1</b> Organise</a></li>
+<li class="chapter" data-level="3.4.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#create-a-new-r-script"><i class="fa fa-check"></i><b>3.4.2</b> Create a new R script</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#get-the-data-into-r"><i class="fa fa-check"></i><b>3.5</b> Get the data into R</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#view-and-refine"><i class="fa fa-check"></i><b>3.5.1</b> View and refine</a></li>
+<li class="chapter" data-level="3.5.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#data-management"><i class="fa fa-check"></i><b>3.5.2</b> Data management</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dataframes-and-tibbles"><i class="fa fa-check"></i><b>3.6</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="3.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean-and-tidy"><i class="fa fa-check"></i><b>3.7</b> Clean and tidy</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy"><i class="fa fa-check"></i><b>3.7.1</b> Tidy</a></li>
+<li class="chapter" data-level="3.7.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean"><i class="fa fa-check"></i><b>3.7.2</b> Clean</a></li>
+<li class="chapter" data-level="3.7.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#refine-variable-names"><i class="fa fa-check"></i><b>3.7.3</b> Refine variable names</a></li>
+<li class="chapter" data-level="3.7.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dates"><i class="fa fa-check"></i><b>3.7.4</b> Dates</a></li>
+<li class="chapter" data-level="3.7.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#rename-some-values"><i class="fa fa-check"></i><b>3.7.5</b> Rename some values</a></li>
+<li class="chapter" data-level="3.7.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-duplication"><i class="fa fa-check"></i><b>3.7.6</b> Check for duplication</a></li>
+<li class="chapter" data-level="3.7.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-typos-or-implausible-values"><i class="fa fa-check"></i><b>3.7.7</b> Check for typos or implausible values</a></li>
+<li class="chapter" data-level="3.7.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#missing-values-na"><i class="fa fa-check"></i><b>3.7.8</b> Missing values: NA</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#summing-up"><i class="fa fa-check"></i><b>3.8</b> Summing up</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#what-we-learned"><i class="fa fa-check"></i><b>3.8.1</b> What we learned</a></li>
+<li class="chapter" data-level="3.8.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#quitting-1"><i class="fa fa-check"></i><b>3.8.2</b> Quitting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html"><i class="fa fa-check"></i><b>4</b> Workflow Part Two: Week Three</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-insights"><i class="fa fa-check"></i><b>4.1</b> Initial insights</a></li>
+<li class="chapter" data-level="4.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#numbers-and-sex-of-the-penguins"><i class="fa fa-check"></i><b>4.2</b> Numbers and sex of the penguins</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-a-simple-figure"><i class="fa fa-check"></i><b>4.2.1</b> Making a simple figure</a></li>
+<li class="chapter" data-level="4.2.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#challenge"><i class="fa fa-check"></i><b>4.2.2</b> Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions"><i class="fa fa-check"></i><b>4.3</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#insights"><i class="fa fa-check"></i><b>4.3.1</b> Insights</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#more-distributions"><i class="fa fa-check"></i><b>4.4</b> More distributions</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-conclusions"><i class="fa fa-check"></i><b>4.4.1</b> Initial conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#data-transformation"><i class="fa fa-check"></i><b>4.5</b> Data transformation</a></li>
+<li class="chapter" data-level="4.6" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#developing-insights"><i class="fa fa-check"></i><b>4.6</b> Developing insights</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions-of-the-relative-bill-length"><i class="fa fa-check"></i><b>4.6.1</b> Distributions of the relative bill length</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#relationshipdifferences"><i class="fa fa-check"></i><b>4.7</b> Relationship/differences</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#differences"><i class="fa fa-check"></i><b>4.7.1</b> Differences</a></li>
+<li class="chapter" data-level="4.7.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#associations"><i class="fa fa-check"></i><b>4.7.2</b> Associations</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#sex-interactions"><i class="fa fa-check"></i><b>4.8</b> Sex interactions</a></li>
+<li class="chapter" data-level="4.9" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-our-graphs-more-attractive"><i class="fa fa-check"></i><b>4.9</b> Making our graphs more attractive</a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#saving-your-output"><i class="fa fa-check"></i><b>4.9.1</b> Saving your output</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#quitting-2"><i class="fa fa-check"></i><b>4.10</b> Quitting</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html"><i class="fa fa-check"></i><b>5</b> ggplot2 A grammar of graphics: Week Four</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#intro-to-grammar"><i class="fa fa-check"></i><b>5.1</b> Intro to grammar</a></li>
+<li class="chapter" data-level="5.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#building-a-plot"><i class="fa fa-check"></i><b>5.2</b> Building a plot</a></li>
+<li class="chapter" data-level="5.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#plot-background"><i class="fa fa-check"></i><b>5.3</b> Plot background</a></li>
+<li class="chapter" data-level="5.4" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#aesthetics---aes"><i class="fa fa-check"></i><b>5.4</b> Aesthetics - aes()</a></li>
+<li class="chapter" data-level="5.5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#geometric-representations---geom"><i class="fa fa-check"></i><b>5.5</b> Geometric representations - geom()</a></li>
+<li class="chapter" data-level="5.6" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#and"><i class="fa fa-check"></i><b>5.6</b> %&gt;% and +</a></li>
+<li class="chapter" data-level="5.7" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#colour"><i class="fa fa-check"></i><b>5.7</b> Colour</a></li>
+<li class="chapter" data-level="5.8" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-layers"><i class="fa fa-check"></i><b>5.8</b> More layers</a></li>
+<li class="chapter" data-level="5.9" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#facets"><i class="fa fa-check"></i><b>5.9</b> Facets</a></li>
+<li class="chapter" data-level="5.10" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#co-ordinate-space"><i class="fa fa-check"></i><b>5.10</b> Co-ordinate space</a></li>
+<li class="chapter" data-level="5.11" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#labels"><i class="fa fa-check"></i><b>5.11</b> Labels</a></li>
+<li class="chapter" data-level="5.12" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#themes"><i class="fa fa-check"></i><b>5.12</b> Themes</a></li>
+<li class="chapter" data-level="5.13" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#jitter"><i class="fa fa-check"></i><b>5.13</b> Jitter</a></li>
+<li class="chapter" data-level="5.14" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#boxplots"><i class="fa fa-check"></i><b>5.14</b> Boxplots</a></li>
+<li class="chapter" data-level="5.15" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#density-and-histogram"><i class="fa fa-check"></i><b>5.15</b> Density and histogram</a></li>
+<li class="chapter" data-level="5.16" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-colours"><i class="fa fa-check"></i><b>5.16</b> More Colours</a>
+<ul>
+<li class="chapter" data-level="5.16.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#assign-colours-to-variables"><i class="fa fa-check"></i><b>5.16.1</b> Assign colours to variables</a></li>
+<li class="chapter" data-level="5.16.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#accessibility"><i class="fa fa-check"></i><b>5.16.2</b> Accessibility</a></li>
+<li class="chapter" data-level="5.16.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#guides-to-visual-accessibility"><i class="fa fa-check"></i><b>5.16.3</b> Guides to visual accessibility</a></li>
+</ul></li>
+<li class="chapter" data-level="5.17" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#patchwork"><i class="fa fa-check"></i><b>5.17</b> Patchwork</a></li>
+<li class="chapter" data-level="5.18" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#test"><i class="fa fa-check"></i><b>5.18</b> Test</a></li>
+<li class="chapter" data-level="5.19" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#saving"><i class="fa fa-check"></i><b>5.19</b> Saving</a></li>
+<li class="chapter" data-level="5.20" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#quitting-3"><i class="fa fa-check"></i><b>5.20</b> Quitting</a></li>
+<li class="chapter" data-level="5.21" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#summing-up-ggplot"><i class="fa fa-check"></i><b>5.21</b> Summing up ggplot</a>
+<ul>
+<li class="chapter" data-level="5.21.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#what-we-learned-1"><i class="fa fa-check"></i><b>5.21.1</b> What we learned</a></li>
+<li class="chapter" data-level="5.21.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#further-reading-guides-and-tips"><i class="fa fa-check"></i><b>5.21.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html"><i class="fa fa-check"></i><b>6</b> Reports with Rmarkdown: Week Five</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#format"><i class="fa fa-check"></i><b>6.0.1</b> Format</a></li>
+<li class="chapter" data-level="6.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#background-to-rmarkdown"><i class="fa fa-check"></i><b>6.1</b> Background to Rmarkdown</a></li>
+<li class="chapter" data-level="6.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#starting-a-new-rmd-file"><i class="fa fa-check"></i><b>6.2</b> Starting a new Rmd file</a></li>
+<li class="chapter" data-level="6.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#r-markdown-parts"><i class="fa fa-check"></i><b>6.3</b> R Markdown parts</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#yaml"><i class="fa fa-check"></i><b>6.3.1</b> YAML</a></li>
+<li class="chapter" data-level="6.3.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#text"><i class="fa fa-check"></i><b>6.3.2</b> Text</a></li>
+<li class="chapter" data-level="6.3.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#code-chunks"><i class="fa fa-check"></i><b>6.3.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="6.3.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#here"><i class="fa fa-check"></i><b>6.3.4</b> Here</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#images"><i class="fa fa-check"></i><b>6.4</b> Images</a></li>
+<li class="chapter" data-level="6.5" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables</a></li>
+<li class="chapter" data-level="6.6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#self-contained-documents"><i class="fa fa-check"></i><b>6.6</b> Self-contained documents</a></li>
+<li class="chapter" data-level="6.7" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#source-files"><i class="fa fa-check"></i><b>6.7</b> Source files</a></li>
+<li class="chapter" data-level="6.8" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#exercise---make-your-own-rmd-document"><i class="fa fa-check"></i><b>6.8</b> Exercise - Make your own Rmd document</a></li>
+<li class="chapter" data-level="6.9" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#summing-up-rmarkdown"><i class="fa fa-check"></i><b>6.9</b> Summing up Rmarkdown</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#what-we-learned-2"><i class="fa fa-check"></i><b>6.9.1</b> What we learned</a></li>
+<li class="chapter" data-level="6.9.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#further-reading-guides-and-tips-1"><i class="fa fa-check"></i><b>6.9.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html"><i class="fa fa-check"></i><b>7</b> Version control with GitHub: Week Six</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#lets-git-it-started"><i class="fa fa-check"></i><b>7.1</b> Let’s Git it started</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#will-this-be-fun"><i class="fa fa-check"></i><b>7.1.1</b> Will this be fun?</a></li>
+<li class="chapter" data-level="7.1.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#the-payoff"><i class="fa fa-check"></i><b>7.1.2</b> The Payoff</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#set-up-github"><i class="fa fa-check"></i><b>7.2</b> Set up GitHub</a></li>
+<li class="chapter" data-level="7.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-1.-fork-clone-an-existing-repo-on-github-make-edits-push-back"><i class="fa fa-check"></i><b>7.3</b> <strong>Exercise 1.</strong> Fork &amp; clone an existing repo on GitHub, make edits, push back</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-the-hell-is-a-fork"><i class="fa fa-check"></i><b>7.3.1</b> What the hell is a fork?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#talking-to-github"><i class="fa fa-check"></i><b>7.4</b> Talking to GitHub</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#see-changes"><i class="fa fa-check"></i><b>7.4.1</b> See changes</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#how-to-use-version-control---when-to-commit-push-and-pull"><i class="fa fa-check"></i><b>7.5</b> How to use version control - when to commit, push and pull</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#commit"><i class="fa fa-check"></i><b>7.5.1</b> Commit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#push"><i class="fa fa-check"></i><b>7.5.2</b> Push</a></li>
+<li class="chapter" data-level="7.5.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#a-couple-of-general-tips"><i class="fa fa-check"></i><b>7.5.3</b> A couple of general tips:</a></li>
+<li class="chapter" data-level="7.5.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#turn-back-time-with-git"><i class="fa fa-check"></i><b>7.5.4</b> Turn back time with Git</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-2.-github-classrooms-enabled-r-projects-with-subfolders"><i class="fa fa-check"></i><b>7.6</b> <strong>Exercise 2.</strong> GitHub Classrooms enabled R Projects with subfolders</a></li>
+<li class="chapter" data-level="7.7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#find-your-classroom-repos"><i class="fa fa-check"></i><b>7.7</b> Find your classroom repos</a></li>
+<li class="chapter" data-level="7.8" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#glossary-github"><i class="fa fa-check"></i><b>7.8</b> Glossary-GitHub</a></li>
+<li class="chapter" data-level="7.9" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#summing-up-github"><i class="fa fa-check"></i><b>7.9</b> Summing up GitHub</a>
+<ul>
+<li class="chapter" data-level="7.9.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-we-learned-3"><i class="fa fa-check"></i><b>7.9.1</b> What we learned</a></li>
+<li class="chapter" data-level="7.9.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#further-reading-guides-and-tips-2"><i class="fa fa-check"></i><b>7.9.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html"><i class="fa fa-check"></i><b>8</b> Dealing with data: dplyr: Week Eight</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#lets-get-going"><i class="fa fa-check"></i><b>8.1</b> Let’s get going</a></li>
+<li class="chapter" data-level="8.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#introduction-to-dplyr"><i class="fa fa-check"></i><b>8.2</b> Introduction to dplyr</a></li>
+<li class="chapter" data-level="8.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#select"><i class="fa fa-check"></i><b>8.3</b> select</a></li>
+<li class="chapter" data-level="8.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#mutate"><i class="fa fa-check"></i><b>8.4</b> mutate</a></li>
+<li class="chapter" data-level="8.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#filter"><i class="fa fa-check"></i><b>8.5</b> filter</a></li>
+<li class="chapter" data-level="8.6" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#arrange"><i class="fa fa-check"></i><b>8.6</b> arrange</a></li>
+<li class="chapter" data-level="8.7" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group-and-summarise"><i class="fa fa-check"></i><b>8.7</b> Group and summarise</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#using-summarise"><i class="fa fa-check"></i><b>8.7.1</b> Using summarise</a></li>
+<li class="chapter" data-level="8.7.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summarize-all-columns"><i class="fa fa-check"></i><b>8.7.2</b> Summarize all columns</a></li>
+<li class="chapter" data-level="8.7.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group_by-summary"><i class="fa fa-check"></i><b>8.7.3</b> group_by summary</a></li>
+<li class="chapter" data-level="8.7.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>8.7.4</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="8.7.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#remove-group_by"><i class="fa fa-check"></i><b>8.7.5</b> remove group_by</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html"><i class="fa fa-check"></i><b>9</b> Dealing with data part 2: Week Nine</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#expanding-the-data-toolkit"><i class="fa fa-check"></i><b>9.1</b> Expanding the data toolkit</a></li>
+<li class="chapter" data-level="9.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pipes"><i class="fa fa-check"></i><b>9.2</b> Pipes</a></li>
+<li class="chapter" data-level="9.3" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#strings"><i class="fa fa-check"></i><b>9.3</b> Strings</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#separate"><i class="fa fa-check"></i><b>9.3.1</b> separate</a></li>
+<li class="chapter" data-level="9.3.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#more-stringr"><i class="fa fa-check"></i><b>9.3.2</b> More stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#dates-and-times"><i class="fa fa-check"></i><b>9.4</b> Dates and times</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#calculations-with-dates"><i class="fa fa-check"></i><b>9.4.1</b> Calculations with dates</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pivot"><i class="fa fa-check"></i><b>9.5</b> Pivot</a></li>
+<li class="chapter" data-level="9.6" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#summing-up-1"><i class="fa fa-check"></i><b>9.6</b> Summing up</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#what-we-learned-4"><i class="fa fa-check"></i><b>9.6.1</b> What we learned</a></li>
+<li class="chapter" data-level="9.6.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#further-reading-guides-and-tips-3"><i class="fa fa-check"></i><b>9.6.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html"><i class="fa fa-check"></i><b>10</b> Deeper data insights part 1: Week Ten</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#variables"><i class="fa fa-check"></i><b>10.1</b> Variables</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#numerical"><i class="fa fa-check"></i><b>10.1.1</b> Numerical</a></li>
+<li class="chapter" data-level="10.1.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical"><i class="fa fa-check"></i><b>10.1.2</b> Categorical</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#understanding-numerical-variables"><i class="fa fa-check"></i><b>10.2</b> Understanding Numerical variables</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#graphing-a-numeric-variable"><i class="fa fa-check"></i><b>10.2.1</b> Graphing a numeric variable</a></li>
+<li class="chapter" data-level="10.2.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#insights-about-body-mass"><i class="fa fa-check"></i><b>10.2.2</b> Insights about body mass</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#descriptive-statistics"><i class="fa fa-check"></i><b>10.3</b> Descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#central-tendency"><i class="fa fa-check"></i><b>10.3.1</b> Central tendency</a></li>
+<li class="chapter" data-level="10.3.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#dispersion"><i class="fa fa-check"></i><b>10.3.2</b> Dispersion</a></li>
+<li class="chapter" data-level="10.3.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#visualising-dispersion"><i class="fa fa-check"></i><b>10.3.3</b> Visualising dispersion</a></li>
+<li class="chapter" data-level="10.3.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#combining-histograms-and-boxplots"><i class="fa fa-check"></i><b>10.3.4</b> Combining histograms and boxplots</a></li>
+<li class="chapter" data-level="10.3.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#missing-values"><i class="fa fa-check"></i><b>10.3.5</b> Missing values</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical-variables"><i class="fa fa-check"></i><b>10.4</b> Categorical variables</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summaries"><i class="fa fa-check"></i><b>10.4.1</b> Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summing-up-2"><i class="fa fa-check"></i><b>10.5</b> Summing up</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#reward"><i class="fa fa-check"></i><b>10.5.1</b> Reward</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html"><i class="fa fa-check"></i><b>11</b> Deeper data insights part 2: Week Eleven</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-numerical-variables"><i class="fa fa-check"></i><b>11.1</b> Associations between numerical variables</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#correlations"><i class="fa fa-check"></i><b>11.1.1</b> Correlations</a></li>
+<li class="chapter" data-level="11.1.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#non-linear-correlations"><i class="fa fa-check"></i><b>11.1.2</b> Non-linear correlations</a></li>
+<li class="chapter" data-level="11.1.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#graphical-summaries-between-numeric-variables"><i class="fa fa-check"></i><b>11.1.3</b> Graphical summaries between numeric variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-variables"><i class="fa fa-check"></i><b>11.2</b> Associations between categorical variables</a></li>
+<li class="chapter" data-level="11.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-numerical-variables"><i class="fa fa-check"></i><b>11.3</b> Associations between Categorical-numerical variables</a></li>
+<li class="chapter" data-level="11.4" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#complexity"><i class="fa fa-check"></i><b>11.4</b> Complexity</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#simpsons-paradox"><i class="fa fa-check"></i><b>11.4.1</b> Simpson’s Paradox</a></li>
+<li class="chapter" data-level="11.4.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#three-or-more-variables"><i class="fa fa-check"></i><b>11.4.2</b> Three or more variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#summing-up-3"><i class="fa fa-check"></i><b>11.5</b> Summing up</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html"><i class="fa fa-check"></i><b>12</b> Introduction to Statistics - Spring Week One</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#introduction-to-statistics"><i class="fa fa-check"></i><b>12.1</b> Introduction to statistics</a></li>
+<li class="chapter" data-level="12.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>12.2</b> Darwin’s maize data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#description"><i class="fa fa-check"></i><b>12.2.1</b> Description</a></li>
+<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.2</b> Comparing groups</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#estimation"><i class="fa fa-check"></i><b>12.3</b> Estimation</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#differences-between-groups"><i class="fa fa-check"></i><b>12.3.1</b> Differences between groups</a></li>
+<li class="chapter" data-level="12.3.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#standard-error-of-the-difference"><i class="fa fa-check"></i><b>12.3.2</b> Standard error of the difference</a></li>
+<li class="chapter" data-level="12.3.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#normal-distribution"><i class="fa fa-check"></i><b>12.3.3</b> Normal distribution</a></li>
+<li class="chapter" data-level="12.3.4" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#confidence-intervals"><i class="fa fa-check"></i><b>12.3.4</b> Confidence Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#summary"><i class="fa fa-check"></i><b>12.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html"><i class="fa fa-check"></i><b>13</b> Keeping code DRY - Spring Week One</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#functions-1"><i class="fa fa-check"></i><b>13.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#common-functions"><i class="fa fa-check"></i><b>13.1.1</b> Common functions</a></li>
+<li class="chapter" data-level="13.1.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#write-your-own-function"><i class="fa fa-check"></i><b>13.1.2</b> Write your own function</a></li>
+<li class="chapter" data-level="13.1.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#custom-ggplot-themes"><i class="fa fa-check"></i><b>13.1.3</b> Custom ggplot themes</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-tidyverse"><i class="fa fa-check"></i><b>13.2.1</b> iteration in tidyverse</a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.2</b> For Loops</a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.3</b> Exercise for For Loops</a></li>
+<li class="chapter" data-level="13.2.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#learning-to-purr"><i class="fa fa-check"></i><b>13.2.4</b> Learning to <strong>purr</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.3</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science for Biologists - 5023Y</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="keeping-code-dry---spring-week-one" class="section level1" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Keeping code DRY - Spring Week One</h1>
+<script>
+  addClassKlippyTo("pre.r, pre.bash");
+  addKlippy('right', 'top', 'auto', '1', 'copy to clipboard', 'Copied!');
+</script>
+<p>You can keep working in the same project workspace as <span class="citation">(<a href="#ref-ref-Estimates" role="doc-biblioref"><strong>ref-Estimates?</strong></a>)</span>, but I would advise you start a new script to work on iteration.</p>
+<div id="functions-1" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Functions</h2>
+<p>Most of the time when we work in R, we will use functions; either pre-written functions or ones we write ourselves. <strong>Functions</strong> make it easy to use sets of code instructions repeatedly (without filling our scripts with the code underlying the function) and help us carry out multiple tasks in a single step without having to go through the details of how the steps are executed.</p>
+<div id="common-functions" class="section level3" number="13.1.1">
+<h3><span class="header-section-number">13.1.1</span> Common functions</h3>
+<p>You have been using functions in R from week one, we type the name of the function followed by parentheses e.g. <code>read_csv()</code>. Within the parentheses is where we will specify the function input and options, separated by commas <code>,</code>. One function you will use a lot is the <strong>combine function</strong> <code>c()</code>, which as the name suggests lets you concatenate different types of values into a <strong>vector</strong>.</p>
+<ul>
+<li><p>Complete the script below to combine a set of numerical values using <code>c()</code>.</p></li>
+<li><p>Then use the <code>sum()</code> function to add them together</p></li>
+</ul>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="keeping-code-dry-spring-week-one.html#cb247-1" aria-hidden="true" tabindex="-1"></a>my_combined_values <span class="ot">&lt;-</span> <span class="fu">c</span>(,) </span>
+<span id="cb247-2"><a href="keeping-code-dry-spring-week-one.html#cb247-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(my_combined_values)</span></code></pre></div>
+</div>
+<div id="write-your-own-function" class="section level3" number="13.1.2">
+<h3><span class="header-section-number">13.1.2</span> Write your own function</h3>
+<p>R makes it easy to create user defined functions by using <code>function()</code>. Here is how it works:</p>
+<ul>
+<li><p>Give your function an object name and assign the function to it, e.g. <code>my_function_name &lt;- function()</code>.</p></li>
+<li><p>Within the parentheses you specify inputs and options just like how pre-written functions work, e.g. <code>function(input_data)</code>.</p></li>
+<li><p>Next, put all the code you want your function to execute inside curly brackets like this: <code>function(input_data){code to  run}</code></p></li>
+<li><p>Use <code>return()</code> to specify what you want to your function to output once it is done running the code.</p></li>
+</ul>
+<p>Use the following instructions to complete the function in the window below:</p>
+<ul>
+<li><p>I’ve started writing a function for you that will sum up values and take the square root of the sum. To take the square root, we use the <code>sqrt()</code> function.</p></li>
+<li><p>Complete this function by filling in input_data for the <code>sum()</code>, and then filling in the remaining empty parentheses with the appropriate object names.</p>
+<p>*Now create an object containing a set of numerical values and call it <code>my_combined_values</code>. Then try out your new function on this object, which will compute the square root of the object’s sum.</p></li>
+</ul>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="keeping-code-dry-spring-week-one.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the instructions above to complete the function below</span></span>
+<span id="cb248-2"><a href="keeping-code-dry-spring-week-one.html#cb248-2" aria-hidden="true" tabindex="-1"></a>my_function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(input_data){</span>
+<span id="cb248-3"><a href="keeping-code-dry-spring-week-one.html#cb248-3" aria-hidden="true" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">sum</span>( )</span>
+<span id="cb248-4"><a href="keeping-code-dry-spring-week-one.html#cb248-4" aria-hidden="true" tabindex="-1"></a>  ss <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( )</span>
+<span id="cb248-5"><a href="keeping-code-dry-spring-week-one.html#cb248-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( )</span>
+<span id="cb248-6"><a href="keeping-code-dry-spring-week-one.html#cb248-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb248-7"><a href="keeping-code-dry-spring-week-one.html#cb248-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb248-8"><a href="keeping-code-dry-spring-week-one.html#cb248-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new object and try out your new function</span></span>
+<span id="cb248-9"><a href="keeping-code-dry-spring-week-one.html#cb248-9" aria-hidden="true" tabindex="-1"></a>my_combined_values <span class="ot">&lt;-</span> <span class="fu">c</span>(,) </span>
+<span id="cb248-10"><a href="keeping-code-dry-spring-week-one.html#cb248-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb248-11"><a href="keeping-code-dry-spring-week-one.html#cb248-11" aria-hidden="true" tabindex="-1"></a><span class="fu">my_function_name</span>(my_combined_values)</span></code></pre></div>
+<div class="rmdnote">
+<p>
+A general rule of thumb. If you end up repeating a line of code more than three times in a script - you should write a function to do the work instead. And write clear comments on its use! Why? It reduces the numbers of lines of code in your script, it reduces the amount of repetition in the code, if you need to make changes you can change the function without having to hunt through all of your code.
+</p>
+<p>
+A really good way to organise your functions is to organise them into a separate script to the rest of your analysis. Write functions in a separate script and use source(“scripts/functions.R”)
+</p>
+</div>
+<div class="figure"><span id="fig:unnamed-chunk-346"></span>
+<img src="images/Project.png" alt="An example of a typical R project set-up" width="80%" />
+<p class="caption">
+Figure 13.1: An example of a typical R project set-up
+</p>
+</div>
+<p>It might suprise you to know that there is no prebuilt function for standard error in R</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="keeping-code-dry-spring-week-one.html#cb249-1" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb249-2"><a href="keeping-code-dry-spring-week-one.html#cb249-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>(x)<span class="sc">/</span>(<span class="fu">sqrt</span>(<span class="fu">length</span>(x)))</span>
+<span id="cb249-3"><a href="keeping-code-dry-spring-week-one.html#cb249-3" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="keeping-code-dry-spring-week-one.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The seq R function generates a sequence of numeric values</span></span>
+<span id="cb250-2"><a href="keeping-code-dry-spring-week-one.html#cb250-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">8</span>, <span class="dv">20</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb250-3"><a href="keeping-code-dry-spring-week-one.html#cb250-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb250-4"><a href="keeping-code-dry-spring-week-one.html#cb250-4" aria-hidden="true" tabindex="-1"></a><span class="co"># use the mean function to calculate average for x</span></span>
+<span id="cb250-5"><a href="keeping-code-dry-spring-week-one.html#cb250-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
+<span id="cb250-6"><a href="keeping-code-dry-spring-week-one.html#cb250-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb250-7"><a href="keeping-code-dry-spring-week-one.html#cb250-7" aria-hidden="true" tabindex="-1"></a><span class="co"># use our custom function to calculate se for x</span></span>
+<span id="cb250-8"><a href="keeping-code-dry-spring-week-one.html#cb250-8" aria-hidden="true" tabindex="-1"></a><span class="fu">se</span>(x)</span>
+<span id="cb250-9"><a href="keeping-code-dry-spring-week-one.html#cb250-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb250-10"><a href="keeping-code-dry-spring-week-one.html#cb250-10" aria-hidden="true" tabindex="-1"></a><span class="co"># could be used in the group_by and summarise pipes we are used to using</span></span>
+<span id="cb250-11"><a href="keeping-code-dry-spring-week-one.html#cb250-11" aria-hidden="true" tabindex="-1"></a>darwin_wide <span class="sc">%&gt;%</span> </span>
+<span id="cb250-12"><a href="keeping-code-dry-spring-week-one.html#cb250-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(difference),</span>
+<span id="cb250-13"><a href="keeping-code-dry-spring-week-one.html#cb250-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd=</span><span class="fu">sd</span>(difference),</span>
+<span id="cb250-14"><a href="keeping-code-dry-spring-week-one.html#cb250-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">n=</span><span class="fu">n</span>(),</span>
+<span id="cb250-15"><a href="keeping-code-dry-spring-week-one.html#cb250-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">se=</span><span class="fu">se</span>(difference))</span></code></pre></div>
+</div>
+<div id="custom-ggplot-themes" class="section level3" number="13.1.3">
+<h3><span class="header-section-number">13.1.3</span> Custom ggplot themes</h3>
+<p>It is often the case that we start to default to a particular ‘style’ for our figures, or you may be making several similar figures within a research paper. Creating custom functions can extend to making our own custom ggplot themes. You have probably already used theme variants such as <code>theme_bw()</code>, <code>theme_void()</code>, <code>theme_minimal()</code> - these are incredibly useful, but you might find you still wish to make consistent changes.</p>
+<p>Here is a plot we made in the previous chapter</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="keeping-code-dry-spring-week-one.html#cb251-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> darwin <span class="sc">%&gt;%</span> </span>
+<span id="cb251-2"><a href="keeping-code-dry-spring-week-one.html#cb251-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>type,</span>
+<span id="cb251-3"><a href="keeping-code-dry-spring-week-one.html#cb251-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">y=</span>height))<span class="sc">+</span></span>
+<span id="cb251-4"><a href="keeping-code-dry-spring-week-one.html#cb251-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb251-5"><a href="keeping-code-dry-spring-week-one.html#cb251-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb251-6"><a href="keeping-code-dry-spring-week-one.html#cb251-6" aria-hidden="true" tabindex="-1"></a>plot</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-349-1.png" width="672" />
+With the addition of a title and <code>theme_classic()</code> we can improve the style quickly</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="keeping-code-dry-spring-week-one.html#cb252-1" aria-hidden="true" tabindex="-1"></a>plot<span class="sc">+</span></span>
+<span id="cb252-2"><a href="keeping-code-dry-spring-week-one.html#cb252-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Comparison of heights between </span><span class="sc">\n</span><span class="st">Crossed and Selfed Maize plants&quot;</span>)<span class="sc">+</span></span>
+<span id="cb252-3"><a href="keeping-code-dry-spring-week-one.html#cb252-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-350-1.png" width="672" />
+But I still want to make some more changes, rather than do this work for one figure, and potentially have to repeat this several times for subsequent figures, I can decide to make a new function instead.</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="keeping-code-dry-spring-week-one.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="co"># custom theme sets defaults for font and size, but these can be changed without changing the function</span></span>
+<span id="cb253-2"><a href="keeping-code-dry-spring-week-one.html#cb253-2" aria-hidden="true" tabindex="-1"></a>theme_custom <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base_size=</span><span class="dv">14</span>, <span class="at">base_family=</span><span class="st">&quot;serif&quot;</span>){</span>
+<span id="cb253-3"><a href="keeping-code-dry-spring-week-one.html#cb253-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> base_size, </span>
+<span id="cb253-4"><a href="keeping-code-dry-spring-week-one.html#cb253-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">base_family =</span> base_family,</span>
+<span id="cb253-5"><a href="keeping-code-dry-spring-week-one.html#cb253-5" aria-hidden="true" tabindex="-1"></a>                ) <span class="sc">+</span></span>
+<span id="cb253-6"><a href="keeping-code-dry-spring-week-one.html#cb253-6" aria-hidden="true" tabindex="-1"></a><span class="co"># update theme minimal </span></span>
+<span id="cb253-7"><a href="keeping-code-dry-spring-week-one.html#cb253-7" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span>(</span>
+<span id="cb253-8"><a href="keeping-code-dry-spring-week-one.html#cb253-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify default settings for plot titles - use rel to set titles relative to base size</span></span>
+<span id="cb253-9"><a href="keeping-code-dry-spring-week-one.html#cb253-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="fu">rel</span>(<span class="fl">1.5</span>),</span>
+<span id="cb253-10"><a href="keeping-code-dry-spring-week-one.html#cb253-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">face=</span><span class="st">&quot;bold&quot;</span>,</span>
+<span id="cb253-11"><a href="keeping-code-dry-spring-week-one.html#cb253-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">family=</span>base_family),</span>
+<span id="cb253-12"><a href="keeping-code-dry-spring-week-one.html#cb253-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">#specify defaults for axis titles</span></span>
+<span id="cb253-13"><a href="keeping-code-dry-spring-week-one.html#cb253-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title=</span><span class="fu">element_text</span>(</span>
+<span id="cb253-14"><a href="keeping-code-dry-spring-week-one.html#cb253-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">size=</span><span class="fu">rel</span>(<span class="fl">1.2</span>),</span>
+<span id="cb253-15"><a href="keeping-code-dry-spring-week-one.html#cb253-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">family=</span>base_family),</span>
+<span id="cb253-16"><a href="keeping-code-dry-spring-week-one.html#cb253-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify position for y axis title</span></span>
+<span id="cb253-17"><a href="keeping-code-dry-spring-week-one.html#cb253-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.y=</span><span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r =</span> <span class="dv">10</span>, <span class="at">l=</span> <span class="dv">10</span>)),</span>
+<span id="cb253-18"><a href="keeping-code-dry-spring-week-one.html#cb253-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># specify position for x axis title</span></span>
+<span id="cb253-19"><a href="keeping-code-dry-spring-week-one.html#cb253-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>( <span class="at">t =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="dv">10</span>)),</span>
+<span id="cb253-20"><a href="keeping-code-dry-spring-week-one.html#cb253-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set major y grid lines</span></span>
+<span id="cb253-21"><a href="keeping-code-dry-spring-week-one.html#cb253-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour=</span><span class="st">&quot;gray&quot;</span>, <span class="at">size=</span><span class="fl">0.5</span>),</span>
+<span id="cb253-22"><a href="keeping-code-dry-spring-week-one.html#cb253-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add axis lines</span></span>
+<span id="cb253-23"><a href="keeping-code-dry-spring-week-one.html#cb253-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.line=</span><span class="fu">element_line</span>(),</span>
+<span id="cb253-24"><a href="keeping-code-dry-spring-week-one.html#cb253-24" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Adding a 0.5cm margin around the plot</span></span>
+<span id="cb253-25"><a href="keeping-code-dry-spring-week-one.html#cb253-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">units =</span> , <span class="st">&quot;cm&quot;</span>),    </span>
+<span id="cb253-26"><a href="keeping-code-dry-spring-week-one.html#cb253-26" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Setting the font for the legend text</span></span>
+<span id="cb253-27"><a href="keeping-code-dry-spring-week-one.html#cb253-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;italic&quot;</span>),   </span>
+<span id="cb253-28"><a href="keeping-code-dry-spring-week-one.html#cb253-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Removing the legend title</span></span>
+<span id="cb253-29"><a href="keeping-code-dry-spring-week-one.html#cb253-29" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),    </span>
+<span id="cb253-30"><a href="keeping-code-dry-spring-week-one.html#cb253-30" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Setting the position for the legend - 0 is left/bottom, 1 is top/right</span></span>
+<span id="cb253-31"><a href="keeping-code-dry-spring-week-one.html#cb253-31" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>)             </span>
+<span id="cb253-32"><a href="keeping-code-dry-spring-week-one.html#cb253-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb253-33"><a href="keeping-code-dry-spring-week-one.html#cb253-33" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>With this function set, I can now use it for as many figures as I wish. To use it in the future I should probably save it in a unique script, with a clear title and comments for future use.</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="keeping-code-dry-spring-week-one.html#cb254-1" aria-hidden="true" tabindex="-1"></a>plot<span class="sc">+</span></span>
+<span id="cb254-2"><a href="keeping-code-dry-spring-week-one.html#cb254-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtitle</span>(<span class="st">&quot;Comparison of heights between </span><span class="sc">\n</span><span class="st">Crossed and Selfed Maize plants&quot;</span>)<span class="sc">+</span></span>
+<span id="cb254-3"><a href="keeping-code-dry-spring-week-one.html#cb254-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_custom</span>()</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-352-1.png" width="672" /></p>
+</div>
+</div>
+<div id="iteration" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Iteration</h2>
+<p>We’ve seen how to write a function and how they can be used to create concise re-usable operations that can be applied multiple times in a script without having to copy and paste, but where functions really come into their own is when combined with iteration. Iteration is the process of running the same operation on a group of objects, further minimising code replication.</p>
+<div id="iteration-in-tidyverse" class="section level3" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> iteration in tidyverse</h3>
+<p>You have already used functions within tidyverse that allow you to perform iteration. For example we have the used the function <code>group_by()</code> many times. It allows us to subset our data, then command R to perform subsequent functions on each group separately. Sometimes however, you might want to use iteration more explicitly.</p>
+</div>
+<div id="for-loops" class="section level3" number="13.2.2">
+<h3><span class="header-section-number">13.2.2</span> For Loops</h3>
+<p>A for loop has three core parts:</p>
+<ol style="list-style-type: decimal">
+<li><p>The sequence of items to iterate through</p></li>
+<li><p>The operations to conduct per item in the sequence</p></li>
+<li><p>The container for the results (optional)</p></li>
+</ol>
+<p>The basic syntax is: for (item in sequence) {do operations using item}. Note the parentheses and the curly brackets. The results could be printed to console, or stored in a container R object.</p>
+<pre><code>for(i in list){
+    # PERFORM SOME ACTION
+}</code></pre>
+<p>A simple for loop <strong>example</strong> is below. For every number in the vector add 2.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="keeping-code-dry-spring-week-one.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (num <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)) {  <span class="co"># the SEQUENCE is defined (numbers 1 to 5) and loop is opened with &quot;{&quot;</span></span>
+<span id="cb256-2"><a href="keeping-code-dry-spring-week-one.html#cb256-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(num <span class="sc">+</span> <span class="dv">2</span>)             <span class="co"># The OPERATIONS (add two to each sequence number and print)</span></span>
+<span id="cb256-3"><a href="keeping-code-dry-spring-week-one.html#cb256-3" aria-hidden="true" tabindex="-1"></a>}                            <span class="co"># The loop is closed with &quot;}&quot;                            </span></span></code></pre></div>
+<pre><code>[1] 3
+[1] 4
+[1] 5
+[1] 6
+[1] 7</code></pre>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="keeping-code-dry-spring-week-one.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a simple tibble</span></span>
+<span id="cb258-2"><a href="keeping-code-dry-spring-week-one.html#cb258-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb258-3"><a href="keeping-code-dry-spring-week-one.html#cb258-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>),</span>
+<span id="cb258-4"><a href="keeping-code-dry-spring-week-one.html#cb258-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>),</span>
+<span id="cb258-5"><a href="keeping-code-dry-spring-week-one.html#cb258-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">c =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>),</span>
+<span id="cb258-6"><a href="keeping-code-dry-spring-week-one.html#cb258-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">d =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb258-7"><a href="keeping-code-dry-spring-week-one.html#cb258-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="keeping-code-dry-spring-week-one.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(df<span class="sc">$</span>a)</span>
+<span id="cb259-2"><a href="keeping-code-dry-spring-week-one.html#cb259-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 0.3085154</span></span>
+<span id="cb259-3"><a href="keeping-code-dry-spring-week-one.html#cb259-3" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(df<span class="sc">$</span>b)</span>
+<span id="cb259-4"><a href="keeping-code-dry-spring-week-one.html#cb259-4" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 0.5429483</span></span>
+<span id="cb259-5"><a href="keeping-code-dry-spring-week-one.html#cb259-5" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(df<span class="sc">$</span>c)</span>
+<span id="cb259-6"><a href="keeping-code-dry-spring-week-one.html#cb259-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] -0.5137691</span></span>
+<span id="cb259-7"><a href="keeping-code-dry-spring-week-one.html#cb259-7" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(df<span class="sc">$</span>d)</span>
+<span id="cb259-8"><a href="keeping-code-dry-spring-week-one.html#cb259-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 0.04415608</span></span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="keeping-code-dry-spring-week-one.html#cb260-1" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;double&quot;</span>, <span class="fu">ncol</span>(df))  <span class="co"># 1. output having a predefined empty list of the right size works best</span></span>
+<span id="cb260-2"><a href="keeping-code-dry-spring-week-one.html#cb260-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(df)) {            <span class="co"># 2. sequence - determines what to loop over</span></span>
+<span id="cb260-3"><a href="keeping-code-dry-spring-week-one.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  output[[i]] <span class="ot">&lt;-</span> <span class="fu">median</span>(df[[i]])      <span class="co"># 3. body - each time the loop runs it allocates a value to output, </span></span>
+<span id="cb260-4"><a href="keeping-code-dry-spring-week-one.html#cb260-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb260-5"><a href="keeping-code-dry-spring-week-one.html#cb260-5" aria-hidden="true" tabindex="-1"></a>output</span>
+<span id="cb260-6"><a href="keeping-code-dry-spring-week-one.html#cb260-6" aria-hidden="true" tabindex="-1"></a><span class="co"># [1]  0.30851540  0.54294832 -0.51376911  0.0441560</span></span></code></pre></div>
+</div>
+<div id="exercise-for-for-loops" class="section level3" number="13.2.3">
+<h3><span class="header-section-number">13.2.3</span> Exercise for For Loops</h3>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="keeping-code-dry-spring-week-one.html#cb261-1" aria-hidden="true" tabindex="-1"></a>LPI <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/LPI_data_loops.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="keeping-code-dry-spring-week-one.html#cb262-1" aria-hidden="true" tabindex="-1"></a>vulture <span class="ot">&lt;-</span> <span class="fu">filter</span>(LPI, Common.Name <span class="sc">==</span> <span class="st">&quot;Griffon vulture / Eurasian griffon&quot;</span>)</span>
+<span id="cb262-2"><a href="keeping-code-dry-spring-week-one.html#cb262-2" aria-hidden="true" tabindex="-1"></a>vultureITCR <span class="ot">&lt;-</span> <span class="fu">filter</span>(vulture, Country.list <span class="sc">==</span> <span class="fu">c</span>(<span class="st">&quot;Croatia&quot;</span>, <span class="st">&quot;Italy&quot;</span>))</span>
+<span id="cb262-3"><a href="keeping-code-dry-spring-week-one.html#cb262-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb262-4"><a href="keeping-code-dry-spring-week-one.html#cb262-4" aria-hidden="true" tabindex="-1"></a>vulture_scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(vultureITCR, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> abundance, <span class="at">colour =</span> Country.list)) <span class="sc">+</span></span>
+<span id="cb262-5"><a href="keeping-code-dry-spring-week-one.html#cb262-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span>                                              <span class="co"># Changing point size</span></span>
+<span id="cb262-6"><a href="keeping-code-dry-spring-week-one.html#cb262-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="fu">aes</span>(<span class="at">fill =</span> Country.list)) <span class="sc">+</span>                <span class="co"># Adding a linear model fit and colour-coding by country</span></span>
+<span id="cb262-7"><a href="keeping-code-dry-spring-week-one.html#cb262-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#EE7600&quot;</span>, <span class="st">&quot;#00868B&quot;</span>)) <span class="sc">+</span>               <span class="co"># Adding custom colours</span></span>
+<span id="cb262-8"><a href="keeping-code-dry-spring-week-one.html#cb262-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#EE7600&quot;</span>, <span class="st">&quot;#00868B&quot;</span>),               <span class="co"># Adding custom colours</span></span>
+<span id="cb262-9"><a href="keeping-code-dry-spring-week-one.html#cb262-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Croatia&quot;</span>, <span class="st">&quot;Italy&quot;</span>)) <span class="sc">+</span>               <span class="co"># Adding labels for the legend</span></span>
+<span id="cb262-10"><a href="keeping-code-dry-spring-week-one.html#cb262-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;Griffon vulture abundance</span><span class="sc">\n</span><span class="st">&quot;</span>) <span class="sc">+</span>                             </span>
+<span id="cb262-11"><a href="keeping-code-dry-spring-week-one.html#cb262-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Year&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb262-12"><a href="keeping-code-dry-spring-week-one.html#cb262-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme_bw</span>() </span>
+<span id="cb262-13"><a href="keeping-code-dry-spring-week-one.html#cb262-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb262-14"><a href="keeping-code-dry-spring-week-one.html#cb262-14" aria-hidden="true" tabindex="-1"></a>vulture_scatter</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-358-1.png" width="672" /></p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="keeping-code-dry-spring-week-one.html#cb263-1" aria-hidden="true" tabindex="-1"></a>vulture_scatter<span class="sc">+</span><span class="fu">theme_custom</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="keeping-code-dry-spring-week-one.html#cb264-1" aria-hidden="true" tabindex="-1"></a>LPI_UK <span class="ot">&lt;-</span> <span class="fu">filter</span>(LPI, Country.list <span class="sc">==</span> <span class="st">&quot;United Kingdom&quot;</span>)</span>
+<span id="cb264-2"><a href="keeping-code-dry-spring-week-one.html#cb264-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb264-3"><a href="keeping-code-dry-spring-week-one.html#cb264-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick 4 species and make scatterplots with linear model fits that show how the population has varied through time</span></span>
+<span id="cb264-4"><a href="keeping-code-dry-spring-week-one.html#cb264-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Careful with the spelling of the names, it needs to match the names of the species in the LPI.UK dataframe</span></span>
+<span id="cb264-5"><a href="keeping-code-dry-spring-week-one.html#cb264-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb264-6"><a href="keeping-code-dry-spring-week-one.html#cb264-6" aria-hidden="true" tabindex="-1"></a>house_sparrow <span class="ot">&lt;-</span> <span class="fu">filter</span>(LPI_UK, Common.Name <span class="sc">==</span> <span class="st">&quot;House sparrow&quot;</span>)</span>
+<span id="cb264-7"><a href="keeping-code-dry-spring-week-one.html#cb264-7" aria-hidden="true" tabindex="-1"></a>great_tit <span class="ot">&lt;-</span> <span class="fu">filter</span>(LPI_UK, Common.Name <span class="sc">==</span> <span class="st">&quot;Great tit&quot;</span>)</span>
+<span id="cb264-8"><a href="keeping-code-dry-spring-week-one.html#cb264-8" aria-hidden="true" tabindex="-1"></a>corn_bunting <span class="ot">&lt;-</span> <span class="fu">filter</span>(LPI_UK, Common.Name <span class="sc">==</span> <span class="st">&quot;Corn bunting&quot;</span>)</span>
+<span id="cb264-9"><a href="keeping-code-dry-spring-week-one.html#cb264-9" aria-hidden="true" tabindex="-1"></a>reed_bunting <span class="ot">&lt;-</span> <span class="fu">filter</span>(LPI_UK, Common.Name <span class="sc">==</span> <span class="st">&quot;Reed bunting&quot;</span>)</span>
+<span id="cb264-10"><a href="keeping-code-dry-spring-week-one.html#cb264-10" aria-hidden="true" tabindex="-1"></a>meadow_pipit <span class="ot">&lt;-</span> <span class="fu">filter</span>(LPI_UK, Common.Name <span class="sc">==</span> <span class="st">&quot;Meadow pipit&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="keeping-code-dry-spring-week-one.html#cb265-1" aria-hidden="true" tabindex="-1"></a>house_sparrow_scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(house_sparrow, <span class="fu">aes</span> (<span class="at">x =</span> year, <span class="at">y =</span> abundance)) <span class="sc">+</span></span>
+<span id="cb265-2"><a href="keeping-code-dry-spring-week-one.html#cb265-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>                                                </span>
+<span id="cb265-3"><a href="keeping-code-dry-spring-week-one.html#cb265-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>          </span>
+<span id="cb265-4"><a href="keeping-code-dry-spring-week-one.html#cb265-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_custom</span>() <span class="sc">+</span></span>
+<span id="cb265-5"><a href="keeping-code-dry-spring-week-one.html#cb265-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Abundance</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;House sparrow&quot;</span>)</span>
+<span id="cb265-6"><a href="keeping-code-dry-spring-week-one.html#cb265-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb265-7"><a href="keeping-code-dry-spring-week-one.html#cb265-7" aria-hidden="true" tabindex="-1"></a>great_tit_scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(great_tit, <span class="fu">aes</span> (<span class="at">x =</span> year, <span class="at">y =</span> abundance)) <span class="sc">+</span></span>
+<span id="cb265-8"><a href="keeping-code-dry-spring-week-one.html#cb265-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>                                                </span>
+<span id="cb265-9"><a href="keeping-code-dry-spring-week-one.html#cb265-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>          </span>
+<span id="cb265-10"><a href="keeping-code-dry-spring-week-one.html#cb265-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_custom</span>() <span class="sc">+</span></span>
+<span id="cb265-11"><a href="keeping-code-dry-spring-week-one.html#cb265-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Abundance</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Great tit&quot;</span>)</span>
+<span id="cb265-12"><a href="keeping-code-dry-spring-week-one.html#cb265-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb265-13"><a href="keeping-code-dry-spring-week-one.html#cb265-13" aria-hidden="true" tabindex="-1"></a>corn_bunting_scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(corn_bunting, <span class="fu">aes</span> (<span class="at">x =</span> year, <span class="at">y =</span> abundance)) <span class="sc">+</span></span>
+<span id="cb265-14"><a href="keeping-code-dry-spring-week-one.html#cb265-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>                                                </span>
+<span id="cb265-15"><a href="keeping-code-dry-spring-week-one.html#cb265-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>          </span>
+<span id="cb265-16"><a href="keeping-code-dry-spring-week-one.html#cb265-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_custom</span>() <span class="sc">+</span></span>
+<span id="cb265-17"><a href="keeping-code-dry-spring-week-one.html#cb265-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Abundance</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Corn bunting&quot;</span>)</span>
+<span id="cb265-18"><a href="keeping-code-dry-spring-week-one.html#cb265-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb265-19"><a href="keeping-code-dry-spring-week-one.html#cb265-19" aria-hidden="true" tabindex="-1"></a>meadow_pipit_scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(meadow_pipit, <span class="fu">aes</span> (<span class="at">x =</span> year, <span class="at">y =</span> abundance)) <span class="sc">+</span></span>
+<span id="cb265-20"><a href="keeping-code-dry-spring-week-one.html#cb265-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>                                                </span>
+<span id="cb265-21"><a href="keeping-code-dry-spring-week-one.html#cb265-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>          </span>
+<span id="cb265-22"><a href="keeping-code-dry-spring-week-one.html#cb265-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_custom</span>() <span class="sc">+</span></span>
+<span id="cb265-23"><a href="keeping-code-dry-spring-week-one.html#cb265-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Abundance</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Meadow pipit&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="keeping-code-dry-spring-week-one.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="co"># put at the top of your script</span></span>
+<span id="cb266-2"><a href="keeping-code-dry-spring-week-one.html#cb266-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb266-3"><a href="keeping-code-dry-spring-week-one.html#cb266-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb266-4"><a href="keeping-code-dry-spring-week-one.html#cb266-4" aria-hidden="true" tabindex="-1"></a>layout <span class="ot">&lt;-</span> <span class="st">&quot;AABB</span></span>
+<span id="cb266-5"><a href="keeping-code-dry-spring-week-one.html#cb266-5" aria-hidden="true" tabindex="-1"></a><span class="st">           CCDD&quot;</span></span>
+<span id="cb266-6"><a href="keeping-code-dry-spring-week-one.html#cb266-6" aria-hidden="true" tabindex="-1"></a>house_sparrow_scatter<span class="sc">+</span>great_tit_scatter<span class="sc">+</span>corn_bunting_scatter<span class="sc">+</span>meadow_pipit_scatter<span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">design=</span>layout)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-362-1.png" width="672" /></p>
+<p>This is ok, but arguably still requires a lot of code repetition.</p>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="keeping-code-dry-spring-week-one.html#cb267-1" aria-hidden="true" tabindex="-1"></a>Sp_list <span class="ot">&lt;-</span> <span class="fu">list</span>(house_sparrow, great_tit, corn_bunting, meadow_pipit)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="keeping-code-dry-spring-week-one.html#cb268-1" aria-hidden="true" tabindex="-1"></a>my_plots <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">length</span>(Sp_list))</span>
+<span id="cb268-2"><a href="keeping-code-dry-spring-week-one.html#cb268-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-3"><a href="keeping-code-dry-spring-week-one.html#cb268-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Sp_list)) {                                    <span class="co"># For every item along the length of Sp_list we want R to perform the following functions</span></span>
+<span id="cb268-4"><a href="keeping-code-dry-spring-week-one.html#cb268-4" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(Sp_list[i])                               <span class="co"># Create a dataframe for each species</span></span>
+<span id="cb268-5"><a href="keeping-code-dry-spring-week-one.html#cb268-5" aria-hidden="true" tabindex="-1"></a>  sp.name <span class="ot">&lt;-</span> <span class="fu">unique</span>(data<span class="sc">$</span>Common.Name)                             <span class="co"># Create an object that holds the species name, so that we can title each graph</span></span>
+<span id="cb268-6"><a href="keeping-code-dry-spring-week-one.html#cb268-6" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span> (<span class="at">x =</span> year, <span class="at">y =</span> abundance)) <span class="sc">+</span>               <span class="co"># Make the plots and add our customised theme</span></span>
+<span id="cb268-7"><a href="keeping-code-dry-spring-week-one.html#cb268-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>                                                </span>
+<span id="cb268-8"><a href="keeping-code-dry-spring-week-one.html#cb268-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>          </span>
+<span id="cb268-9"><a href="keeping-code-dry-spring-week-one.html#cb268-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_custom</span>() <span class="sc">+</span></span>
+<span id="cb268-10"><a href="keeping-code-dry-spring-week-one.html#cb268-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Abundance</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> sp.name)</span>
+<span id="cb268-11"><a href="keeping-code-dry-spring-week-one.html#cb268-11" aria-hidden="true" tabindex="-1"></a>  my_plots[[i]] <span class="ot">&lt;-</span> plot <span class="co"># makes a list of all the plots generates</span></span>
+<span id="cb268-12"><a href="keeping-code-dry-spring-week-one.html#cb268-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(plot) <span class="co"># prints each plot out as it is made</span></span>
+<span id="cb268-13"><a href="keeping-code-dry-spring-week-one.html#cb268-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="keeping-code-dry-spring-week-one.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wrap_plots</span>(my_plots)<span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">design=</span>layout) <span class="co">#wrap_plots function from patchwork can take a list of ggplots</span></span></code></pre></div>
+<details>
+<summary>
+<strong>What if you want to write a loop to save all four plots at once - can you modify the script to do this?</strong>
+</summary>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="keeping-code-dry-spring-week-one.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(Sp_list)) {                                    <span class="co"># For every item along the length of Sp_list we want R to perform the following functions</span></span>
+<span id="cb270-2"><a href="keeping-code-dry-spring-week-one.html#cb270-2" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(Sp_list[i])                               <span class="co"># Create a dataframe for each species</span></span>
+<span id="cb270-3"><a href="keeping-code-dry-spring-week-one.html#cb270-3" aria-hidden="true" tabindex="-1"></a>  sp.name <span class="ot">&lt;-</span> <span class="fu">unique</span>(data<span class="sc">$</span>Common.Name)                             <span class="co"># Create an object that holds the species name, so that we can title each graph</span></span>
+<span id="cb270-4"><a href="keeping-code-dry-spring-week-one.html#cb270-4" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span> (<span class="at">x =</span> year, <span class="at">y =</span> abundance)) <span class="sc">+</span>               <span class="co"># Make the plots and add our customised theme</span></span>
+<span id="cb270-5"><a href="keeping-code-dry-spring-week-one.html#cb270-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>                                                </span>
+<span id="cb270-6"><a href="keeping-code-dry-spring-week-one.html#cb270-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>          </span>
+<span id="cb270-7"><a href="keeping-code-dry-spring-week-one.html#cb270-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_custom</span>() <span class="sc">+</span></span>
+<span id="cb270-8"><a href="keeping-code-dry-spring-week-one.html#cb270-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Abundance</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> sp.name)</span>
+<span id="cb270-9"><a href="keeping-code-dry-spring-week-one.html#cb270-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb270-10"><a href="keeping-code-dry-spring-week-one.html#cb270-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i <span class="sc">%%</span> <span class="dv">1</span><span class="sc">==</span><span class="dv">0</span>){    <span class="co"># The %% operator is the remainder, this handy if line prints a number every time it completes a loop</span></span>
+<span id="cb270-11"><a href="keeping-code-dry-spring-week-one.html#cb270-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(i)</span>
+<span id="cb270-12"><a href="keeping-code-dry-spring-week-one.html#cb270-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb270-13"><a href="keeping-code-dry-spring-week-one.html#cb270-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb270-14"><a href="keeping-code-dry-spring-week-one.html#cb270-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggsave</span>(plot, <span class="at">file=</span><span class="fu">paste</span>(<span class="st">&quot;figure/&quot;</span>, sp.name, <span class="st">&quot;.png&quot;</span>, <span class="at">sep=</span><span class="st">&#39;&#39;</span>), <span class="at">dpi=</span><span class="dv">900</span>) <span class="co"># use paste to automatically add filename</span></span>
+<span id="cb270-15"><a href="keeping-code-dry-spring-week-one.html#cb270-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</details>
+</div>
+<div id="learning-to-purr" class="section level3" number="13.2.4">
+<h3><span class="header-section-number">13.2.4</span> Learning to <strong>purr</strong></h3>
+<p>Another approach to iterative operations is the purrr package - it is the tidyverse approach to iteration.</p>
+<p>If you are faced with performing the same task several times, it is probably worth creating a generalised solution that you can use across many inputs. For example, producing plots for multiple jurisdictions, or importing and combining many files.</p>
+<p>There are also a few other advantages to purrr - you can use it with pipes %&gt;%, it handles errors better than normal for loops, and the syntax is quite clean and simple! If you are using a for loop, you can probably do it more clearly and succinctly with purrr!</p>
+<p><strong>Remember</strong> purrr is a very tidyverse focused method of iteration, so understanding for loops can be useful if you end up learning other programming languages in the future.</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="keeping-code-dry-spring-week-one.html#cb271-1" aria-hidden="true" tabindex="-1"></a>my_plots_2 <span class="ot">&lt;-</span> <span class="fu">map</span>(Sp_list, <span class="sc">~</span><span class="fu">ggplot</span>(data, <span class="fu">aes</span> (<span class="at">x =</span> year, <span class="at">y =</span> abundance)) <span class="sc">+</span>              </span>
+<span id="cb271-2"><a href="keeping-code-dry-spring-week-one.html#cb271-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>                                                </span>
+<span id="cb271-3"><a href="keeping-code-dry-spring-week-one.html#cb271-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>          </span>
+<span id="cb271-4"><a href="keeping-code-dry-spring-week-one.html#cb271-4" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">theme_custom</span>() <span class="sc">+</span></span>
+<span id="cb271-5"><a href="keeping-code-dry-spring-week-one.html#cb271-5" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Abundance</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> sp.name)) </span>
+<span id="cb271-6"><a href="keeping-code-dry-spring-week-one.html#cb271-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb271-7"><a href="keeping-code-dry-spring-week-one.html#cb271-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb271-8"><a href="keeping-code-dry-spring-week-one.html#cb271-8" aria-hidden="true" tabindex="-1"></a><span class="fu">wrap_plots</span>(my_plots_2)<span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">design=</span>layout)</span></code></pre></div>
+</div>
+</div>
+<div id="summary-1" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Summary</h2>
+<p>Making functions and iterations are advanced R skills, and can often seem daunting. I do not expect you to HAVE to implement these for this course, but I do want to give you an insight into some core programming skills that you might be interested in and want to develop.</p>
+<p><a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a></p>
+<p><a href="https://r4ds.had.co.nz/program-intro.html" class="uri">https://r4ds.had.co.nz/program-intro.html</a></p>
+<ul>
+<li>Coding club. <a href="https://ourcodingclub.github.io/tutorials/funandloops/#function" class="uri">https://ourcodingclub.github.io/tutorials/funandloops/#function</a></li>
+</ul>
+<p><a href="https://epirhandbook.com/en/iteration-loops-and-lists.html" class="uri">https://epirhandbook.com/en/iteration-loops-and-lists.html</a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-statistics-spring-week-one.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/08-Estimation.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
