@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-01-20" />
+<meta name="date" content="2022-01-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -544,7 +544,10 @@ You should have a script set up to put your work from today into - use this to w
 <h3><span class="header-section-number">12.2.1</span> Description</h3>
 <p>The first thing we should know by now is to always start by exploring our data. If you want to stretch yourself, see if you can perform a basic data check <strong>without</strong> prompts.</p>
 <p>If you need a little help with remembering what to check, but would like to try and adapt scripts go to <a href="workflow-part-one-week-two.html#view-and-refine">3.5.1</a> from workflow 1.</p>
-<p>If you got completely stuck, or had a go but want to check your answers follow below:</p>
+<details>
+<summary>
+<strong>Click-me</strong> - If you got completely stuck, or had a go but want to check your answers follow below:
+</summary>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="introduction-to-statistics-spring-week-one.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check the structure of the data</span></span>
 <span id="cb233-2"><a href="introduction-to-statistics-spring-week-one.html#cb233-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(darwin)</span>
 <span id="cb233-3"><a href="introduction-to-statistics-spring-week-one.html#cb233-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -582,6 +585,7 @@ You should have a script set up to put your work from today into - use this to w
 <span id="cb233-35"><a href="introduction-to-statistics-spring-week-one.html#cb233-35" aria-hidden="true" tabindex="-1"></a><span class="co"># quick summary</span></span>
 <span id="cb233-36"><a href="introduction-to-statistics-spring-week-one.html#cb233-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb233-37"><a href="introduction-to-statistics-spring-week-one.html#cb233-37" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(darwin)</span></code></pre></div>
+</details>
 <p>Now seems like a good time for our first data visualisation</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="introduction-to-statistics-spring-week-one.html#cb234-1" aria-hidden="true" tabindex="-1"></a>darwin <span class="sc">%&gt;%</span> </span>
 <span id="cb234-2"><a href="introduction-to-statistics-spring-week-one.html#cb234-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>type,</span>
@@ -736,7 +740,7 @@ SE = \frac{s}{\sqrt(n)}
 <p>Our estimate of the mean is not really very useful without an accompanying measuring of <em>uncertainty</em> like the standard error, in fact estimates of averages or differences should <strong>always</strong> be accompanied by their measure of uncertainty.</p>
 <details>
 <summary>
-<strong>With the information above, how would you present a short sentence describing the average different in height?</strong>
+<strong>Click me -</strong> With the information above, how would you present a short sentence describing the average different in height?**
 </summary>
 <p><em>… the average difference in height was 2.62 ± 1.22 inches (mean ± SE).</em></p>
 </details>
@@ -757,6 +761,15 @@ When we decide whether we have enough confidence that a difference is real (e.g.
 </div>
 <div id="normal-distribution" class="section level3" number="12.3.3">
 <h3><span class="header-section-number">12.3.3</span> Normal distribution</h3>
+<p>As we should remember from last term (and before), the normal distribution is the bell-shaped curve. It is defined by two parameters:</p>
+<ul>
+<li><p>the mean</p></li>
+<li><p>the standard deviation</p></li>
+</ul>
+<p>The mean determines where the centre/peak of the bell curve is, the standard deviation determines the width of the bell (how long the tails are).</p>
+<p>Large standard deviations produce wide bell curves, with short peaks. Small standard deviations produce narrow bell curves with tall peaks.</p>
+<p>The bell curve occurs frequently in nature, most circumstances where we can think of a continuous measure coming from a population e.g. human mass, penguin flipper lengths or plant heights.</p>
+<p>As a <em>probability</em> distribution, the area within the curve sums to the whole population (e.g. the probability that the curve contains every possible measurement is 1). Known proportions of the curve lie within certain distances from the centre e.g. 67.8% of observations should have values within one standard deviation of the mean. 95% of observations should have values within two standard deviations of the mean. This <em>idealised</em> normal distribution is presented below:</p>
 <div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="introduction-to-statistics-spring-week-one.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a sequence of 100 equally spaced numbers between -4 and 4</span></span>
 <span id="cb246-2"><a href="introduction-to-statistics-spring-week-one.html#cb246-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
 <span id="cb246-3"><a href="introduction-to-statistics-spring-week-one.html#cb246-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -769,14 +782,40 @@ When we decide whether we have enough confidence that a difference is real (e.g.
 <span id="cb246-10"><a href="introduction-to-statistics-spring-week-one.html#cb246-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>)</span>
 <span id="cb246-11"><a href="introduction-to-statistics-spring-week-one.html#cb246-11" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="sc">-</span><span class="dv">3</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;-3s&quot;</span>, <span class="st">&quot;-2s&quot;</span>, <span class="st">&quot;-1s&quot;</span>, <span class="st">&quot;mean&quot;</span>, <span class="st">&quot;1s&quot;</span>, <span class="st">&quot;2s&quot;</span>, <span class="st">&quot;3s&quot;</span>))</span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-339-1.png" width="672" /></p>
+<p>How do we convert this information into how likely we are to observe a difference of 2.62 inches in plant heights if the ‘true’ difference between crosses and selfed plants is <em>zero</em>?</p>
+<p>The <strong>central limit theorem</strong> states that if you have a population with mean and standard deviation, and take sufficiently large random samples from the population, then the distribution of the sample means will be approximately normally distributed. Standard error then is our measure of variability around our sample mean, and we will assume that we can apply a normal distribution to our ability to estimate the mean (<em>we will revisit this assumption later</em>).</p>
+<p>So if we now center our bell curve on the estimate of the mean (2.62), then just over two thirds of the area under the curve is ± 1.22 inches. 95% of it will be within ± 2 standard errors, and 99.8% will be within ± 3 standard errors.</p>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-340-1.png" width="672" /></p>
+<p>Taking a look at this figure we can ask ourselves where is zero on our normal distribution? One way to think about this is, if the true difference between our plant groups is zero, how surprising is it that we estimated a difference of 2.62 inches?</p>
+<p>If zero was close to the center of the bell curve, then our observed mean would not be surprising at all (<strong>if the null hypothesis is true</strong>). However in this case it is not in the middle of the bell. It falls in the left-hand tail, and it is &gt; than two standard deviations from our estimated mean.</p>
+<p>We can describe this in two ways:</p>
+<ul>
+<li><p>We estimate that if we ran this experiment 100 times then &gt;95 of our experiments would estimate a mean difference between our plant groups that is &gt; 0.</p></li>
+<li><p>This is also usually taken as the minimum threshold needed to <em>reject</em> a null hypothesis. We can think of the probability of estimating this mean difference, if our true mean difference was zero, as p &lt; 0.05.</p></li>
+</ul>
+<p>You will probably be very used to a threshold for null hypothesis rejection of <span class="math inline">\(\alpha\)</span> = 0.05, but this only the very lowest level of confidence at which we can pass a statistical test. If we increase the severity of our test so that the minimum we require is <span class="math inline">\(\alpha\)</span> = 0.001 or 99% confidence, we can see that we no longer believe we have enough confidence to reject the null hypothesis (0 is within 3 s.d. of our estimated mean).</p>
 </div>
 <div id="confidence-intervals" class="section level3" number="12.3.4">
 <h3><span class="header-section-number">12.3.4</span> Confidence Intervals</h3>
+<p>Because ± 2 standard errors covers the central 95% of the area under the normal curve, we refer to this as our 95% confidence interval. We can calculate confidence intervals for any level, but commonly we refer to standard error (68% CI), 95% and 99%.</p>
+<p>We can work out the 95% confidence interval range of our estimated mean as follows</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="introduction-to-statistics-spring-week-one.html#cb247-1" aria-hidden="true" tabindex="-1"></a>lowerCI <span class="ot">&lt;-</span> <span class="fl">2.62</span><span class="sc">-</span>(<span class="dv">2</span><span class="sc">*</span><span class="fl">1.22</span>)</span>
+<span id="cb247-2"><a href="introduction-to-statistics-spring-week-one.html#cb247-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-3"><a href="introduction-to-statistics-spring-week-one.html#cb247-3" aria-hidden="true" tabindex="-1"></a>upperCI <span class="ot">&lt;-</span> <span class="fl">2.62</span><span class="sc">+</span>(<span class="dv">2</span><span class="sc">*</span><span class="fl">1.22</span>)</span>
+<span id="cb247-4"><a href="introduction-to-statistics-spring-week-one.html#cb247-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-5"><a href="introduction-to-statistics-spring-week-one.html#cb247-5" aria-hidden="true" tabindex="-1"></a>lowerCI</span>
+<span id="cb247-6"><a href="introduction-to-statistics-spring-week-one.html#cb247-6" aria-hidden="true" tabindex="-1"></a>upperCI</span></code></pre></div>
+<p>A common mistake it to state that we are 95% confident that the ‘true’ mean lies within our interval. But <em>technically</em> it refers to the fact that if we kept running this experiment again and again the intervals we calculate would capture the true mean in 95% of experiments. So really we are saying that we are confident we would capture the true mean in 95% of our experiments.</p>
+<p>How might we write this up?</p>
+<pre><code>The maize plants that have been cross pollinated were taller on average than the self-pollinated plants, with a mean difference in height of 2.62 [0.18, 5.06] inches (mean [95% CI]).</code></pre>
+<p>Note that because it is possible to generate multiple types of average and confidence interval, we clearly state them in our write up. The same would be true if you were presenting the standard error (± S.E.) or the standard deviation (± S.D.) or a median and interquartile range (median [± IQR]).</p>
+<p>The above is a good example of a simple but clear write-up because it clearly describes the <em>direction</em> of the difference, the <em>amount</em> and the <em>error</em> in our estimate.</p>
 </div>
 </div>
 <div id="summary" class="section level2" number="12.4">
 <h2><span class="header-section-number">12.4</span> Summary</h2>
+<p>Statistics is all about trying to interpret whether the signal (of a difference or trend) is stronger than the amount of noise (variability). In a sample the standard deviation is a strong choice for estimating this <em>within</em> a dataset. The standard deviation of the sampling distribution of the mean is known as the standard error. The standard error (of the mean) is a measure of the precision we have in our estimate of the mean. Thanks to the central limit theorem and normal distribution we can use the variability in our estimate to calculate confidence intervals, and decide whether our signal of an effect is strong enough to reject a null hypothesis (of no effect or no difference).</p>
+<p>Next time we will start working with linear models - this approach allows us to estimate means and intervals in a more sophisticated (and automated) way.</p>
 </div>
 </div>
             </section>

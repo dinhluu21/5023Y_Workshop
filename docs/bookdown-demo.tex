@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2022-01-20}
+\date{2022-01-25}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-01-20
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-01-25
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -5884,7 +5884,7 @@ The first thing we should know by now is to always start by exploring our data. 
 
 If you need a little help with remembering what to check, but would like to try and adapt scripts go to \ref{view-and-refine} from workflow 1.
 
-If you got completely stuck, or had a go but want to check your answers follow below:
+\textbf{Click-me} - If you got completely stuck, or had a go but want to check your answers follow below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6127,7 +6127,7 @@ We can calculate the standard error for our sample as follows
 
 Our estimate of the mean is not really very useful without an accompanying measuring of \emph{uncertainty} like the standard error, in fact estimates of averages or differences should \textbf{always} be accompanied by their measure of uncertainty.
 
-\textbf{With the information above, how would you present a short sentence describing the average different in height?}
+\textbf{Click me -} With the information above, how would you present a short sentence describing the average different in height?**
 
 \emph{\ldots{} the average difference in height was 2.62 ± 1.22 inches (mean ± SE).}
 
@@ -6156,6 +6156,23 @@ More on this later
 \hypertarget{normal-distribution}{%
 \subsection{Normal distribution}\label{normal-distribution}}
 
+As we should remember from last term (and before), the normal distribution is the bell-shaped curve. It is defined by two parameters:
+
+\begin{itemize}
+\item
+  the mean
+\item
+  the standard deviation
+\end{itemize}
+
+The mean determines where the centre/peak of the bell curve is, the standard deviation determines the width of the bell (how long the tails are).
+
+Large standard deviations produce wide bell curves, with short peaks. Small standard deviations produce narrow bell curves with tall peaks.
+
+The bell curve occurs frequently in nature, most circumstances where we can think of a continuous measure coming from a population e.g.~human mass, penguin flipper lengths or plant heights.
+
+As a \emph{probability} distribution, the area within the curve sums to the whole population (e.g.~the probability that the curve contains every possible measurement is 1). Known proportions of the curve lie within certain distances from the centre e.g.~67.8\% of observations should have values within one standard deviation of the mean. 95\% of observations should have values within two standard deviations of the mean. This \emph{idealised} normal distribution is presented below:
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\#Create a sequence of 100 equally spaced numbers between {-}4 and 4}
@@ -6174,13 +6191,65 @@ More on this later
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-339-1.pdf}
 
+How do we convert this information into how likely we are to observe a difference of 2.62 inches in plant heights if the `true' difference between crosses and selfed plants is \emph{zero}?
+
+The \textbf{central limit theorem} states that if you have a population with mean and standard deviation, and take sufficiently large random samples from the population, then the distribution of the sample means will be approximately normally distributed. Standard error then is our measure of variability around our sample mean, and we will assume that we can apply a normal distribution to our ability to estimate the mean (\emph{we will revisit this assumption later}).
+
+So if we now center our bell curve on the estimate of the mean (2.62), then just over two thirds of the area under the curve is ± 1.22 inches. 95\% of it will be within ± 2 standard errors, and 99.8\% will be within ± 3 standard errors.
+
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-340-1.pdf}
+
+Taking a look at this figure we can ask ourselves where is zero on our normal distribution? One way to think about this is, if the true difference between our plant groups is zero, how surprising is it that we estimated a difference of 2.62 inches?
+
+If zero was close to the center of the bell curve, then our observed mean would not be surprising at all (\textbf{if the null hypothesis is true}). However in this case it is not in the middle of the bell. It falls in the left-hand tail, and it is \textgreater{} than two standard deviations from our estimated mean.
+
+We can describe this in two ways:
+
+\begin{itemize}
+\item
+  We estimate that if we ran this experiment 100 times then \textgreater95 of our experiments would estimate a mean difference between our plant groups that is \textgreater{} 0.
+\item
+  This is also usually taken as the minimum threshold needed to \emph{reject} a null hypothesis. We can think of the probability of estimating this mean difference, if our true mean difference was zero, as p \textless{} 0.05.
+\end{itemize}
+
+You will probably be very used to a threshold for null hypothesis rejection of \(\alpha\) = 0.05, but this only the very lowest level of confidence at which we can pass a statistical test. If we increase the severity of our test so that the minimum we require is \(\alpha\) = 0.001 or 99\% confidence, we can see that we no longer believe we have enough confidence to reject the null hypothesis (0 is within 3 s.d. of our estimated mean).
 
 \hypertarget{confidence-intervals}{%
 \subsection{Confidence Intervals}\label{confidence-intervals}}
 
+Because ± 2 standard errors covers the central 95\% of the area under the normal curve, we refer to this as our 95\% confidence interval. We can calculate confidence intervals for any level, but commonly we refer to standard error (68\% CI), 95\% and 99\%.
+
+We can work out the 95\% confidence interval range of our estimated mean as follows
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lowerCI }\OtherTok{\textless{}{-}} \FloatTok{2.62}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\FloatTok{1.22}\NormalTok{)}
+
+\NormalTok{upperCI }\OtherTok{\textless{}{-}} \FloatTok{2.62}\SpecialCharTok{+}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\FloatTok{1.22}\NormalTok{)}
+
+\NormalTok{lowerCI}
+\NormalTok{upperCI}
+\end{Highlighting}
+\end{Shaded}
+
+A common mistake it to state that we are 95\% confident that the `true' mean lies within our interval. But \emph{technically} it refers to the fact that if we kept running this experiment again and again the intervals we calculate would capture the true mean in 95\% of experiments. So really we are saying that we are confident we would capture the true mean in 95\% of our experiments.
+
+How might we write this up?
+
+\begin{verbatim}
+The maize plants that have been cross pollinated were taller on average than the self-pollinated plants, with a mean difference in height of 2.62 [0.18, 5.06] inches (mean [95% CI]).
+\end{verbatim}
+
+Note that because it is possible to generate multiple types of average and confidence interval, we clearly state them in our write up. The same would be true if you were presenting the standard error (± S.E.) or the standard deviation (± S.D.) or a median and interquartile range (median {[}± IQR{]}).
+
+The above is a good example of a simple but clear write-up because it clearly describes the \emph{direction} of the difference, the \emph{amount} and the \emph{error} in our estimate.
+
 \hypertarget{summary}{%
 \section{Summary}\label{summary}}
+
+Statistics is all about trying to interpret whether the signal (of a difference or trend) is stronger than the amount of noise (variability). In a sample the standard deviation is a strong choice for estimating this \emph{within} a dataset. The standard deviation of the sampling distribution of the mean is known as the standard error. The standard error (of the mean) is a measure of the precision we have in our estimate of the mean. Thanks to the central limit theorem and normal distribution we can use the variability in our estimate to calculate confidence intervals, and decide whether our signal of an effect is strong enough to reject a null hypothesis (of no effect or no difference).
+
+Next time we will start working with linear models - this approach allows us to estimate means and intervals in a more sophisticated (and automated) way.
 
 \hypertarget{keeping-code-dry---spring-week-one}{%
 \chapter{Keeping code DRY - Spring Week One}\label{keeping-code-dry---spring-week-one}}
@@ -6268,10 +6337,10 @@ separate script and use source(``scripts/functions.R'')
 \end{rmdnote}
 
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{images/project} \caption{An example of a typical R project set-up}\label{fig:unnamed-chunk-346}
+\includegraphics[width=0.8\linewidth]{images/project} \caption{An example of a typical R project set-up}\label{fig:unnamed-chunk-347}
 \end{figure}
 
-It might suprise you to know that there is no prebuilt function for standard error in R
+It might suprise you to know that there is no prebuilt function for standard error in base R, but we can build our own!
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6319,7 +6388,7 @@ Here is a plot we made in the previous chapter
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-349-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-350-1.pdf}
 With the addition of a title and \texttt{theme\_classic()} we can improve the style quickly
 
 \begin{Shaded}
@@ -6330,7 +6399,7 @@ With the addition of a title and \texttt{theme\_classic()} we can improve the st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-350-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-351-1.pdf}
 But I still want to make some more changes, rather than do this work for one figure, and potentially have to repeat this several times for subsequent figures, I can decide to make a new function instead.
 
 \begin{Shaded}
@@ -6381,7 +6450,7 @@ With this function set, I can now use it for as many figures as I wish. To use i
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-352-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-353-1.pdf}
 
 \hypertarget{iteration}{%
 \section{Iteration}\label{iteration}}
@@ -6498,7 +6567,7 @@ A simple for loop \textbf{example} is below. For every number in the vector add 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-358-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-359-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6560,7 +6629,7 @@ A simple for loop \textbf{example} is below. For every number in the vector add 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-362-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-363-1.pdf}
 
 This is ok, but arguably still requires a lot of code repetition.
 
@@ -6594,7 +6663,7 @@ This is ok, but arguably still requires a lot of code repetition.
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{What if you want to write a loop to save all four plots at once - can you modify the script to do this?}
+\textbf{Click me} - What if you want to write a loop to save all four plots at once - can you modify the script to do this?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6645,17 +6714,18 @@ There are also a few other advantages to purrr - you can use it with pipes \%\te
 
 Making functions and iterations are advanced R skills, and can often seem daunting. I do not expect you to HAVE to implement these for this course, but I do want to give you an insight into some core programming skills that you might be interested in and want to develop.
 
-\url{https://www.rstudio.com/resources/cheatsheets/}
-
-\url{https://r4ds.had.co.nz/program-intro.html}
+Below are some links you may find useful
 
 \begin{itemize}
-\tightlist
 \item
-  Coding club. \url{https://ourcodingclub.github.io/tutorials/funandloops/\#function}
+  \href{https://www.rstudio.com/resources/cheatsheets/}{RStudio education cheat sheet for ourr}
+\item
+  \href{https://r4ds.had.co.nz/program-intro.html}{R4DS - intro to programming}
+\item
+  \href{https://ourcodingclub.github.io/tutorials/funandloops/\#function}{Coding club}
+\item
+  \href{https://epirhandbook.com/en/iteration-loops-and-lists.html}{EpiR handbook}
 \end{itemize}
-
-\url{https://epirhandbook.com/en/iteration-loops-and-lists.html}
 
 *\href{https://www.rstudio.com/resources/cheatsheets/}{R Cheat Sheets}
 

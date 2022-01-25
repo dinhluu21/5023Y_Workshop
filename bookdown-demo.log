@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.11.15)  20 JAN 2022 17:02
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021/W32TeX) (preloaded format=xelatex 2021.11.15)  25 JAN 2022 17:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -3067,91 +3067,104 @@ RING WEEK ONE
 [244]
 File: images/note.png Graphic file (type bmp)
 <images/note.png>
+[245]
 File: bookdown-demo_files/figure-latex/unnamed-chunk-339-1.pdf Graphic file (ty
 pe pdf)
 <use bookdown-demo_files/figure-latex/unnamed-chunk-339-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[245]
 File: bookdown-demo_files/figure-latex/unnamed-chunk-340-1.pdf Graphic file (ty
 pe pdf)
 <use bookdown-demo_files/figure-latex/unnamed-chunk-340-1.pdf>
+
+Underfull \vbox (badness 2961) has occurred while \output is active []
+
 
 Overfull \hbox (6.09453pt too wide) has occurred while \output is active
 \TU/lmr/m/n/10 246 \TU/lmr/m/sl/10 CHAPTER 12.  INTRODUCTION TO STATISTICS - SP
 RING WEEK ONE
  []
 
-[246]
-Chapter 13.
-
-Package natbib Warning: Citation `ref-Estimates' on page 247 undefined on input
- line 6188.
-
-[247
-
-]
-File: images/note.png Graphic file (type bmp)
-<images/note.png>
-[248]
-File: images/project.png Graphic file (type bmp)
-<images/project.png>
-[249]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-349-1.pdf Graphic file (ty
-pe pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-349-1.pdf>
-
-Underfull \hbox (badness 10000) in paragraph at lines 6322--6324
-[][]
+[246] [247]
+Overfull \hbox (610.5pt too wide) in paragraph at lines 6241--6241
+[]\TU/lmtt/m/n/10 The maize plants that have been cross pollinated were taller 
+on average than the self-pollinated plants, with a mean difference in height of
+ 2.62 [0.18, 5.06] inches (mean [95% CI]).[] 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Overfull \hbox (6.09453pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 248 \TU/lmr/m/sl/10 CHAPTER 12.  INTRODUCTION TO STATISTICS - SP
+RING WEEK ONE
+ []
 
-[250]
+[248] [249]
+Overfull \hbox (6.09453pt too wide) has occurred while \output is active
+\TU/lmr/m/n/10 250 \TU/lmr/m/sl/10 CHAPTER 12.  INTRODUCTION TO STATISTICS - SP
+RING WEEK ONE
+ []
+
+[250
+
+]
+Chapter 13.
+
+Package natbib Warning: Citation `ref-Estimates' on page 251 undefined on input
+ line 6257.
+
+[251]
+File: images/note.png Graphic file (type bmp)
+<images/note.png>
+[252]
+File: images/project.png Graphic file (type bmp)
+<images/project.png>
+[253]
 File: bookdown-demo_files/figure-latex/unnamed-chunk-350-1.pdf Graphic file (ty
 pe pdf)
 <use bookdown-demo_files/figure-latex/unnamed-chunk-350-1.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 6333--6335
+Underfull \hbox (badness 10000) in paragraph at lines 6391--6393
 [][]
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[251] [252]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-352-1.pdf Graphic file (ty
+[254]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-351-1.pdf Graphic file (ty
 pe pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-352-1.pdf>
+<use bookdown-demo_files/figure-latex/unnamed-chunk-351-1.pdf>
+
+Underfull \hbox (badness 10000) in paragraph at lines 6402--6404
+[][]
+ []
+
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[253] [254] [255]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-358-1.pdf Graphic file (ty
+[255] [256]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-353-1.pdf Graphic file (ty
 pe pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-358-1.pdf>
-[256]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-362-1.pdf Graphic file (ty
-pe pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-362-1.pdf>
+<use bookdown-demo_files/figure-latex/unnamed-chunk-353-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [257] [258] [259]
-Underfull \hbox (badness 2103) in paragraph at lines 6655--6656
-[]\TU/lmr/m/n/10 Coding club. []$[][][][][] [] [] [] [][][][][][][][][][][][][]
- [] [][][][][][] [] [][] [] [][][][][][][][][] [] [][][][][][][][][][][] []
- []
+File: bookdown-demo_files/figure-latex/unnamed-chunk-359-1.pdf Graphic file (ty
+pe pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-359-1.pdf>
+[260]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-363-1.pdf Graphic file (ty
+pe pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-363-1.pdf>
 
-(./bookdown-demo.bbl [260] [261
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-] [262])
+[261] [262] [263] (./bookdown-demo.bbl [264] [265
+
+] [266])
 
 Package natbib Warning: There were undefined citations.
 
-[263] (./bookdown-demo.aux)
+[267] (./bookdown-demo.aux)
 Package rerunfilecheck Info: File `bookdown-demo.out' has not changed.
 (rerunfilecheck)             Checksum: 896A9588B56127183BFE0F0BD7C45A3E;17871.
  ) 
@@ -3164,4 +3177,4 @@ Here is how much of TeX's memory you used:
  14 hyphenation exceptions out of 8191
  86i,15n,121p,7685b,499s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on bookdown-demo.pdf (263 pages).
+Output written on bookdown-demo.pdf (267 pages).

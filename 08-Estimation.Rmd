@@ -63,7 +63,7 @@ The first thing we should know by now is to always start by exploring our data. 
 
 If you need a little help with remembering what to check, but would like to try and adapt scripts go to \@ref(view-and-refine) from workflow 1. 
 
-If you got completely stuck, or had a go but want to check your answers follow below:
+<details><summary> **Click-me** - If you got completely stuck, or had a go but want to check your answers follow below:</summary>
 
 ```{r}
 # check the structure of the data
@@ -105,6 +105,8 @@ darwin %>%
 summary(darwin)
 
 ```
+
+</details>
 
 Now seems like a good time for our first data visualisation
 
@@ -270,7 +272,7 @@ difference_summary %>%
 
 Our estimate of the mean is not really very useful without an accompanying measuring of *uncertainty* like the standard error, in fact estimates of averages or differences should **always** be accompanied by their measure of uncertainty. 
 
-<details><summary>**With the information above, how would you present a short sentence describing the average different in height?**</summary>
+<details><summary>**Click me -** With the information above, how would you present a short sentence describing the average different in height?**</summary>
 
 *... the average difference in height was 2.62 ± 1.22 inches (mean ± SE).*
 
@@ -295,6 +297,20 @@ When we decide whether we have enough confidence that a difference is real (e.g.
 
 ### Normal distribution
 
+As we should remember from last term (and before), the normal distribution is the bell-shaped curve. It is defined by two parameters:
+
+* the mean
+
+* the standard deviation
+
+The mean determines where the centre/peak of the bell curve is, the standard deviation determines the width of the bell (how long the tails are). 
+
+Large standard deviations produce wide bell curves, with short peaks. Small standard deviations produce narrow bell curves with tall peaks. 
+
+The bell curve occurs frequently in nature, most circumstances where we can think of a continuous measure coming from a population e.g. human mass, penguin flipper lengths or plant heights. 
+
+As a *probability* distribution, the area within the curve sums to the whole population (e.g. the probability that the curve contains every possible measurement is 1). Known proportions of the curve lie within certain distances from the centre e.g. 67.8% of observations should have values within one standard deviation of the mean. 95% of observations should have values within two standard deviations of the mean. This *idealised* normal distribution is presented below:
+
 ```{r, eval=TRUE}
 #Create a sequence of 100 equally spaced numbers between -4 and 4
 x <- seq(-4, 4, length=100)
@@ -309,17 +325,62 @@ plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "", ylab = "")
 axis(1, at = -3:3, labels = c("-3s", "-2s", "-1s", "mean", "1s", "2s", "3s"))
 ```
 
+How do we convert this information into how likely we are to observe a difference of 2.62 inches in plant heights if the 'true' difference between crosses and selfed plants is *zero*? 
+
+The **central limit theorem** states that if you have a population with mean and standard deviation, and take sufficiently large random samples from the population, then the distribution of the sample means will be approximately normally distributed. Standard error then is our measure of variability around our sample mean, and we will assume that we can apply a normal distribution to our ability to estimate the mean (*we will revisit this assumption later*). 
+
+So if we now center our bell curve on the estimate of the mean (2.62), then just over two thirds of the area under the curve is ± 1.22 inches. 95% of it will be within ± 2 standard errors, and 99.8% will be within ± 3 standard errors.
 
 ```{r, eval=TRUE, echo=FALSE}
 plot(x,y, type = "l", lwd = 2, axes = FALSE, xlab = "difference in height (inches)", ylab = "")
-axis(1, at = -3:3, labels = c("", "0", "", "2.5", "", "5", ""))
+axis(1, at = -3:3, labels = c("", "0.18", "", "2.62", "", "5.06", ""))
 
 ```
 
+Taking a look at this figure we can ask ourselves where is zero on our normal distribution? One way to think about this is, if the true difference between our plant groups is zero, how surprising is it that we estimated a difference of 2.62 inches? 
+
+If zero was close to the center of the bell curve, then our observed mean would not be surprising at all (**if the null hypothesis is true**). However in this case it is not in the middle of the bell. It falls in the left-hand tail, and it is > than two standard deviations from our estimated mean. 
+
+We can describe this in two ways:
+
+* We estimate that if we ran this experiment 100 times then >95 of our experiments would estimate a mean difference between our plant groups that is > 0. 
+
+* This is also usually taken as the minimum threshold needed to *reject* a null hypothesis. We can think of the probability of estimating this mean difference, if our true mean difference was zero, as p < 0.05. 
+
+You will probably be very used to a threshold for null hypothesis rejection of $\alpha$ = 0.05, but this only the very lowest level of confidence at which we can pass a statistical test. If we increase the severity of our test so that the minimum we require is $\alpha$ = 0.001 or 99% confidence, we can see that we no longer believe we have enough confidence to reject the null hypothesis (0 is within 3 s.d. of our estimated mean). 
+
 ### Confidence Intervals
+
+Because ± 2 standard errors covers the central 95% of the area under the normal curve, we refer to this as our 95% confidence interval. We can calculate confidence intervals for any level, but commonly we refer to standard error (68% CI), 95% and 99%. 
+
+We can work out the 95% confidence interval range of our estimated mean as follows
+
+```{r}
+lowerCI <- 2.62-(2*1.22)
+
+upperCI <- 2.62+(2*1.22)
+
+lowerCI
+upperCI
+```
+
+A common mistake it to state that we are 95% confident that the 'true' mean lies within our interval. But *technically* it refers to the fact that if we kept running this experiment again and again the intervals we calculate would capture the true mean in 95% of experiments. So really we are saying that we are confident we would capture the true mean in 95% of our experiments. 
+
+How might we write this up?
+
+```{block, type="rmdnote"}
+The maize plants that have been cross pollinated were taller on average than the self-pollinated plants, with a mean difference in height of 2.62 [0.18, 5.06] inches (mean [95% CI]).
+```
+Note that because it is possible to generate multiple types of average and confidence interval, we clearly state them in our write up. The same would be true if you were presenting the standard error (± S.E.) or the standard deviation (± S.D.) or a median and interquartile range (median [± IQR]). 
+
+The above is a good example of a simple but clear write-up because it clearly describes the *direction* of the difference, the *amount* and the *error* in our estimate. 
 
 
 ## Summary
+
+Statistics is all about trying to interpret whether the signal (of a difference or trend) is stronger than the amount of noise (variability). In a sample the standard deviation is a strong choice for estimating this *within* a dataset. The standard deviation of the sampling distribution of the mean is known as the standard error. The standard error (of the mean) is a measure of the precision we have in our estimate of the mean. Thanks to the central limit theorem and normal distribution we can use the variability in our estimate to calculate confidence intervals, and decide whether our signal of an effect is strong enough to reject a null hypothesis (of no effect or no difference). 
+
+Next time we will start working with linear models - this approach allows us to estimate means and intervals in a more sophisticated (and automated) way. 
 
 
 # Keeping code DRY - Spring Week One
@@ -332,8 +393,7 @@ klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = '
 knitr::opts_chunk$set(eval=FALSE)
 ```
 
-You can keep working in the same project workspace as @ref-Estimates, but I would advise you start a new script to work on iteration. 
-
+You can keep working in the same project workspace, but I would advise you start a new script to work on iteration. 
 
 
 ## Functions
@@ -406,7 +466,7 @@ A really good way to organise your functions is to organise them into a separate
 knitr::include_graphics("images/project.png")
 ```
 
-It might suprise you to know that there is no prebuilt function for standard error in R
+It might suprise you to know that there is no prebuilt function for standard error in base R, but we can build our own!
 
 ```{r}
 se <- function(x) {
@@ -546,6 +606,7 @@ for (num in c(1,2,3,4,5)) {  # the SEQUENCE is defined (numbers 1 to 5) and loop
 }                            # The loop is closed with "}"                            
 
 ```
+
 ```
 [1] 3
 [1] 4
@@ -697,7 +758,7 @@ wrap_plots(my_plots)+plot_layout(design=layout) #wrap_plots function from patchw
 
 ```
 
-<details><summary>**What if you want to write a loop to save all four plots at once - can you modify the script to do this?**</summary>
+<details><summary>**Click me** - What if you want to write a loop to save all four plots at once - can you modify the script to do this?</summary>
 
 ```{r}
 for (i in 1:length(Sp_list)) {                                    # For every item along the length of Sp_list we want R to perform the following functions
@@ -747,17 +808,14 @@ wrap_plots(my_plots_2)+plot_layout(design=layout)
 
 Making functions and iterations are advanced R skills, and can often seem daunting. I do not expect you to HAVE to implement these for this course, but I do want to give you an insight into some core programming skills that you might be interested in and want to develop. 
 
+Below are some links you may find useful
 
-https://www.rstudio.com/resources/cheatsheets/
+* [RStudio education cheat sheet for ourr](https://www.rstudio.com/resources/cheatsheets/)
 
+* [R4DS - intro to programming](https://r4ds.had.co.nz/program-intro.html)
 
+* [Coding club](https://ourcodingclub.github.io/tutorials/funandloops/#function)
 
-
-https://r4ds.had.co.nz/program-intro.html
-
-
-- Coding club. https://ourcodingclub.github.io/tutorials/funandloops/#function
-
-https://epirhandbook.com/en/iteration-loops-and-lists.html
+* [EpiR handbook](https://epirhandbook.com/en/iteration-loops-and-lists.html)
 
 
