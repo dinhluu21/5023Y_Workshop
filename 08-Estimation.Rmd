@@ -22,11 +22,13 @@ For example we might measure the measure the heights of some plants that have be
 
 In fact that gives me an idea...
 
+**Head to Blackboard and check out today's assignment from GitHub Classrooms**
+
 ## Darwin's maize data
 
 Loss of genetic diversity is an important issue in the conservation of species. Declines in population size due to over exploitation, habitat fragmentation lead to loss of genetic diversity. Even populations restored to viable numbers through conservation efforts may suffer from continued loss of population fitness because of inbreeding depression @Rescue. 
 
-Charles Darwin even wrote a book on the subject *The Effects of Cross and Self-Fertilisation in the Vegetable Kingdom* @Cross. In this he describes how he produced seeds of maize (*Zea mays*) that were fertilised with pollen from the same individual or from a different plant. The height of the seedlings that were produced from these were then measured as a proxy for their evolutionary fitness.
+Charles Darwin even wrote a book on the subject *"The Effects of Cross and Self-Fertilisation in the Vegetable Kingdom"* @Cross. In this he describes how he produced seeds of maize (*Zea mays*) that were fertilised with pollen from the same individual or from a different plant. The height of the seedlings that were produced from these were then measured as a proxy for their evolutionary fitness.
 
 Darwin wanted to know whether inbreeding reduced the fitness of the selfed plants - this was his **hypothesis**. The data we are going to use today is from Darwin's original dataset.
 
@@ -63,7 +65,7 @@ The first thing we should know by now is to always start by exploring our data. 
 
 If you need a little help with remembering what to check, but would like to try and adapt scripts go to \@ref(view-and-refine) from workflow 1. 
 
-<details><summary> **Click-me** - If you got completely stuck, or had a go but want to check your answers follow below:</summary>
+<details><summary> **Click-me for answer** - If you got completely stuck, or had a go but want to check your answers then click here:</summary>
 
 ```{r}
 # check the structure of the data
@@ -108,7 +110,9 @@ summary(darwin)
 
 </details>
 
-Now seems like a good time for our first data visualisation
+### Visualisation
+
+Now seems like a good time for our first data visualisation.
 
 ```{r, eval=TRUE}
 darwin %>% 
@@ -119,6 +123,7 @@ darwin %>%
 # you could also substitute (or combine) other geoms including
 # geom_boxplot()
 # geom_violin()
+# Why not have a go and see what you can make?
 
 ```
 
@@ -173,7 +178,7 @@ library(kableExtra)
 
 # use kable extra functions to make a nice table (could be replaced with kable() if needed)
 darwin_summary %>% 
-    kbl(caption="Table 1. Summary statistics of crossed and selfed maize plants") %>% 
+    kbl(caption="Summary statistics of crossed and selfed maize plants") %>% 
   kable_styling(bootstrap_options = "striped", full_width = T, position = "left")
 
 ```
@@ -196,13 +201,14 @@ Our goal is to:
 
 Darwin's data used match pairs - each pair shared one parent. So that in pair 1 the same parent plant was either 'selfed'or 'crossed' to produce offspring. This is a powerful approach to experimental design, as it means that we can look at the differences in heights across each of the 15 pairs of plants - rather than having to infer differences from two randomly derived groups. 
 
-In order to calculate the differences in height between each pair we need to do some data wrangling
+In order to calculate the differences in height between each pair we need to do some data wrangling - **can you complete the below to produce the required output?**
 
 ```{r}
 # pivot data to wide format then subtract Selfed plant heights from Crossed plant heights
+
 darwin_wide <- darwin %>% 
   pivot_wider(names_from=type, values_from=height, id_cols=pair) %>% 
-  mutate(difference=Cross-Self)
+  mutate(difference=___________)
 
 ```
 
@@ -217,6 +223,7 @@ darwin_wide <- darwin %>%
  
 ```
 
+We now have the difference in height for each pair, we can use this to calculate the **mean difference** in heights between paired plants, and the amount of variance (as standard deviation)
 
 ```{r}
 difference_summary <- darwin_wide %>% 
@@ -255,11 +262,11 @@ $$
 
 As sample size increases the standard error should reduce - reflecting an increasing confidence in our estimate. 
 
-We can calculate the standard error for our sample as follows
+We can calculate the standard error for our sample by applying this equation to our `difference_summary` object, can you complete this?
 
 ```{r}
 difference_summary %>% 
-  mutate(se=sd/sqrt(n))
+  mutate(se=_______)
 
 ```
 
@@ -353,7 +360,7 @@ You will probably be very used to a threshold for null hypothesis rejection of $
 
 Because ± 2 standard errors covers the central 95% of the area under the normal curve, we refer to this as our 95% confidence interval. We can calculate confidence intervals for any level, but commonly we refer to standard error (68% CI), 95% and 99%. 
 
-We can work out the 95% confidence interval range of our estimated mean as follows
+We can work out the 95% confidence interval range of our estimated mean as follows:
 
 ```{r}
 lowerCI <- 2.62-(2*1.22)
@@ -393,7 +400,7 @@ klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = '
 knitr::opts_chunk$set(eval=FALSE)
 ```
 
-You can keep working in the same project workspace, but I would advise you start a new script to work on iteration. 
+You can keep working in the same project workspace, but I would advise you start a new script to work on iteration.
 
 
 ## Functions
@@ -404,13 +411,18 @@ Most of the time when we work in R, we will use functions; either pre-written fu
 
 You have been using functions in R from week one, we type the name of the function followed by parentheses e.g. `read_csv()`. Within the parentheses is where we will specify the function input and options, separated by commas `,`. One function you will use a lot is the **combine function** `c()`, which as the name suggests lets you concatenate different types of values into a **vector**.
 
-* Complete the script below to combine a set of numerical values using `c()`. 
+```{block, type="rmdnote"}
+If you are struggling to remember what a vector is, you might want to go back to our intro to R pages for a brief refresher on data types. 
+```
+
+
+* Complete the script below to combine any set of numerical values using `c()`. 
 
 * Then use the `sum()` function to add them together
 
 ```{r}
 
-my_combined_values <- c(,) 
+my_combined_values <- c(__,__) 
 sum(my_combined_values)
 
 ```
@@ -452,25 +464,45 @@ my_function_name(my_combined_values)
 
 ```
 
-```{block, type="rmdnote"}
+
+
+<details><summary>**Solution**</summary>
+
+```{r}
+# Use the instructions above to complete the function below
+my_function_name <- function(input_data){
+  s <- sum(input_data)
+  ss <- sqrt(s)
+  return(ss)
+}
+
+# Create a new object and try out your new function
+my_combined_values <- c(__,__) 
+
+my_function_name(my_combined_values)
+
+```
+
+</details>
 
 A general rule of thumb. If you end up repeating a line of code more than three times in a script - you should write a function to do the work instead. And write clear comments on its use!
 Why?
+
 It reduces the numbers of lines of code in your script, it reduces the amount of repetition in the code, if you need to make changes you can change the function without having to hunt through all of your code. 
 
 A really good way to organise your functions is to organise them into a separate script to the rest of your analysis. Write functions in a separate script and use source("scripts/functions.R")
 
-```
 
 ```{r, eval=TRUE, echo=FALSE, out.width="80%", fig.cap = "An example of a typical R project set-up"}
 knitr::include_graphics("images/project.png")
 ```
 
-It might suprise you to know that there is no prebuilt function for standard error in base R, but we can build our own!
+It might surprise you to know that there is no prebuilt function for standard error in base R, but we can build our own!
 
 ```{r}
 se <- function(x) {
-  sd(x)/(sqrt(length(x)))
+  se <- sd(x)/(sqrt(length(x)))
+  return(se)
   }
 
 ```
@@ -511,6 +543,7 @@ plot <- darwin %>%
 plot
 
 ```
+
 With the addition of a title and `theme_classic()` we can improve the style quickly
 
 ```{r, eval=TRUE}
@@ -520,7 +553,8 @@ plot+
   theme_classic()
 
 ```
-But I still want to make some more changes, rather than do this work for one figure, and potentially have to repeat this several times for subsequent figures, I can decide to make a new function instead. 
+
+But I **still** want to make some more changes, rather than do this work for one figure, and potentially have to repeat this several times for subsequent figures, I can decide to make a new function instead. 
 
 ```{r, eval=TRUE}
 
@@ -556,6 +590,7 @@ theme(
    # Setting the position for the legend - 0 is left/bottom, 1 is top/right
           legend.position = c(0.9, 0.8)             
 )
+  
 }
       
 
@@ -598,7 +633,7 @@ for(i in list){
 }
 ```
 
-A simple for loop **example** is below. For every number in the vector add 2. 
+A simple for loop **example** is below. For every number in the vector add 2. There is no *container object* here, the results of the function are printed directly into the console.  
 
 ```{r}
 for (num in c(1,2,3,4,5)) {  # the SEQUENCE is defined (numbers 1 to 5) and loop is opened with "{"
@@ -615,17 +650,20 @@ for (num in c(1,2,3,4,5)) {  # the SEQUENCE is defined (numbers 1 to 5) and loop
 [1] 7
 ```
 
+So let's make a slightly more complicated function - first we are making a new tibble, first we have four vectors - made of 10 numbers each randomly generated to be roughly close to a 0 mean with a s.d. of 1. Then we combine them to make a tibble
+
 ```{r}
 # a simple tibble
 df <- tibble(
-  a = rnorm(10),
-  b = rnorm(10),
-  c = rnorm(10),
+  a =  rnorm(10),
+  b =  rnorm(10),
+  c =  rnorm(10),
   d = rnorm(10)
 )
 
 ```
 
+Each vector randomly generated so the actual averages will be slightly different
 
 ```{r}
 median(df$a)
@@ -639,9 +677,13 @@ median(df$d)
 
 ```
 
+So the above code works, but it is repetitive, applying the same function again and again. Below we have a simple for loop 
+
 ```{r}
-output <- vector("double", ncol(df))  # 1. output having a predefined empty list of the right size works best
-for (i in seq_along(df)) {            # 2. sequence - determines what to loop over
+output <- vector("double", ncol(df))  # 1. output having a predefined empty list of the right size works best, we choose to make the vector "double" specifying that it is empty and ready to receive number values. 
+
+for (i in seq_along(df)) {            # 2. sequence - determines what to loop over - here we are looping along df, rather than down the length of each vector
+  
   output[[i]] <- median(df[[i]])      # 3. body - each time the loop runs it allocates a value to output, 
 }
 output
@@ -651,22 +693,34 @@ output
 
 ### Exercise for For Loops
 
+This part of the exercise is a real world example of using simple `for()` loops to create graphs. This data comes from the [Living Planet Index](https://livingplanetindex.org/home/index), which holds data on various vertebrate species collected from 1974 to 2014. 
+
+First we should import the data:
+
 ```{r, eval=TRUE, message=FALSE, warning=FALSE}
 LPI <- read_csv("data/LPI_data_loops.csv")
 
-
 ```
 
+Here is an example of a graph we can make from the data looking at Griffon Vulture changes in numbers over time. 
+
 ```{r, eval=TRUE, message=FALSE}
-vulture <- filter(LPI, Common.Name == "Griffon vulture / Eurasian griffon")
-vultureITCR <- filter(vulture, Country.list == c("Croatia", "Italy"))
+
+vultureITCR <- LPI %>% 
+  filter(Common.Name == "Griffon vulture / Eurasian griffon") %>%
+  filter(Country.list==c("Croatia", "Italy"))
 
 vulture_scatter <- ggplot(vultureITCR, aes(x = year, y = abundance, colour = Country.list)) +
-    geom_point(size = 2) +                                              # Changing point size
-    geom_smooth(method = lm, aes(fill = Country.list)) +                # Adding a linear model fit and colour-coding by country
-    scale_fill_manual(values = c("#EE7600", "#00868B")) +               # Adding custom colours
-    scale_colour_manual(values = c("#EE7600", "#00868B"),               # Adding custom colours
-                        labels = c("Croatia", "Italy")) +               # Adding labels for the legend
+    geom_point(size = 2) +  
+  # Changing point size
+    geom_smooth(method = lm, aes(fill = Country.list)) + 
+  # Adding a linear model fit and colour-coding by country
+    scale_fill_manual(values = c("#EE7600", "#00868B")) +               
+  # Adding custom colours
+    scale_colour_manual(values = c("#EE7600", "#00868B"),               
+                        # Adding custom colours
+                        labels = c("Croatia", "Italy")) +               
+  # Adding labels for the legend
     ylab("Griffon vulture abundance\n") +                             
     xlab("\nYear")  +
 		theme_bw() 
@@ -674,23 +728,29 @@ vulture_scatter <- ggplot(vultureITCR, aes(x = year, y = abundance, colour = Cou
 vulture_scatter
 ```
 
+We can use custom themes (like the one you made earlier) to quickly update figures
+
 ```{r}
 vulture_scatter+theme_custom()
 ```
+
+Now let's take a look at using functions and loops to help us build figures. 
+
 ```{r, eval=TRUE, message=FALSE, warning=FALSE}
 LPI_UK <- filter(LPI, Country.list == "United Kingdom")
 
-# Pick 4 species and make scatterplots with linear model fits that show how the population has varied through time
+# Pick 4 species and make scatterplots with a simple regression model fits that show how the population has varied through time
+
 # Careful with the spelling of the names, it needs to match the names of the species in the LPI.UK dataframe
 
 house_sparrow <- filter(LPI_UK, Common.Name == "House sparrow")
 great_tit <- filter(LPI_UK, Common.Name == "Great tit")
 corn_bunting <- filter(LPI_UK, Common.Name == "Corn bunting")
-reed_bunting <- filter(LPI_UK, Common.Name == "Reed bunting")
 meadow_pipit <- filter(LPI_UK, Common.Name == "Meadow pipit")
 
 ```
 
+So now we have four separate R objects holding data from four bird species, our standard approach might then be to make four figures looking at abundance over time. 
 
 ```{r, eval=TRUE}
 house_sparrow_scatter <- ggplot(house_sparrow, aes (x = year, y = abundance)) +
@@ -719,6 +779,7 @@ meadow_pipit_scatter <- ggplot(meadow_pipit, aes (x = year, y = abundance)) +
 
 ```
 
+If we want to look at all four plots at once we can use the layout functions from the package `patchwork`. 
 
 ```{r, eval=TRUE, message=FALSE, warning=FALSE}
 # put at the top of your script
@@ -726,45 +787,69 @@ library(patchwork)
 
 layout <- "AABB
            CCDD"
-house_sparrow_scatter+great_tit_scatter+corn_bunting_scatter+meadow_pipit_scatter+plot_layout(design=layout)
 
+house_sparrow_scatter+
+  great_tit_scatter+
+  corn_bunting_scatter+
+  meadow_pipit_scatter+
+  plot_layout(design=layout)
 
 ```
 
-This is ok, but arguably still requires a lot of code repetition. 
+This is ok, but arguably still requires a lot of code repetition. We have used the same lines of code four times to recreate four plots that are functionally the same. If we want to make any changes to the look of our plots we have to make four separate edits & mistakes can easily creep in. 
+
+If we want to apply a loop, then the easiest thing is to first make our objects into an R list:
 
 ```{r}
 Sp_list <- list(house_sparrow, great_tit, corn_bunting, meadow_pipit)
 ```
 
+Then loop down the length of our list:
+
 ```{r}
 my_plots <- list(length(Sp_list))
 
-for (i in 1:length(Sp_list)) {                                    # For every item along the length of Sp_list we want R to perform the following functions
-  data <- as.data.frame(Sp_list[i])                               # Create a dataframe for each species
-  sp.name <- unique(data$Common.Name)                             # Create an object that holds the species name, so that we can title each graph
-  plot <- ggplot(data, aes (x = year, y = abundance)) +               # Make the plots and add our customised theme
-    geom_point(size = 2, colour = "#00868B") +                                                
-    geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +          
+for (i in 1:length(Sp_list)) {                                    
+  # For every item along the length of Sp_list we want R to perform the following functions
+  data <- as.data.frame(Sp_list[i])                               
+  # Create a dataframe for each species
+  sp.name <- unique(data$Common.Name)                             
+  # Create an object that holds the species name, so that we can title each graph
+  plot <- ggplot(data, aes (x = year, y = abundance)) +               
+    # Make the plots and add our customised theme
+    geom_point(size = 2, colour = "#00868B") +                              
+    geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +        
     theme_custom() +
     labs(y = "Abundance\n", x = "", title = sp.name)
-  my_plots[[i]] <- plot # makes a list of all the plots generates
-  print(plot) # prints each plot out as it is made
+ 
+   # makes a list of all the plots generates
+  my_plots[[i]] <- plot 
+  
+  # prints each plot out as it is made
+  print(plot) 
 }
 ```
 
+So now we have a new object `my_plots` which is a list containing the four plots. This loop allowed us to code the details of our figures once, then iterate across four different groups.
+
 ```{r}
-wrap_plots(my_plots)+plot_layout(design=layout) #wrap_plots function from patchwork can take a list of ggplots
+wrap_plots(my_plots)+
+  plot_layout(design=layout) 
+#wrap_plots function from patchwork can take a list of ggplots
 
 ```
 
-<details><summary>**Click me** - What if you want to write a loop to save all four plots at once - can you modify the script to do this?</summary>
+What if you want to write a loop to save all four plots at once - can you modify the script to do this?
 
 ```{r}
-for (i in 1:length(Sp_list)) {                                    # For every item along the length of Sp_list we want R to perform the following functions
-  data <- as.data.frame(Sp_list[i])                               # Create a dataframe for each species
-  sp.name <- unique(data$Common.Name)                             # Create an object that holds the species name, so that we can title each graph
-  plot <- ggplot(data, aes (x = year, y = abundance)) +               # Make the plots and add our customised theme
+for (i in 1:length(Sp_list)) {                                    
+  # For every item along the length of Sp_list we want R to perform the following functions
+  data <- as.data.frame(Sp_list[i])                               
+  # Create a dataframe for each species
+  sp.name <- unique(data$Common.Name)                             
+  # Create an object that holds the species name, so that we can title each graph
+  plot <- ggplot(data, aes (x = year, y = abundance)) +               
+    # Make the plots and add our customised theme
     geom_point(size = 2, colour = "#00868B") +                                                
     geom_smooth(method = lm, colour = "#00868B", fill = "#00868B") +          
     theme_custom() +
@@ -773,12 +858,11 @@ for (i in 1:length(Sp_list)) {                                    # For every it
     if(i %% 1==0){    # The %% operator is the remainder, this handy if line prints a number every time it completes a loop
     print(i)
     }
-
-  ggsave(plot, file=paste("figure/", sp.name, ".png", sep=''), dpi=900) # use paste to automatically add filename
+# use paste to automatically add filename
+  ggsave(plot, file=paste("figure/", sp.name, ".png", sep=''), dpi=900) 
 }
 ```
 
-</details>
 
 ### Learning to **purr**
 
@@ -789,6 +873,13 @@ If you are faced with performing the same task several times, it is probably wor
 There are also a few other advantages to purrr - you can use it with pipes %>%, it handles errors better than normal for loops, and the syntax is quite clean and simple! If you are using a for loop, you can probably do it more clearly and succinctly with purrr!
 
 **Remember** purrr is a very tidyverse focused method of iteration, so understanding for loops can be useful if you end up learning other programming languages in the future. 
+
+**purrr** is more focused on the function, and less obviously focused on the looping aspect, as you might be able to see below. 
+
+[**This is a really good intro to learning how to purrr - try some of the simple exercises here before trying the below**](https://www.rebeccabarter.com/blog/2019-08-19_purrr/)
+
+
+Now you have a simple grasp of `purrr` you should see that we have a list containing species objects, and an anonymous function ~ggplot on the right. We can use this to quickly make four plots, just like we did with our for loops. 
 
 ```{r}
 
@@ -803,10 +894,17 @@ wrap_plots(my_plots_2)+plot_layout(design=layout)
 
 ```
 
+## More Practice
+
+If you want to play with basic coding more, try some of these other tutorials, if you try them, let me know how you get on! 
+
+[Importing Hospital Records](https://www.gerkelab.com/blog/2018/09/import-directory-csv-purrr-readr/)
+
+[Bioinformatics and Lists](https://sanderwuyts.com/en/blog/purrr-tutorial/)
 
 ## Summary
 
-Making functions and iterations are advanced R skills, and can often seem daunting. I do not expect you to HAVE to implement these for this course, but I do want to give you an insight into some core programming skills that you might be interested in and want to develop. 
+Making functions and iterations are advanced R skills, and can often seem daunting. I do not expect you to HAVE to implement these for this course, but I do want to give you an insight into some core programming skills that you might be interested in and want to develop.
 
 Below are some links you may find useful
 

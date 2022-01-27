@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-01-25" />
+<meta name="date" content="2022-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -452,7 +452,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>12.2</b> Darwin’s maize data</a>
 <ul>
 <li class="chapter" data-level="12.2.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#description"><i class="fa fa-check"></i><b>12.2.1</b> Description</a></li>
-<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.2</b> Comparing groups</a></li>
+<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="12.2.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.3</b> Comparing groups</a></li>
 </ul></li>
 <li class="chapter" data-level="12.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#estimation"><i class="fa fa-check"></i><b>12.3</b> Estimation</a>
 <ul>
@@ -478,9 +479,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.3</b> Exercise for For Loops</a></li>
 <li class="chapter" data-level="13.2.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#learning-to-purr"><i class="fa fa-check"></i><b>13.2.4</b> Learning to <strong>purr</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.3</b> Summary</a></li>
+<li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
+<li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -546,11 +549,11 @@ The pipe %&gt;% allows us to make “human-readable” an logical strings of ins
 </div>
 <div id="strings" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Strings</h2>
-<p>Datasets often contain words, and we call these words “strings.” Often these aren’t quite how we want them to be, but we can manipulate these as much as we like. Functions in the package <code>stringr</code> <span class="citation"><a href="references.html#ref-R-stringr" role="doc-biblioref">Wickham</a> (<a href="references.html#ref-R-stringr" role="doc-biblioref">2019</a>)</span>, are fantastic. And the number of different types of manipulations are endless</p>
+<p>Datasets often contain words, and we call these words “strings.” Often these aren’t quite how we want them to be, but we can manipulate these as much as we like. Functions in the package <code>stringr</code> <span class="citation"><a href="references-1.html#ref-R-stringr" role="doc-biblioref">Wickham</a> (<a href="references-1.html#ref-R-stringr" role="doc-biblioref">2019</a>)</span>, are fantastic. And the number of different types of manipulations are endless</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="dealing-with-data-part-2-week-nine.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(<span class="fu">names</span>(penguins), <span class="fu">c</span>(<span class="st">&quot;e&quot;</span><span class="ot">=</span> <span class="st">&quot;E&quot;</span>))</span></code></pre></div>
 <div id="separate" class="section level3" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> separate</h3>
-<p>Sometimes a string might contain two pieces of information in one. This does not confirm to our tidy data principles. But we can easily separate the information with <code>separate</code> from <code>tidyr</code> <span class="citation"><a href="references.html#ref-R-tidyr" role="doc-biblioref">Wickham</a> (<a href="references.html#ref-R-tidyr" role="doc-biblioref">2021</a>)</span></p>
+<p>Sometimes a string might contain two pieces of information in one. This does not confirm to our tidy data principles. But we can easily separate the information with <code>separate</code> from <code>tidyr</code> <span class="citation"><a href="references-1.html#ref-R-tidyr" role="doc-biblioref">Wickham</a> (<a href="references-1.html#ref-R-tidyr" role="doc-biblioref">2021</a>)</span></p>
 <p>First we produce some made-up data</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="dealing-with-data-part-2-week-nine.html#cb169-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">label=</span><span class="fu">c</span>(<span class="st">&quot;a-1&quot;</span>, <span class="st">&quot;a-2&quot;</span>, <span class="st">&quot;a-3&quot;</span>)) </span>
 <span id="cb169-2"><a href="dealing-with-data-part-2-week-nine.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="co">#make a one column tibble</span></span>
@@ -562,7 +565,7 @@ The opposite of this function is <code>unite()</code></p>
 </div>
 <div id="more-stringr" class="section level3" number="9.3.2">
 <h3><span class="header-section-number">9.3.2</span> More stringr</h3>
-<p>Check out (<a href="https://stringr.tidyverse.org/index.html" class="uri">https://stringr.tidyverse.org/index.html</a>) <span class="citation"><a href="references.html#ref-R-stringr" role="doc-biblioref">Wickham</a> (<a href="references.html#ref-R-stringr" role="doc-biblioref">2019</a>)</span></p>
+<p>Check out (<a href="https://stringr.tidyverse.org/index.html" class="uri">https://stringr.tidyverse.org/index.html</a>) <span class="citation"><a href="references-1.html#ref-R-stringr" role="doc-biblioref">Wickham</a> (<a href="references-1.html#ref-R-stringr" role="doc-biblioref">2019</a>)</span></p>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="dealing-with-data-part-2-week-nine.html#cb171-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb171-2"><a href="dealing-with-data-part-2-week-nine.html#cb171-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species=</span><span class="fu">str_to_upper</span>(species))</span></code></pre></div>
 <div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="dealing-with-data-part-2-week-nine.html#cb172-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
@@ -592,7 +595,7 @@ The opposite of this function is <code>unite()</code></p>
 <p>13-10-19</p>
 <p>13th Oct 2019</p>
 <p>2019-10-13</p>
-<p>This variability makes it difficult to tell our software how to read the information, luckily we can use <code>lubridate</code> <span class="citation"><a href="references.html#ref-R-lubridate" role="doc-biblioref">Spinu, Grolemund, and Wickham</a> (<a href="references.html#ref-R-lubridate" role="doc-biblioref">2021</a>)</span>. We can tell R the order of our date (or time) data.</p>
+<p>This variability makes it difficult to tell our software how to read the information, luckily we can use <code>lubridate</code> <span class="citation"><a href="references-1.html#ref-R-lubridate" role="doc-biblioref">Spinu, Grolemund, and Wickham</a> (<a href="references-1.html#ref-R-lubridate" role="doc-biblioref">2021</a>)</span>. We can tell R the order of our date (or time) data.</p>
 <p>Back in the last chapter (<a href="dealing-with-data-dplyr-week-eight.html#mutate">8.4</a>), we used <code>mutate</code> and <code>lubridate</code> to convert date data which had been parsed as a string, into date format with the function <code>dmy()</code>. Depending on how we interpret the date ordering in a file, we can use <code>ymd</code>, <code>ydm</code>, <code>mdy</code> etc.</p>
 <p>If you get a warning that some dates could not be parsed, then you might find the date date has been inconsistently entered into the dataset.</p>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="dealing-with-data-part-2-week-nine.html#cb177-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
@@ -664,13 +667,13 @@ Most of the time, we can make data “tidy” but pivoting wide data into a long
 </ul>
 <p>You have used <code>tidyverse</code> and the functions made available from:</p>
 <ul>
-<li><p><code>dplyr</code> <span class="citation"><a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al.</a> (<a href="references.html#ref-R-dplyr" role="doc-biblioref">2021</a>)</span></p></li>
-<li><p><code>tidyr</code> <span class="citation"><a href="references.html#ref-R-tidyr" role="doc-biblioref">Wickham</a> (<a href="references.html#ref-R-tidyr" role="doc-biblioref">2021</a>)</span></p></li>
+<li><p><code>dplyr</code> <span class="citation"><a href="references-1.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al.</a> (<a href="references-1.html#ref-R-dplyr" role="doc-biblioref">2021</a>)</span></p></li>
+<li><p><code>tidyr</code> <span class="citation"><a href="references-1.html#ref-R-tidyr" role="doc-biblioref">Wickham</a> (<a href="references-1.html#ref-R-tidyr" role="doc-biblioref">2021</a>)</span></p></li>
 </ul>
 <p>You have also used two packages, which are also installed as part of the tidyverse, but have to be called with separate library() functions</p>
 <ul>
-<li><p><code>lubridate</code> <span class="citation"><a href="references.html#ref-R-lubridate" role="doc-biblioref">Spinu, Grolemund, and Wickham</a> (<a href="references.html#ref-R-lubridate" role="doc-biblioref">2021</a>)</span></p></li>
-<li><p><code>stringr</code> <span class="citation"><a href="references.html#ref-R-stringr" role="doc-biblioref">Wickham</a> (<a href="references.html#ref-R-stringr" role="doc-biblioref">2019</a>)</span></p></li>
+<li><p><code>lubridate</code> <span class="citation"><a href="references-1.html#ref-R-lubridate" role="doc-biblioref">Spinu, Grolemund, and Wickham</a> (<a href="references-1.html#ref-R-lubridate" role="doc-biblioref">2021</a>)</span></p></li>
+<li><p><code>stringr</code> <span class="citation"><a href="references-1.html#ref-R-stringr" role="doc-biblioref">Wickham</a> (<a href="references-1.html#ref-R-stringr" role="doc-biblioref">2019</a>)</span></p></li>
 </ul>
 </div>
 <div id="further-reading-guides-and-tips-3" class="section level3" number="9.6.2">

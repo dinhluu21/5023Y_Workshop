@@ -17,7 +17,7 @@ fig:unnamed-chunk-313
 fig:unnamed-chunk-314
 fig:unnamed-chunk-318
 tab:unnamed-chunk-333
-fig:unnamed-chunk-347
+fig:unnamed-chunk-349
 introduction
 approach-and-style
 teaching
@@ -223,6 +223,7 @@ introduction-to-statistics---spring-week-one
 introduction-to-statistics
 darwins-maize-data
 description
+visualisation
 comparing-groups
 estimation
 differences-between-groups
@@ -240,4 +241,5 @@ iteration-in-tidyverse
 for-loops
 exercise-for-for-loops
 learning-to-purr
+more-practice
 summary-1

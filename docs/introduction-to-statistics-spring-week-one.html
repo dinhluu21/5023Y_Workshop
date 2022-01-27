@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-01-25" />
+<meta name="date" content="2022-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -452,7 +452,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>12.2</b> Darwin’s maize data</a>
 <ul>
 <li class="chapter" data-level="12.2.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#description"><i class="fa fa-check"></i><b>12.2.1</b> Description</a></li>
-<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.2</b> Comparing groups</a></li>
+<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="12.2.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.3</b> Comparing groups</a></li>
 </ul></li>
 <li class="chapter" data-level="12.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#estimation"><i class="fa fa-check"></i><b>12.3</b> Estimation</a>
 <ul>
@@ -478,9 +479,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.3</b> Exercise for For Loops</a></li>
 <li class="chapter" data-level="13.2.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#learning-to-purr"><i class="fa fa-check"></i><b>13.2.4</b> Learning to <strong>purr</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.3</b> Summary</a></li>
+<li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
+<li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -514,11 +517,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We are building on this to develop our skills in <em>inferential statistics</em>. Inferential statistics allow us to make generalisations - taking a descriptive statistics from our data such as the <strong>sample mean</strong>, and using it to say something about a population parameter (i.e. the <strong>population mean</strong>).</p>
 <p>For example we might measure the measure the heights of some plants that have been outcrossed and inbred and make some summaries and figures to construct an average difference in height (this is <strong>descriptive</strong>). Or we could use this to produce some estimates of the general effect of outcrossing vs inbreeding on plant heights (this is <strong>inferential</strong>).</p>
 <p>In fact that gives me an idea…</p>
+<p><strong>Head to Blackboard and check out today’s assignment from GitHub Classrooms</strong></p>
 </div>
 <div id="darwins-maize-data" class="section level2" number="12.2">
 <h2><span class="header-section-number">12.2</span> Darwin’s maize data</h2>
-<p>Loss of genetic diversity is an important issue in the conservation of species. Declines in population size due to over exploitation, habitat fragmentation lead to loss of genetic diversity. Even populations restored to viable numbers through conservation efforts may suffer from continued loss of population fitness because of inbreeding depression <span class="citation"><a href="references.html#ref-Rescue" role="doc-biblioref">Katherine Ralls and Frankham</a> (<a href="references.html#ref-Rescue" role="doc-biblioref">2020</a>)</span>.</p>
-<p>Charles Darwin even wrote a book on the subject <em>The Effects of Cross and Self-Fertilisation in the Vegetable Kingdom</em> <span class="citation"><a href="references.html#ref-Cross" role="doc-biblioref">Darwin</a> (<a href="references.html#ref-Cross" role="doc-biblioref">1876</a>)</span>. In this he describes how he produced seeds of maize (<em>Zea mays</em>) that were fertilised with pollen from the same individual or from a different plant. The height of the seedlings that were produced from these were then measured as a proxy for their evolutionary fitness.</p>
+<p>Loss of genetic diversity is an important issue in the conservation of species. Declines in population size due to over exploitation, habitat fragmentation lead to loss of genetic diversity. Even populations restored to viable numbers through conservation efforts may suffer from continued loss of population fitness because of inbreeding depression <span class="citation"><a href="references-1.html#ref-Rescue" role="doc-biblioref">Katherine Ralls and Frankham</a> (<a href="references-1.html#ref-Rescue" role="doc-biblioref">2020</a>)</span>.</p>
+<p>Charles Darwin even wrote a book on the subject <em>“The Effects of Cross and Self-Fertilisation in the Vegetable Kingdom”</em> <span class="citation"><a href="references-1.html#ref-Cross" role="doc-biblioref">Darwin</a> (<a href="references-1.html#ref-Cross" role="doc-biblioref">1876</a>)</span>. In this he describes how he produced seeds of maize (<em>Zea mays</em>) that were fertilised with pollen from the same individual or from a different plant. The height of the seedlings that were produced from these were then measured as a proxy for their evolutionary fitness.</p>
 <p>Darwin wanted to know whether inbreeding reduced the fitness of the selfed plants - this was his <strong>hypothesis</strong>. The data we are going to use today is from Darwin’s original dataset.</p>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="introduction-to-statistics-spring-week-one.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb231-2"><a href="introduction-to-statistics-spring-week-one.html#cb231-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -546,7 +550,7 @@ You should have a script set up to put your work from today into - use this to w
 <p>If you need a little help with remembering what to check, but would like to try and adapt scripts go to <a href="workflow-part-one-week-two.html#view-and-refine">3.5.1</a> from workflow 1.</p>
 <details>
 <summary>
-<strong>Click-me</strong> - If you got completely stuck, or had a go but want to check your answers follow below:
+<strong>Click-me for answer</strong> - If you got completely stuck, or had a go but want to check your answers then click here:
 </summary>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="introduction-to-statistics-spring-week-one.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check the structure of the data</span></span>
 <span id="cb233-2"><a href="introduction-to-statistics-spring-week-one.html#cb233-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(darwin)</span>
@@ -586,7 +590,10 @@ You should have a script set up to put your work from today into - use this to w
 <span id="cb233-36"><a href="introduction-to-statistics-spring-week-one.html#cb233-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb233-37"><a href="introduction-to-statistics-spring-week-one.html#cb233-37" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(darwin)</span></code></pre></div>
 </details>
-<p>Now seems like a good time for our first data visualisation</p>
+</div>
+<div id="visualisation" class="section level3" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> Visualisation</h3>
+<p>Now seems like a good time for our first data visualisation.</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="introduction-to-statistics-spring-week-one.html#cb234-1" aria-hidden="true" tabindex="-1"></a>darwin <span class="sc">%&gt;%</span> </span>
 <span id="cb234-2"><a href="introduction-to-statistics-spring-week-one.html#cb234-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>type,</span>
 <span id="cb234-3"><a href="introduction-to-statistics-spring-week-one.html#cb234-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">y=</span>height))<span class="sc">+</span></span>
@@ -594,12 +601,13 @@ You should have a script set up to put your work from today into - use this to w
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-331-1.png" width="672" /></p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="introduction-to-statistics-spring-week-one.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="co"># you could also substitute (or combine) other geoms including</span></span>
 <span id="cb235-2"><a href="introduction-to-statistics-spring-week-one.html#cb235-2" aria-hidden="true" tabindex="-1"></a><span class="co"># geom_boxplot()</span></span>
-<span id="cb235-3"><a href="introduction-to-statistics-spring-week-one.html#cb235-3" aria-hidden="true" tabindex="-1"></a><span class="co"># geom_violin()</span></span></code></pre></div>
+<span id="cb235-3"><a href="introduction-to-statistics-spring-week-one.html#cb235-3" aria-hidden="true" tabindex="-1"></a><span class="co"># geom_violin()</span></span>
+<span id="cb235-4"><a href="introduction-to-statistics-spring-week-one.html#cb235-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Why not have a go and see what you can make?</span></span></code></pre></div>
 <p>The graph clearly shows that the average height of the ‘crossed’ plants is greater than that of the ‘selfed’ plants. But we need to investigate further in order to determine whether the signal (any apparent differences in mean values) is greater than the level of noise (variance within the different groups).</p>
 <p>The variance appears to be roughly similar between the two groups - though by making a graph we can now clearly see that in the crossed group, there is a <em>potential</em> outlier with a value of 12.</p>
 </div>
-<div id="comparing-groups" class="section level3" number="12.2.2">
-<h3><span class="header-section-number">12.2.2</span> Comparing groups</h3>
+<div id="comparing-groups" class="section level3" number="12.2.3">
+<h3><span class="header-section-number">12.2.3</span> Comparing groups</h3>
 <p>As we have seen previously we can use various tidy functions to determine the mean and standard deviations of our groups.</p>
 <div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="introduction-to-statistics-spring-week-one.html#cb236-1" aria-hidden="true" tabindex="-1"></a>darwin <span class="sc">%&gt;%</span> </span>
 <span id="cb236-2"><a href="introduction-to-statistics-spring-week-one.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(type) <span class="sc">%&gt;%</span> </span>
@@ -633,11 +641,11 @@ You should have a script set up to put your work from today into - use this to w
 <span id="cb239-3"><a href="introduction-to-statistics-spring-week-one.html#cb239-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb239-4"><a href="introduction-to-statistics-spring-week-one.html#cb239-4" aria-hidden="true" tabindex="-1"></a><span class="co"># use kable extra functions to make a nice table (could be replaced with kable() if needed)</span></span>
 <span id="cb239-5"><a href="introduction-to-statistics-spring-week-one.html#cb239-5" aria-hidden="true" tabindex="-1"></a>darwin_summary <span class="sc">%&gt;%</span> </span>
-<span id="cb239-6"><a href="introduction-to-statistics-spring-week-one.html#cb239-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">caption=</span><span class="st">&quot;Table 1. Summary statistics of crossed and selfed maize plants&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb239-6"><a href="introduction-to-statistics-spring-week-one.html#cb239-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">caption=</span><span class="st">&quot;Summary statistics of crossed and selfed maize plants&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb239-7"><a href="introduction-to-statistics-spring-week-one.html#cb239-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>, <span class="at">full_width =</span> T, <span class="at">position =</span> <span class="st">&quot;left&quot;</span>)</span></code></pre></div>
 <table class="table table-striped" style>
 <caption>
-<span id="tab:unnamed-chunk-333">Table 12.1: </span>Table 1. Summary statistics of crossed and selfed maize plants
+<span id="tab:unnamed-chunk-333">Table 12.1: </span>Summary statistics of crossed and selfed maize plants
 </caption>
 <thead>
 <tr>
@@ -692,11 +700,12 @@ Self
 <div id="differences-between-groups" class="section level3" number="12.3.1">
 <h3><span class="header-section-number">12.3.1</span> Differences between groups</h3>
 <p>Darwin’s data used match pairs - each pair shared one parent. So that in pair 1 the same parent plant was either ‘selfed’or ’crossed’ to produce offspring. This is a powerful approach to experimental design, as it means that we can look at the differences in heights across each of the 15 pairs of plants - rather than having to infer differences from two randomly derived groups.</p>
-<p>In order to calculate the differences in height between each pair we need to do some data wrangling</p>
+<p>In order to calculate the differences in height between each pair we need to do some data wrangling - <strong>can you complete the below to produce the required output?</strong></p>
 <div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="introduction-to-statistics-spring-week-one.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pivot data to wide format then subtract Selfed plant heights from Crossed plant heights</span></span>
-<span id="cb240-2"><a href="introduction-to-statistics-spring-week-one.html#cb240-2" aria-hidden="true" tabindex="-1"></a>darwin_wide <span class="ot">&lt;-</span> darwin <span class="sc">%&gt;%</span> </span>
-<span id="cb240-3"><a href="introduction-to-statistics-spring-week-one.html#cb240-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>type, <span class="at">values_from=</span>height, <span class="at">id_cols=</span>pair) <span class="sc">%&gt;%</span> </span>
-<span id="cb240-4"><a href="introduction-to-statistics-spring-week-one.html#cb240-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference=</span>Cross<span class="sc">-</span>Self)</span></code></pre></div>
+<span id="cb240-2"><a href="introduction-to-statistics-spring-week-one.html#cb240-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb240-3"><a href="introduction-to-statistics-spring-week-one.html#cb240-3" aria-hidden="true" tabindex="-1"></a>darwin_wide <span class="ot">&lt;-</span> darwin <span class="sc">%&gt;%</span> </span>
+<span id="cb240-4"><a href="introduction-to-statistics-spring-week-one.html#cb240-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>type, <span class="at">values_from=</span>height, <span class="at">id_cols=</span>pair) <span class="sc">%&gt;%</span> </span>
+<span id="cb240-5"><a href="introduction-to-statistics-spring-week-one.html#cb240-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference=</span>___________)</span></code></pre></div>
 <pre><code># A tibble: 15 x 4
     pair Cross  Self difference
    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
@@ -705,6 +714,7 @@ Self
  3     3  21    20         1   
  4     4  22    20         2   
  </code></pre>
+<p>We now have the difference in height for each pair, we can use this to calculate the <strong>mean difference</strong> in heights between paired plants, and the amount of variance (as standard deviation)</p>
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="introduction-to-statistics-spring-week-one.html#cb242-1" aria-hidden="true" tabindex="-1"></a>difference_summary <span class="ot">&lt;-</span> darwin_wide <span class="sc">%&gt;%</span> </span>
 <span id="cb242-2"><a href="introduction-to-statistics-spring-week-one.html#cb242-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(difference),</span>
 <span id="cb242-3"><a href="introduction-to-statistics-spring-week-one.html#cb242-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd=</span><span class="fu">sd</span>(difference),</span>
@@ -730,9 +740,9 @@ What we have just calculated is the average difference in height between these g
 SE = \frac{s}{\sqrt(n)}
 \]</span></p>
 <p>As sample size increases the standard error should reduce - reflecting an increasing confidence in our estimate.</p>
-<p>We can calculate the standard error for our sample as follows</p>
+<p>We can calculate the standard error for our sample by applying this equation to our <code>difference_summary</code> object, can you complete this?</p>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="introduction-to-statistics-spring-week-one.html#cb244-1" aria-hidden="true" tabindex="-1"></a>difference_summary <span class="sc">%&gt;%</span> </span>
-<span id="cb244-2"><a href="introduction-to-statistics-spring-week-one.html#cb244-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">se=</span>sd<span class="sc">/</span><span class="fu">sqrt</span>(n))</span></code></pre></div>
+<span id="cb244-2"><a href="introduction-to-statistics-spring-week-one.html#cb244-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">se=</span>_______)</span></code></pre></div>
 <pre><code># A tibble: 1 x 4
    mean    sd     n    se
   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
@@ -798,7 +808,7 @@ When we decide whether we have enough confidence that a difference is real (e.g.
 <div id="confidence-intervals" class="section level3" number="12.3.4">
 <h3><span class="header-section-number">12.3.4</span> Confidence Intervals</h3>
 <p>Because ± 2 standard errors covers the central 95% of the area under the normal curve, we refer to this as our 95% confidence interval. We can calculate confidence intervals for any level, but commonly we refer to standard error (68% CI), 95% and 99%.</p>
-<p>We can work out the 95% confidence interval range of our estimated mean as follows</p>
+<p>We can work out the 95% confidence interval range of our estimated mean as follows:</p>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="introduction-to-statistics-spring-week-one.html#cb247-1" aria-hidden="true" tabindex="-1"></a>lowerCI <span class="ot">&lt;-</span> <span class="fl">2.62</span><span class="sc">-</span>(<span class="dv">2</span><span class="sc">*</span><span class="fl">1.22</span>)</span>
 <span id="cb247-2"><a href="introduction-to-statistics-spring-week-one.html#cb247-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb247-3"><a href="introduction-to-statistics-spring-week-one.html#cb247-3" aria-hidden="true" tabindex="-1"></a>upperCI <span class="ot">&lt;-</span> <span class="fl">2.62</span><span class="sc">+</span>(<span class="dv">2</span><span class="sc">*</span><span class="fl">1.22</span>)</span>
@@ -807,7 +817,11 @@ When we decide whether we have enough confidence that a difference is real (e.g.
 <span id="cb247-6"><a href="introduction-to-statistics-spring-week-one.html#cb247-6" aria-hidden="true" tabindex="-1"></a>upperCI</span></code></pre></div>
 <p>A common mistake it to state that we are 95% confident that the ‘true’ mean lies within our interval. But <em>technically</em> it refers to the fact that if we kept running this experiment again and again the intervals we calculate would capture the true mean in 95% of experiments. So really we are saying that we are confident we would capture the true mean in 95% of our experiments.</p>
 <p>How might we write this up?</p>
-<pre><code>The maize plants that have been cross pollinated were taller on average than the self-pollinated plants, with a mean difference in height of 2.62 [0.18, 5.06] inches (mean [95% CI]).</code></pre>
+<div class="rmdnote">
+<p>
+The maize plants that have been cross pollinated were taller on average than the self-pollinated plants, with a mean difference in height of 2.62 [0.18, 5.06] inches (mean [95% CI]).
+</p>
+</div>
 <p>Note that because it is possible to generate multiple types of average and confidence interval, we clearly state them in our write up. The same would be true if you were presenting the standard error (± S.E.) or the standard deviation (± S.D.) or a median and interquartile range (median [± IQR]).</p>
 <p>The above is a good example of a simple but clear write-up because it clearly describes the <em>direction</em> of the difference, the <em>amount</em> and the <em>error</em> in our estimate.</p>
 </div>

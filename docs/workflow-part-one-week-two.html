@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-01-25" />
+<meta name="date" content="2022-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -452,7 +452,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>12.2</b> Darwin’s maize data</a>
 <ul>
 <li class="chapter" data-level="12.2.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#description"><i class="fa fa-check"></i><b>12.2.1</b> Description</a></li>
-<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.2</b> Comparing groups</a></li>
+<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="12.2.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.3</b> Comparing groups</a></li>
 </ul></li>
 <li class="chapter" data-level="12.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#estimation"><i class="fa fa-check"></i><b>12.3</b> Estimation</a>
 <ul>
@@ -478,9 +479,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.3</b> Exercise for For Loops</a></li>
 <li class="chapter" data-level="13.2.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#learning-to-purr"><i class="fa fa-check"></i><b>13.2.4</b> Learning to <strong>purr</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.3</b> Summary</a></li>
+<li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
+<li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -513,7 +516,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We have chosen to continue working with a dataset you have been introduced to already - the Palmer Penguins dataset. Previously we loaded a cleaned dataset, very quickly using an R package. Today we will be working in a more realistic scenario - uploading out dataset to our R workspace.</p>
 <div id="meet-the-penguins" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Meet the Penguins</h2>
-<p>This data, taken from the <code>palmerpenguins</code> (<span class="citation"><a href="references.html#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, and Gorman</a> (<a href="references.html#ref-R-palmerpenguins" role="doc-biblioref">2020</a>)</span>) package was originally published by <span class="citation"><a href="references.html#ref-Antarctic" role="doc-biblioref">Gorman, Williams, and Fraser</a> (<a href="references.html#ref-Antarctic" role="doc-biblioref">2014</a>)</span>.</p>
+<p>This data, taken from the <code>palmerpenguins</code> (<span class="citation"><a href="references-1.html#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, and Gorman</a> (<a href="references-1.html#ref-R-palmerpenguins" role="doc-biblioref">2020</a>)</span>) package was originally published by <span class="citation"><a href="references-1.html#ref-Antarctic" role="doc-biblioref">Gorman, Williams, and Fraser</a> (<a href="references-1.html#ref-Antarctic" role="doc-biblioref">2014</a>)</span>.</p>
 <p>The palmerpenguins data contains size measurements, clutch observations, and blood isotope ratios for three penguin species observed on three islands in the Palmer Archipelago, Antarctica over a study period of three years.</p>
 <p><img src="images/gorman-penguins.jpg" title="Photo of three penguin species, Chinstrap, Gentoo, Adelie" alt="Photo of three penguin species, Chinstrap, Gentoo, Adelie" width="80%" /></p>
 <p>These data were collected from 2007 - 2009 by Dr. Kristen Gorman with the Palmer Station Long Term Ecological Research Program, part of the US Long Term Ecological Research Network. The data were imported directly from the Environmental Data Initiative (EDI) Data Portal, and are available for use by CC0 license (“No Rights Reserved”) in accordance with the Palmer Station Data Policy. We gratefully acknowledge Palmer Station LTER and the US LTER Network. Special thanks to Marty Downs (Director, LTER Network Office) for help regarding the data license &amp; use. Here is our intrepid package co-author, Dr. Gorman, in action collecting some penguin data:</p>
@@ -551,7 +554,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="preparing-the-data" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Preparing the data</h2>
 <p>Imagine we have completed our practical study and have our data. The data is probably distributed in lots of places, originally notes collected in the field were probably on paper &amp; notebooks. Then someone will have taken time to transcribe those into a spreadsheet. This will almost certainly have been done by typing all the data in by hand.</p>
-<p>It is very important for us to know how we would like our data to be organised at the end. We are going to learn how to organise data using the <em>tidy</em> format<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. This is because we are going to use the <code>tidyverse</code> packages by <span class="citation"><a href="references.html#ref-tidyverse2019" role="doc-biblioref">Wickham et al.</a> (<a href="references.html#ref-tidyverse2019" role="doc-biblioref">2019</a>)</span>. This is an opinionated, but highly effective method for generating reproducible analyses with a wide-range of data manipulation tools. Tidy data is an easy format for computers to read.</p>
+<p>It is very important for us to know how we would like our data to be organised at the end. We are going to learn how to organise data using the <em>tidy</em> format<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. This is because we are going to use the <code>tidyverse</code> packages by <span class="citation"><a href="references-1.html#ref-tidyverse2019" role="doc-biblioref">Wickham et al.</a> (<a href="references-1.html#ref-tidyverse2019" role="doc-biblioref">2019</a>)</span>. This is an opinionated, but highly effective method for generating reproducible analyses with a wide-range of data manipulation tools. Tidy data is an easy format for computers to read.</p>
 <div id="tidy-data" class="section level3" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Tidy data</h3>
 <p>Here ‘tidy’ refers to a specific structure that lets us manipulate and visualise data with ease. In a tidy dataset each <em>variable</em> is in one column and each row contains one <em>observation</em>. Each cell of the table/spreadsheet contains the <em>values</em>. Obe observation you might make about tidy data is it is quite long - it generates a lot of rows of data.</p>
@@ -915,13 +918,13 @@ What is the deliberate mistake in my code comment above? By now you may have pic
 </ul>
 <p>You have also been introduced to the <code>tidyverse</code> and two of its packages</p>
 <ul>
-<li><p><code>readr</code> <span class="citation"><a href="references.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, and Bryan</a> (<a href="references.html#ref-R-readr" role="doc-biblioref">2021</a>)</span></p></li>
-<li><p><code>dplyr</code> <span class="citation"><a href="references.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al.</a> (<a href="references.html#ref-R-dplyr" role="doc-biblioref">2021</a>)</span></p></li>
+<li><p><code>readr</code> <span class="citation"><a href="references-1.html#ref-R-readr" role="doc-biblioref">Wickham, Hester, and Bryan</a> (<a href="references-1.html#ref-R-readr" role="doc-biblioref">2021</a>)</span></p></li>
+<li><p><code>dplyr</code> <span class="citation"><a href="references-1.html#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al.</a> (<a href="references-1.html#ref-R-dplyr" role="doc-biblioref">2021</a>)</span></p></li>
 </ul>
 <p>As well as:</p>
 <ul>
-<li><p><code>janitor</code> <span class="citation"><a href="references.html#ref-R-janitor" role="doc-biblioref">Firke</a> (<a href="references.html#ref-R-janitor" role="doc-biblioref">2021</a>)</span></p></li>
-<li><p><code>lubridate</code> <span class="citation"><a href="references.html#ref-R-lubridate" role="doc-biblioref">Spinu, Grolemund, and Wickham</a> (<a href="references.html#ref-R-lubridate" role="doc-biblioref">2021</a>)</span></p></li>
+<li><p><code>janitor</code> <span class="citation"><a href="references-1.html#ref-R-janitor" role="doc-biblioref">Firke</a> (<a href="references-1.html#ref-R-janitor" role="doc-biblioref">2021</a>)</span></p></li>
+<li><p><code>lubridate</code> <span class="citation"><a href="references-1.html#ref-R-lubridate" role="doc-biblioref">Spinu, Grolemund, and Wickham</a> (<a href="references-1.html#ref-R-lubridate" role="doc-biblioref">2021</a>)</span></p></li>
 </ul>
 </div>
 <div id="quitting-1" class="section level3" number="3.8.2">
