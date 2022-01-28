@@ -400,7 +400,25 @@ klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = '
 knitr::opts_chunk$set(eval=FALSE)
 ```
 
-You can keep working in the same project workspace, but I would advise you start a new script to work on iteration.
+Keep working in the same project workspace as Estimates because there's a file you need, but I would advise you start a new script to work on iteration.
+
+So what the flip is **DRY** code anyway? It stands for **D**on't **R**epeat **Y**ourself. It's aimed at reducing the repetition and number of lines of code in your scripts. 
+
+So what the flip is **DRY** code anyway? It stands for **D**on't **R**epeat **Y**ourself. It's aimed at reducing the repetition and number of lines of code in your scripts. 
+
+Why is this useful? 
+
+* If you keep repeating the same/similar lines of code over and over then your script will become very large
+
+* Changes or updates have to be manually applied to each and every time you have used a line of code in your script
+
+* Mistakes can easily start to creep in
+
+There are two broad ways we can DRY out our code
+
+1) Use Functions - functions contain code instructions, and we can re-use them for similar processes simply by changing the arguments. In R you can use pre-built functions and start building your own!
+
+2) Use Iteration - Apply functions to loop/repeat over different groups or lists.
 
 
 ## Functions
@@ -527,6 +545,101 @@ darwin_wide %>%
 
 ```
 
+```{block, type="rmdwarning"}
+Functions can basically be given any name you want. However, you may accidentally overwrite existing functions if you give them the same name, so try and make them unique.
+
+```
+
+### More functions
+
+This is an example of a very simple function that just prints the string "Hello World" whenever you type the function `say_hello()`
+
+```{r}
+say_hello <- function(){
+  paste("Hello World") 
+}
+
+say_hello()
+
+# Notice the argument section is blank, what happens when you try to put something in the brackets when using this function?
+
+# say_hello("x")
+
+
+```
+Now lets try a similar function, but we include an argument:
+
+```{r}
+say_morning <- function(x){
+  paste("Good morning", x)
+}
+
+# what happens when you try to run this function
+say_morning() 
+
+#  what about this one?
+say_morning("Phil")
+
+```
+
+So that was an example where we included an argument for our function. However, you are probably used to the idea that many functions have "default" values for arguments, and we can easily set these.
+
+```{r}
+say_morning_default <- function(name="you"){
+  paste("Good morning", name)
+}
+# what happens when you put a "string" in the brackets? What happens when you leave it blank?
+say_morning_default()
+```
+
+### Exercise
+
+We are going to try and write a custom function called `find_largest_male()`, it will be used to identify the largest male *Drosophila* from a small dataset. 
+
+```{r}
+# Make some fake data into a tibble
+
+vial <- 1:10
+sex <- (rep(c("male","female"),5))
+weight_mg <- rnorm(10, mean=0.2, sd=0.01)
+
+dros_weight <- tibble(vial, sex, weight_mg)
+
+```
+
+#### Step 1.
+
+What functions would you use to extract the heaviest male from this dataset? Try and think that through first, then see if you can rework it into a function.
+
+<details><summary> **Click-me for A solution**</summary>
+
+```{r}
+find_largest_male <- function(df){
+  dros_male <- filter(df, df[,2]=="male")
+  head(arrange(dros_male, desc(dros_male[,3])),n=1)
+}
+
+# Note that this uses dplyr functions, so this would need to be loaded for this to work, this is an example of a dependency!
+
+```
+
+</details>
+
+#### Step 2.
+
+Now we have a basic function we can work to refine and extend it. What if we made a function that could pick the largest Drosophila overall, or male or female depending on what we need?
+
+<details><summary> **Click-me for A solution**</summary>
+
+```{r}
+find_largest_fly <- function(df, n=1, s=c("male", "female") ){
+  drossex <- filter(df, sex %in% s )
+  head(arrange(drossex, desc(drossex[,3])),n=n)
+}
+
+```
+
+</details>
 
 ### Custom ggplot themes
 
@@ -606,6 +719,12 @@ theme_custom()
 
 ```
 
+### Writing Packages
+
+You should be familiar by now with the idea that R packages add data and functions to your workspace. They are bundles of code that anyone can write, most commonly you will be downloading packages from CRAN. However development stage packages can also be downloaded directly from GitHub. 
+
+In the previous section we walked through some very basic writing of new functions. We can save these as R scripts and move them from project to project. Or we could choose to write them into a documented R package. 
+[This tutorial](https://ourcodingclub.github.io/tutorials/writing-r-package/) shows you just how to do that. Writing packages is a useful thing to do, even if you think the only person that will ever use them is yourself, as you then more easily access these functions across different workspaces and projects. 
 
 ## Iteration
 
@@ -613,7 +732,7 @@ We’ve seen how to write a function and how they can be used to create concise 
 
 ### iteration in tidyverse
 
-You have already used functions within tidyverse that allow you to perform iteration. For example we have the used the function `group_by()` many times. It allows us to subset our data, then command R to perform subsequent functions on each group separately. Sometimes however, you might want to use iteration more explicitly. 
+You have already used functions within tidyverse that allow you to perform iteration. For example we have the used the function `group_by()` many times. It allows us to subset our data, then command R to perform subsequent `dplyr` functions on each group separately. Sometimes however, you might want to use iteration more explicitly. 
 
 ### For Loops
 

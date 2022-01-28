@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2022-01-27}
+\date{2022-01-28}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-01-27
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-01-28
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -6265,7 +6265,32 @@ Next time we will start working with linear models - this approach allows us to 
 \hypertarget{keeping-code-dry---spring-week-one}{%
 \chapter{Keeping code DRY - Spring Week One}\label{keeping-code-dry---spring-week-one}}
 
-You can keep working in the same project workspace, but I would advise you start a new script to work on iteration.
+Keep working in the same project workspace as Estimates because there's a file you need, but I would advise you start a new script to work on iteration.
+
+So what the flip is \textbf{DRY} code anyway? It stands for \textbf{D}on't \textbf{R}epeat \textbf{Y}ourself. It's aimed at reducing the repetition and number of lines of code in your scripts.
+
+So what the flip is \textbf{DRY} code anyway? It stands for \textbf{D}on't \textbf{R}epeat \textbf{Y}ourself. It's aimed at reducing the repetition and number of lines of code in your scripts.
+
+Why is this useful?
+
+\begin{itemize}
+\item
+  If you keep repeating the same/similar lines of code over and over then your script will become very large
+\item
+  Changes or updates have to be manually applied to each and every time you have used a line of code in your script
+\item
+  Mistakes can easily start to creep in
+\end{itemize}
+
+There are two broad ways we can DRY out our code
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Use Functions - functions contain code instructions, and we can re-use them for similar processes simply by changing the arguments. In R you can use pre-built functions and start building your own!
+\item
+  Use Iteration - Apply functions to loop/repeat over different groups or lists.
+\end{enumerate}
 
 \hypertarget{functions-1}{%
 \section{Functions}\label{functions-1}}
@@ -6399,6 +6424,110 @@ It might surprise you to know that there is no prebuilt function for standard er
 \end{Highlighting}
 \end{Shaded}
 
+\begin{rmdwarning}
+Functions can basically be given any name you want. However, you may
+accidentally overwrite existing functions if you give them the same
+name, so try and make them unique.
+\end{rmdwarning}
+
+\hypertarget{more-functions}{%
+\subsection{More functions}\label{more-functions}}
+
+This is an example of a very simple function that just prints the string ``Hello World'' whenever you type the function \texttt{say\_hello()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{say\_hello }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{()\{}
+  \FunctionTok{paste}\NormalTok{(}\StringTok{"Hello World"}\NormalTok{) }
+\NormalTok{\}}
+
+\FunctionTok{say\_hello}\NormalTok{()}
+
+\CommentTok{\# Notice the argument section is blank, what happens when you try to put something in the brackets when using this function?}
+
+\CommentTok{\# say\_hello("x")}
+\end{Highlighting}
+\end{Shaded}
+
+Now lets try a similar function, but we include an argument:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{say\_morning }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x)\{}
+  \FunctionTok{paste}\NormalTok{(}\StringTok{"Good morning"}\NormalTok{, x)}
+\NormalTok{\}}
+
+\CommentTok{\# what happens when you try to run this function}
+\FunctionTok{say\_morning}\NormalTok{() }
+
+\CommentTok{\#  what about this one?}
+\FunctionTok{say\_morning}\NormalTok{(}\StringTok{"Phil"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+So that was an example where we included an argument for our function. However, you are probably used to the idea that many functions have ``default'' values for arguments, and we can easily set these.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{say\_morning\_default }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{name=}\StringTok{"you"}\NormalTok{)\{}
+  \FunctionTok{paste}\NormalTok{(}\StringTok{"Good morning"}\NormalTok{, name)}
+\NormalTok{\}}
+\CommentTok{\# what happens when you put a "string" in the brackets? What happens when you leave it blank?}
+\FunctionTok{say\_morning\_default}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercise}{%
+\subsection{Exercise}\label{exercise}}
+
+We are going to try and write a custom function called \texttt{find\_largest\_male()}, it will be used to identify the largest male \emph{Drosophila} from a small dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Make some fake data into a tibble}
+
+\NormalTok{vial }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}
+\NormalTok{sex }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"male"}\NormalTok{,}\StringTok{"female"}\NormalTok{),}\DecValTok{5}\NormalTok{))}
+\NormalTok{weight\_mg }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{, }\AttributeTok{mean=}\FloatTok{0.2}\NormalTok{, }\AttributeTok{sd=}\FloatTok{0.01}\NormalTok{)}
+
+\NormalTok{dros\_weight }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(vial, sex, weight\_mg)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{step-1.}{%
+\subsubsection{Step 1.}\label{step-1.}}
+
+What functions would you use to extract the heaviest male from this dataset? Try and think that through first, then see if you can rework it into a function.
+
+\textbf{Click-me for A solution}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{find\_largest\_male }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df)\{}
+\NormalTok{  dros\_male }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(df, df[,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{==}\StringTok{"male"}\NormalTok{)}
+  \FunctionTok{head}\NormalTok{(}\FunctionTok{arrange}\NormalTok{(dros\_male, }\FunctionTok{desc}\NormalTok{(dros\_male[,}\DecValTok{3}\NormalTok{])),}\AttributeTok{n=}\DecValTok{1}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{\# Note that this uses dplyr functions, so this would need to be loaded for this to work, this is an example of a dependency!}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{step-2.}{%
+\subsubsection{Step 2.}\label{step-2.}}
+
+Now we have a basic function we can work to refine and extend it. What if we made a function that could pick the largest Drosophila overall, or male or female depending on what we need?
+
+\textbf{Click-me for A solution}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{find\_largest\_fly }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(df, }\AttributeTok{n=}\DecValTok{1}\NormalTok{, }\AttributeTok{s=}\FunctionTok{c}\NormalTok{(}\StringTok{"male"}\NormalTok{, }\StringTok{"female"}\NormalTok{) )\{}
+\NormalTok{  drossex }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(df, sex }\SpecialCharTok{\%in\%}\NormalTok{ s )}
+  \FunctionTok{head}\NormalTok{(}\FunctionTok{arrange}\NormalTok{(drossex, }\FunctionTok{desc}\NormalTok{(drossex[,}\DecValTok{3}\NormalTok{])),}\AttributeTok{n=}\NormalTok{n)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{custom-ggplot-themes}{%
 \subsection{Custom ggplot themes}\label{custom-ggplot-themes}}
 
@@ -6417,7 +6546,7 @@ Here is a plot we made in the previous chapter
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-352-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-359-1.pdf}
 
 With the addition of a title and \texttt{theme\_classic()} we can improve the style quickly
 
@@ -6429,7 +6558,7 @@ With the addition of a title and \texttt{theme\_classic()} we can improve the st
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-353-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-360-1.pdf}
 
 But I \textbf{still} want to make some more changes, rather than do this work for one figure, and potentially have to repeat this several times for subsequent figures, I can decide to make a new function instead.
 
@@ -6482,7 +6611,15 @@ With this function set, I can now use it for as many figures as I wish. To use i
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-355-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-362-1.pdf}
+
+\hypertarget{writing-packages}{%
+\subsection{Writing Packages}\label{writing-packages}}
+
+You should be familiar by now with the idea that R packages add data and functions to your workspace. They are bundles of code that anyone can write, most commonly you will be downloading packages from CRAN. However development stage packages can also be downloaded directly from GitHub.
+
+In the previous section we walked through some very basic writing of new functions. We can save these as R scripts and move them from project to project. Or we could choose to write them into a documented R package.
+\href{https://ourcodingclub.github.io/tutorials/writing-r-package/}{This tutorial} shows you just how to do that. Writing packages is a useful thing to do, even if you think the only person that will ever use them is yourself, as you then more easily access these functions across different workspaces and projects.
 
 \hypertarget{iteration}{%
 \section{Iteration}\label{iteration}}
@@ -6492,7 +6629,7 @@ We've seen how to write a function and how they can be used to create concise re
 \hypertarget{iteration-in-tidyverse}{%
 \subsection{iteration in tidyverse}\label{iteration-in-tidyverse}}
 
-You have already used functions within tidyverse that allow you to perform iteration. For example we have the used the function \texttt{group\_by()} many times. It allows us to subset our data, then command R to perform subsequent functions on each group separately. Sometimes however, you might want to use iteration more explicitly.
+You have already used functions within tidyverse that allow you to perform iteration. For example we have the used the function \texttt{group\_by()} many times. It allows us to subset our data, then command R to perform subsequent \texttt{dplyr} functions on each group separately. Sometimes however, you might want to use iteration more explicitly.
 
 \hypertarget{for-loops}{%
 \subsection{For Loops}\label{for-loops}}
@@ -6619,7 +6756,7 @@ Here is an example of a graph we can make from the data looking at Griffon Vultu
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-361-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-368-1.pdf}
 
 We can use custom themes (like the one you made earlier) to quickly update figures
 
@@ -6694,7 +6831,7 @@ If we want to look at all four plots at once we can use the layout functions fro
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-365-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-372-1.pdf}
 
 This is ok, but arguably still requires a lot of code repetition. We have used the same lines of code four times to recreate four plots that are functionally the same. If we want to make any changes to the look of our plots we have to make four separate edits \& mistakes can easily creep in.
 

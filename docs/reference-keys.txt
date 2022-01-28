@@ -235,7 +235,12 @@ keeping-code-dry---spring-week-one
 functions-1
 common-functions
 write-your-own-function
+more-functions
+exercise
+step-1.
+step-2.
 custom-ggplot-themes
+writing-packages
 iteration
 iteration-in-tidyverse
 for-loops
