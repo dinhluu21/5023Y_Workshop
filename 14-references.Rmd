@@ -1,5 +1,0 @@
-`r if (knitr:::is_html_output()) '
-# References {-}
-'`
-
-*[R Cheat Sheets](https://www.rstudio.com/resources/cheatsheets/)

@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2022-01-28}
+\date{2022-01-29}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-01-28
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-01-29
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -6626,11 +6626,6 @@ In the previous section we walked through some very basic writing of new functio
 
 We've seen how to write a function and how they can be used to create concise re-usable operations that can be applied multiple times in a script without having to copy and paste, but where functions really come into their own is when combined with iteration. Iteration is the process of running the same operation on a group of objects, further minimising code replication.
 
-\hypertarget{iteration-in-tidyverse}{%
-\subsection{iteration in tidyverse}\label{iteration-in-tidyverse}}
-
-You have already used functions within tidyverse that allow you to perform iteration. For example we have the used the function \texttt{group\_by()} many times. It allows us to subset our data, then command R to perform subsequent \texttt{dplyr} functions on each group separately. Sometimes however, you might want to use iteration more explicitly.
-
 \hypertarget{for-loops}{%
 \subsection{For Loops}\label{for-loops}}
 
@@ -6907,12 +6902,33 @@ What if you want to write a loop to save all four plots at once - can you modify
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{learning-to-purr}{%
-\subsection{\texorpdfstring{Learning to \textbf{purr}}{Learning to purr}}\label{learning-to-purr}}
+\hypertarget{iteration-in-r}{%
+\subsection{Iteration in R}\label{iteration-in-r}}
 
-Another approach to iterative operations is the purrr package - it is the tidyverse approach to iteration.
+Loops are a fundamental part of programming in many languages - that's why they have been introduced as a concept with examples here. However in R, Loops are used much less often than in other languages. That is because R is a `vector based language', something we often take for granted. But what does that mean?
 
-If you are faced with performing the same task several times, it is probably worth creating a generalised solution that you can use across many inputs. For example, producing plots for multiple jurisdictions, or importing and combining many files.
+Here's an example - in the below written for R if we make a vector then apply a function to it, then it is applied to each element of the function, this is something we take for granted in R, but simply doesn't exist in languages like C++
+
+\begin{verbatim}
+x <- c(2,4,6,8,10)
+
+x/2
+
+# [1] 1 2 3 4 5
+\end{verbatim}
+
+Instead for C++ we would be required to write a loop, in order to explicitly request that the division is applied to each element of the vector
+
+\begin{verbatim}
+for(i in seq_along(x)){
+x[i] = x[i]/2
+}
+x
+
+# [1] 1 2 3 4 5
+\end{verbatim}
+
+A lot of functions in R are already vectorised and you don't even have to think about this concept. When we want more control over how this vectorization is applied, we have used the function \texttt{group\_by()} It allows us to subset our data into hidden vectors, then command R to perform subsequent \texttt{dplyr} functions on each group separately. Because of the combined functionality of R's vectorization and dplyr's data tools you might find there is little need for loops. When we \emph{do} wish to apply a function that isn't vectorize in the way we want - then tidyverse has an answer to this as well - purrr \citet{R-purrr}
 
 There are also a few other advantages to purrr - you can use it with pipes \%\textgreater\%, it handles errors better than normal for loops, and the syntax is quite clean and simple! If you are using a for loop, you can probably do it more clearly and succinctly with purrr!
 
@@ -6923,6 +6939,8 @@ There are also a few other advantages to purrr - you can use it with pipes \%\te
 \href{https://www.rebeccabarter.com/blog/2019-08-19_purrr/}{\textbf{This is a really good intro to learning how to purrr - try some of the simple exercises here before trying the below}}
 
 Now you have a simple grasp of \texttt{purrr} you should see that we have a list containing species objects, and an anonymous function \textasciitilde ggplot on the right. We can use this to quickly make four plots, just like we did with our for loops.
+
+the \texttt{map()} function takes a list or vector as the first argument, and a function (prefixed by \textasciitilde) as the second argument, it will then apply the function to each element of the list or vector. It will then return the output as new list. Simple!
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6955,7 +6973,7 @@ Below are some links you may find useful
 
 \begin{itemize}
 \item
-  \href{https://www.rstudio.com/resources/cheatsheets/}{RStudio education cheat sheet for ourr}
+  \href{https://www.rstudio.com/resources/cheatsheets/}{RStudio education cheat sheet for purr}
 \item
   \href{https://r4ds.had.co.nz/program-intro.html}{R4DS - intro to programming}
 \item
@@ -6963,8 +6981,6 @@ Below are some links you may find useful
 \item
   \href{https://epirhandbook.com/en/iteration-loops-and-lists.html}{EpiR handbook}
 \end{itemize}
-
-*\href{https://www.rstudio.com/resources/cheatsheets/}{R Cheat Sheets}
 
 *\href{https://www.rstudio.com/resources/cheatsheets/}{R Cheat Sheets}
 

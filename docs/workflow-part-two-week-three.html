@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-01-28" />
+<meta name="date" content="2022-01-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -477,16 +477,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="13.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-tidyverse"><i class="fa fa-check"></i><b>13.2.1</b> iteration in tidyverse</a></li>
-<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.2</b> For Loops</a></li>
-<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.3</b> Exercise for For Loops</a></li>
-<li class="chapter" data-level="13.2.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#learning-to-purr"><i class="fa fa-check"></i><b>13.2.4</b> Learning to <strong>purr</strong></a></li>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops</a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops</a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R</a></li>
 </ul></li>
 <li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
 <li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -713,7 +711,7 @@ How does this data stack up against the hypothesis about bill morphology we put 
 <span id="cb79-2"><a href="workflow-part-two-week-three.html#cb79-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb79-3"><a href="workflow-part-two-week-three.html#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>body_mass_g, <span class="at">fill=</span>species))<span class="sc">+</span></span>
 <span id="cb79-4"><a href="workflow-part-two-week-three.html#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">50</span>)</span></code></pre></div>
-<p>How does the distribution you have found compare with your insights on bill length? We can do this using the <code>cor_test</code> function from the package <code>rstatix</code> (<span class="citation"><a href="references-1.html#ref-R-rstatix" role="doc-biblioref">Kassambara</a> (<a href="references-1.html#ref-R-rstatix" role="doc-biblioref">2020</a>)</span>). This package contains a number of ‘pipe-friendly’ simple statistics functions</p>
+<p>How does the distribution you have found compare with your insights on bill length? We can do this using the <code>cor_test</code> function from the package <code>rstatix</code> (<span class="citation"><a href="references.html#ref-R-rstatix" role="doc-biblioref">Kassambara</a> (<a href="references.html#ref-R-rstatix" role="doc-biblioref">2020</a>)</span>). This package contains a number of ‘pipe-friendly’ simple statistics functions</p>
 <p>Add the <code>library()</code> for <code>rstatix</code> at the <strong>top</strong> of your RScript with an appropriate comment #</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="workflow-part-two-week-three.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a simple correlation test from the rstatix package</span></span>
 <span id="cb80-2"><a href="workflow-part-two-week-three.html#cb80-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>

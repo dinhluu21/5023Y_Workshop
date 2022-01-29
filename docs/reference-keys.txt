@@ -242,9 +242,8 @@ step-2.
 custom-ggplot-themes
 writing-packages
 iteration
-iteration-in-tidyverse
 for-loops
 exercise-for-for-loops
-learning-to-purr
+iteration-in-r
 more-practice
 summary-1

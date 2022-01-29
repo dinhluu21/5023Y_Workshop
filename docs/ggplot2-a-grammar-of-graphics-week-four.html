@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-01-28" />
+<meta name="date" content="2022-01-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -477,16 +477,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="13.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-tidyverse"><i class="fa fa-check"></i><b>13.2.1</b> iteration in tidyverse</a></li>
-<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.2</b> For Loops</a></li>
-<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.3</b> Exercise for For Loops</a></li>
-<li class="chapter" data-level="13.2.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#learning-to-purr"><i class="fa fa-check"></i><b>13.2.4</b> Learning to <strong>purr</strong></a></li>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops</a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops</a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R</a></li>
 </ul></li>
 <li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
 <li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -527,11 +525,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>plot theme</p></li>
 </ul>
 <p>We will cover each below.</p>
-<p>The philosophy of ggplot is much better explained by the package author, Hadley Wickham (<span class="citation"><a href="references-1.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al.</a> (<a href="references-1.html#ref-R-ggplot2" role="doc-biblioref">2021</a>)</span>). For now, we just need to be aware that ggplots are constructed by specifying the different components that we want to display, based on underlying information in a data frame.</p>
+<p>The philosophy of ggplot is much better explained by the package author, Hadley Wickham (<span class="citation"><a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al.</a> (<a href="references.html#ref-R-ggplot2" role="doc-biblioref">2021</a>)</span>). For now, we just need to be aware that ggplots are constructed by specifying the different components that we want to display, based on underlying information in a data frame.</p>
 </div>
 <div id="building-a-plot" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Building a plot</h2>
-<p>We are going to use the <em>simple</em> penguin data set contained in the <code>palmerpenguins</code> package (<span class="citation"><a href="references-1.html#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, and Gorman</a> (<a href="references-1.html#ref-R-palmerpenguins" role="doc-biblioref">2020</a>)</span>).</p>
+<p>We are going to use the <em>simple</em> penguin data set contained in the <code>palmerpenguins</code> package (<span class="citation"><a href="references.html#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, and Gorman</a> (<a href="references.html#ref-R-palmerpenguins" role="doc-biblioref">2020</a>)</span>).</p>
 <div class="rmdwarning">
 <p>
 Make sure you have a folder structure for your project - scripts - data (won’t be needed this week) - figures
@@ -866,12 +864,12 @@ assigned to variables.</p>
 You can explore all schemes available with the command <code>RColorBrewer::display.brewer.all()</code>
 </p>
 </div>
-<p>There are also many, many extensions that provide additional colour palettes. Some of my favourite packages include <code>ggsci</code>(<span class="citation"><a href="references-1.html#ref-R-ggsci" role="doc-biblioref">Xiao</a> (<a href="references-1.html#ref-R-ggsci" role="doc-biblioref">2018</a>)</span>) and <code>wesanderson</code>(<span class="citation"><a href="references-1.html#ref-R-wesanderson" role="doc-biblioref">Ram and Wickham</a> (<a href="references-1.html#ref-R-wesanderson" role="doc-biblioref">2018</a>)</span>).</p>
+<p>There are also many, many extensions that provide additional colour palettes. Some of my favourite packages include <code>ggsci</code>(<span class="citation"><a href="references.html#ref-R-ggsci" role="doc-biblioref">Xiao</a> (<a href="references.html#ref-R-ggsci" role="doc-biblioref">2018</a>)</span>) and <code>wesanderson</code>(<span class="citation"><a href="references.html#ref-R-wesanderson" role="doc-biblioref">Ram and Wickham</a> (<a href="references.html#ref-R-wesanderson" role="doc-biblioref">2018</a>)</span>).</p>
 <p><img src="images/wesanderson.png" width="80%" /></p>
 </div>
 <div id="accessibility" class="section level3" number="5.16.2">
 <h3><span class="header-section-number">5.16.2</span> Accessibility</h3>
-<p>It’s very easy to get carried away with colour palettes, but you should remember at all times that your figures must be accessible. One way to check how accessible your figures are is to use a colour blindness checker <span class="citation"><a href="references-1.html#ref-R-colorBlindness" role="doc-biblioref">Ou</a> (<a href="references-1.html#ref-R-colorBlindness" role="doc-biblioref">2021</a>)</span></p>
+<p>It’s very easy to get carried away with colour palettes, but you should remember at all times that your figures must be accessible. One way to check how accessible your figures are is to use a colour blindness checker <span class="citation"><a href="references.html#ref-R-colorBlindness" role="doc-biblioref">Ou</a> (<a href="references.html#ref-R-colorBlindness" role="doc-biblioref">2021</a>)</span></p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="ggplot2-a-grammar-of-graphics-week-four.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(colorBlindness)</span>
 <span id="cb120-2"><a href="ggplot2-a-grammar-of-graphics-week-four.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cvdPlot</span>() <span class="co"># will automatically run on the last plot you made</span></span></code></pre></div>
 <p><img src="images/colorblind.png" width="80%" /></p>
@@ -885,7 +883,7 @@ You can explore all schemes available with the command <code>RColorBrewer::displ
 </div>
 <div id="patchwork" class="section level2" number="5.17">
 <h2><span class="header-section-number">5.17</span> Patchwork</h2>
-<p>There are many times you might want to combine figures into multi-panel plots. Probably the easiest way to do this is with the <code>patchwork</code> package (<span class="citation"><a href="references-1.html#ref-R-patchwork" role="doc-biblioref">Pedersen</a> (<a href="references-1.html#ref-R-patchwork" role="doc-biblioref">2020</a>)</span>).</p>
+<p>There are many times you might want to combine figures into multi-panel plots. Probably the easiest way to do this is with the <code>patchwork</code> package (<span class="citation"><a href="references.html#ref-R-patchwork" role="doc-biblioref">Pedersen</a> (<a href="references.html#ref-R-patchwork" role="doc-biblioref">2020</a>)</span>).</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="ggplot2-a-grammar-of-graphics-week-four.html#cb121-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb121-2"><a href="ggplot2-a-grammar-of-graphics-week-four.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm, </span>
 <span id="cb121-3"><a href="ggplot2-a-grammar-of-graphics-week-four.html#cb121-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> bill_length_mm))<span class="sc">+</span></span>
@@ -963,22 +961,22 @@ Download your saved figure from RStudio Cloud and submit it to Blackboard “Wee
 </ul>
 <p>You have primarily worked with <code>tidyverse</code> and the package</p>
 <ul>
-<li><code>ggplot2</code> <span class="citation"><a href="references-1.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al.</a> (<a href="references-1.html#ref-R-ggplot2" role="doc-biblioref">2021</a>)</span></li>
+<li><code>ggplot2</code> <span class="citation"><a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al.</a> (<a href="references.html#ref-R-ggplot2" role="doc-biblioref">2021</a>)</span></li>
 </ul>
 <p>As well as:</p>
 <ul>
-<li><p><code>colorBlindness</code> <span class="citation"><a href="references-1.html#ref-R-colorBlindness" role="doc-biblioref">Ou</a> (<a href="references-1.html#ref-R-colorBlindness" role="doc-biblioref">2021</a>)</span></p></li>
-<li><p><code>patchwork</code> <span class="citation"><a href="references-1.html#ref-R-patchwork" role="doc-biblioref">Pedersen</a> (<a href="references-1.html#ref-R-patchwork" role="doc-biblioref">2020</a>)</span></p></li>
+<li><p><code>colorBlindness</code> <span class="citation"><a href="references.html#ref-R-colorBlindness" role="doc-biblioref">Ou</a> (<a href="references.html#ref-R-colorBlindness" role="doc-biblioref">2021</a>)</span></p></li>
+<li><p><code>patchwork</code> <span class="citation"><a href="references.html#ref-R-patchwork" role="doc-biblioref">Pedersen</a> (<a href="references.html#ref-R-patchwork" role="doc-biblioref">2020</a>)</span></p></li>
 </ul>
 </div>
 <div id="further-reading-guides-and-tips" class="section level3" number="5.21.2">
 <h3><span class="header-section-number">5.21.2</span> Further Reading, Guides and tips</h3>
 <p><a href="https://www.rstudio.com/resources/cheatsheets/">R Cheat Sheets</a></p>
-<p><span class="citation"><a href="references-1.html#ref-dataviz" role="doc-biblioref">Wilke</a> (<a href="references-1.html#ref-dataviz" role="doc-biblioref">2020</a>)</span> <a href="https://clauswilke.com/dataviz/" class="uri">https://clauswilke.com/dataviz/</a></p>
+<p><span class="citation"><a href="references.html#ref-dataviz" role="doc-biblioref">Wilke</a> (<a href="references.html#ref-dataviz" role="doc-biblioref">2020</a>)</span> <a href="https://clauswilke.com/dataviz/" class="uri">https://clauswilke.com/dataviz/</a></p>
 <p><em>this book tells you everything you need to know about presenting your figures for accessbility and clarity</em></p>
 <p><a href="https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/" class="uri">https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/</a></p>
 <p><em>an incredibly handy ggplot guide for how to build and improve your figures</em></p>
-<p><span class="citation"><a href="references-1.html#ref-ggplot" role="doc-biblioref">D. N. Hadley Wickham and Pedersen</a> (<a href="references-1.html#ref-ggplot" role="doc-biblioref">2020</a>)</span> <a href="https://ggplot2-book.org/" class="uri">https://ggplot2-book.org/</a></p>
+<p><span class="citation"><a href="references.html#ref-ggplot" role="doc-biblioref">D. N. Hadley Wickham and Pedersen</a> (<a href="references.html#ref-ggplot" role="doc-biblioref">2020</a>)</span> <a href="https://ggplot2-book.org/" class="uri">https://ggplot2-book.org/</a></p>
 <p><em>the original Hadley Wickham book on ggplot2</em></p>
 
 </div>

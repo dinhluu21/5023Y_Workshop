@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-01-28" />
+<meta name="date" content="2022-01-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -477,16 +477,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="13.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-tidyverse"><i class="fa fa-check"></i><b>13.2.1</b> iteration in tidyverse</a></li>
-<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.2</b> For Loops</a></li>
-<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.3</b> Exercise for For Loops</a></li>
-<li class="chapter" data-level="13.2.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#learning-to-purr"><i class="fa fa-check"></i><b>13.2.4</b> Learning to <strong>purr</strong></a></li>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops</a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops</a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R</a></li>
 </ul></li>
 <li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
 <li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -758,12 +756,8 @@ Functions can basically be given any name you want. However, you may accidentall
 <div id="iteration" class="section level2" number="13.2">
 <h2><span class="header-section-number">13.2</span> Iteration</h2>
 <p>We’ve seen how to write a function and how they can be used to create concise re-usable operations that can be applied multiple times in a script without having to copy and paste, but where functions really come into their own is when combined with iteration. Iteration is the process of running the same operation on a group of objects, further minimising code replication.</p>
-<div id="iteration-in-tidyverse" class="section level3" number="13.2.1">
-<h3><span class="header-section-number">13.2.1</span> iteration in tidyverse</h3>
-<p>You have already used functions within tidyverse that allow you to perform iteration. For example we have the used the function <code>group_by()</code> many times. It allows us to subset our data, then command R to perform subsequent <code>dplyr</code> functions on each group separately. Sometimes however, you might want to use iteration more explicitly.</p>
-</div>
-<div id="for-loops" class="section level3" number="13.2.2">
-<h3><span class="header-section-number">13.2.2</span> For Loops</h3>
+<div id="for-loops" class="section level3" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> For Loops</h3>
 <p>A for loop has three core parts:</p>
 <ol style="list-style-type: decimal">
 <li><p>The sequence of items to iterate through</p></li>
@@ -810,8 +804,8 @@ Functions can basically be given any name you want. However, you may accidentall
 <span id="cb268-7"><a href="keeping-code-dry-spring-week-one.html#cb268-7" aria-hidden="true" tabindex="-1"></a>output</span>
 <span id="cb268-8"><a href="keeping-code-dry-spring-week-one.html#cb268-8" aria-hidden="true" tabindex="-1"></a><span class="co"># [1]  0.30851540  0.54294832 -0.51376911  0.0441560</span></span></code></pre></div>
 </div>
-<div id="exercise-for-for-loops" class="section level3" number="13.2.3">
-<h3><span class="header-section-number">13.2.3</span> Exercise for For Loops</h3>
+<div id="exercise-for-for-loops" class="section level3" number="13.2.2">
+<h3><span class="header-section-number">13.2.2</span> Exercise for For Loops</h3>
 <p>This part of the exercise is a real world example of using simple <code>for()</code> loops to create graphs. This data comes from the <a href="https://livingplanetindex.org/home/index">Living Planet Index</a>, which holds data on various vertebrate species collected from 1974 to 2014.</p>
 <p>First we should import the data:</p>
 <div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="keeping-code-dry-spring-week-one.html#cb269-1" aria-hidden="true" tabindex="-1"></a>LPI <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/LPI_data_loops.csv&quot;</span>)</span></code></pre></div>
@@ -937,23 +931,39 @@ Functions can basically be given any name you want. However, you may accidentall
 <span id="cb278-18"><a href="keeping-code-dry-spring-week-one.html#cb278-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggsave</span>(plot, <span class="at">file=</span><span class="fu">paste</span>(<span class="st">&quot;figure/&quot;</span>, sp.name, <span class="st">&quot;.png&quot;</span>, <span class="at">sep=</span><span class="st">&#39;&#39;</span>), <span class="at">dpi=</span><span class="dv">900</span>) </span>
 <span id="cb278-19"><a href="keeping-code-dry-spring-week-one.html#cb278-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="learning-to-purr" class="section level3" number="13.2.4">
-<h3><span class="header-section-number">13.2.4</span> Learning to <strong>purr</strong></h3>
-<p>Another approach to iterative operations is the purrr package - it is the tidyverse approach to iteration.</p>
-<p>If you are faced with performing the same task several times, it is probably worth creating a generalised solution that you can use across many inputs. For example, producing plots for multiple jurisdictions, or importing and combining many files.</p>
+<div id="iteration-in-r" class="section level3" number="13.2.3">
+<h3><span class="header-section-number">13.2.3</span> Iteration in R</h3>
+<p>Loops are a fundamental part of programming in many languages - that’s why they have been introduced as a concept with examples here. However in R, Loops are used much less often than in other languages. That is because R is a ‘vector based language,’ something we often take for granted. But what does that mean?</p>
+<p>Here’s an example - in the below written for R if we make a vector then apply a function to it, then it is applied to each element of the function, this is something we take for granted in R, but simply doesn’t exist in languages like C++</p>
+<pre><code>x &lt;- c(2,4,6,8,10)
+
+x/2
+
+# [1] 1 2 3 4 5
+</code></pre>
+<p>Instead for C++ we would be required to write a loop, in order to explicitly request that the division is applied to each element of the vector</p>
+<pre><code>for(i in seq_along(x)){
+x[i] = x[i]/2
+}
+x
+
+# [1] 1 2 3 4 5
+</code></pre>
+<p>A lot of functions in R are already vectorised and you don’t even have to think about this concept. When we want more control over how this vectorization is applied, we have used the function <code>group_by()</code> It allows us to subset our data into hidden vectors, then command R to perform subsequent <code>dplyr</code> functions on each group separately. Because of the combined functionality of R’s vectorization and dplyr’s data tools you might find there is little need for loops. When we <em>do</em> wish to apply a function that isn’t vectorize in the way we want - then tidyverse has an answer to this as well - purrr <span class="citation"><a href="references.html#ref-R-purrr" role="doc-biblioref">Henry and Wickham</a> (<a href="references.html#ref-R-purrr" role="doc-biblioref">2020</a>)</span></p>
 <p>There are also a few other advantages to purrr - you can use it with pipes %&gt;%, it handles errors better than normal for loops, and the syntax is quite clean and simple! If you are using a for loop, you can probably do it more clearly and succinctly with purrr!</p>
 <p><strong>Remember</strong> purrr is a very tidyverse focused method of iteration, so understanding for loops can be useful if you end up learning other programming languages in the future.</p>
 <p><strong>purrr</strong> is more focused on the function, and less obviously focused on the looping aspect, as you might be able to see below.</p>
 <p><a href="https://www.rebeccabarter.com/blog/2019-08-19_purrr/"><strong>This is a really good intro to learning how to purrr - try some of the simple exercises here before trying the below</strong></a></p>
 <p>Now you have a simple grasp of <code>purrr</code> you should see that we have a list containing species objects, and an anonymous function ~ggplot on the right. We can use this to quickly make four plots, just like we did with our for loops.</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="keeping-code-dry-spring-week-one.html#cb279-1" aria-hidden="true" tabindex="-1"></a>my_plots_2 <span class="ot">&lt;-</span> <span class="fu">map</span>(Sp_list, <span class="sc">~</span><span class="fu">ggplot</span>(data, <span class="fu">aes</span> (<span class="at">x =</span> year, <span class="at">y =</span> abundance)) <span class="sc">+</span>              </span>
-<span id="cb279-2"><a href="keeping-code-dry-spring-week-one.html#cb279-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>                                                </span>
-<span id="cb279-3"><a href="keeping-code-dry-spring-week-one.html#cb279-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>          </span>
-<span id="cb279-4"><a href="keeping-code-dry-spring-week-one.html#cb279-4" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">theme_custom</span>() <span class="sc">+</span></span>
-<span id="cb279-5"><a href="keeping-code-dry-spring-week-one.html#cb279-5" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Abundance</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> sp.name)) </span>
-<span id="cb279-6"><a href="keeping-code-dry-spring-week-one.html#cb279-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb279-7"><a href="keeping-code-dry-spring-week-one.html#cb279-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb279-8"><a href="keeping-code-dry-spring-week-one.html#cb279-8" aria-hidden="true" tabindex="-1"></a><span class="fu">wrap_plots</span>(my_plots_2)<span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">design=</span>layout)</span></code></pre></div>
+<p>the <code>map()</code> function takes a list or vector as the first argument, and a function (prefixed by ~) as the second argument, it will then apply the function to each element of the list or vector. It will then return the output as new list. Simple!</p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="keeping-code-dry-spring-week-one.html#cb281-1" aria-hidden="true" tabindex="-1"></a>my_plots_2 <span class="ot">&lt;-</span> <span class="fu">map</span>(Sp_list, <span class="sc">~</span><span class="fu">ggplot</span>(data, <span class="fu">aes</span> (<span class="at">x =</span> year, <span class="at">y =</span> abundance)) <span class="sc">+</span>              </span>
+<span id="cb281-2"><a href="keeping-code-dry-spring-week-one.html#cb281-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>                                                </span>
+<span id="cb281-3"><a href="keeping-code-dry-spring-week-one.html#cb281-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">colour =</span> <span class="st">&quot;#00868B&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;#00868B&quot;</span>) <span class="sc">+</span>          </span>
+<span id="cb281-4"><a href="keeping-code-dry-spring-week-one.html#cb281-4" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">theme_custom</span>() <span class="sc">+</span></span>
+<span id="cb281-5"><a href="keeping-code-dry-spring-week-one.html#cb281-5" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Abundance</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> sp.name)) </span>
+<span id="cb281-6"><a href="keeping-code-dry-spring-week-one.html#cb281-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-7"><a href="keeping-code-dry-spring-week-one.html#cb281-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-8"><a href="keeping-code-dry-spring-week-one.html#cb281-8" aria-hidden="true" tabindex="-1"></a><span class="fu">wrap_plots</span>(my_plots_2)<span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">design=</span>layout)</span></code></pre></div>
 </div>
 </div>
 <div id="more-practice" class="section level2" number="13.3">
@@ -967,7 +977,7 @@ Functions can basically be given any name you want. However, you may accidentall
 <p>Making functions and iterations are advanced R skills, and can often seem daunting. I do not expect you to HAVE to implement these for this course, but I do want to give you an insight into some core programming skills that you might be interested in and want to develop.</p>
 <p>Below are some links you may find useful</p>
 <ul>
-<li><p><a href="https://www.rstudio.com/resources/cheatsheets/">RStudio education cheat sheet for ourr</a></p></li>
+<li><p><a href="https://www.rstudio.com/resources/cheatsheets/">RStudio education cheat sheet for purr</a></p></li>
 <li><p><a href="https://r4ds.had.co.nz/program-intro.html">R4DS - intro to programming</a></p></li>
 <li><p><a href="https://ourcodingclub.github.io/tutorials/funandloops/#function">Coding club</a></p></li>
 <li><p><a href="https://epirhandbook.com/en/iteration-loops-and-lists.html">EpiR handbook</a></p></li>

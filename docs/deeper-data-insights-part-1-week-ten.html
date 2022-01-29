@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-01-28" />
+<meta name="date" content="2022-01-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -477,16 +477,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="13.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-tidyverse"><i class="fa fa-check"></i><b>13.2.1</b> iteration in tidyverse</a></li>
-<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.2</b> For Loops</a></li>
-<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.3</b> Exercise for For Loops</a></li>
-<li class="chapter" data-level="13.2.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#learning-to-purr"><i class="fa fa-check"></i><b>13.2.4</b> Learning to <strong>purr</strong></a></li>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops</a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops</a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R</a></li>
 </ul></li>
 <li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
 <li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -632,7 +630,7 @@ penguins &lt;- penguins %&gt;% mutate(species = factor(species, levels = c(“Ad
 <span id="cb189-8"><a href="deeper-data-insights-part-1-week-ten.html#cb189-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">position=</span><span class="st">&quot;identity&quot;</span>)<span class="sc">+</span></span>
 <span id="cb189-9"><a href="deeper-data-insights-part-1-week-ten.html#cb189-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Body mass (g) of Adelie penguins&quot;</span>,</span>
 <span id="cb189-10"><a href="deeper-data-insights-part-1-week-ten.html#cb189-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>)</span></code></pre></div>
-<p>Or we can use one of my favourite packages <code>ggridges</code> <span class="citation"><a href="references-1.html#ref-R-ggridges" role="doc-biblioref">Wilke</a> (<a href="references-1.html#ref-R-ggridges" role="doc-biblioref">2021</a>)</span> which let’s us separate out different groups along the y-axis.</p>
+<p>Or we can use one of my favourite packages <code>ggridges</code> <span class="citation"><a href="references.html#ref-R-ggridges" role="doc-biblioref">Wilke</a> (<a href="references.html#ref-R-ggridges" role="doc-biblioref">2021</a>)</span> which let’s us separate out different groups along the y-axis.</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="deeper-data-insights-part-1-week-ten.html#cb190-1" aria-hidden="true" tabindex="-1"></a>adelie_penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb190-2"><a href="deeper-data-insights-part-1-week-ten.html#cb190-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(sex) <span class="sc">%&gt;%</span> </span>
 <span id="cb190-3"><a href="deeper-data-insights-part-1-week-ten.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()<span class="sc">+</span></span>
@@ -674,7 +672,7 @@ penguins &lt;- penguins %&gt;% mutate(species = factor(species, levels = c(“Ad
 <p>We can use the IQR function to find the interquartile range of the body mass variable</p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="deeper-data-insights-part-1-week-ten.html#cb193-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb193-2"><a href="deeper-data-insights-part-1-week-ten.html#cb193-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">IQR_body_mass =</span> <span class="fu">IQR</span>(body_mass_g, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code></pre></div>
-<p>The IQR is also useful when applied to the summary plots ‘box and whisker plots.’ We can also calculate the values of the IQR margins, and add labels with <code>scales</code> <span class="citation"><a href="references-1.html#ref-R-scales" role="doc-biblioref">Wickham and Seidel</a> (<a href="references-1.html#ref-R-scales" role="doc-biblioref">2020</a>)</span>.</p>
+<p>The IQR is also useful when applied to the summary plots ‘box and whisker plots.’ We can also calculate the values of the IQR margins, and add labels with <code>scales</code> <span class="citation"><a href="references.html#ref-R-scales" role="doc-biblioref">Wickham and Seidel</a> (<a href="references.html#ref-R-scales" role="doc-biblioref">2020</a>)</span>.</p>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="deeper-data-insights-part-1-week-ten.html#cb194-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
 <span id="cb194-2"><a href="deeper-data-insights-part-1-week-ten.html#cb194-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">q_body_mass =</span> <span class="fu">quantile</span>(body_mass_g, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>), <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
 <span id="cb194-3"><a href="deeper-data-insights-part-1-week-ten.html#cb194-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">quantile =</span> scales<span class="sc">::</span><span class="fu">percent</span>(<span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))) <span class="co"># scales package allows easy converting from data values to perceptual properties</span></span></code></pre></div>
@@ -847,8 +845,8 @@ Figure 10.2: This figure shows the use of patchwork to combine two ggplots, demo
 </ul>
 <p>You have primarily used <code>tidyverse</code> packages, but also:</p>
 <ul>
-<li><p><code>ggridges</code> <span class="citation"><a href="references-1.html#ref-R-ggridges" role="doc-biblioref">Wilke</a> (<a href="references-1.html#ref-R-ggridges" role="doc-biblioref">2021</a>)</span></p></li>
-<li><p><code>scales</code> <span class="citation"><a href="references-1.html#ref-R-scales" role="doc-biblioref">Wickham and Seidel</a> (<a href="references-1.html#ref-R-scales" role="doc-biblioref">2020</a>)</span></p></li>
+<li><p><code>ggridges</code> <span class="citation"><a href="references.html#ref-R-ggridges" role="doc-biblioref">Wilke</a> (<a href="references.html#ref-R-ggridges" role="doc-biblioref">2021</a>)</span></p></li>
+<li><p><code>scales</code> <span class="citation"><a href="references.html#ref-R-scales" role="doc-biblioref">Wickham and Seidel</a> (<a href="references.html#ref-R-scales" role="doc-biblioref">2020</a>)</span></p></li>
 </ul>
 <p>In the next chapter we will look at generating insights around the relationships between variables. Now is a good time to review earlier chapters such as Chapter <a href="workflow-part-one-week-two.html#workflow-part-one-week-two">3</a>, and think about how we ask questions of our data.</p>
 <div id="reward" class="section level3" number="10.5.1">

@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-01-28" />
+<meta name="date" content="2022-01-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -477,16 +477,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="13.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration</a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-tidyverse"><i class="fa fa-check"></i><b>13.2.1</b> iteration in tidyverse</a></li>
-<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.2</b> For Loops</a></li>
-<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.3</b> Exercise for For Loops</a></li>
-<li class="chapter" data-level="13.2.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#learning-to-purr"><i class="fa fa-check"></i><b>13.2.4</b> Learning to <strong>purr</strong></a></li>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops</a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops</a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R</a></li>
 </ul></li>
 <li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
 <li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -747,7 +745,7 @@ Figure 2.1: courtesy of Allison Horst
 </div>
 <div id="my-first-data-visualisation" class="section level2" number="2.8">
 <h2><span class="header-section-number">2.8</span> My first data visualisation</h2>
-<p>Let’s run our first data visualisation using the functions and data we have now loaded - this produces a plot using functions from the <code>ggplot2</code> package (<span class="citation"><a href="references-1.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al.</a> (<a href="references-1.html#ref-R-ggplot2" role="doc-biblioref">2021</a>)</span>) and data from the <code>palmerpenguins</code> (<span class="citation"><a href="references-1.html#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, and Gorman</a> (<a href="references-1.html#ref-R-palmerpenguins" role="doc-biblioref">2020</a>)</span>) package. Use the # comments to add notes on what you are using each package for in your script.</p>
+<p>Let’s run our first data visualisation using the functions and data we have now loaded - this produces a plot using functions from the <code>ggplot2</code> package (<span class="citation"><a href="references.html#ref-R-ggplot2" role="doc-biblioref">Wickham, Chang, et al.</a> (<a href="references.html#ref-R-ggplot2" role="doc-biblioref">2021</a>)</span>) and data from the <code>palmerpenguins</code> (<span class="citation"><a href="references.html#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, and Gorman</a> (<a href="references.html#ref-R-palmerpenguins" role="doc-biblioref">2020</a>)</span>) package. Use the # comments to add notes on what you are using each package for in your script.</p>
 <p>Using these functions we can write a simple line of code to produce a figure. We specify the data source, the variables to be used for the x and y axis and then the type of visual object to produce, colouring them by the species.</p>
 <p>Copy this into your console and hit Enter.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="getting-to-know-r-week-one.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour=</span>species)) </span></code></pre></div>
