@@ -1255,7 +1255,7 @@ Enjoy this stupid reward from [ggcats](https://github.com/R-CoderDotCom/ggcats)
 
 > **Note - ggcats is sadly not available on CRAN library (yet) if you want to install your own version you can, you just need the package 'remotes' - then to follow the instructions on the ggcats github page. 
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 library(Ecdat)
 data(incomeInequality)
 

@@ -18,6 +18,8 @@ fig:unnamed-chunk-314
 fig:unnamed-chunk-318
 tab:unnamed-chunk-333
 fig:unnamed-chunk-349
+fig:unnamed-chunk-389
+fig:unnamed-chunk-399
 introduction
 approach-and-style
 teaching
@@ -247,3 +249,18 @@ exercise-for-for-loops
 iteration-in-r
 more-practice
 summary-1
+introduction-to-statistics---spring-week-one-1
+introduction-to-linear-models
+packages-1
+a-linear-model-analysis-for-comparing-groups
+compare-means
+standard-error-of-the-difference-1
+confidence-intervals-1
+answering-the-question
+getting-the-other-treatment-mean-and-standard-error
+assumption-checking
+normal-distribution-1
+what-is-a-quantile-quantile-qq-plot
+equal-variance
+outliers
+summary-2
