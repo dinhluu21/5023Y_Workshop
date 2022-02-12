@@ -1,5 +1,5 @@
 
-# Introduction to Statistics - Spring Week One
+# Introduction to Linear Models - Spring Week Two
 
 ```{r , echo=FALSE, eval=TRUE, include=TRUE}
 klippy::klippy(c('r', 'bash'), position = c('top', 'right'), tooltip_message = 'copy to clipboard', tooltip_success = 'Copied!')

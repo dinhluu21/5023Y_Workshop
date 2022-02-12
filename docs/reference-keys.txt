@@ -20,6 +20,7 @@ tab:unnamed-chunk-333
 fig:unnamed-chunk-349
 fig:unnamed-chunk-389
 fig:unnamed-chunk-399
+tab:unnamed-chunk-417
 introduction
 approach-and-style
 teaching
@@ -249,7 +250,7 @@ exercise-for-for-loops
 iteration-in-r
 more-practice
 summary-1
-introduction-to-statistics---spring-week-one-1
+introduction-to-linear-models---spring-week-two
 introduction-to-linear-models
 packages-1
 a-linear-model-analysis-for-comparing-groups
@@ -264,3 +265,11 @@ what-is-a-quantile-quantile-qq-plot
 equal-variance
 outliers
 summary-2
+testing---spring-week-three
+its-t-time
+students-t-test
+paired-t
+effect-sizes
+power
+meta-analysis
+summary-3
