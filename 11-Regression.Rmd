@@ -310,9 +310,9 @@ p1 <- augmented_ls1 %>%
   geom_line()+
   ggtitle("Full Data")
 
-# Plotting the fitted values against the dependent e.g. our regression line
+# Plotting the fitted values against the independent e.g. our regression line
 p2 <- augmented_ls1 %>% 
-  ggplot(aes(x=hardness, y=.fitted))+
+  ggplot(aes(x=dens, y=.fitted))+
   geom_line()+
   ggtitle("Linear trend")
 

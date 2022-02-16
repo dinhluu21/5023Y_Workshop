@@ -813,9 +813,9 @@ large
 <span id="cb347-4"><a href="regression-spring-week-four.html#cb347-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
 <span id="cb347-5"><a href="regression-spring-week-four.html#cb347-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Full Data&quot;</span>)</span>
 <span id="cb347-6"><a href="regression-spring-week-four.html#cb347-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb347-7"><a href="regression-spring-week-four.html#cb347-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the fitted values against the dependent e.g. our regression line</span></span>
+<span id="cb347-7"><a href="regression-spring-week-four.html#cb347-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the fitted values against the independent e.g. our regression line</span></span>
 <span id="cb347-8"><a href="regression-spring-week-four.html#cb347-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> augmented_ls1 <span class="sc">%&gt;%</span> </span>
-<span id="cb347-9"><a href="regression-spring-week-four.html#cb347-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>hardness, <span class="at">y=</span>.fitted))<span class="sc">+</span></span>
+<span id="cb347-9"><a href="regression-spring-week-four.html#cb347-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dens, <span class="at">y=</span>.fitted))<span class="sc">+</span></span>
 <span id="cb347-10"><a href="regression-spring-week-four.html#cb347-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
 <span id="cb347-11"><a href="regression-spring-week-four.html#cb347-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Linear trend&quot;</span>)</span>
 <span id="cb347-12"><a href="regression-spring-week-four.html#cb347-12" aria-hidden="true" tabindex="-1"></a></span>

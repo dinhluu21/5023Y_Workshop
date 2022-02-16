@@ -8174,9 +8174,9 @@ We can use this augmented data to really help us understand what residual varian
   \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Full Data"}\NormalTok{)}
 
-\CommentTok{\# Plotting the fitted values against the dependent e.g. our regression line}
+\CommentTok{\# Plotting the fitted values against the independent e.g. our regression line}
 \NormalTok{p2 }\OtherTok{\textless{}{-}}\NormalTok{ augmented\_ls1 }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{hardness, }\AttributeTok{y=}\NormalTok{.fitted))}\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dens, }\AttributeTok{y=}\NormalTok{.fitted))}\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Linear trend"}\NormalTok{)}
 
