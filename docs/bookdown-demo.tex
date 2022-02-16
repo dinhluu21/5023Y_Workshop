@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2022-02-12}
+\date{2022-02-16}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-12
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-16
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -7353,7 +7353,7 @@ So the fit is not perfect, but it is also not terrible!
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot}\NormalTok{(lsmodel1, }\AttributeTok{which=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(lsmodel1, }\AttributeTok{which=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7481,9 +7481,9 @@ This is very \emph{approximate} and becomes less robust at smaller sample sizes,
 \NormalTok{combined }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(values,t)}
 
 \NormalTok{combined }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\SpecialCharTok{!}\NormalTok{x, }\AttributeTok{names\_to=}\StringTok{"Distribution"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\SpecialCharTok{!}\NormalTok{x, }\AttributeTok{names\_to=}\StringTok{"distribution"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{distribution=}\FunctionTok{factor}\NormalTok{(distribution, }\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"z\_dist"}\NormalTok{, }\StringTok{"1"}\NormalTok{, }\StringTok{"3"}\NormalTok{, }\StringTok{"8"}\NormalTok{, }\StringTok{"30"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}  
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{distribution=}\FunctionTok{fct\_recode}\NormalTok{( distribution, }\StringTok{"z distribution"} \OtherTok{=} \StringTok{"z\_dist"}\NormalTok{, }\StringTok{"df = 1"} \OtherTok{=} \StringTok{"1"}\NormalTok{, }\StringTok{"df = 3"} \OtherTok{=} \StringTok{"3"}\NormalTok{, }\StringTok{"df = 8"} \OtherTok{=} \StringTok{"8"}\NormalTok{, }\StringTok{"df = 30"} \OtherTok{=} \StringTok{"30"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{distribution=}\FunctionTok{fct\_recode}\NormalTok{(distribution, }\StringTok{"z distribution"} \OtherTok{=} \StringTok{"z\_dist"}\NormalTok{, }\StringTok{"df = 1"} \OtherTok{=} \StringTok{"1"}\NormalTok{, }\StringTok{"df = 3"} \OtherTok{=} \StringTok{"3"}\NormalTok{, }\StringTok{"df = 8"} \OtherTok{=} \StringTok{"8"}\NormalTok{, }\StringTok{"df = 30"} \OtherTok{=} \StringTok{"30"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{x, }\AttributeTok{y=}\NormalTok{value, }\AttributeTok{colour=}\NormalTok{distribution))}\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{)}\SpecialCharTok{+}
   \FunctionTok{theme\_classic}\NormalTok{()}
@@ -7573,7 +7573,7 @@ The structure of our linear model so far has produced the output for a standard 
 \begin{Highlighting}[]
 \CommentTok{\# note I have made pair a factor {-} pair 2 is not greater than pair 1 {-} so it doesn\textquotesingle{}t make sense to treat these as number values.}
 
-\FunctionTok{lsmodel2}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ type }\SpecialCharTok{+} \FunctionTok{factor}\NormalTok{(pair), }\AttributeTok{data =}\NormalTok{ darwin) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{lm}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ type }\SpecialCharTok{+} \FunctionTok{factor}\NormalTok{(pair), }\AttributeTok{data =}\NormalTok{ darwin) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(.)}
 \end{Highlighting}
 \end{Shaded}
@@ -7615,7 +7615,7 @@ For completeness let's generate the confidence intervals for the \emph{paired t}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{lsmodel2}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ type }\SpecialCharTok{+} \FunctionTok{factor}\NormalTok{(pair), }\AttributeTok{data =}\NormalTok{ darwin) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{lm}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ type }\SpecialCharTok{+} \FunctionTok{factor}\NormalTok{(pair), }\AttributeTok{data =}\NormalTok{ darwin) }\SpecialCharTok{\%\textgreater{}\%} 
 \NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(., }\AttributeTok{conf.int=}\NormalTok{T) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
@@ -7716,13 +7716,14 @@ There are two potential uses for Power analysis
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(pwr)}
 
+\CommentTok{\# for n, d, sig.level and power {-} put values for three of the arguments and it will return the value of the fourth e.g. can you work out the power of our two sample t{-}test above? }
 \FunctionTok{pwr.t.test}\NormalTok{(}\AttributeTok{n =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{d =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{sig.level =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{power =} \ConstantTok{NULL}\NormalTok{,}
-\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{"two.sample"}\NormalTok{, }\StringTok{"one.sample"}\NormalTok{, }\StringTok{"paired"}\NormalTok{),}
-\AttributeTok{alternative =} \FunctionTok{c}\NormalTok{(}\StringTok{"two.sided"}\NormalTok{, }\StringTok{"less"}\NormalTok{, }\StringTok{"greater"}\NormalTok{))}
+\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{"two.sample"}\NormalTok{),}
+\AttributeTok{alternative =} \FunctionTok{c}\NormalTok{(}\StringTok{"two.sided"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Now you know how the pwr.t.test() function works - Can you make a simple iteration to check the power for an effect size (d) of 0.2 for a two-sided t-test at sample sizes from 0-1000 increasing by 10 each time?}
+\textbf{Now you know how the pwr.t.test() function works - Can you make a simple iteration to check the power for a lower effect size (d) of 0.2 for a two-sided t-test at sample sizes from 0-1000 increasing by 10 each time?}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7789,7 +7790,7 @@ In the example below we have made a for loop that assumes we `know' the true mea
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{y }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{p value \textless{} 0.05}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{if\_else}\NormalTok{(p.value }\SpecialCharTok{\textgreater{}} \FloatTok{0.049}\NormalTok{, }\StringTok{"significant"}\NormalTok{, }\StringTok{"non{-}significant"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{p value \textless{} 0.05}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{if\_else}\NormalTok{(p.value }\SpecialCharTok{\textgreater{}} \FloatTok{0.049}\NormalTok{, }\StringTok{"non{-}significant"}\NormalTok{, }\StringTok{"significant"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{p value \textless{} 0.05}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{summarise}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{number of experiments}\StringTok{\textasciigrave{}}\OtherTok{=}\FunctionTok{n}\NormalTok{())}
 \end{Highlighting}
@@ -7799,8 +7800,8 @@ In the example below we have made a for loop that assumes we `know' the true mea
 ## # A tibble: 2 x 2
 ##   `p value < 0.05` `number of experiments`
 ##   <chr>                              <int>
-## 1 non-significant                       14
-## 2 significant                            6
+## 1 non-significant                        6
+## 2 significant                           14
 \end{verbatim}
 
 In \textbf{my} example nearly a third of the experiments did not find a statistically significant difference. A less formal review of the research might tally these \emph{P}-values and conclude that there are inconsistent results in the literature.
@@ -7834,6 +7835,548 @@ This chapter finally allowed us to calculate \emph{P}-values and test statistica
 However we also learned to appreciate the potential issues around making Type 1 and Type 2 errors, and how an appreciation of confidence intervals and standardised effect sizes can be used to assess these.
 
 A single experiment is never definitive, and a reliance on reporting \emph{P}-values is uninformative and can be misleading. Instead reporting estimates and confidence intervals allows us to report our levels of uncertainty, and provides results which are more informative for comparitive studies.
+
+\hypertarget{regression---spring-week-four}{%
+\chapter{Regression - Spring Week Four}\label{regression---spring-week-four}}
+
+\hypertarget{introduction-to-regression}{%
+\section{Introduction to Regression}\label{introduction-to-regression}}
+
+So far we have used linear models for analyses between \emph{two} `categorical' explanatory variables e.g.~\emph{t}-tests. But what about when we have a `continuous' explanatory variable? For that we need to use a regression analysis, luckily this is just another `special case' of the linear model, so we can use the same \texttt{lm()} function we have already been using, and we can interpret the outputs in the same way.
+
+\hypertarget{linear-regression}{%
+\section{Linear regression}\label{linear-regression}}
+
+Much like the \emph{t}-test we have generating from our linear model, the regression analysis is interpreting the strength of the `signal' (the change in mean values according to the explanatory variable), vs the amount of `noise' (variance around the mean).
+
+We would normally visualise a regression analysis with a scatter plot, with the explanatory (predictor, independent) variable on the x-axis and the response (dependent) variable on the y-axis. Individual data points are plotted, and we attempt to draw a straight-line relationship throught the cloud of data points. This line is the `mean', and the variability around the mean is captured by calculated standard errors and confidence intervals from the variance.
+
+The equation for the linear regression model is:
+
+\[ y = a + bx \]
+You may also note this is basically identical to the equation for a straight fit line \(y = mx +c\).
+
+Here:
+* \emph{y} is the predicted value of the response variable
+
+\begin{itemize}
+\item
+  \emph{a} is the regression intercept (the value of \emph{y} when \emph{x} = 0)
+\item
+  \emph{b} is the slope of the regression line
+\item
+  \emph{x} is the value of the explanatory variable
+\end{itemize}
+
+This formula explains the mean, you would need to include the unexplained residual error as a term to include our measure of uncertainty
+
+\[ y = a + bx + e \]
+
+The regression uses two values to fit a straight line. First we need a starting point, known as the regression intercept. For categorical predictors this is the mean value of \emph{y} for one of our categories, for a regression this is the mean value of \emph{y} when \emph{x} = 0. We then need a gradient (how the value of \emph{y} changes when the value of \emph{x} changes). This allows us to draw a regression line.
+
+A linear model analysis estimates the values of the intercept and gradient in order to predict values of \emph{y} for given values of \emph{x}.
+
+\hypertarget{data}{%
+\section{Data}\label{data}}
+
+Here we are going to use example data from the Australian forestry industry, recording the density and hardness of 36 samples of wood from different tree species. Wood density is a fundamental property that is relatively easy to measure, timber hardness, is quantified as the `the amount of force required to embed a 0.444" steel ball into the wood to half of its diameter'.
+
+With regression, we can test the biological hypothesis that wood density can be used to predict timber hardness, and use this regression to predict timber hardness for new samples of known density.
+
+Timber hardness is quantified using the `Janka scale', and the data we are going to use today comes from an R package `SemiPar' - once loaded you will then need to call the data using another function \texttt{data()} (note this is different to PalmerPenguins where the data was immediately available).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(SemiPar)}
+\FunctionTok{data}\NormalTok{(janka)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{You should ALWAYS check your data before starting a new analysis - write yourself a short checking script - then CLICK HERE to see what I did}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check the structure of the data}
+\FunctionTok{glimpse}\NormalTok{(janka)}
+
+\CommentTok{\# check data is in a tidy format}
+\FunctionTok{head}\NormalTok{(janka)}
+
+\CommentTok{\# check variable names}
+\FunctionTok{colnames}\NormalTok{(janka)}
+
+\CommentTok{\# check for duplication}
+\NormalTok{janka }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{duplicated}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{sum}\NormalTok{()}
+
+\CommentTok{\# check for typos {-} by looking at impossible values}
+\NormalTok{janka }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min\_dens=}\FunctionTok{min}\NormalTok{(dens, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{), }
+            \AttributeTok{max\_dens=}\FunctionTok{max}\NormalTok{(dens, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}
+            \AttributeTok{min\_hard=}\FunctionTok{min}\NormalTok{(hardness, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{), }
+            \AttributeTok{max\_hard=}\FunctionTok{max}\NormalTok{(hardness, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{))}
+
+
+\CommentTok{\# missing values}
+\NormalTok{janka }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{is.na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{sum}\NormalTok{()}
+
+\CommentTok{\# quick summary}
+
+\FunctionTok{summary}\NormalTok{(janka)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{janka }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dens, }\AttributeTok{y=}\NormalTok{hardness))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-429-1.pdf}
+
+\hypertarget{correlation}{%
+\section{Correlation}\label{correlation}}
+
+Wood density and timber hardness appear to be positively related, and the linear appears to be fairly linear. We can look at a simple strength of this association between dens and hardness using correlation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# base r}
+\CommentTok{\# cor() does not have a data option so need to use the with() function}
+\FunctionTok{with}\NormalTok{(janka, }\FunctionTok{cor}\NormalTok{(dens, hardness))}
+
+\CommentTok{\# tidyverse}
+\FunctionTok{library}\NormalTok{(rstatix)}
+
+\NormalTok{janka }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{cor\_test}\NormalTok{(dens, hardness)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.9743345
+\end{verbatim}
+
+Correlation coefficients range from -1 to 1 for perfectly negative to perfectly positive linear relationships. The relationship here appears to be strongly positive. Correlation looks at the \textbf{association} between two variables, but we want to go further - we are arguing that wood density \emph{causes} higher values of timber hardness. In order to test that hypothesis we need to go further than correlation and use regression.
+
+\hypertarget{regression-in-r}{%
+\section{Regression in R}\label{regression-in-r}}
+
+We can fit the regression model in exactly the same way as we fit the linear model for Darwin's maize data. The \emph{only} difference is that here our predictor variable is continuous rather than categorical.
+
+\begin{quote}
+**Note - be careful when ordering variables here on the left of the `tilde' is the response variable, on the right is the predictor. Get them the wrong way round and it will reverse your hypothesis.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{janka\_ls1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(hardness }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dens, }\AttributeTok{data =}\NormalTok{ janka) }
+\end{Highlighting}
+\end{Shaded}
+
+This linear model will estimate a `line of best fit' using the method of `least squares' to minimise the error sums of squares (the average distance between the data points and the regression line).
+
+We can add a regression line to our ggplots very easily with the function \texttt{geom\_smooth()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{janka }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dens, }\AttributeTok{y=}\NormalTok{hardness))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-432-1.pdf}
+
+\textbf{The blue line represents the regression line, and the shaded interval is the 95\% confidence interval band. What do you notice about the width of the interval band as you move along the regression line? Click-me for answer}
+
+The 95\% confidence interval band is narrowest in the middle and widest at either end of the regression line. But why?
+
+When performing a linear regression, there are \textbf{two} types of uncertainty in the prediction.
+
+First is the prediction of the overall mean of the estimate (ie the center of the fit). The second is the uncertainly in the estimate calculating the slope.
+
+So when you combine both uncertainties of the prediction there is a spread between the high and low estimates. The further away from the center of the data you get (in either direction), the uncertainty of the slope becomes a large and more noticeable factor, thus the limits widen.
+
+\hypertarget{summary-4}{%
+\subsection{Summary}\label{summary-4}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{janka\_ls1 }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{()}
+
+\CommentTok{\# base R summary(janka\_ls1)}
+\end{Highlighting}
+\end{Shaded}
+
+This output should look very familiar to you, because it's the same output produced for the analysis of the maize data. Including a column for the coefficient estimates, standard error, \emph{t}-statistic and \emph{P}-value. The first row is the intercept, and the second row is the difference in the mean from the intercept caused by our explanantory variable.
+
+In many ways the intercept makes more intuitive sense in a regression model than a difference model. Here the intercept describes the value of \emph{y} (timber hardness) when \emph{x} (wood density) = 0. The standard error is standard error of this calculated mean value. The only wrinkle here is that that value of \emph{y} is an impossible value - timber hardness obviously cannot be a negative value (anti-hardness???). This does not affect the fit of our line, it just means a regression line (being an infinite straight line) can move into impossible value ranges.
+
+One way in which the intercept can be made more valuable is to use a technique known as `centering'. By subtracting the average (mean) value of \emph{x} from every data point, the intercept (when \emph{x} is 0) can effectively be right-shifted into the centre of the data.
+
+\textbf{Try it for yourself, use your data manipulation skills to `center' the values of x then fit a new linear model. Click-me for answer}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dens\_mean }\OtherTok{\textless{}{-}}\NormalTok{ janka }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_dens=}\FunctionTok{mean}\NormalTok{(dens))}
+\CommentTok{\# 45.73333}
+
+\NormalTok{janka }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{centered\_dens =}\NormalTok{ dens}\SpecialCharTok{{-}}\NormalTok{dens\_mean[,}\DecValTok{1}\NormalTok{]) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{lm}\NormalTok{(hardness }\SpecialCharTok{\textasciitilde{}}\NormalTok{ centered\_dens, }\AttributeTok{data =}\NormalTok{ .) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  term          estimate std.error statistic  p.value
+  <chr>            <dbl>     <dbl>     <dbl>    <dbl>
+1 (Intercept)     1469.      30.5       48.2 7.10e-33
+2 centered_dens     57.5      2.28      25.2 1.33e-23
+\end{verbatim}
+
+Note how the estimate for row 2 - the effect of density on timber hardness \textbf{has not} changed, but the intercept now represents the estimated mean timber hardness for the mean wood density e.g.~at a density of \(\rho\) = 45.73 the average timber hardness on the janka scale is 1469.
+
+\hypertarget{the-second-row}{%
+\subsection{the second row}\label{the-second-row}}
+
+The second row is labelled `dens'. Density is our explanatory variable, and the slope is estimated against it. So if 57.5 is the value of the regression slope (with its standard error) - then the timber hardness is predicted to \textbf{increase} by 57.5 on the janka scale for every unit change of density.
+
+According to our model summary, this estimated change in the mean is statistically significant - so for this effect size and sample size it is unlikely that we would observe this relationship if the null hypothesis (that we cannot predict timber hardness from wood density) were true.
+
+\hypertarget{confidence-intervals-2}{%
+\subsection{Confidence intervals}\label{confidence-intervals-2}}
+
+Just like with the maize data, we can produce upper and lower bounds of confidence intervals:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(janka\_ls1, }\AttributeTok{conf.int=}\NormalTok{T, }\AttributeTok{conf.level=}\FloatTok{0.95}\NormalTok{)}
+
+\CommentTok{\# base r}
+\CommentTok{\# confint(lsmodel1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2 x 7
+  term        estimate std.error statistic  p.value conf.low conf.high
+  <chr>          <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+1 (Intercept)  -1160.     109.       -10.7 2.07e-12  -1381.     -940. 
+2 dens            57.5      2.28      25.2 1.33e-23     52.9      62.1
+\end{verbatim}
+
+Here we can say that at \(\alpha\) = 0.05 we think there is at least a 52.9 unit increase on the janka scale for every unit increase in density (\(\rho\)). Because our 95\% confidence intervals do not span 0, we know that there is a significant relationship at \(\alpha\) = 0.05.
+
+\hypertarget{effect-size}{%
+\subsection{Effect size}\label{effect-size}}
+
+With a regression model, we can also produce a standardised effect size. The estimate and 95\% confidence intervals are the amount of change being observed, but just like with the maize data we can produce a standardised measure of how strong the relationship is. This value is represented by \(R^2\) : the proportion of the variation in the data explained by the linear regression analysis. This is a more sensible measure of effect size than Cohen's \emph{d} which is a standardised measure of \emph{difference} according to standard deviation.
+
+The value of \(R^2\) can be found in the model summaries as follows
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{janka\_ls1 }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{glance}\NormalTok{()}
+
+\CommentTok{\# base r}
+\CommentTok{\# summary(janka\_ls1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 12
+  r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC deviance df.residual  nobs
+      <dbl>         <dbl> <dbl>     <dbl>    <dbl> <dbl>  <dbl> <dbl> <dbl>    <dbl>       <int> <int>
+1     0.949         0.948  183.      637. 1.33e-23     1  -238.  481.  486. 1139366.          34    36
+\end{verbatim}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-437}R squared effect size}
+\begin{tabular}[t]{l|r}
+\hline
+Effect size & r\textasciicircum{}2\\
+\hline
+small & 0.1\\
+\hline
+medium & 0.3\\
+\hline
+large & 0.5\\
+\hline
+\end{tabular}
+\end{table}
+
+\hypertarget{assumptions}{%
+\section{Assumptions}\label{assumptions}}
+
+Regression models make ALL the same assumptions as all linear models - that the unexplained variation around the regression line (the residuals) is approximately normally distributed, and has constant variance. And we can check this in the same way.
+
+Remember, the residuals are the \emph{difference} between the observed values and the fitted values predicted by the model. Or in other words it is the \emph{vertical} distance between a data point and the fitted value on the regression line. We can take a look at this with another function in the \texttt{broom} package \texttt{augment()}. This generates the predicted value for each data point according to the regression, and calculates the residuals for each data point.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{augmented\_ls1 }\OtherTok{\textless{}{-}}\NormalTok{ janka\_ls1 }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{augment}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# base R}
+
+\FunctionTok{predicted}\NormalTok{(janka\_ls1)}
+
+\FunctionTok{resid}\NormalTok{(janka\_ls1)}
+\end{Highlighting}
+\end{Shaded}
+
+If we plot this, with a black fitted regression line and red dashed lines representing the residuals:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{augmented\_ls1 }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dens, }\AttributeTok{y=}\NormalTok{.fitted))}\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dens, }\AttributeTok{y=}\NormalTok{hardness))}\SpecialCharTok{+}\FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dens, }\AttributeTok{xend=}\NormalTok{dens, }\AttributeTok{y=}\NormalTok{.fitted, }\AttributeTok{yend=}\NormalTok{hardness), }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }\AttributeTok{colour=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-440-1.pdf}
+
+We can use this augmented data to really help us understand what residual variance looks like, and how it can be used to diagnose our models. A perfect model would mean that all of our residual values = 0, but this is incredibly unlikely to ever occur. Instead we would like to see
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  that there is a `normal distribution' to the residuals e.g.~more residuals close to the mean, and fewer further away in a rough z-distribution.
+\item
+  We also want to see homogeneity of the residuals e.g.~it would be a bad model if the average error was greater at one end of the model than the other. This might mean we have more uncertainty in the slope of the line for large values over small values or vice versa.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# A line connecting all the data points in order }
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ augmented\_ls1 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dens, }\AttributeTok{y=}\NormalTok{hardness))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Full Data"}\NormalTok{)}
+
+\CommentTok{\# Plotting the fitted values against the dependent e.g. our regression line}
+\NormalTok{p2 }\OtherTok{\textless{}{-}}\NormalTok{ augmented\_ls1 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{hardness, }\AttributeTok{y=}\NormalTok{.fitted))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Linear trend"}\NormalTok{)}
+
+\CommentTok{\# Plotting the residuals against the fitted values e.g. remaining variance}
+\NormalTok{p3 }\OtherTok{\textless{}{-}}\NormalTok{ augmented\_ls1 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{.fitted, }\AttributeTok{y=}\NormalTok{.resid))}\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept=}\DecValTok{0}\NormalTok{, }\AttributeTok{colour=}\StringTok{"white"}\NormalTok{, }\AttributeTok{size=}\DecValTok{5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Remaining pattern"}\NormalTok{)}
+
+
+\FunctionTok{library}\NormalTok{(patchwork)}
+\NormalTok{p1}\SpecialCharTok{+}\NormalTok{p2}\SpecialCharTok{+}\NormalTok{p3}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-441-1.pdf}
+
+\textbf{CHALLENGE - the above is an example of functional, but repetitive code - could you make a function that reduces the amount of code needed? CLICK HERE for a solution}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_plot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{data=}\NormalTok{augmented\_ls1, }\AttributeTok{x=}\StringTok{"dens"}\NormalTok{, }\AttributeTok{y=}\StringTok{"hardness"}\NormalTok{, }\AttributeTok{title=}\StringTok{"Full data"}\NormalTok{)\{}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{.data[[x]], }\AttributeTok{y=}\NormalTok{.data[[y]]), }\AttributeTok{data=}\NormalTok{data)}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}
+    \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+      \FunctionTok{ggtitle}\NormalTok{(title)}
+\NormalTok{\}}
+
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{model\_plot}\NormalTok{()}
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{model\_plot}\NormalTok{(}\AttributeTok{y=}\StringTok{".fitted"}\NormalTok{, }\AttributeTok{title=}\StringTok{"Linear prediction"}\NormalTok{)}
+\NormalTok{p3 }\OtherTok{\textless{}{-}} \FunctionTok{model\_plot}\NormalTok{(}\AttributeTok{y=}\StringTok{".resid"}\NormalTok{, }\AttributeTok{title=}\StringTok{"Remaining pattern"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{normal-distribution-2}{%
+\subsection{Normal distribution}\label{normal-distribution-2}}
+
+We can use the same model diagnostic plots as we used for the maize data.
+Here you can see it is mostly pretty good, with just one or two data points outside of the confidence intervals
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{performance}\SpecialCharTok{::}\FunctionTok{check\_model}\NormalTok{(janka\_ls1, }\AttributeTok{check=}\FunctionTok{c}\NormalTok{(}\StringTok{"normality"}\NormalTok{,}\StringTok{"qq"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-443-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(janka\_ls1, }\AttributeTok{which=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{equal-variance-1}{%
+\subsection{Equal variance}\label{equal-variance-1}}
+
+We can use the same model diagnostic plots as we used for the maize data.
+You should see that this is similar to the \texttt{p3} plot we constructed manually. With the plot we constructed earlier we had the `raw' residuals as a function of the fitted values. The plot we have produced now is the `standardized residuals' - this is the raw residual divided by the standard deviation.
+
+Both plots suggests that the residuals \textbf{do not} have constant variance, broadly speaking the amount of variance \emph{y} increases as \emph{x} increases. This means we have less confidence in our predictions at high values of density. Later we will see what we can do to improve the fit of this model
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{performance}\SpecialCharTok{::}\FunctionTok{check\_model}\NormalTok{(janka\_ls1, }\AttributeTok{check=}\StringTok{"homogeneity"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-445-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(janka\_ls1, }\AttributeTok{which=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{outliers-1}{%
+\subsection{Outliers}\label{outliers-1}}
+
+Here we can see there is just one potential outlier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{performance}\SpecialCharTok{::}\FunctionTok{check\_model}\NormalTok{(janka\_ls1, }\AttributeTok{check=}\StringTok{"outliers"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-447-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(janka\_ls1, }\AttributeTok{which=}\FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{prediction}{%
+\section{Prediction}\label{prediction}}
+
+Using the coefficients of the intercept and the slope we can make predictions on new data.
+The estimates of the intercept and the slope are:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coef}\NormalTok{(janka\_ls1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(Intercept)        dens 
+-1160.49970    57.50667
+\end{verbatim}
+
+Now imagine we have a new wood samples with a density of 65, how can we use the equation for a linear regression to predict what the timber hardness for this wood sample should be?
+
+\textbf{Click me for answer}
+
+\[ y = a + bx \]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# a + bx}
+
+\SpecialCharTok{{-}}\FloatTok{1160.49970} \SpecialCharTok{+} \FloatTok{57.50667} \SpecialCharTok{*} \DecValTok{65}
+\end{Highlighting}
+\end{Shaded}
+
+Rather than work out the values manually, we can also use the coefficients of the model directly
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coef}\NormalTok{(janka\_ls1)[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{coef}\NormalTok{(janka\_ls1)[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{*} \DecValTok{65}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(Intercept) 
+   2577.434 
+\end{verbatim}
+
+But most of the time we are unlikely to want to work out predicted values by hand, instead we can use functions like \texttt{predict()} and \texttt{augment()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# base R}
+\FunctionTok{predict}\NormalTok{(janka\_ls1, }\AttributeTok{newdata=}\FunctionTok{list}\NormalTok{(}\AttributeTok{dens=}\FunctionTok{c}\NormalTok{(}\DecValTok{22}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{65}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# broom package}
+\NormalTok{newdata }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{dens=}\FunctionTok{c}\NormalTok{(}\DecValTok{22}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{65}\NormalTok{))}
+
+\FunctionTok{augment}\NormalTok{(janka\_ls1, }\AttributeTok{newdata=}\NormalTok{newdata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 3 x 2
+   dens .fitted
+  <dbl>   <dbl>
+1    22    105.
+2    35    852.
+3    74   3095.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{broom}\SpecialCharTok{::}\FunctionTok{augment}\NormalTok{(janka\_ls1, }\AttributeTok{newdata=}\NormalTok{newdata, }\AttributeTok{se=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{broom}\SpecialCharTok{::}\FunctionTok{augment}\NormalTok{(janka\_ls1, }\AttributeTok{newdata=}\NormalTok{newdata, }\AttributeTok{interval=}\StringTok{"confidence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{CHALLENGE - can you plot the three new predicted values onto an existing figure to recreate the below? CLICK HERE for a solution}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{janka }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{dens, }\AttributeTok{y=}\NormalTok{hardness))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data=}\NormalTok{pred\_newdata, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{.fitted, }\AttributeTok{x=}\NormalTok{dens), }\AttributeTok{colour=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-457-1.pdf}
+
+\hypertarget{summary-5}{%
+\section{Summary}\label{summary-5}}
+
+Linear model analyses can extend beyond testing differences of means in categorical groupings to test relationships with continuous variables. This is known as linear regression, where the relationship between the explanatory variable and response variable are modelled with the equation for a straight line. The intercept is the value of \emph{y} when \emph{x} = 0, often this isn't that useful, and we can use `mean-centered' values if we wish to make the intercept more intuitive.
+As with all linear models, regression assumes that the unexplained variability around the regression line, is normally distributed and has constant variance.
+
+Once the regression has been fitted it is possible to predict values of \emph{y} from values of \emph{x}, the uncertainty around these predictions can be captured with confidence intervals.
 
 *\href{https://www.rstudio.com/resources/cheatsheets/}{R Cheat Sheets}
 

@@ -21,6 +21,7 @@ fig:unnamed-chunk-349
 fig:unnamed-chunk-389
 fig:unnamed-chunk-399
 tab:unnamed-chunk-417
+tab:unnamed-chunk-437
 introduction
 approach-and-style
 teaching
@@ -273,3 +274,19 @@ effect-sizes
 power
 meta-analysis
 summary-3
+regression---spring-week-four
+introduction-to-regression
+linear-regression
+data
+correlation
+regression-in-r
+summary-4
+the-second-row
+confidence-intervals-2
+effect-size
+assumptions
+normal-distribution-2
+equal-variance-1
+outliers-1
+prediction
+summary-5

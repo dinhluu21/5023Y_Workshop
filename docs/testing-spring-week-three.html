@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-02-12" />
+<meta name="date" content="2022-02-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="introduction-to-linear-models-spring-week-two.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="regression-spring-week-four.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -522,6 +522,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.4" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#meta-analysis"><i class="fa fa-check"></i><b>15.4</b> Meta-analysis</a></li>
 <li class="chapter" data-level="15.5" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#summary-3"><i class="fa fa-check"></i><b>15.5</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="16" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html"><i class="fa fa-check"></i><b>16</b> Regression - Spring Week Four</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#introduction-to-regression"><i class="fa fa-check"></i><b>16.1</b> Introduction to Regression</a></li>
+<li class="chapter" data-level="16.2" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#linear-regression"><i class="fa fa-check"></i><b>16.2</b> Linear regression</a></li>
+<li class="chapter" data-level="16.3" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#data"><i class="fa fa-check"></i><b>16.3</b> Data</a></li>
+<li class="chapter" data-level="16.4" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#correlation"><i class="fa fa-check"></i><b>16.4</b> Correlation</a></li>
+<li class="chapter" data-level="16.5" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#regression-in-r"><i class="fa fa-check"></i><b>16.5</b> Regression in R</a>
+<ul>
+<li class="chapter" data-level="16.5.1" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#summary-4"><i class="fa fa-check"></i><b>16.5.1</b> Summary</a></li>
+<li class="chapter" data-level="16.5.2" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#the-second-row"><i class="fa fa-check"></i><b>16.5.2</b> the second row</a></li>
+<li class="chapter" data-level="16.5.3" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#confidence-intervals-2"><i class="fa fa-check"></i><b>16.5.3</b> Confidence intervals</a></li>
+<li class="chapter" data-level="16.5.4" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#effect-size"><i class="fa fa-check"></i><b>16.5.4</b> Effect size</a></li>
+</ul></li>
+<li class="chapter" data-level="16.6" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#assumptions"><i class="fa fa-check"></i><b>16.6</b> Assumptions</a>
+<ul>
+<li class="chapter" data-level="16.6.1" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#normal-distribution-2"><i class="fa fa-check"></i><b>16.6.1</b> Normal distribution</a></li>
+<li class="chapter" data-level="16.6.2" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#equal-variance-1"><i class="fa fa-check"></i><b>16.6.2</b> Equal variance</a></li>
+<li class="chapter" data-level="16.6.3" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#outliers-1"><i class="fa fa-check"></i><b>16.6.3</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="16.7" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#prediction"><i class="fa fa-check"></i><b>16.7</b> Prediction</a></li>
+<li class="chapter" data-level="16.8" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#summary-5"><i class="fa fa-check"></i><b>16.8</b> Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -605,9 +627,9 @@ t = \frac{difference}{SE}
 <span id="cb312-12"><a href="testing-spring-week-three.html#cb312-12" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">cbind</span>(values,t)</span>
 <span id="cb312-13"><a href="testing-spring-week-three.html#cb312-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb312-14"><a href="testing-spring-week-three.html#cb312-14" aria-hidden="true" tabindex="-1"></a>combined <span class="sc">%&gt;%</span> </span>
-<span id="cb312-15"><a href="testing-spring-week-three.html#cb312-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">!</span>x, <span class="at">names_to=</span><span class="st">&quot;Distribution&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb312-15"><a href="testing-spring-week-three.html#cb312-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">!</span>x, <span class="at">names_to=</span><span class="st">&quot;distribution&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb312-16"><a href="testing-spring-week-three.html#cb312-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">distribution=</span><span class="fu">factor</span>(distribution, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;z_dist&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;8&quot;</span>, <span class="st">&quot;30&quot;</span>))) <span class="sc">%&gt;%</span>  </span>
-<span id="cb312-17"><a href="testing-spring-week-three.html#cb312-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">distribution=</span><span class="fu">fct_recode</span>( distribution, <span class="st">&quot;z distribution&quot;</span> <span class="ot">=</span> <span class="st">&quot;z_dist&quot;</span>, <span class="st">&quot;df = 1&quot;</span> <span class="ot">=</span> <span class="st">&quot;1&quot;</span>, <span class="st">&quot;df = 3&quot;</span> <span class="ot">=</span> <span class="st">&quot;3&quot;</span>, <span class="st">&quot;df = 8&quot;</span> <span class="ot">=</span> <span class="st">&quot;8&quot;</span>, <span class="st">&quot;df = 30&quot;</span> <span class="ot">=</span> <span class="st">&quot;30&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb312-17"><a href="testing-spring-week-three.html#cb312-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">distribution=</span><span class="fu">fct_recode</span>(distribution, <span class="st">&quot;z distribution&quot;</span> <span class="ot">=</span> <span class="st">&quot;z_dist&quot;</span>, <span class="st">&quot;df = 1&quot;</span> <span class="ot">=</span> <span class="st">&quot;1&quot;</span>, <span class="st">&quot;df = 3&quot;</span> <span class="ot">=</span> <span class="st">&quot;3&quot;</span>, <span class="st">&quot;df = 8&quot;</span> <span class="ot">=</span> <span class="st">&quot;8&quot;</span>, <span class="st">&quot;df = 30&quot;</span> <span class="ot">=</span> <span class="st">&quot;30&quot;</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb312-18"><a href="testing-spring-week-three.html#cb312-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>value, <span class="at">colour=</span>distribution))<span class="sc">+</span></span>
 <span id="cb312-19"><a href="testing-spring-week-three.html#cb312-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linetype=</span><span class="st">&quot;dashed&quot;</span>)<span class="sc">+</span></span>
 <span id="cb312-20"><a href="testing-spring-week-three.html#cb312-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
@@ -653,7 +675,7 @@ t = \frac{difference}{SE}
 <p>The structure of our linear model so far has produced the output for a standard two-sample Student’s <em>t</em>-test. However, when we <em>first</em> calculated our estimates by hand - we started by making an average of the paired differences in height. To generate the equivalent of a paired <em>t</em>-test, we simply have to add the factor for pairs to our linear model formula</p>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="testing-spring-week-three.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note I have made pair a factor - pair 2 is not greater than pair 1 - so it doesn&#39;t make sense to treat these as number values.</span></span>
 <span id="cb320-2"><a href="testing-spring-week-three.html#cb320-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb320-3"><a href="testing-spring-week-three.html#cb320-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lsmodel2</span>(height <span class="sc">~</span> type <span class="sc">+</span> <span class="fu">factor</span>(pair), <span class="at">data =</span> darwin) <span class="sc">%&gt;%</span> </span>
+<span id="cb320-3"><a href="testing-spring-week-three.html#cb320-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> type <span class="sc">+</span> <span class="fu">factor</span>(pair), <span class="at">data =</span> darwin) <span class="sc">%&gt;%</span> </span>
 <span id="cb320-4"><a href="testing-spring-week-three.html#cb320-4" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>(.)</span></code></pre></div>
 <pre><code># A tibble: 16 x 5
    term           estimate std.error statistic     p.value
@@ -681,7 +703,7 @@ t = \frac{difference}{SE}
 </ul>
 <p>Again the linear model computes every possible combination of <em>t</em>-statistic and <em>P</em>-value, however the only one we care about is the difference in Cross and Self-pollinated plant heights. If we ignore the pair comparisons the second row gives us a <em>paired t</em>-test. ‘What is the difference in height between Cross and Self-pollinated plants when we hold pairs constant.’</p>
 <p>For completeness let’s generate the confidence intervals for the <em>paired t</em>-test.</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="testing-spring-week-three.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lsmodel2</span>(height <span class="sc">~</span> type <span class="sc">+</span> <span class="fu">factor</span>(pair), <span class="at">data =</span> darwin) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="testing-spring-week-three.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> type <span class="sc">+</span> <span class="fu">factor</span>(pair), <span class="at">data =</span> darwin) <span class="sc">%&gt;%</span> </span>
 <span id="cb322-2"><a href="testing-spring-week-three.html#cb322-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>(., <span class="at">conf.int=</span>T) <span class="sc">%&gt;%</span> </span>
 <span id="cb322-3"><a href="testing-spring-week-three.html#cb322-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
 <p>We can see that estimate of the mean difference is identical but the 95% confidence intervals are now slightly different. So in this particular version we have actually increased our level of uncertainty by including the pair parameter.</p>
@@ -797,12 +819,13 @@ huge
 </ol>
 <div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="testing-spring-week-three.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pwr)</span>
 <span id="cb324-2"><a href="testing-spring-week-three.html#cb324-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb324-3"><a href="testing-spring-week-three.html#cb324-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.t.test</span>(<span class="at">n =</span> <span class="cn">NULL</span>, <span class="at">d =</span> <span class="cn">NULL</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="cn">NULL</span>,</span>
-<span id="cb324-4"><a href="testing-spring-week-three.html#cb324-4" aria-hidden="true" tabindex="-1"></a><span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;two.sample&quot;</span>, <span class="st">&quot;one.sample&quot;</span>, <span class="st">&quot;paired&quot;</span>),</span>
-<span id="cb324-5"><a href="testing-spring-week-three.html#cb324-5" aria-hidden="true" tabindex="-1"></a><span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">&quot;two.sided&quot;</span>, <span class="st">&quot;less&quot;</span>, <span class="st">&quot;greater&quot;</span>))</span></code></pre></div>
+<span id="cb324-3"><a href="testing-spring-week-three.html#cb324-3" aria-hidden="true" tabindex="-1"></a><span class="co"># for n, d, sig.level and power - put values for three of the arguments and it will return the value of the fourth e.g. can you work out the power of our two sample t-test above? </span></span>
+<span id="cb324-4"><a href="testing-spring-week-three.html#cb324-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.t.test</span>(<span class="at">n =</span> <span class="cn">NULL</span>, <span class="at">d =</span> <span class="cn">NULL</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="cn">NULL</span>,</span>
+<span id="cb324-5"><a href="testing-spring-week-three.html#cb324-5" aria-hidden="true" tabindex="-1"></a><span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;two.sample&quot;</span>),</span>
+<span id="cb324-6"><a href="testing-spring-week-three.html#cb324-6" aria-hidden="true" tabindex="-1"></a><span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">&quot;two.sided&quot;</span>))</span></code></pre></div>
 <details>
 <summary>
-<strong>Now you know how the pwr.t.test() function works - Can you make a simple iteration to check the power for an effect size (d) of 0.2 for a two-sided t-test at sample sizes from 0-1000 increasing by 10 each time?</strong>
+<strong>Now you know how the pwr.t.test() function works - Can you make a simple iteration to check the power for a lower effect size (d) of 0.2 for a two-sided t-test at sample sizes from 0-1000 increasing by 10 each time?</strong>
 </summary>
 <div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="testing-spring-week-three.html#cb325-1" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1000</span>, <span class="at">by=</span><span class="dv">10</span>)</span>
 <span id="cb325-2"><a href="testing-spring-week-three.html#cb325-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -858,14 +881,14 @@ huge
 <strong>Using this newly generated data how many experiments found a significant difference and how many did not? - What would you conclue from this?</strong>
 </summary>
 <div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="testing-spring-week-three.html#cb327-1" aria-hidden="true" tabindex="-1"></a>y <span class="sc">%&gt;%</span> </span>
-<span id="cb327-2"><a href="testing-spring-week-three.html#cb327-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">p value &lt; 0.05</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">if_else</span>(p.value <span class="sc">&gt;</span> <span class="fl">0.049</span>, <span class="st">&quot;significant&quot;</span>, <span class="st">&quot;non-significant&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb327-2"><a href="testing-spring-week-three.html#cb327-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">p value &lt; 0.05</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">if_else</span>(p.value <span class="sc">&gt;</span> <span class="fl">0.049</span>, <span class="st">&quot;non-significant&quot;</span>, <span class="st">&quot;significant&quot;</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb327-3"><a href="testing-spring-week-three.html#cb327-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">p value &lt; 0.05</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb327-4"><a href="testing-spring-week-three.html#cb327-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">number of experiments</span><span class="st">`</span><span class="ot">=</span><span class="fu">n</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   `p value &lt; 0.05` `number of experiments`
 ##   &lt;chr&gt;                              &lt;int&gt;
-## 1 non-significant                       14
-## 2 significant                            6</code></pre>
+## 1 non-significant                        6
+## 2 significant                           14</code></pre>
 <p>In <strong>my</strong> example nearly a third of the experiments did not find a statistically significant difference. A less formal review of the research might tally these <em>P</em>-values and conclude that there are inconsistent results in the literature.</p>
 <p>A <strong>better</strong> way would be to look at the estimates and calculated confidence intervals</p>
 </details>
@@ -898,7 +921,7 @@ huge
         </div>
       </div>
 <a href="introduction-to-linear-models-spring-week-two.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="regression-spring-week-four.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

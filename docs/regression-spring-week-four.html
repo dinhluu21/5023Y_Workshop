@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 16 Regression - Spring Week Four | Data Science for Biologists - 5023Y</title>
+  <meta name="description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 16 Regression - Spring Week Four | Data Science for Biologists - 5023Y" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 16 Regression - Spring Week Four | Data Science for Biologists - 5023Y" />
+  
+  <meta name="twitter:description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  
+
+<meta name="author" content="Philip Leftwich" />
+
+
+<meta name="date" content="2022-02-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="testing-spring-week-three.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#approach-and-style"><i class="fa fa-check"></i><b>1.1</b> Approach and style</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#teaching"><i class="fa fa-check"></i><b>1.2</b> Teaching</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#workshops"><i class="fa fa-check"></i><b>1.2.1</b> Workshops</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#introduction-to-r"><i class="fa fa-check"></i><b>1.3</b> Introduction to R</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#getting-around-on-rstudio"><i class="fa fa-check"></i><b>1.4</b> Getting around on RStudio</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#an-intro-to-rstudio"><i class="fa fa-check"></i><b>1.4.1</b> An intro to RStudio</a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#using-r-studio-cloud"><i class="fa fa-check"></i><b>1.4.2</b> Using R Studio Cloud</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#reading"><i class="fa fa-check"></i><b>1.5</b> Reading</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#get-help"><i class="fa fa-check"></i><b>1.6</b> Get Help!</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html"><i class="fa fa-check"></i><b>2</b> Getting to know R: Week One</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#your-first-r-command"><i class="fa fa-check"></i><b>2.1</b> Your first R command</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#typos"><i class="fa fa-check"></i><b>2.1.1</b> Typos</a></li>
+<li class="chapter" data-level="2.1.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-simple-arithmetic"><i class="fa fa-check"></i><b>2.1.2</b> More simple arithmetic</a></li>
+<li class="chapter" data-level="2.1.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#try-some-maths"><i class="fa fa-check"></i><b>2.1.3</b> Try some maths</a></li>
+<li class="chapter" data-level="2.1.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#perform-some-combos"><i class="fa fa-check"></i><b>2.1.4</b> Perform some combos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#true-or-false-data"><i class="fa fa-check"></i><b>2.2</b> “true or false” data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#assessing-mathematical-truths"><i class="fa fa-check"></i><b>2.2.1</b> Assessing mathematical truths</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-outputs"><i class="fa fa-check"></i><b>2.3</b> Storing outputs</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#choosing-names"><i class="fa fa-check"></i><b>2.3.1</b> Choosing names</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#writing-scripts"><i class="fa fa-check"></i><b>2.4</b> Writing scripts</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#commenting-on-scripts"><i class="fa fa-check"></i><b>2.4.1</b> Commenting on scripts</a></li>
+<li class="chapter" data-level="2.4.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#running-your-script"><i class="fa fa-check"></i><b>2.4.2</b> Running your script</a></li>
+<li class="chapter" data-level="2.4.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#saving-your-script"><i class="fa fa-check"></i><b>2.4.3</b> Saving your script</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#error"><i class="fa fa-check"></i><b>2.5</b> Error</a></li>
+<li class="chapter" data-level="2.6" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-the-output-of-functions"><i class="fa fa-check"></i><b>2.6.1</b> Storing the output of functions</a></li>
+<li class="chapter" data-level="2.6.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-fun-with-functions"><i class="fa fa-check"></i><b>2.6.2</b> More fun with functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#packages"><i class="fa fa-check"></i><b>2.7</b> Packages</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#my-first-data-visualisation"><i class="fa fa-check"></i><b>2.8</b> My first data visualisation</a></li>
+<li class="chapter" data-level="2.9" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#quitting"><i class="fa fa-check"></i><b>2.9</b> Quitting</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html"><i class="fa fa-check"></i><b>3</b> Workflow Part One: Week Two</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#meet-the-penguins"><i class="fa fa-check"></i><b>3.1</b> Meet the Penguins</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#insights-from-data"><i class="fa fa-check"></i><b>3.1.1</b> Insights from data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-question"><i class="fa fa-check"></i><b>3.2</b> The Question?</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#hypotheses"><i class="fa fa-check"></i><b>3.2.1</b> Hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#preparing-the-data"><i class="fa fa-check"></i><b>3.3</b> Preparing the data</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy-data"><i class="fa fa-check"></i><b>3.3.1</b> Tidy data</a></li>
+<li class="chapter" data-level="3.3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-dataset"><i class="fa fa-check"></i><b>3.3.2</b> The dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#prepare-the-rstudio-workspace"><i class="fa fa-check"></i><b>3.4</b> Prepare the RStudio workspace</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#organise"><i class="fa fa-check"></i><b>3.4.1</b> Organise</a></li>
+<li class="chapter" data-level="3.4.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#create-a-new-r-script"><i class="fa fa-check"></i><b>3.4.2</b> Create a new R script</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#get-the-data-into-r"><i class="fa fa-check"></i><b>3.5</b> Get the data into R</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#view-and-refine"><i class="fa fa-check"></i><b>3.5.1</b> View and refine</a></li>
+<li class="chapter" data-level="3.5.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#data-management"><i class="fa fa-check"></i><b>3.5.2</b> Data management</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dataframes-and-tibbles"><i class="fa fa-check"></i><b>3.6</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="3.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean-and-tidy"><i class="fa fa-check"></i><b>3.7</b> Clean and tidy</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy"><i class="fa fa-check"></i><b>3.7.1</b> Tidy</a></li>
+<li class="chapter" data-level="3.7.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean"><i class="fa fa-check"></i><b>3.7.2</b> Clean</a></li>
+<li class="chapter" data-level="3.7.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#refine-variable-names"><i class="fa fa-check"></i><b>3.7.3</b> Refine variable names</a></li>
+<li class="chapter" data-level="3.7.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dates"><i class="fa fa-check"></i><b>3.7.4</b> Dates</a></li>
+<li class="chapter" data-level="3.7.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#rename-some-values"><i class="fa fa-check"></i><b>3.7.5</b> Rename some values</a></li>
+<li class="chapter" data-level="3.7.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-duplication"><i class="fa fa-check"></i><b>3.7.6</b> Check for duplication</a></li>
+<li class="chapter" data-level="3.7.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-typos-or-implausible-values"><i class="fa fa-check"></i><b>3.7.7</b> Check for typos or implausible values</a></li>
+<li class="chapter" data-level="3.7.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#missing-values-na"><i class="fa fa-check"></i><b>3.7.8</b> Missing values: NA</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#summing-up"><i class="fa fa-check"></i><b>3.8</b> Summing up</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#what-we-learned"><i class="fa fa-check"></i><b>3.8.1</b> What we learned</a></li>
+<li class="chapter" data-level="3.8.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#quitting-1"><i class="fa fa-check"></i><b>3.8.2</b> Quitting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html"><i class="fa fa-check"></i><b>4</b> Workflow Part Two: Week Three</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-insights"><i class="fa fa-check"></i><b>4.1</b> Initial insights</a></li>
+<li class="chapter" data-level="4.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#numbers-and-sex-of-the-penguins"><i class="fa fa-check"></i><b>4.2</b> Numbers and sex of the penguins</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-a-simple-figure"><i class="fa fa-check"></i><b>4.2.1</b> Making a simple figure</a></li>
+<li class="chapter" data-level="4.2.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#challenge"><i class="fa fa-check"></i><b>4.2.2</b> Challenge</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions"><i class="fa fa-check"></i><b>4.3</b> Distributions</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#insights"><i class="fa fa-check"></i><b>4.3.1</b> Insights</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#more-distributions"><i class="fa fa-check"></i><b>4.4</b> More distributions</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-conclusions"><i class="fa fa-check"></i><b>4.4.1</b> Initial conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#data-transformation"><i class="fa fa-check"></i><b>4.5</b> Data transformation</a></li>
+<li class="chapter" data-level="4.6" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#developing-insights"><i class="fa fa-check"></i><b>4.6</b> Developing insights</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions-of-the-relative-bill-length"><i class="fa fa-check"></i><b>4.6.1</b> Distributions of the relative bill length</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#relationshipdifferences"><i class="fa fa-check"></i><b>4.7</b> Relationship/differences</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#differences"><i class="fa fa-check"></i><b>4.7.1</b> Differences</a></li>
+<li class="chapter" data-level="4.7.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#associations"><i class="fa fa-check"></i><b>4.7.2</b> Associations</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#sex-interactions"><i class="fa fa-check"></i><b>4.8</b> Sex interactions</a></li>
+<li class="chapter" data-level="4.9" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-our-graphs-more-attractive"><i class="fa fa-check"></i><b>4.9</b> Making our graphs more attractive</a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#saving-your-output"><i class="fa fa-check"></i><b>4.9.1</b> Saving your output</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#quitting-2"><i class="fa fa-check"></i><b>4.10</b> Quitting</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html"><i class="fa fa-check"></i><b>5</b> ggplot2 A grammar of graphics: Week Four</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#intro-to-grammar"><i class="fa fa-check"></i><b>5.1</b> Intro to grammar</a></li>
+<li class="chapter" data-level="5.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#building-a-plot"><i class="fa fa-check"></i><b>5.2</b> Building a plot</a></li>
+<li class="chapter" data-level="5.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#plot-background"><i class="fa fa-check"></i><b>5.3</b> Plot background</a></li>
+<li class="chapter" data-level="5.4" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#aesthetics---aes"><i class="fa fa-check"></i><b>5.4</b> Aesthetics - aes()</a></li>
+<li class="chapter" data-level="5.5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#geometric-representations---geom"><i class="fa fa-check"></i><b>5.5</b> Geometric representations - geom()</a></li>
+<li class="chapter" data-level="5.6" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#and"><i class="fa fa-check"></i><b>5.6</b> %&gt;% and +</a></li>
+<li class="chapter" data-level="5.7" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#colour"><i class="fa fa-check"></i><b>5.7</b> Colour</a></li>
+<li class="chapter" data-level="5.8" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-layers"><i class="fa fa-check"></i><b>5.8</b> More layers</a></li>
+<li class="chapter" data-level="5.9" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#facets"><i class="fa fa-check"></i><b>5.9</b> Facets</a></li>
+<li class="chapter" data-level="5.10" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#co-ordinate-space"><i class="fa fa-check"></i><b>5.10</b> Co-ordinate space</a></li>
+<li class="chapter" data-level="5.11" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#labels"><i class="fa fa-check"></i><b>5.11</b> Labels</a></li>
+<li class="chapter" data-level="5.12" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#themes"><i class="fa fa-check"></i><b>5.12</b> Themes</a></li>
+<li class="chapter" data-level="5.13" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#jitter"><i class="fa fa-check"></i><b>5.13</b> Jitter</a></li>
+<li class="chapter" data-level="5.14" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#boxplots"><i class="fa fa-check"></i><b>5.14</b> Boxplots</a></li>
+<li class="chapter" data-level="5.15" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#density-and-histogram"><i class="fa fa-check"></i><b>5.15</b> Density and histogram</a></li>
+<li class="chapter" data-level="5.16" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-colours"><i class="fa fa-check"></i><b>5.16</b> More Colours</a>
+<ul>
+<li class="chapter" data-level="5.16.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#assign-colours-to-variables"><i class="fa fa-check"></i><b>5.16.1</b> Assign colours to variables</a></li>
+<li class="chapter" data-level="5.16.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#accessibility"><i class="fa fa-check"></i><b>5.16.2</b> Accessibility</a></li>
+<li class="chapter" data-level="5.16.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#guides-to-visual-accessibility"><i class="fa fa-check"></i><b>5.16.3</b> Guides to visual accessibility</a></li>
+</ul></li>
+<li class="chapter" data-level="5.17" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#patchwork"><i class="fa fa-check"></i><b>5.17</b> Patchwork</a></li>
+<li class="chapter" data-level="5.18" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#test"><i class="fa fa-check"></i><b>5.18</b> Test</a></li>
+<li class="chapter" data-level="5.19" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#saving"><i class="fa fa-check"></i><b>5.19</b> Saving</a></li>
+<li class="chapter" data-level="5.20" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#quitting-3"><i class="fa fa-check"></i><b>5.20</b> Quitting</a></li>
+<li class="chapter" data-level="5.21" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#summing-up-ggplot"><i class="fa fa-check"></i><b>5.21</b> Summing up ggplot</a>
+<ul>
+<li class="chapter" data-level="5.21.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#what-we-learned-1"><i class="fa fa-check"></i><b>5.21.1</b> What we learned</a></li>
+<li class="chapter" data-level="5.21.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#further-reading-guides-and-tips"><i class="fa fa-check"></i><b>5.21.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html"><i class="fa fa-check"></i><b>6</b> Reports with Rmarkdown: Week Five</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#format"><i class="fa fa-check"></i><b>6.0.1</b> Format</a></li>
+<li class="chapter" data-level="6.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#background-to-rmarkdown"><i class="fa fa-check"></i><b>6.1</b> Background to Rmarkdown</a></li>
+<li class="chapter" data-level="6.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#starting-a-new-rmd-file"><i class="fa fa-check"></i><b>6.2</b> Starting a new Rmd file</a></li>
+<li class="chapter" data-level="6.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#r-markdown-parts"><i class="fa fa-check"></i><b>6.3</b> R Markdown parts</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#yaml"><i class="fa fa-check"></i><b>6.3.1</b> YAML</a></li>
+<li class="chapter" data-level="6.3.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#text"><i class="fa fa-check"></i><b>6.3.2</b> Text</a></li>
+<li class="chapter" data-level="6.3.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#code-chunks"><i class="fa fa-check"></i><b>6.3.3</b> Code Chunks</a></li>
+<li class="chapter" data-level="6.3.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#here"><i class="fa fa-check"></i><b>6.3.4</b> Here</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#images"><i class="fa fa-check"></i><b>6.4</b> Images</a></li>
+<li class="chapter" data-level="6.5" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables</a></li>
+<li class="chapter" data-level="6.6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#self-contained-documents"><i class="fa fa-check"></i><b>6.6</b> Self-contained documents</a></li>
+<li class="chapter" data-level="6.7" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#source-files"><i class="fa fa-check"></i><b>6.7</b> Source files</a></li>
+<li class="chapter" data-level="6.8" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#exercise---make-your-own-rmd-document"><i class="fa fa-check"></i><b>6.8</b> Exercise - Make your own Rmd document</a></li>
+<li class="chapter" data-level="6.9" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#summing-up-rmarkdown"><i class="fa fa-check"></i><b>6.9</b> Summing up Rmarkdown</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#what-we-learned-2"><i class="fa fa-check"></i><b>6.9.1</b> What we learned</a></li>
+<li class="chapter" data-level="6.9.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#further-reading-guides-and-tips-1"><i class="fa fa-check"></i><b>6.9.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html"><i class="fa fa-check"></i><b>7</b> Version control with GitHub: Week Six</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#lets-git-it-started"><i class="fa fa-check"></i><b>7.1</b> Let’s Git it started</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#will-this-be-fun"><i class="fa fa-check"></i><b>7.1.1</b> Will this be fun?</a></li>
+<li class="chapter" data-level="7.1.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#the-payoff"><i class="fa fa-check"></i><b>7.1.2</b> The Payoff</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#set-up-github"><i class="fa fa-check"></i><b>7.2</b> Set up GitHub</a></li>
+<li class="chapter" data-level="7.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-1.-fork-clone-an-existing-repo-on-github-make-edits-push-back"><i class="fa fa-check"></i><b>7.3</b> <strong>Exercise 1.</strong> Fork &amp; clone an existing repo on GitHub, make edits, push back</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-the-hell-is-a-fork"><i class="fa fa-check"></i><b>7.3.1</b> What the hell is a fork?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#talking-to-github"><i class="fa fa-check"></i><b>7.4</b> Talking to GitHub</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#see-changes"><i class="fa fa-check"></i><b>7.4.1</b> See changes</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#how-to-use-version-control---when-to-commit-push-and-pull"><i class="fa fa-check"></i><b>7.5</b> How to use version control - when to commit, push and pull</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#commit"><i class="fa fa-check"></i><b>7.5.1</b> Commit</a></li>
+<li class="chapter" data-level="7.5.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#push"><i class="fa fa-check"></i><b>7.5.2</b> Push</a></li>
+<li class="chapter" data-level="7.5.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#a-couple-of-general-tips"><i class="fa fa-check"></i><b>7.5.3</b> A couple of general tips:</a></li>
+<li class="chapter" data-level="7.5.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#turn-back-time-with-git"><i class="fa fa-check"></i><b>7.5.4</b> Turn back time with Git</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-2.-github-classrooms-enabled-r-projects-with-subfolders"><i class="fa fa-check"></i><b>7.6</b> <strong>Exercise 2.</strong> GitHub Classrooms enabled R Projects with subfolders</a></li>
+<li class="chapter" data-level="7.7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#find-your-classroom-repos"><i class="fa fa-check"></i><b>7.7</b> Find your classroom repos</a></li>
+<li class="chapter" data-level="7.8" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#glossary-github"><i class="fa fa-check"></i><b>7.8</b> Glossary-GitHub</a></li>
+<li class="chapter" data-level="7.9" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#summing-up-github"><i class="fa fa-check"></i><b>7.9</b> Summing up GitHub</a>
+<ul>
+<li class="chapter" data-level="7.9.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-we-learned-3"><i class="fa fa-check"></i><b>7.9.1</b> What we learned</a></li>
+<li class="chapter" data-level="7.9.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#further-reading-guides-and-tips-2"><i class="fa fa-check"></i><b>7.9.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html"><i class="fa fa-check"></i><b>8</b> Dealing with data: dplyr: Week Eight</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#lets-get-going"><i class="fa fa-check"></i><b>8.1</b> Let’s get going</a></li>
+<li class="chapter" data-level="8.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#introduction-to-dplyr"><i class="fa fa-check"></i><b>8.2</b> Introduction to dplyr</a></li>
+<li class="chapter" data-level="8.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#select"><i class="fa fa-check"></i><b>8.3</b> select</a></li>
+<li class="chapter" data-level="8.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#mutate"><i class="fa fa-check"></i><b>8.4</b> mutate</a></li>
+<li class="chapter" data-level="8.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#filter"><i class="fa fa-check"></i><b>8.5</b> filter</a></li>
+<li class="chapter" data-level="8.6" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#arrange"><i class="fa fa-check"></i><b>8.6</b> arrange</a></li>
+<li class="chapter" data-level="8.7" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group-and-summarise"><i class="fa fa-check"></i><b>8.7</b> Group and summarise</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#using-summarise"><i class="fa fa-check"></i><b>8.7.1</b> Using summarise</a></li>
+<li class="chapter" data-level="8.7.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summarize-all-columns"><i class="fa fa-check"></i><b>8.7.2</b> Summarize all columns</a></li>
+<li class="chapter" data-level="8.7.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group_by-summary"><i class="fa fa-check"></i><b>8.7.3</b> group_by summary</a></li>
+<li class="chapter" data-level="8.7.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>8.7.4</b> More than one grouping variable</a></li>
+<li class="chapter" data-level="8.7.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#remove-group_by"><i class="fa fa-check"></i><b>8.7.5</b> remove group_by</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html"><i class="fa fa-check"></i><b>9</b> Dealing with data part 2: Week Nine</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#expanding-the-data-toolkit"><i class="fa fa-check"></i><b>9.1</b> Expanding the data toolkit</a></li>
+<li class="chapter" data-level="9.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pipes"><i class="fa fa-check"></i><b>9.2</b> Pipes</a></li>
+<li class="chapter" data-level="9.3" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#strings"><i class="fa fa-check"></i><b>9.3</b> Strings</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#separate"><i class="fa fa-check"></i><b>9.3.1</b> separate</a></li>
+<li class="chapter" data-level="9.3.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#more-stringr"><i class="fa fa-check"></i><b>9.3.2</b> More stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#dates-and-times"><i class="fa fa-check"></i><b>9.4</b> Dates and times</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#calculations-with-dates"><i class="fa fa-check"></i><b>9.4.1</b> Calculations with dates</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pivot"><i class="fa fa-check"></i><b>9.5</b> Pivot</a></li>
+<li class="chapter" data-level="9.6" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#summing-up-1"><i class="fa fa-check"></i><b>9.6</b> Summing up</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#what-we-learned-4"><i class="fa fa-check"></i><b>9.6.1</b> What we learned</a></li>
+<li class="chapter" data-level="9.6.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#further-reading-guides-and-tips-3"><i class="fa fa-check"></i><b>9.6.2</b> Further Reading, Guides and tips</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html"><i class="fa fa-check"></i><b>10</b> Deeper data insights part 1: Week Ten</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#variables"><i class="fa fa-check"></i><b>10.1</b> Variables</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#numerical"><i class="fa fa-check"></i><b>10.1.1</b> Numerical</a></li>
+<li class="chapter" data-level="10.1.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical"><i class="fa fa-check"></i><b>10.1.2</b> Categorical</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#understanding-numerical-variables"><i class="fa fa-check"></i><b>10.2</b> Understanding Numerical variables</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#graphing-a-numeric-variable"><i class="fa fa-check"></i><b>10.2.1</b> Graphing a numeric variable</a></li>
+<li class="chapter" data-level="10.2.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#insights-about-body-mass"><i class="fa fa-check"></i><b>10.2.2</b> Insights about body mass</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#descriptive-statistics"><i class="fa fa-check"></i><b>10.3</b> Descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#central-tendency"><i class="fa fa-check"></i><b>10.3.1</b> Central tendency</a></li>
+<li class="chapter" data-level="10.3.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#dispersion"><i class="fa fa-check"></i><b>10.3.2</b> Dispersion</a></li>
+<li class="chapter" data-level="10.3.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#visualising-dispersion"><i class="fa fa-check"></i><b>10.3.3</b> Visualising dispersion</a></li>
+<li class="chapter" data-level="10.3.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#combining-histograms-and-boxplots"><i class="fa fa-check"></i><b>10.3.4</b> Combining histograms and boxplots</a></li>
+<li class="chapter" data-level="10.3.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#missing-values"><i class="fa fa-check"></i><b>10.3.5</b> Missing values</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical-variables"><i class="fa fa-check"></i><b>10.4</b> Categorical variables</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summaries"><i class="fa fa-check"></i><b>10.4.1</b> Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summing-up-2"><i class="fa fa-check"></i><b>10.5</b> Summing up</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#reward"><i class="fa fa-check"></i><b>10.5.1</b> Reward</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html"><i class="fa fa-check"></i><b>11</b> Deeper data insights part 2: Week Eleven</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-numerical-variables"><i class="fa fa-check"></i><b>11.1</b> Associations between numerical variables</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#correlations"><i class="fa fa-check"></i><b>11.1.1</b> Correlations</a></li>
+<li class="chapter" data-level="11.1.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#non-linear-correlations"><i class="fa fa-check"></i><b>11.1.2</b> Non-linear correlations</a></li>
+<li class="chapter" data-level="11.1.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#graphical-summaries-between-numeric-variables"><i class="fa fa-check"></i><b>11.1.3</b> Graphical summaries between numeric variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-variables"><i class="fa fa-check"></i><b>11.2</b> Associations between categorical variables</a></li>
+<li class="chapter" data-level="11.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-numerical-variables"><i class="fa fa-check"></i><b>11.3</b> Associations between Categorical-numerical variables</a></li>
+<li class="chapter" data-level="11.4" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#complexity"><i class="fa fa-check"></i><b>11.4</b> Complexity</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#simpsons-paradox"><i class="fa fa-check"></i><b>11.4.1</b> Simpson’s Paradox</a></li>
+<li class="chapter" data-level="11.4.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#three-or-more-variables"><i class="fa fa-check"></i><b>11.4.2</b> Three or more variables</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#summing-up-3"><i class="fa fa-check"></i><b>11.5</b> Summing up</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html"><i class="fa fa-check"></i><b>12</b> Introduction to Statistics - Spring Week One</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#introduction-to-statistics"><i class="fa fa-check"></i><b>12.1</b> Introduction to statistics</a></li>
+<li class="chapter" data-level="12.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>12.2</b> Darwin’s maize data</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#description"><i class="fa fa-check"></i><b>12.2.1</b> Description</a></li>
+<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="12.2.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.3</b> Comparing groups</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#estimation"><i class="fa fa-check"></i><b>12.3</b> Estimation</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#differences-between-groups"><i class="fa fa-check"></i><b>12.3.1</b> Differences between groups</a></li>
+<li class="chapter" data-level="12.3.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#standard-error-of-the-difference"><i class="fa fa-check"></i><b>12.3.2</b> Standard error of the difference</a></li>
+<li class="chapter" data-level="12.3.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#normal-distribution"><i class="fa fa-check"></i><b>12.3.3</b> Normal distribution</a></li>
+<li class="chapter" data-level="12.3.4" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#confidence-intervals"><i class="fa fa-check"></i><b>12.3.4</b> Confidence Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#summary"><i class="fa fa-check"></i><b>12.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html"><i class="fa fa-check"></i><b>13</b> Keeping code DRY - Spring Week One</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#functions-1"><i class="fa fa-check"></i><b>13.1</b> Functions</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#common-functions"><i class="fa fa-check"></i><b>13.1.1</b> Common functions</a></li>
+<li class="chapter" data-level="13.1.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#write-your-own-function"><i class="fa fa-check"></i><b>13.1.2</b> Write your own function</a></li>
+<li class="chapter" data-level="13.1.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-functions"><i class="fa fa-check"></i><b>13.1.3</b> More functions</a></li>
+<li class="chapter" data-level="13.1.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise"><i class="fa fa-check"></i><b>13.1.4</b> Exercise</a></li>
+<li class="chapter" data-level="13.1.5" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#custom-ggplot-themes"><i class="fa fa-check"></i><b>13.1.5</b> Custom ggplot themes</a></li>
+<li class="chapter" data-level="13.1.6" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#writing-packages"><i class="fa fa-check"></i><b>13.1.6</b> Writing Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops</a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops</a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
+<li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html"><i class="fa fa-check"></i><b>14</b> Introduction to Linear Models - Spring Week Two</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#introduction-to-linear-models"><i class="fa fa-check"></i><b>14.1</b> Introduction to Linear Models</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#packages-1"><i class="fa fa-check"></i><b>14.1.1</b> Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#a-linear-model-analysis-for-comparing-groups"><i class="fa fa-check"></i><b>14.2</b> A linear model analysis for comparing groups</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#compare-means"><i class="fa fa-check"></i><b>14.2.1</b> Compare means</a></li>
+<li class="chapter" data-level="14.2.2" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#standard-error-of-the-difference-1"><i class="fa fa-check"></i><b>14.2.2</b> Standard error of the difference</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#confidence-intervals-1"><i class="fa fa-check"></i><b>14.3</b> Confidence intervals</a></li>
+<li class="chapter" data-level="14.4" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#answering-the-question"><i class="fa fa-check"></i><b>14.4</b> Answering the question</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#getting-the-other-treatment-mean-and-standard-error"><i class="fa fa-check"></i><b>14.4.1</b> Getting the other treatment mean and standard error</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#assumption-checking"><i class="fa fa-check"></i><b>14.5</b> Assumption checking</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#normal-distribution-1"><i class="fa fa-check"></i><b>14.5.1</b> Normal distribution</a></li>
+<li class="chapter" data-level="14.5.2" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#equal-variance"><i class="fa fa-check"></i><b>14.5.2</b> Equal variance</a></li>
+<li class="chapter" data-level="14.5.3" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#outliers"><i class="fa fa-check"></i><b>14.5.3</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#summary-2"><i class="fa fa-check"></i><b>14.6</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html"><i class="fa fa-check"></i><b>15</b> Testing - Spring Week Three</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#its-t-time"><i class="fa fa-check"></i><b>15.1</b> It’s t-time</a></li>
+<li class="chapter" data-level="15.2" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#students-t-test"><i class="fa fa-check"></i><b>15.2</b> Student’s <em>t</em>-test</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#paired-t"><i class="fa fa-check"></i><b>15.2.1</b> Paired t</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#effect-sizes"><i class="fa fa-check"></i><b>15.3</b> Effect sizes</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#power"><i class="fa fa-check"></i><b>15.3.1</b> Power</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#meta-analysis"><i class="fa fa-check"></i><b>15.4</b> Meta-analysis</a></li>
+<li class="chapter" data-level="15.5" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#summary-3"><i class="fa fa-check"></i><b>15.5</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html"><i class="fa fa-check"></i><b>16</b> Regression - Spring Week Four</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#introduction-to-regression"><i class="fa fa-check"></i><b>16.1</b> Introduction to Regression</a></li>
+<li class="chapter" data-level="16.2" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#linear-regression"><i class="fa fa-check"></i><b>16.2</b> Linear regression</a></li>
+<li class="chapter" data-level="16.3" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#data"><i class="fa fa-check"></i><b>16.3</b> Data</a></li>
+<li class="chapter" data-level="16.4" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#correlation"><i class="fa fa-check"></i><b>16.4</b> Correlation</a></li>
+<li class="chapter" data-level="16.5" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#regression-in-r"><i class="fa fa-check"></i><b>16.5</b> Regression in R</a>
+<ul>
+<li class="chapter" data-level="16.5.1" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#summary-4"><i class="fa fa-check"></i><b>16.5.1</b> Summary</a></li>
+<li class="chapter" data-level="16.5.2" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#the-second-row"><i class="fa fa-check"></i><b>16.5.2</b> the second row</a></li>
+<li class="chapter" data-level="16.5.3" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#confidence-intervals-2"><i class="fa fa-check"></i><b>16.5.3</b> Confidence intervals</a></li>
+<li class="chapter" data-level="16.5.4" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#effect-size"><i class="fa fa-check"></i><b>16.5.4</b> Effect size</a></li>
+</ul></li>
+<li class="chapter" data-level="16.6" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#assumptions"><i class="fa fa-check"></i><b>16.6</b> Assumptions</a>
+<ul>
+<li class="chapter" data-level="16.6.1" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#normal-distribution-2"><i class="fa fa-check"></i><b>16.6.1</b> Normal distribution</a></li>
+<li class="chapter" data-level="16.6.2" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#equal-variance-1"><i class="fa fa-check"></i><b>16.6.2</b> Equal variance</a></li>
+<li class="chapter" data-level="16.6.3" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#outliers-1"><i class="fa fa-check"></i><b>16.6.3</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="16.7" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#prediction"><i class="fa fa-check"></i><b>16.7</b> Prediction</a></li>
+<li class="chapter" data-level="16.8" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#summary-5"><i class="fa fa-check"></i><b>16.8</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science for Biologists - 5023Y</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regression---spring-week-four" class="section level1" number="16">
+<h1><span class="header-section-number">Chapter 16</span> Regression - Spring Week Four</h1>
+<script>
+  addClassKlippyTo("pre.r, pre.bash");
+  addKlippy('right', 'top', 'auto', '1', 'copy to clipboard', 'Copied!');
+</script>
+<div id="introduction-to-regression" class="section level2" number="16.1">
+<h2><span class="header-section-number">16.1</span> Introduction to Regression</h2>
+<p>So far we have used linear models for analyses between <em>two</em> ‘categorical’ explanatory variables e.g. <em>t</em>-tests. But what about when we have a ‘continuous’ explanatory variable? For that we need to use a regression analysis, luckily this is just another ‘special case’ of the linear model, so we can use the same <code>lm()</code> function we have already been using, and we can interpret the outputs in the same way.</p>
+</div>
+<div id="linear-regression" class="section level2" number="16.2">
+<h2><span class="header-section-number">16.2</span> Linear regression</h2>
+<p>Much like the <em>t</em>-test we have generating from our linear model, the regression analysis is interpreting the strength of the ‘signal’ (the change in mean values according to the explanatory variable), vs the amount of ‘noise’ (variance around the mean).</p>
+<p>We would normally visualise a regression analysis with a scatter plot, with the explanatory (predictor, independent) variable on the x-axis and the response (dependent) variable on the y-axis. Individual data points are plotted, and we attempt to draw a straight-line relationship throught the cloud of data points. This line is the ‘mean,’ and the variability around the mean is captured by calculated standard errors and confidence intervals from the variance.</p>
+<p>The equation for the linear regression model is:</p>
+<p><span class="math display">\[ y = a + bx \]</span>
+You may also note this is basically identical to the equation for a straight fit line <span class="math inline">\(y = mx +c\)</span>.</p>
+<p>Here:
+* <em>y</em> is the predicted value of the response variable</p>
+<ul>
+<li><p><em>a</em> is the regression intercept (the value of <em>y</em> when <em>x</em> = 0)</p></li>
+<li><p><em>b</em> is the slope of the regression line</p></li>
+<li><p><em>x</em> is the value of the explanatory variable</p></li>
+</ul>
+<p>This formula explains the mean, you would need to include the unexplained residual error as a term to include our measure of uncertainty</p>
+<p><span class="math display">\[ y = a + bx + e \]</span></p>
+<p>The regression uses two values to fit a straight line. First we need a starting point, known as the regression intercept. For categorical predictors this is the mean value of <em>y</em> for one of our categories, for a regression this is the mean value of <em>y</em> when <em>x</em> = 0. We then need a gradient (how the value of <em>y</em> changes when the value of <em>x</em> changes). This allows us to draw a regression line.</p>
+<p>A linear model analysis estimates the values of the intercept and gradient in order to predict values of <em>y</em> for given values of <em>x</em>.</p>
+</div>
+<div id="data" class="section level2" number="16.3">
+<h2><span class="header-section-number">16.3</span> Data</h2>
+<p>Here we are going to use example data from the Australian forestry industry, recording the density and hardness of 36 samples of wood from different tree species. Wood density is a fundamental property that is relatively easy to measure, timber hardness, is quantified as the ‘the amount of force required to embed a 0.444" steel ball into the wood to half of its diameter.’</p>
+<p>With regression, we can test the biological hypothesis that wood density can be used to predict timber hardness, and use this regression to predict timber hardness for new samples of known density.</p>
+<p>Timber hardness is quantified using the ‘Janka scale,’ and the data we are going to use today comes from an R package ‘SemiPar’ - once loaded you will then need to call the data using another function <code>data()</code> (note this is different to PalmerPenguins where the data was immediately available).</p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="regression-spring-week-four.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb330-2"><a href="regression-spring-week-four.html#cb330-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SemiPar)</span>
+<span id="cb330-3"><a href="regression-spring-week-four.html#cb330-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(janka)</span></code></pre></div>
+<details>
+<summary>
+<strong>You should ALWAYS check your data before starting a new analysis - write yourself a short checking script - then CLICK HERE to see what I did</strong>
+</summary>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="regression-spring-week-four.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check the structure of the data</span></span>
+<span id="cb331-2"><a href="regression-spring-week-four.html#cb331-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(janka)</span>
+<span id="cb331-3"><a href="regression-spring-week-four.html#cb331-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb331-4"><a href="regression-spring-week-four.html#cb331-4" aria-hidden="true" tabindex="-1"></a><span class="co"># check data is in a tidy format</span></span>
+<span id="cb331-5"><a href="regression-spring-week-four.html#cb331-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(janka)</span>
+<span id="cb331-6"><a href="regression-spring-week-four.html#cb331-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb331-7"><a href="regression-spring-week-four.html#cb331-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check variable names</span></span>
+<span id="cb331-8"><a href="regression-spring-week-four.html#cb331-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(janka)</span>
+<span id="cb331-9"><a href="regression-spring-week-four.html#cb331-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb331-10"><a href="regression-spring-week-four.html#cb331-10" aria-hidden="true" tabindex="-1"></a><span class="co"># check for duplication</span></span>
+<span id="cb331-11"><a href="regression-spring-week-four.html#cb331-11" aria-hidden="true" tabindex="-1"></a>janka <span class="sc">%&gt;%</span> </span>
+<span id="cb331-12"><a href="regression-spring-week-four.html#cb331-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">duplicated</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb331-13"><a href="regression-spring-week-four.html#cb331-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb331-14"><a href="regression-spring-week-four.html#cb331-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb331-15"><a href="regression-spring-week-four.html#cb331-15" aria-hidden="true" tabindex="-1"></a><span class="co"># check for typos - by looking at impossible values</span></span>
+<span id="cb331-16"><a href="regression-spring-week-four.html#cb331-16" aria-hidden="true" tabindex="-1"></a>janka <span class="sc">%&gt;%</span> </span>
+<span id="cb331-17"><a href="regression-spring-week-four.html#cb331-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">min_dens=</span><span class="fu">min</span>(dens, <span class="at">na.rm=</span><span class="cn">TRUE</span>), </span>
+<span id="cb331-18"><a href="regression-spring-week-four.html#cb331-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_dens=</span><span class="fu">max</span>(dens, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb331-19"><a href="regression-spring-week-four.html#cb331-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">min_hard=</span><span class="fu">min</span>(hardness, <span class="at">na.rm=</span><span class="cn">TRUE</span>), </span>
+<span id="cb331-20"><a href="regression-spring-week-four.html#cb331-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_hard=</span><span class="fu">max</span>(hardness, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
+<span id="cb331-21"><a href="regression-spring-week-four.html#cb331-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb331-22"><a href="regression-spring-week-four.html#cb331-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb331-23"><a href="regression-spring-week-four.html#cb331-23" aria-hidden="true" tabindex="-1"></a><span class="co"># missing values</span></span>
+<span id="cb331-24"><a href="regression-spring-week-four.html#cb331-24" aria-hidden="true" tabindex="-1"></a>janka <span class="sc">%&gt;%</span> </span>
+<span id="cb331-25"><a href="regression-spring-week-four.html#cb331-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb331-26"><a href="regression-spring-week-four.html#cb331-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
+<span id="cb331-27"><a href="regression-spring-week-four.html#cb331-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb331-28"><a href="regression-spring-week-four.html#cb331-28" aria-hidden="true" tabindex="-1"></a><span class="co"># quick summary</span></span>
+<span id="cb331-29"><a href="regression-spring-week-four.html#cb331-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb331-30"><a href="regression-spring-week-four.html#cb331-30" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(janka)</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="regression-spring-week-four.html#cb332-1" aria-hidden="true" tabindex="-1"></a>janka <span class="sc">%&gt;%</span> </span>
+<span id="cb332-2"><a href="regression-spring-week-four.html#cb332-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dens, <span class="at">y=</span>hardness))<span class="sc">+</span></span>
+<span id="cb332-3"><a href="regression-spring-week-four.html#cb332-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb332-4"><a href="regression-spring-week-four.html#cb332-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-429-1.png" width="672" /></p>
+</details>
+</div>
+<div id="correlation" class="section level2" number="16.4">
+<h2><span class="header-section-number">16.4</span> Correlation</h2>
+<p>Wood density and timber hardness appear to be positively related, and the linear appears to be fairly linear. We can look at a simple strength of this association between dens and hardness using correlation</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="regression-spring-week-four.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base r</span></span>
+<span id="cb333-2"><a href="regression-spring-week-four.html#cb333-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cor() does not have a data option so need to use the with() function</span></span>
+<span id="cb333-3"><a href="regression-spring-week-four.html#cb333-3" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(janka, <span class="fu">cor</span>(dens, hardness))</span>
+<span id="cb333-4"><a href="regression-spring-week-four.html#cb333-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-5"><a href="regression-spring-week-four.html#cb333-5" aria-hidden="true" tabindex="-1"></a><span class="co"># tidyverse</span></span>
+<span id="cb333-6"><a href="regression-spring-week-four.html#cb333-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
+<span id="cb333-7"><a href="regression-spring-week-four.html#cb333-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-8"><a href="regression-spring-week-four.html#cb333-8" aria-hidden="true" tabindex="-1"></a>janka <span class="sc">%&gt;%</span> </span>
+<span id="cb333-9"><a href="regression-spring-week-four.html#cb333-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor_test</span>(dens, hardness)</span></code></pre></div>
+<pre><code>[1] 0.9743345</code></pre>
+<p>Correlation coefficients range from -1 to 1 for perfectly negative to perfectly positive linear relationships. The relationship here appears to be strongly positive. Correlation looks at the <strong>association</strong> between two variables, but we want to go further - we are arguing that wood density <em>causes</em> higher values of timber hardness. In order to test that hypothesis we need to go further than correlation and use regression.</p>
+</div>
+<div id="regression-in-r" class="section level2" number="16.5">
+<h2><span class="header-section-number">16.5</span> Regression in R</h2>
+<p>We can fit the regression model in exactly the same way as we fit the linear model for Darwin’s maize data. The <em>only</em> difference is that here our predictor variable is continuous rather than categorical.</p>
+<blockquote>
+<p>**Note - be careful when ordering variables here on the left of the ‘tilde’ is the response variable, on the right is the predictor. Get them the wrong way round and it will reverse your hypothesis.</p>
+</blockquote>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="regression-spring-week-four.html#cb335-1" aria-hidden="true" tabindex="-1"></a>janka_ls1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(hardness <span class="sc">~</span> dens, <span class="at">data =</span> janka) </span></code></pre></div>
+<p>This linear model will estimate a ‘line of best fit’ using the method of ‘least squares’ to minimise the error sums of squares (the average distance between the data points and the regression line).</p>
+<p>We can add a regression line to our ggplots very easily with the function <code>geom_smooth()</code>.</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="regression-spring-week-four.html#cb336-1" aria-hidden="true" tabindex="-1"></a>janka <span class="sc">%&gt;%</span> </span>
+<span id="cb336-2"><a href="regression-spring-week-four.html#cb336-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dens, <span class="at">y=</span>hardness))<span class="sc">+</span></span>
+<span id="cb336-3"><a href="regression-spring-week-four.html#cb336-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb336-4"><a href="regression-spring-week-four.html#cb336-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)<span class="sc">+</span></span>
+<span id="cb336-5"><a href="regression-spring-week-four.html#cb336-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-432-1.png" width="672" /></p>
+<details>
+<summary>
+<strong>The blue line represents the regression line, and the shaded interval is the 95% confidence interval band. What do you notice about the width of the interval band as you move along the regression line? Click-me for answer</strong>
+</summary>
+<p>The 95% confidence interval band is narrowest in the middle and widest at either end of the regression line. But why?</p>
+<p>When performing a linear regression, there are <strong>two</strong> types of uncertainty in the prediction.</p>
+<p>First is the prediction of the overall mean of the estimate (ie the center of the fit). The second is the uncertainly in the estimate calculating the slope.</p>
+<p>So when you combine both uncertainties of the prediction there is a spread between the high and low estimates. The further away from the center of the data you get (in either direction), the uncertainty of the slope becomes a large and more noticeable factor, thus the limits widen.</p>
+</details>
+<div id="summary-4" class="section level3" number="16.5.1">
+<h3><span class="header-section-number">16.5.1</span> Summary</h3>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="regression-spring-week-four.html#cb337-1" aria-hidden="true" tabindex="-1"></a>janka_ls1 <span class="sc">%&gt;%</span> </span>
+<span id="cb337-2"><a href="regression-spring-week-four.html#cb337-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
+<span id="cb337-3"><a href="regression-spring-week-four.html#cb337-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb337-4"><a href="regression-spring-week-four.html#cb337-4" aria-hidden="true" tabindex="-1"></a><span class="co"># base R summary(janka_ls1)</span></span></code></pre></div>
+<p>This output should look very familiar to you, because it’s the same output produced for the analysis of the maize data. Including a column for the coefficient estimates, standard error, <em>t</em>-statistic and <em>P</em>-value. The first row is the intercept, and the second row is the difference in the mean from the intercept caused by our explanantory variable.</p>
+<p>In many ways the intercept makes more intuitive sense in a regression model than a difference model. Here the intercept describes the value of <em>y</em> (timber hardness) when <em>x</em> (wood density) = 0. The standard error is standard error of this calculated mean value. The only wrinkle here is that that value of <em>y</em> is an impossible value - timber hardness obviously cannot be a negative value (anti-hardness???). This does not affect the fit of our line, it just means a regression line (being an infinite straight line) can move into impossible value ranges.</p>
+<p>One way in which the intercept can be made more valuable is to use a technique known as ‘centering.’ By subtracting the average (mean) value of <em>x</em> from every data point, the intercept (when <em>x</em> is 0) can effectively be right-shifted into the centre of the data.</p>
+<details>
+<summary>
+<strong>Try it for yourself, use your data manipulation skills to ‘center’ the values of x then fit a new linear model. Click-me for answer</strong>
+</summary>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="regression-spring-week-four.html#cb338-1" aria-hidden="true" tabindex="-1"></a>dens_mean <span class="ot">&lt;-</span> janka <span class="sc">%&gt;%</span> </span>
+<span id="cb338-2"><a href="regression-spring-week-four.html#cb338-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_dens=</span><span class="fu">mean</span>(dens))</span>
+<span id="cb338-3"><a href="regression-spring-week-four.html#cb338-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 45.73333</span></span>
+<span id="cb338-4"><a href="regression-spring-week-four.html#cb338-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb338-5"><a href="regression-spring-week-four.html#cb338-5" aria-hidden="true" tabindex="-1"></a>janka <span class="sc">%&gt;%</span> </span>
+<span id="cb338-6"><a href="regression-spring-week-four.html#cb338-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">centered_dens =</span> dens<span class="sc">-</span>dens_mean[,<span class="dv">1</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb338-7"><a href="regression-spring-week-four.html#cb338-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(hardness <span class="sc">~</span> centered_dens, <span class="at">data =</span> .) <span class="sc">%&gt;%</span> </span>
+<span id="cb338-8"><a href="regression-spring-week-four.html#cb338-8" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code></pre></div>
+<pre><code>  term          estimate std.error statistic  p.value
+  &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)     1469.      30.5       48.2 7.10e-33
+2 centered_dens     57.5      2.28      25.2 1.33e-23
+</code></pre>
+<p>Note how the estimate for row 2 - the effect of density on timber hardness <strong>has not</strong> changed, but the intercept now represents the estimated mean timber hardness for the mean wood density e.g. at a density of <span class="math inline">\(\rho\)</span> = 45.73 the average timber hardness on the janka scale is 1469.</p>
+</details>
+</div>
+<div id="the-second-row" class="section level3" number="16.5.2">
+<h3><span class="header-section-number">16.5.2</span> the second row</h3>
+<p>The second row is labelled ‘dens.’ Density is our explanatory variable, and the slope is estimated against it. So if 57.5 is the value of the regression slope (with its standard error) - then the timber hardness is predicted to <strong>increase</strong> by 57.5 on the janka scale for every unit change of density.</p>
+<p>According to our model summary, this estimated change in the mean is statistically significant - so for this effect size and sample size it is unlikely that we would observe this relationship if the null hypothesis (that we cannot predict timber hardness from wood density) were true.</p>
+</div>
+<div id="confidence-intervals-2" class="section level3" number="16.5.3">
+<h3><span class="header-section-number">16.5.3</span> Confidence intervals</h3>
+<p>Just like with the maize data, we can produce upper and lower bounds of confidence intervals:</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="regression-spring-week-four.html#cb340-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(janka_ls1, <span class="at">conf.int=</span>T, <span class="at">conf.level=</span><span class="fl">0.95</span>)</span>
+<span id="cb340-2"><a href="regression-spring-week-four.html#cb340-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-3"><a href="regression-spring-week-four.html#cb340-3" aria-hidden="true" tabindex="-1"></a><span class="co"># base r</span></span>
+<span id="cb340-4"><a href="regression-spring-week-four.html#cb340-4" aria-hidden="true" tabindex="-1"></a><span class="co"># confint(lsmodel1)</span></span></code></pre></div>
+<pre><code># A tibble: 2 x 7
+  term        estimate std.error statistic  p.value conf.low conf.high
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)  -1160.     109.       -10.7 2.07e-12  -1381.     -940. 
+2 dens            57.5      2.28      25.2 1.33e-23     52.9      62.1</code></pre>
+<p>Here we can say that at <span class="math inline">\(\alpha\)</span> = 0.05 we think there is at least a 52.9 unit increase on the janka scale for every unit increase in density (<span class="math inline">\(\rho\)</span>). Because our 95% confidence intervals do not span 0, we know that there is a significant relationship at <span class="math inline">\(\alpha\)</span> = 0.05.</p>
+</div>
+<div id="effect-size" class="section level3" number="16.5.4">
+<h3><span class="header-section-number">16.5.4</span> Effect size</h3>
+<p>With a regression model, we can also produce a standardised effect size. The estimate and 95% confidence intervals are the amount of change being observed, but just like with the maize data we can produce a standardised measure of how strong the relationship is. This value is represented by <span class="math inline">\(R^2\)</span> : the proportion of the variation in the data explained by the linear regression analysis. This is a more sensible measure of effect size than Cohen’s <em>d</em> which is a standardised measure of <em>difference</em> according to standard deviation.</p>
+<p>The value of <span class="math inline">\(R^2\)</span> can be found in the model summaries as follows</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="regression-spring-week-four.html#cb342-1" aria-hidden="true" tabindex="-1"></a>janka_ls1 <span class="sc">%&gt;%</span> </span>
+<span id="cb342-2"><a href="regression-spring-week-four.html#cb342-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">glance</span>()</span>
+<span id="cb342-3"><a href="regression-spring-week-four.html#cb342-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb342-4"><a href="regression-spring-week-four.html#cb342-4" aria-hidden="true" tabindex="-1"></a><span class="co"># base r</span></span>
+<span id="cb342-5"><a href="regression-spring-week-four.html#cb342-5" aria-hidden="true" tabindex="-1"></a><span class="co"># summary(janka_ls1)</span></span></code></pre></div>
+<pre><code># A tibble: 1 x 12
+  r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC deviance df.residual  nobs
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt; &lt;int&gt;
+1     0.949         0.948  183.      637. 1.33e-23     1  -238.  481.  486. 1139366.          34    36</code></pre>
+<table class="table table-striped" style="width: auto !important; ">
+<caption>
+<span id="tab:unnamed-chunk-437">Table 16.1: </span>R squared effect size
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Effect size
+</th>
+<th style="text-align:right;">
+r^2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+small
+</td>
+<td style="text-align:right;">
+0.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+medium
+</td>
+<td style="text-align:right;">
+0.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+large
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="assumptions" class="section level2" number="16.6">
+<h2><span class="header-section-number">16.6</span> Assumptions</h2>
+<p>Regression models make ALL the same assumptions as all linear models - that the unexplained variation around the regression line (the residuals) is approximately normally distributed, and has constant variance. And we can check this in the same way.</p>
+<p>Remember, the residuals are the <em>difference</em> between the observed values and the fitted values predicted by the model. Or in other words it is the <em>vertical</em> distance between a data point and the fitted value on the regression line. We can take a look at this with another function in the <code>broom</code> package <code>augment()</code>. This generates the predicted value for each data point according to the regression, and calculates the residuals for each data point.</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="regression-spring-week-four.html#cb344-1" aria-hidden="true" tabindex="-1"></a>augmented_ls1 <span class="ot">&lt;-</span> janka_ls1 <span class="sc">%&gt;%</span> </span>
+<span id="cb344-2"><a href="regression-spring-week-four.html#cb344-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">augment</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="regression-spring-week-four.html#cb345-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base R</span></span>
+<span id="cb345-2"><a href="regression-spring-week-four.html#cb345-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb345-3"><a href="regression-spring-week-four.html#cb345-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predicted</span>(janka_ls1)</span>
+<span id="cb345-4"><a href="regression-spring-week-four.html#cb345-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb345-5"><a href="regression-spring-week-four.html#cb345-5" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(janka_ls1)</span></code></pre></div>
+<p>If we plot this, with a black fitted regression line and red dashed lines representing the residuals:</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="regression-spring-week-four.html#cb346-1" aria-hidden="true" tabindex="-1"></a>augmented_ls1 <span class="sc">%&gt;%</span> </span>
+<span id="cb346-2"><a href="regression-spring-week-four.html#cb346-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dens, <span class="at">y=</span>.fitted))<span class="sc">+</span></span>
+<span id="cb346-3"><a href="regression-spring-week-four.html#cb346-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>dens, <span class="at">y=</span>hardness))<span class="sc">+</span><span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span>dens, <span class="at">xend=</span>dens, <span class="at">y=</span>.fitted, <span class="at">yend=</span>hardness), <span class="at">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="at">colour=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-440-1.png" width="672" /></p>
+<p>We can use this augmented data to really help us understand what residual variance looks like, and how it can be used to diagnose our models. A perfect model would mean that all of our residual values = 0, but this is incredibly unlikely to ever occur. Instead we would like to see</p>
+<ol style="list-style-type: decimal">
+<li><p>that there is a ‘normal distribution’ to the residuals e.g. more residuals close to the mean, and fewer further away in a rough z-distribution.</p></li>
+<li><p>We also want to see homogeneity of the residuals e.g. it would be a bad model if the average error was greater at one end of the model than the other. This might mean we have more uncertainty in the slope of the line for large values over small values or vice versa.</p></li>
+</ol>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="regression-spring-week-four.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A line connecting all the data points in order </span></span>
+<span id="cb347-2"><a href="regression-spring-week-four.html#cb347-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> augmented_ls1 <span class="sc">%&gt;%</span> </span>
+<span id="cb347-3"><a href="regression-spring-week-four.html#cb347-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dens, <span class="at">y=</span>hardness))<span class="sc">+</span></span>
+<span id="cb347-4"><a href="regression-spring-week-four.html#cb347-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb347-5"><a href="regression-spring-week-four.html#cb347-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Full Data&quot;</span>)</span>
+<span id="cb347-6"><a href="regression-spring-week-four.html#cb347-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb347-7"><a href="regression-spring-week-four.html#cb347-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the fitted values against the dependent e.g. our regression line</span></span>
+<span id="cb347-8"><a href="regression-spring-week-four.html#cb347-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> augmented_ls1 <span class="sc">%&gt;%</span> </span>
+<span id="cb347-9"><a href="regression-spring-week-four.html#cb347-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>hardness, <span class="at">y=</span>.fitted))<span class="sc">+</span></span>
+<span id="cb347-10"><a href="regression-spring-week-four.html#cb347-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb347-11"><a href="regression-spring-week-four.html#cb347-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Linear trend&quot;</span>)</span>
+<span id="cb347-12"><a href="regression-spring-week-four.html#cb347-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb347-13"><a href="regression-spring-week-four.html#cb347-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the residuals against the fitted values e.g. remaining variance</span></span>
+<span id="cb347-14"><a href="regression-spring-week-four.html#cb347-14" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> augmented_ls1 <span class="sc">%&gt;%</span> </span>
+<span id="cb347-15"><a href="regression-spring-week-four.html#cb347-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>.fitted, <span class="at">y=</span>.resid))<span class="sc">+</span></span>
+<span id="cb347-16"><a href="regression-spring-week-four.html#cb347-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">colour=</span><span class="st">&quot;white&quot;</span>, <span class="at">size=</span><span class="dv">5</span>)<span class="sc">+</span></span>
+<span id="cb347-17"><a href="regression-spring-week-four.html#cb347-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb347-18"><a href="regression-spring-week-four.html#cb347-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Remaining pattern&quot;</span>)</span>
+<span id="cb347-19"><a href="regression-spring-week-four.html#cb347-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb347-20"><a href="regression-spring-week-four.html#cb347-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb347-21"><a href="regression-spring-week-four.html#cb347-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb347-22"><a href="regression-spring-week-four.html#cb347-22" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">+</span>p2<span class="sc">+</span>p3</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-441-1.png" width="672" /></p>
+<details>
+<summary>
+<strong>CHALLENGE - the above is an example of functional, but repetitive code - could you make a function that reduces the amount of code needed? CLICK HERE for a solution</strong>
+</summary>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="regression-spring-week-four.html#cb348-1" aria-hidden="true" tabindex="-1"></a>model_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data=</span>augmented_ls1, <span class="at">x=</span><span class="st">&quot;dens&quot;</span>, <span class="at">y=</span><span class="st">&quot;hardness&quot;</span>, <span class="at">title=</span><span class="st">&quot;Full data&quot;</span>){</span>
+<span id="cb348-2"><a href="regression-spring-week-four.html#cb348-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>.data[[x]], <span class="at">y=</span>.data[[y]]), <span class="at">data=</span>data)<span class="sc">+</span></span>
+<span id="cb348-3"><a href="regression-spring-week-four.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb348-4"><a href="regression-spring-week-four.html#cb348-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb348-5"><a href="regression-spring-week-four.html#cb348-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggtitle</span>(title)</span>
+<span id="cb348-6"><a href="regression-spring-week-four.html#cb348-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb348-7"><a href="regression-spring-week-four.html#cb348-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb348-8"><a href="regression-spring-week-four.html#cb348-8" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">model_plot</span>()</span>
+<span id="cb348-9"><a href="regression-spring-week-four.html#cb348-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">model_plot</span>(<span class="at">y=</span><span class="st">&quot;.fitted&quot;</span>, <span class="at">title=</span><span class="st">&quot;Linear prediction&quot;</span>)</span>
+<span id="cb348-10"><a href="regression-spring-week-four.html#cb348-10" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">model_plot</span>(<span class="at">y=</span><span class="st">&quot;.resid&quot;</span>, <span class="at">title=</span><span class="st">&quot;Remaining pattern&quot;</span>)</span></code></pre></div>
+</details>
+<div id="normal-distribution-2" class="section level3" number="16.6.1">
+<h3><span class="header-section-number">16.6.1</span> Normal distribution</h3>
+<p>We can use the same model diagnostic plots as we used for the maize data.
+Here you can see it is mostly pretty good, with just one or two data points outside of the confidence intervals</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="regression-spring-week-four.html#cb349-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(janka_ls1, <span class="at">check=</span><span class="fu">c</span>(<span class="st">&quot;normality&quot;</span>,<span class="st">&quot;qq&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-443-1.png" width="672" /></p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="regression-spring-week-four.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(janka_ls1, <span class="at">which=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span></code></pre></div>
+</div>
+<div id="equal-variance-1" class="section level3" number="16.6.2">
+<h3><span class="header-section-number">16.6.2</span> Equal variance</h3>
+<p>We can use the same model diagnostic plots as we used for the maize data.
+You should see that this is similar to the <code>p3</code> plot we constructed manually. With the plot we constructed earlier we had the ‘raw’ residuals as a function of the fitted values. The plot we have produced now is the ‘standardized residuals’ - this is the raw residual divided by the standard deviation.</p>
+<p>Both plots suggests that the residuals <strong>do not</strong> have constant variance, broadly speaking the amount of variance <em>y</em> increases as <em>x</em> increases. This means we have less confidence in our predictions at high values of density. Later we will see what we can do to improve the fit of this model</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="regression-spring-week-four.html#cb351-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(janka_ls1, <span class="at">check=</span><span class="st">&quot;homogeneity&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-445-1.png" width="672" /></p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="regression-spring-week-four.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(janka_ls1, <span class="at">which=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span></code></pre></div>
+</div>
+<div id="outliers-1" class="section level3" number="16.6.3">
+<h3><span class="header-section-number">16.6.3</span> Outliers</h3>
+<p>Here we can see there is just one potential outlier.</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="regression-spring-week-four.html#cb353-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(janka_ls1, <span class="at">check=</span><span class="st">&quot;outliers&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-447-1.png" width="672" /></p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="regression-spring-week-four.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(janka_ls1, <span class="at">which=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>))</span></code></pre></div>
+</div>
+</div>
+<div id="prediction" class="section level2" number="16.7">
+<h2><span class="header-section-number">16.7</span> Prediction</h2>
+<p>Using the coefficients of the intercept and the slope we can make predictions on new data.
+The estimates of the intercept and the slope are:</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="regression-spring-week-four.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(janka_ls1)</span></code></pre></div>
+<pre><code>(Intercept)        dens 
+-1160.49970    57.50667</code></pre>
+<p>Now imagine we have a new wood samples with a density of 65, how can we use the equation for a linear regression to predict what the timber hardness for this wood sample should be?</p>
+<details>
+<summary>
+<strong>Click me for answer</strong>
+</summary>
+<p><span class="math display">\[ y = a + bx \]</span></p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="regression-spring-week-four.html#cb357-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a + bx</span></span>
+<span id="cb357-2"><a href="regression-spring-week-four.html#cb357-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb357-3"><a href="regression-spring-week-four.html#cb357-3" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">1160.49970</span> <span class="sc">+</span> <span class="fl">57.50667</span> <span class="sc">*</span> <span class="dv">65</span></span></code></pre></div>
+<p>Rather than work out the values manually, we can also use the coefficients of the model directly</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="regression-spring-week-four.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(janka_ls1)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(janka_ls1)[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">65</span></span></code></pre></div>
+<pre><code>(Intercept) 
+   2577.434 </code></pre>
+</details>
+<p>But most of the time we are unlikely to want to work out predicted values by hand, instead we can use functions like <code>predict()</code> and <code>augment()</code></p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="regression-spring-week-four.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base R</span></span>
+<span id="cb360-2"><a href="regression-spring-week-four.html#cb360-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(janka_ls1, <span class="at">newdata=</span><span class="fu">list</span>(<span class="at">dens=</span><span class="fu">c</span>(<span class="dv">22</span>,<span class="dv">35</span>,<span class="dv">65</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="regression-spring-week-four.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="co"># broom package</span></span>
+<span id="cb361-2"><a href="regression-spring-week-four.html#cb361-2" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">dens=</span><span class="fu">c</span>(<span class="dv">22</span>,<span class="dv">35</span>,<span class="dv">65</span>))</span>
+<span id="cb361-3"><a href="regression-spring-week-four.html#cb361-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb361-4"><a href="regression-spring-week-four.html#cb361-4" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(janka_ls1, <span class="at">newdata=</span>newdata)</span></code></pre></div>
+<pre><code># A tibble: 3 x 2
+   dens .fitted
+  &lt;dbl&gt;   &lt;dbl&gt;
+1    22    105.
+2    35    852.
+3    74   3095.</code></pre>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="regression-spring-week-four.html#cb363-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">augment</span>(janka_ls1, <span class="at">newdata=</span>newdata, <span class="at">se=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="regression-spring-week-four.html#cb364-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">augment</span>(janka_ls1, <span class="at">newdata=</span>newdata, <span class="at">interval=</span><span class="st">&quot;confidence&quot;</span>)</span></code></pre></div>
+<details>
+<summary>
+<strong>CHALLENGE - can you plot the three new predicted values onto an existing figure to recreate the below? CLICK HERE for a solution</strong>
+</summary>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="regression-spring-week-four.html#cb365-1" aria-hidden="true" tabindex="-1"></a>janka <span class="sc">%&gt;%</span> </span>
+<span id="cb365-2"><a href="regression-spring-week-four.html#cb365-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>dens, <span class="at">y=</span>hardness))<span class="sc">+</span></span>
+<span id="cb365-3"><a href="regression-spring-week-four.html#cb365-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb365-4"><a href="regression-spring-week-four.html#cb365-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)<span class="sc">+</span></span>
+<span id="cb365-5"><a href="regression-spring-week-four.html#cb365-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>pred_newdata, <span class="fu">aes</span>(<span class="at">y=</span>.fitted, <span class="at">x=</span>dens), <span class="at">colour=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-457-1.png" width="672" /></p>
+</div>
+<div id="summary-5" class="section level2" number="16.8">
+<h2><span class="header-section-number">16.8</span> Summary</h2>
+<p>Linear model analyses can extend beyond testing differences of means in categorical groupings to test relationships with continuous variables. This is known as linear regression, where the relationship between the explanatory variable and response variable are modelled with the equation for a straight line. The intercept is the value of <em>y</em> when <em>x</em> = 0, often this isn’t that useful, and we can use ‘mean-centered’ values if we wish to make the intercept more intuitive.
+As with all linear models, regression assumes that the unexplained variability around the regression line, is normally distributed and has constant variance.</p>
+<p>Once the regression has been fitted it is possible to predict values of <em>y</em> from values of <em>x</em>, the uncertainty around these predictions can be captured with confidence intervals.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="testing-spring-week-three.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/11-Regression.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
