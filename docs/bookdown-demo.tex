@@ -8331,7 +8331,7 @@ But most of the time we are unlikely to want to work out predicted values by han
 \CommentTok{\# broom package}
 \NormalTok{newdata }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{dens=}\FunctionTok{c}\NormalTok{(}\DecValTok{22}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{65}\NormalTok{))}
 
-\FunctionTok{augment}\NormalTok{(janka\_ls1, }\AttributeTok{newdata=}\NormalTok{newdata)}
+\NormalTok{broom}\SpecialCharTok{::}\FunctionTok{augment}\NormalTok{(janka\_ls1, }\AttributeTok{newdata=}\NormalTok{newdata)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8341,7 +8341,7 @@ But most of the time we are unlikely to want to work out predicted values by han
   <dbl>   <dbl>
 1    22    105.
 2    35    852.
-3    74   3095.
+3    65   2577
 \end{verbatim}
 
 \begin{Shaded}

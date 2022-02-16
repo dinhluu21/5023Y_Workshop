@@ -444,7 +444,7 @@ predict(janka_ls1, newdata=list(dens=c(22,35,65)))
 # broom package
 newdata <- tibble(dens=c(22,35,65))
 
-augment(janka_ls1, newdata=newdata)
+broom::augment(janka_ls1, newdata=newdata)
 
 ```
 
@@ -454,7 +454,7 @@ augment(janka_ls1, newdata=newdata)
   <dbl>   <dbl>
 1    22    105.
 2    35    852.
-3    74   3095.
+3    65   2577
 ```
 
 
