@@ -30,6 +30,7 @@ $$ y = a + bx $$
 You may also note this is basically identical to the equation for a straight fit line $y = mx +c$. 
 
 Here: 
+
 * *y* is the predicted value of the response variable
 
 * *a* is the regression intercept (the value of *y* when *x* = 0)
@@ -175,6 +176,7 @@ janka_ls1 %>%
 # base R summary(janka_ls1)
 
 ```
+
 This output should look very familiar to you, because it's the same output produced for the analysis of the maize data. Including a column for the coefficient estimates, standard error, *t*-statistic and *P*-value. The first row is the intercept, and the second row is the difference in the mean from the intercept caused by our explanantory variable. 
 
 In many ways the intercept makes more intuitive sense in a regression model than a difference model. Here the intercept describes the value of *y* (timber hardness) when *x* (wood density) = 0. The standard error is standard error of this calculated mean value. The only wrinkle here is that that value of *y* is an impossible value - timber hardness obviously cannot be a negative value (anti-hardness???). This does not affect the fit of our line, it just means a regression line (being an infinite straight line) can move into impossible value ranges.
@@ -329,7 +331,11 @@ p1+p2+p3
 
 ```
 
-<details><summary> **CHALLENGE - the above is an example of functional, but repetitive code - could you make a function that reduces the amount of code needed? CLICK HERE for a solution**</summary>
+<details><summary> **CHALLENGE - the above is an example of functional, but repetitive code - could you make a function that reduces the amount of code needed?**
+
+**HINT - to make sure your arguments for a ggplot are passed properly use this structure x=.data[[x]]**
+
+**CLICK HERE for a solution**</summary>
 
 ```{r}
 

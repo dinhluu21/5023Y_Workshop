@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-02-16" />
+<meta name="date" content="2022-02-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -582,9 +582,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The equation for the linear regression model is:</p>
 <p><span class="math display">\[ y = a + bx \]</span>
 You may also note this is basically identical to the equation for a straight fit line <span class="math inline">\(y = mx +c\)</span>.</p>
-<p>Here:
-* <em>y</em> is the predicted value of the response variable</p>
+<p>Here:</p>
 <ul>
+<li><p><em>y</em> is the predicted value of the response variable</p></li>
 <li><p><em>a</em> is the regression intercept (the value of <em>y</em> when <em>x</em> = 0)</p></li>
 <li><p><em>b</em> is the slope of the regression line</p></li>
 <li><p><em>x</em> is the value of the explanatory variable</p></li>
@@ -832,7 +832,9 @@ large
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-441-1.png" width="672" /></p>
 <details>
 <summary>
-<strong>CHALLENGE - the above is an example of functional, but repetitive code - could you make a function that reduces the amount of code needed? CLICK HERE for a solution</strong>
+<p><strong>CHALLENGE - the above is an example of functional, but repetitive code - could you make a function that reduces the amount of code needed?</strong></p>
+<p><strong>HINT - to make sure your arguments for a ggplot are passed properly use this structure x=.data[[x]]</strong></p>
+<strong>CLICK HERE for a solution</strong>
 </summary>
 <div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="regression-spring-week-four.html#cb348-1" aria-hidden="true" tabindex="-1"></a>model_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">data=</span>augmented_ls1, <span class="at">x=</span><span class="st">&quot;dens&quot;</span>, <span class="at">y=</span><span class="st">&quot;hardness&quot;</span>, <span class="at">title=</span><span class="st">&quot;Full data&quot;</span>){</span>
 <span id="cb348-2"><a href="regression-spring-week-four.html#cb348-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>.data[[x]], <span class="at">y=</span>.data[[y]]), <span class="at">data=</span>data)<span class="sc">+</span></span>

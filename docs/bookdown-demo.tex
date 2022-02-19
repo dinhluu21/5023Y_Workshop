@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2022-02-16}
+\date{2022-02-19}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-16
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-19
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -7857,9 +7857,10 @@ The equation for the linear regression model is:
 You may also note this is basically identical to the equation for a straight fit line \(y = mx +c\).
 
 Here:
-* \emph{y} is the predicted value of the response variable
 
 \begin{itemize}
+\item
+  \emph{y} is the predicted value of the response variable
 \item
   \emph{a} is the regression intercept (the value of \emph{y} when \emph{x} = 0)
 \item
@@ -8195,7 +8196,11 @@ We can use this augmented data to really help us understand what residual varian
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-441-1.pdf}
 
-\textbf{CHALLENGE - the above is an example of functional, but repetitive code - could you make a function that reduces the amount of code needed? CLICK HERE for a solution}
+\textbf{CHALLENGE - the above is an example of functional, but repetitive code - could you make a function that reduces the amount of code needed?}
+
+\textbf{HINT - to make sure your arguments for a ggplot are passed properly use this structure x=.data{[}{[}x{]}{]}}
+
+\textbf{CLICK HERE for a solution}
 
 \begin{Shaded}
 \begin{Highlighting}[]
