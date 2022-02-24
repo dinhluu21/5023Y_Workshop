@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2022-02-19}
+\date{2022-02-24}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-19
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-24
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -8382,6 +8382,298 @@ Linear model analyses can extend beyond testing differences of means in categori
 As with all linear models, regression assumes that the unexplained variability around the regression line, is normally distributed and has constant variance.
 
 Once the regression has been fitted it is possible to predict values of \emph{y} from values of \emph{x}, the uncertainty around these predictions can be captured with confidence intervals.
+
+\hypertarget{anova---spring-week-five}{%
+\chapter{ANOVA - Spring Week Five}\label{anova---spring-week-five}}
+
+\hypertarget{anova}{%
+\section{ANOVA}\label{anova}}
+
+So far we have used linear models for analyses between \emph{two} `categorical' explanatory variables e.g.~\emph{t}-tests, and for regression with \emph{two} `continuous' variables. However, as designs become more complicated, the number of comparisons can quickly become overwhelming, working with estimates and intervals alone can become harder.
+
+As designs become more elaborate the number of pairwise \emph{t}-tests rapidly increases, and therefore our risk of false positives (Type I errors). It is therefore useful to have a complementary approach that first asks if there is any support for a difference between the different means \emph{before} diving into multiple comparisons. This approach is called \emph{analysis of variance} (ANOVA), and although it tends to be associated with categorical data, we will see in the following chapters that the ANOVA is just another type of linear model, so this approach can also be extended to included continuous variables.
+
+\hypertarget{maize-data}{%
+\section{Maize data}\label{maize-data}}
+
+Our simple linear model for the maize data was:
+
+\begin{verbatim}
+lsmodel1 <- lm(height ~ type, data = darwin)
+\end{verbatim}
+
+This structure of fitting a linear model, with one explanatory variable is also known as a one-way ANOVA. The general strategy of the ANOVA is to quantify the overall variability in the data set and then to divide it into the variability between and within the groups. We can also refer to this as the `signal-to-noise' ratio, or the variability explained by the slope of the linear model, vs unexplained variance.
+
+The more of the variation explained by our fitted linear model, the more confident we can be that we have detected a real effect in our estimates of mean differences. This method of fitting a model is called ordinary least squares.
+
+The least squares model first quantifies the total amount of variation (total sum of squares, SST) by measuring the differencea from the individual data points to a reference point or `intercept' (see below). The intercept is arbitrary, as we saw in our regression chapter it defaults to when \emph{x} = 0, but can be shifted to anywhere within our data. In an ANOVA analysis it is normally set to the mean of one of the categories.
+
+Next the model quantifies a fitted slope, it aims to produce a slope that produces the least amount of squared residuals to the data points (sum of squares of the regression/ANOVA, SSR/A).
+
+This then leaves the residual unexplained variation (sum of squares of the error, SSE).
+
+In this way the model is splitting the overall variability (SST) into signal (SSR) and noise (SSE):
+
+\[ SST = SSR + SSE \]
+
+\includegraphics[height=2\textheight]{bookdown-demo_files/figure-latex/unnamed-chunk-461-1}
+\includegraphics[height=2\textheight]{bookdown-demo_files/figure-latex/unnamed-chunk-461-2}
+\includegraphics[height=2\textheight]{bookdown-demo_files/figure-latex/unnamed-chunk-461-3}
+
+\begin{quote}
+\emph{Note - Least squares quantifies top) total least squares, middle) treatment least squares, bottom) error sum of squares (SST, SSR, SSE). The vertical lines measure the distances, which are then squared and summed. SST is calculated by measuring to the intercept, SSR is calculated by measuring the distance of the estimates to the intercept, SSE is calculated by measuring the distance to the estimates}
+\end{quote}
+
+\hypertarget{the-anova-table}{%
+\subsection{The ANOVA table}\label{the-anova-table}}
+
+If we want to get the ANOVA table for a linear model we can use the \texttt{anova()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(lsmodel1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: height
+          Df  Sum Sq Mean Sq F value  Pr(>F)  
+type       1  51.352  51.352  5.9395 0.02141 *
+Residuals 28 242.083   8.646                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{verbatim}
+
+Compare this to the output you get when you use the \texttt{summary()} function. You should see that the \emph{F}-value \emph{P}-value and df are all exactly the same. The ANOVA table actually has \emph{far} less information in it, as it contains no information about the biology (estimates in difference, or uncertainty such as standard errors etc.). It is amazing how many times you will see these tables reported, even though they contain the \emph{least} interesting part of the analysis.
+
+\textbf{BUT} they can help us simplify effects where there are more than two levels, but we need to learn how to use them appropriately.
+
+The ANOVA table has six columns and two rows of information.
+
+The first column contains the information source, here the signal/regression (first row) and error/noise (second row).
+
+The second column gives the degrees of freedom, in the first row this is the number of predictors(treatments) (\emph{k - 1}, including intercept), and in the second row the residual degrees of freedom (\emph{N - k}).
+
+The third column is the sum of squares in the first row this is the SSR, and the second row SSE (remember that SST = SSR + SSE).
+
+The fourth column is the \emph{mean} sum of squares MSR = SSR/(k-1) \& MSE = SSE/(N-k). These are the average amounts of variability per treatment level.
+
+It's worth stopping briefly at this point and remembering that we have effectively pooled the SSE from \emph{both} treatments to generate the MSE. Linear models always use this pooled variance approach, it can give them greater power for detecting effects with smaller sample sizes, but is the reason why we need homogenity of variance as an assumption of our model.
+
+The fifth column is our \emph{F} statistic (the signal-to-noise ratio). It is calculated by dividing the treatment variance by the residual error variance
+
+\[ F =\frac{SSR/(k-1)}{SSE/(N-k)} =  \frac{MSR}{MSE} \]
+In our example \emph{F} = 5.9, which means that the estimated signal is nearly six times larger than the estimated noise.
+
+We can then use this \emph{F} value with our sample size and treatment levels to calculate the probability of observing this ratio of signal to noise if the null hypothesis that there were no effect of treatment is true.
+
+The probability value can be looked up in an ANOVA table, and is calculated from an \emph{F} distribution. The \emph{F}-test takes sample size into account, and the probability assigned takes into account the degrees of freedom of both the signal and noise.
+
+We can see this if we use the R function \texttt{pf()} that this should recreate the exact \emph{P}-value we see in our ANOVA table.
+
+The first three arguments here are the \emph{F}-value, degrees of freedom for the signal, and noise. The last argument is to set this as a two directional test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pf}\NormalTok{(}\FloatTok{5.9395}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{28}\NormalTok{, }\AttributeTok{lower.tail=}\ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+It is common to see \emph{P}-values reported with no supporting information (naked \emph{P}-values). But it is impossible to interpret these without knowing: what test they came from, what the observed value of the test was, and the numbers of the degrees of freedom. So the good (and conventional) way to report this result as an ANOVA would be:
+
+\begin{quote}
+The height of the cross-pollinated plants was significantly taller than the height of the self-pollinated plants (\emph{F}\textsubscript{1,28} = 5.9, \emph{P} = 0.02).
+\end{quote}
+
+\textbf{BUT} we know that this way of reporting, emphasises the statistical tests and not the underlying biology. The report doesn't tell us anything about the heights of the plants, the estimated difference between them, or any measure of the uncertainty around this.
+
+\begin{quote}
+The self pollinated maize plants measured an average of 17.6 {[}16-19.1{]} (mean{[}95\% CI{]}) inches high, while the cross-pollinated plants had a mean height of 20.2 {[}18.6-21.7{]} inches - a difference of 2.6 {[}-0.4-4.8{]} inches (one-way ANOVA: \emph{F}\textsubscript{1,28} = 5.9, \emph{P} = 0.02).
+\end{quote}
+
+\hypertarget{two-way-anova}{%
+\section{Two-way ANOVA}\label{two-way-anova}}
+
+Two way ANOVA (as you might guess) includes \textbf{two} explanatory variables. Usually these are treatments of interest, but for this example we will stick with including the pair variable.
+
+\begin{verbatim}
+lsmodel2 <- lm(height ~ type + as.factor(pair), data = darwin)
+\end{verbatim}
+
+And we can look at this table using the \texttt{anova()} function again
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(lsmodel2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: height
+                Df  Sum Sq Mean Sq F value Pr(>F)  
+type             1  51.352  51.352  4.6139 0.0497 *
+as.factor(pair) 14  86.264   6.162  0.5536 0.8597  
+Residuals       14 155.820  11.130                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{verbatim}
+
+Note how some of the degrees of freedom which were initially in the residuals, have now been `used' by the new term in the more complex model. And that some of the SSE has now been used by SSR explained by the pair term.
+
+As we should already have been able to predict from the last time that we looked at this model structure, the pairing doesn't really do anything. If pairing did `nothing' we would an \emph{F} ratio \textasciitilde{} 1. However, we can see that is actually quite a bit lower than this, and this implies a `negative variance component' - it has actually increased the relative proportion of SSE compared to SSR here.
+
+This is quite surprising and might indicate a poorly designed experiment. Darwin's design is quite elegant and well-balanced, but it is possible he didn't randomise his samples effectively.
+
+\hypertarget{summary-6}{%
+\section{Summary}\label{summary-6}}
+
+ANOVA tables can be built for any linear model. The tables partition the variance into signal(s) and noise, which can be compared using an \emph{F}-test. For complex analyses where many pairwise comparisons could be performed, an initial \emph{F}-test can provide the initial evidence for whether there are any differences at all, reducing the risk of overtesting and the false positives that can be generated.
+
+\hypertarget{practice}{%
+\section{Practice}\label{practice}}
+
+Now is the time to try and put your analysis skills into action. Below are instructions for importing data and setting up a new project to answer the question, does temperature affect frogspawn development? This is your chance to practice
+
+\begin{itemize}
+\item
+  Setting up and organising a project that talks to GitHub
+\item
+  Importing, checking and tidying a dataset
+\item
+  Producing a linear model to try and analyse the observations
+\item
+  Produce a report that contains
+
+  \begin{itemize}
+  \item
+    An informative figure with explanatory legend
+  \item
+    A very brief Results section
+  \end{itemize}
+\end{itemize}
+
+\textbf{Push your project to GitHub Classrooms, and I will provide feedback on your work}
+
+\textbf{There are code solutions hidden below, I would like you to use these ONLY if you get completely stuck, do your best to completed and submit this assignment BEFORE you check your answers.}
+
+\hypertarget{our-question}{%
+\subsection{Our question}\label{our-question}}
+
+\textbf{How does frogspawn hatching time vary with temperature?}
+
+Imagine we ran a manipulative experiment.
+
+\begin{quote}
+A manipulative study is one in which the experimenter changes something about the experimental study system and studies the effect of this change.
+\end{quote}
+
+We collected newly-layed frogspawn from a pond in the Italian Alps and we brought them back to the lab, where we divided them into 60 water containers. 20 of the containers' water temperature was kept to 13°C, 20 containers were kept to 18°C and the remaining 20 containers were kept to 25°C. Having a high number of replicates increases our confidence that the expected difference between groups is due to the factor we are interested in. Here, temperature.
+
+We monitored each water container and we recorded hatching times (days until hatching of eggs) in a spreadsheet (here called frogs\_messy\_data.csv).
+
+\begin{itemize}
+\item
+  Our response variable is Hatching\_time.
+\item
+  Our explanatory variable is Temperature, with 3 levels: 13°C, 18°C and 25°C.
+\end{itemize}
+
+We want to compare the means of 3 independent groups (13°C, 18°C and 25°C temperature groups) and we have one continuous response variable (Hatching time in days) and one categorical explanatory variable (Temperature). One-way ANOVA is the appropriate analysis!
+
+\hypertarget{hypothesis}{%
+\subsection{Hypothesis}\label{hypothesis}}
+
+Always make a hypothesis and prediction, before you delve into the data analysis.
+
+A hypothesis is a tentative answer to a well-framed question, referring to a mechanistic explanation of the expected pattern. It can be verified via predictions, which can be tested by making additional observations and performing experiments.
+
+This should be backed up by some level of knowledge about your study system.
+
+In our case, knowing that frogspawn takes around 2-3 weeks to hatch under optimal temperatures (15-20°C), we can hypothesize that the lower the temperature, the longer it will take for frogspawn to hatch. Our hypothesis can therefore be: mean frogspawn hatching time will vary with temperature level. We can predict that given our temperature range, at the highest temperature (25°C) hatching time will be reduced.
+
+\hypertarget{importing-the-data}{%
+\section{Importing the data}\label{importing-the-data}}
+
+The data can be retrieved from \href{https://classroom.github.com/a/KZvnm46x}{GitHub Classrooms}, you should set up a new project in the shared workspace on RStudio Cloud.
+
+You will then need to organise your Github credentials and make sure you can commit and push.
+
+Organise your project workspace and set up a new analysis script.
+
+\textbf{EXERCISE } With the information above can you \textbf{import and tidy the data}? \emph{Hint: as well as checking the data, you may need to use \texttt{pivot\_longer} to put the data in tidy format}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{frogs }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/frogs\_messy\_data.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{frogs }\OtherTok{\textless{}{-}}\NormalTok{ frogs }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\StringTok{"13"} \OtherTok{=}\NormalTok{ Temperature13,}
+         \StringTok{"18"} \OtherTok{=}\NormalTok{ Temperature18,}
+         \StringTok{"25"} \OtherTok{=}\NormalTok{ Temperature25,}
+         \AttributeTok{frogspawn\_id =} \StringTok{\textasciigrave{}}\AttributeTok{Frogspawn sample id}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{13}\StringTok{\textasciigrave{}}\SpecialCharTok{:}\StringTok{\textasciigrave{}}\AttributeTok{25}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{names\_to=}\StringTok{"temperature"}\NormalTok{, }\AttributeTok{values\_to=}\StringTok{"days"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{drop\_na}\NormalTok{(days)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{EXERCISE -} With the data tidied can you produce a \textbf{linear model}, check its assumptions and interpret its findings?**
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lsmodel\_frogs1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(days }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temperature, }\AttributeTok{data =}\NormalTok{ frogs)}
+
+\CommentTok{\# summary(lsmodel\_frogs1)}
+
+\CommentTok{\# anova(lsmodel\_frogs1)}
+
+\CommentTok{\# broom::tidy(lsmodel\_frogs1, conf.int = T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot(lsmodel\_frogs1)}
+
+\NormalTok{performance}\SpecialCharTok{::}\FunctionTok{check\_model}\NormalTok{(lsmodel\_frogs1,}
+                         \AttributeTok{check =} \FunctionTok{c}\NormalTok{(}\StringTok{"qq"}\NormalTok{, }\StringTok{"outliers"}\NormalTok{, }\StringTok{"homogeneity"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{EXERCISE -} Can you produce a suitable \textbf{Figure} for this dataset?
+
+There are multiple ways to present the same data, equally valid, but emphasising different concepts. For example this first figure uses a boxplot and data points to illustrate the differences. Remember the median and IQR are essentially descriptive statistics, not inferential.
+
+\begin{figure}
+\centering
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-469-1.pdf}
+\caption{\label{fig:unnamed-chunk-469}Frogspawn hatching times at 13, 18 and 25 degrees Celsius. Boxplot displays median, hinges are first and third quartiles, whiskers extend from the hinge to 1.5X the interquartile range. Points represent individual frogspawns.}
+\end{figure}
+
+Whereas the next figure, uses the \texttt{emmeans()} package to produce estimate means and confidence intervals from the \texttt{lm()} and therefore is the produce of inferential statistics, this figure illustrates the estimates of our model rather than the parameters of our sample.
+
+Neither method is `best'.
+
+\begin{figure}
+\centering
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-470-1.pdf}
+\caption{\label{fig:unnamed-chunk-470}Time to hatching is inversely related to temperature in frogspawn. Circles represent estimated mean hatching times with 95\% confidence intervals from a one-way ANOVA (F\textsubscript{1,28} = 385.9, P \textless{} 0.001). Dashed lines indicate the slope of the mean difference between 13-18 degrees and 13-25 degrees Celsius. Faded points represent individual data points.}
+\end{figure}
+
+\textbf{EXERCISE -} Can you write a summary of the \textbf{Results}?
+
+\begin{quote}
+Increasing temperatures had a clear effect on reducing the time taken for frogspawn to hatch (one-way ANOVA: \emph{F}\textsubscript{2,57} = 385.9, \emph{P} \textless{} 0.001). At 13\(^\circ\) C the mean time to hatching was 26.3 days {[}25.8-26.8 95\% CI{]}, this reduced by an average of 5.3 days {[}4.57 - 6.02{]} at 18\(^\circ\) C and by 10.1 days {[}9.37 - 10.82{]} at 25\(^\circ\) C.
+\end{quote}
+
+END
 
 *\href{https://www.rstudio.com/resources/cheatsheets/}{R Cheat Sheets}
 

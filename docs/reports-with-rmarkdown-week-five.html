@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-02-19" />
+<meta name="date" content="2022-02-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -544,6 +544,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.7" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#prediction"><i class="fa fa-check"></i><b>16.7</b> Prediction</a></li>
 <li class="chapter" data-level="16.8" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#summary-5"><i class="fa fa-check"></i><b>16.8</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="17" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html"><i class="fa fa-check"></i><b>17</b> ANOVA - Spring Week Five</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#anova"><i class="fa fa-check"></i><b>17.1</b> ANOVA</a></li>
+<li class="chapter" data-level="17.2" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#maize-data"><i class="fa fa-check"></i><b>17.2</b> Maize data</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#the-anova-table"><i class="fa fa-check"></i><b>17.2.1</b> The ANOVA table</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#two-way-anova"><i class="fa fa-check"></i><b>17.3</b> Two-way ANOVA</a></li>
+<li class="chapter" data-level="17.4" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#summary-6"><i class="fa fa-check"></i><b>17.4</b> Summary</a></li>
+<li class="chapter" data-level="17.5" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#practice"><i class="fa fa-check"></i><b>17.5</b> Practice</a>
+<ul>
+<li class="chapter" data-level="17.5.1" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#our-question"><i class="fa fa-check"></i><b>17.5.1</b> Our question</a></li>
+<li class="chapter" data-level="17.5.2" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#hypothesis"><i class="fa fa-check"></i><b>17.5.2</b> Hypothesis</a></li>
+</ul></li>
+<li class="chapter" data-level="17.6" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#importing-the-data"><i class="fa fa-check"></i><b>17.6</b> Importing the data</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -756,7 +772,7 @@ For instance, so that only the outputs are shown for each code chunk and not the
 <h4><span class="header-section-number">6.3.4.2</span> In-text code</h4>
 <p>You can also include minimal R code within back-ticks. Within the back-ticks, begin the code with “r” and a space, so RStudio knows to evaluate the code as R code. See the example below.</p>
 <p>` r Sys.Date()`</p>
-<p>When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-19</p>
+<p>When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-24</p>
 <p>The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g. to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks <em>earlier</em> in the script.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="reports-with-rmarkdown-week-five.html#cb127-1" aria-hidden="true" tabindex="-1"></a>average_height <span class="ot">&lt;-</span> darwin <span class="sc">%&gt;%</span> </span>
 <span id="cb127-2"><a href="reports-with-rmarkdown-week-five.html#cb127-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_self=</span><span class="fu">mean</span>(Self),</span>

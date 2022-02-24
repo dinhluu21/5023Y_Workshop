@@ -22,6 +22,8 @@ fig:unnamed-chunk-389
 fig:unnamed-chunk-399
 tab:unnamed-chunk-417
 tab:unnamed-chunk-437
+fig:unnamed-chunk-469
+fig:unnamed-chunk-470
 introduction
 approach-and-style
 teaching
@@ -290,3 +292,13 @@ equal-variance-1
 outliers-1
 prediction
 summary-5
+anova---spring-week-five
+anova
+maize-data
+the-anova-table
+two-way-anova
+summary-6
+practice
+our-question
+hypothesis
+importing-the-data
