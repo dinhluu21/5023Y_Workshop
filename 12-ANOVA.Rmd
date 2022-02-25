@@ -32,7 +32,7 @@ This structure of fitting a linear model, with one explanatory variable is also 
 
 The more of the variation explained by our fitted linear model, the more confident we can be that we have detected a real effect in our estimates of mean differences. This method of fitting a model is called ordinary least squares. 
 
-The least squares model first quantifies the total amount of variation (total sum of squares, SST) by measuring the differencea from the individual data points to a reference point or 'intercept' (see below). The intercept is arbitrary, as we saw in our regression chapter it defaults to when *x* = 0, but can be shifted to anywhere within our data. In an ANOVA analysis it is normally set to the mean of one of the categories.  
+The least squares model first quantifies the total amount of variation (total sum of squares, SST) by measuring the difference from the individual data points to a reference point (usually the 'grand' mean, see below). 
 
 Next the model quantifies a fitted slope, it aims to produce a slope that produces the least amount of squared residuals to the data points (sum of squares of the regression/ANOVA, SSR/A). 
 
@@ -41,6 +41,14 @@ This then leaves the residual unexplained variation (sum of squares of the error
 In this way the model is splitting the overall variability (SST) into signal (SSR) and noise (SSE):
 
 $$ SST = SSR + SSE $$
+
+Remember:
+
+* SST = the sum of squared differences between the data points and the grand mean
+
+* SSR = the sum of the squared differences between the grand mean and the predicted position on the linear model
+
+* SSE = the sum of the squared differences between the predicted position and the observed position
 
 ```{r, eval=T, echo=F, out.height="200%"}
 library(tidyverse)
@@ -52,11 +60,11 @@ darwin_reordered <- darwin %>% group_by(type) %>% arrange(`...1`, .by_group = TR
 lsmodel1 <- lm(height ~ type, data = darwin_reordered)
 darwin_augmented <- broom::augment(lsmodel1, darwin_reordered)
 
-SST <- darwin_augmented %>% ggplot(aes(x=order, y=height, colour=type))+geom_segment(aes(x=order, xend=order, y=height, yend=20.192), linetype="dashed", colour="black")+geom_point()+scale_colour_manual(values=c("darkorange", "forestgreen"))+theme_classic()+labs(y="Height in inches", x="Data ordered by type", colour="Pollination type")+geom_hline(aes(yintercept = 20.192), colour="blue")+ggtitle("Sum of Squares Total (SST)")
+SST <- darwin_augmented %>% ggplot(aes(x=order, y=height, colour=type))+geom_segment(aes(x=order, xend=order, y=height, yend=18.9), linetype="dashed", colour="black")+geom_point()+scale_colour_manual(values=c("darkorange", "forestgreen"))+theme_classic()+labs(y="Height in inches", x="Data ordered by type", colour="Pollination type")+geom_hline(aes(yintercept = 18.9), colour="blue")+ggtitle("Sum of Squares Total (SST)")
 
-SSR <- darwin_augmented %>% ggplot(aes(x=order, y=height, colour=type))+geom_segment(aes(x=order, xend=order, y=20.192, yend=.fitted), linetype="dashed", colour="black")+geom_point(alpha=0.4)+scale_colour_manual(values=c("darkorange", "forestgreen"))+theme_classic()+labs(y="Height in inches", x="Data ordered by type", colour="Pollination type")+geom_hline(aes(yintercept = 20.192), colour="blue")+geom_segment(aes(x=16, xend=30, y=.fitted, yend=.fitted), colour="blue")+ggtitle("Sum of Squares Regression (SSR)")
+SSR <- darwin_augmented %>% ggplot(aes(x=order, y=height, colour=type))+geom_segment(aes(x=order, xend=order, y=18.9, yend=.fitted), linetype="dashed", colour="black")+geom_point(alpha=0.4)+scale_colour_manual(values=c("darkorange", "forestgreen"))+theme_classic()+labs(y="Height in inches", x="Data ordered by type", colour="Pollination type")+geom_hline(aes(yintercept = 18.9), colour="blue")+geom_segment(aes(x=16, xend=30, y=.fitted, yend=.fitted), colour="red")+ggtitle("Sum of Squares Regression (SSR)")+geom_segment(aes(x=1, xend=30, y=.fitted, yend=.fitted, group=type), colour="red")
 
-SSE <- darwin_augmented %>% ggplot(aes(x=order, y=height, colour=type))+geom_segment(aes(x=order, xend=order, y=height, yend=.fitted), linetype="dashed", colour="black")+geom_point()+scale_colour_manual(values=c("darkorange", "forestgreen"))+theme_classic()+labs(y="Height in inches", x="Data ordered by type", colour="Pollination type")+geom_hline(aes(yintercept = 20.192), colour="blue")+geom_segment(aes(x=16, xend=30, y=.fitted, yend=.fitted), colour="blue") +ggtitle("Sum of Squares Error (SSE)")
+SSE <- darwin_augmented %>% ggplot(aes(x=order, y=height, colour=type))+geom_segment(aes(x=order, xend=order, y=height, yend=.fitted), linetype="dashed", colour="black")+geom_point()+scale_colour_manual(values=c("darkorange", "forestgreen"))+theme_classic()+labs(y="Height in inches", x="Data ordered by type", colour="Pollination type")+geom_hline(aes(yintercept = 20.192), colour="blue")+geom_segment(aes(x=16, xend=30, y=.fitted, yend=.fitted), colour="red") +ggtitle("Sum of Squares Error (SSE)")
 
 
 

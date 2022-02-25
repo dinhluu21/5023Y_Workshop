@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-02-24" />
+<meta name="date" content="2022-02-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -772,7 +772,7 @@ For instance, so that only the outputs are shown for each code chunk and not the
 <h4><span class="header-section-number">6.3.4.2</span> In-text code</h4>
 <p>You can also include minimal R code within back-ticks. Within the back-ticks, begin the code with “r” and a space, so RStudio knows to evaluate the code as R code. See the example below.</p>
 <p>` r Sys.Date()`</p>
-<p>When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-24</p>
+<p>When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-25</p>
 <p>The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g. to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks <em>earlier</em> in the script.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="reports-with-rmarkdown-week-five.html#cb127-1" aria-hidden="true" tabindex="-1"></a>average_height <span class="ot">&lt;-</span> darwin <span class="sc">%&gt;%</span> </span>
 <span id="cb127-2"><a href="reports-with-rmarkdown-week-five.html#cb127-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_self=</span><span class="fu">mean</span>(Self),</span>

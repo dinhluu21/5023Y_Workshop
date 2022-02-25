@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-02-24" />
+<meta name="date" content="2022-02-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -598,11 +598,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>lsmodel1 &lt;- lm(height ~ type, data = darwin)</code></pre>
 <p>This structure of fitting a linear model, with one explanatory variable is also known as a one-way ANOVA. The general strategy of the ANOVA is to quantify the overall variability in the data set and then to divide it into the variability between and within the groups. We can also refer to this as the ‘signal-to-noise’ ratio, or the variability explained by the slope of the linear model, vs unexplained variance.</p>
 <p>The more of the variation explained by our fitted linear model, the more confident we can be that we have detected a real effect in our estimates of mean differences. This method of fitting a model is called ordinary least squares.</p>
-<p>The least squares model first quantifies the total amount of variation (total sum of squares, SST) by measuring the differencea from the individual data points to a reference point or ‘intercept’ (see below). The intercept is arbitrary, as we saw in our regression chapter it defaults to when <em>x</em> = 0, but can be shifted to anywhere within our data. In an ANOVA analysis it is normally set to the mean of one of the categories.</p>
+<p>The least squares model first quantifies the total amount of variation (total sum of squares, SST) by measuring the difference from the individual data points to a reference point (usually the ‘grand’ mean, see below).</p>
 <p>Next the model quantifies a fitted slope, it aims to produce a slope that produces the least amount of squared residuals to the data points (sum of squares of the regression/ANOVA, SSR/A).</p>
 <p>This then leaves the residual unexplained variation (sum of squares of the error, SSE).</p>
 <p>In this way the model is splitting the overall variability (SST) into signal (SSR) and noise (SSE):</p>
 <p><span class="math display">\[ SST = SSR + SSE \]</span></p>
+<p>Remember:</p>
+<ul>
+<li><p>SST = the sum of squared differences between the data points and the grand mean</p></li>
+<li><p>SSR = the sum of the squared differences between the grand mean and the predicted position on the linear model</p></li>
+<li><p>SSE = the sum of the squared differences between the predicted position and the observed position</p></li>
+</ul>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-461-1.png" width="672" height="200%" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-461-2.png" width="672" height="200%" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-461-3.png" width="672" height="200%" /></p>
 <blockquote>
 <p><em>Note - Least squares quantifies top) total least squares, middle) treatment least squares, bottom) error sum of squares (SST, SSR, SSE). The vertical lines measure the distances, which are then squared and summed. SST is calculated by measuring to the intercept, SSR is calculated by measuring the distance of the estimates to the intercept, SSE is calculated by measuring the distance to the estimates</em></p>
