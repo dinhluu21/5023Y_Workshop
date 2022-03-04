@@ -24,6 +24,9 @@ tab:unnamed-chunk-417
 tab:unnamed-chunk-437
 fig:unnamed-chunk-469
 fig:unnamed-chunk-470
+fig:unnamed-chunk-476
+fig:unnamed-chunk-479
+fig:unnamed-chunk-481
 introduction
 approach-and-style
 teaching
@@ -302,3 +305,16 @@ practice
 our-question
 hypothesis
 importing-the-data
+multivariate-linear-models---spring-week-six
+multivariate-linear-models
+factorial-linear-models
+data-summary
+one-way-anova
+testing-for-interactions
+model-estimates-and-confidence-intervals
+anova-tables
+balancedunbalanced-designs
+practice-1
+post-hoc
+continuous-linear-models
+summary-7

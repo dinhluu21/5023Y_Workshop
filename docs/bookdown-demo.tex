@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2022-02-25}
+\date{2022-03-04}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-02-25
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-03-04
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -8683,6 +8683,703 @@ Neither method is `best'.
 \begin{quote}
 Increasing temperatures had a clear effect on reducing the time taken for frogspawn to hatch (one-way ANOVA: \emph{F}\textsubscript{2,57} = 385.9, \emph{P} \textless{} 0.001). At 13\(^\circ\) C the mean time to hatching was 26.3 days {[}25.8-26.8 95\% CI{]}, this reduced by an average of 5.3 days {[}4.57 - 6.02{]} at 18\(^\circ\) C and by 10.1 days {[}9.37 - 10.82{]} at 25\(^\circ\) C.
 \end{quote}
+
+END
+
+\hypertarget{multivariate-linear-models---spring-week-six}{%
+\chapter{Multivariate linear models - Spring Week Six}\label{multivariate-linear-models---spring-week-six}}
+
+\hypertarget{multivariate-linear-models}{%
+\section{Multivariate linear models}\label{multivariate-linear-models}}
+
+So far we have worked almost exclusively with single explanatory variables either continuous (regression) or categorical (t-test or ANOVA). But what about analyses where we have more than one possible explanatory variable? Extra terms can easily be incorporated into linear models in order to test this.
+
+\hypertarget{factorial-linear-models}{%
+\section{Factorial linear models}\label{factorial-linear-models}}
+
+\begin{quote}
+The example data is the response of above ground plant biomass production of grassland plots in relation to two resource addition treatments. The addition of Fertiliser to the soil and the addition of Light to the grassland understorey. If biomass is limited by the nutrients in the soil, we would expect the addition of fertiliser to increase production. If biomass is limited by low levels of light caused by plant crowding we would expect an addition of light to increase biomass.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{biomass }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/biomass.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+You should first check the data and look at the top rows, we can see that this shows the application or non-application of fertiliser and light additions, because \emph{all four} possible combinations are present, this is known as a \emph{fully factorial design}:
+
+\begin{itemize}
+\item
+  control (F- L-, no added light or fertiliser)
+\item
+  fertiliser (F+ L-)
+\item
+  light (F- L+)
+\item
+  addition of both (F+ L+)
+\end{itemize}
+
+Close inspection of the dataset shows that the same data is presented in \emph{two} ways:
+
+\begin{itemize}
+\item
+  Column 1 shows the status of Fertiliser only (F +/-) (two levels)
+\item
+  Column 2 shows the status of Light only (L +/-) (two levels)
+\item
+  Column 3 shows whether fertiliser \textbf{and} light have been applied (four levels, a combination of the previous two columns)
+\item
+  Column 4 shows the biomass
+\end{itemize}
+
+\textbf{EXERCISE -}Check the data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check the structure of the data}
+\FunctionTok{glimpse}\NormalTok{(biomass)}
+
+\CommentTok{\# check data is in a tidy format}
+\FunctionTok{head}\NormalTok{(biomass)}
+
+\CommentTok{\# check variable names}
+\FunctionTok{colnames}\NormalTok{(biomass)}
+
+\CommentTok{\# check for duplication}
+\NormalTok{biomass }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{duplicated}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{sum}\NormalTok{()}
+
+\CommentTok{\# check for typos {-} by looking at impossible values}
+\NormalTok{biomass }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{min=}\FunctionTok{min}\NormalTok{(Biomass.m2, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{), }
+            \AttributeTok{max=}\FunctionTok{max}\NormalTok{(Biomass.m2, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{))}
+
+\CommentTok{\# check for typos by looking at distinct characters/values}
+\NormalTok{biomass }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(Fert)}
+
+\NormalTok{biomass }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(Light)}
+
+\NormalTok{biomass }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(FL)}
+
+\CommentTok{\# missing values}
+\NormalTok{biomass }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{is.na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{sum}\NormalTok{()}
+
+\CommentTok{\# quick summary}
+
+\FunctionTok{summary}\NormalTok{(biomass)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-summary}{%
+\subsection{Data summary}\label{data-summary}}
+
+So we have 64 observations with four variables, the last column is the response variable (biomass) and the other three columns are \emph{two} different ways of indicating the experimental design.
+
+\begin{itemize}
+\item
+  If we use column 3 - we are treating the design as though it is a one-way ANOVA (with four levels)
+\item
+  If we use columns 1 \& 2 - we are treating this as a \emph{factorial design}
+\end{itemize}
+
+We will look at the two different ways to analyse this data then, and the pros and cons of these two approaches.
+
+\hypertarget{one-way-anova}{%
+\subsection{One-way ANOVA}\label{one-way-anova}}
+
+\begin{figure}
+\centering
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-476-1.pdf}
+\caption{\label{fig:unnamed-chunk-476}Boxplot and individual biomass values (black points) with treatment means (red diamonds)}
+\end{figure}
+
+Plotting the data and superimposing mean values produces the graph shown above. Now we are confident there is a difference in our sample means, we can begin a linear model to quantify this and test it against a null hypothesis.
+
+If we use the FL column as a predictor then this is equivalent to a four-level one way ANOVA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ls\_1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Biomass.m2 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ FL, }\AttributeTok{data =}\NormalTok{ biomass)}
+\FunctionTok{summary}\NormalTok{(ls\_1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Call:
+lm(formula = Biomass.m2 ~ FL, data = biomass)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-233.619  -42.842    1.356   67.961  175.381 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   355.79      23.14  15.376  < 2e-16 ***
+FLF-L+         30.12      32.72   0.921  0.36095    
+FLF+L-         93.69      32.72   2.863  0.00577 ** 
+FLF+L+        219.23      32.72   6.699 8.13e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 92.56 on 60 degrees of freedom
+Multiple R-squared:  0.4686,    Adjusted R-squared:  0.442 
+F-statistic: 17.63 on 3 and 60 DF,  p-value: 2.528e-08
+\end{verbatim}
+
+We can see that the control treatment (F- L-) is the intercept with a mean of 356g and standard error of 23g. The Light treatment adds an average of 30g to the biomass (but this close to the standard error of this estimated mean difference - 32.72g). In contrast the addition of fertiliser adds 93g to the biomass.
+
+If we wanted to get the precise confidence intervals we could use \texttt{broom::tidy(ls\_1,\ conf.int\ =\ T)} or \texttt{confint(ls1)}.
+
+We can visualise these differences with a coefficient plot, and see clearly that adding light by itself produce a slight increase in the mean biomass of our samples \textbf{but} the 95\% confidence interval includes zero, so we don't have any real confidence that this is a consistent/true effect.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{GGally}\SpecialCharTok{::}\FunctionTok{ggcoef\_model}\NormalTok{(ls\_1,}
+                      \AttributeTok{show\_p\_values=}\ConstantTok{FALSE}\NormalTok{,}
+                      \AttributeTok{signif\_stars =} \ConstantTok{FALSE}\NormalTok{,}
+                     \AttributeTok{conf.level=}\FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-479-1.pdf}
+\caption{\label{fig:unnamed-chunk-479}Effects of light and fertiliser treatments on biomass relative to an untreated control (error bars = 95\% CI)}
+\end{figure}
+
+But what about the fourth level - combined fertiliser and light treatments? If there is no interaction (combined effect) between light and fertiliser then we would expect the average biomass difference caused by the light and the and the average biomass difference caused by fertiliser to \emph{add together} to approximately the value found in the combined treatment.
+
+In other words if one treatment has an effect size of \emph{A}, and another treatment has an effect size of \emph{B}, then ANOVA predicts that in combination the effect size of the combined treatments is \emph{A + B}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# combine the average mean differences of the light effect and fertiliser effect}
+\FunctionTok{coef}\NormalTok{(ls\_1)[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{coef}\NormalTok{(ls\_1)[}\DecValTok{3}\NormalTok{] }
+
+\CommentTok{\# compare this to the average difference of the combined treatment}
+\FunctionTok{coef}\NormalTok{(ls\_1)[}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+predicted combined effect = 123.82
+
+observed combined effect = 219.2
+\end{verbatim}
+
+In this example we can see clearly that combining the separate treatments \textbf{does not} add up to the combined value. The mean biomass of the combined treatment is well above the additive prediction.
+
+The mean biomass of the combined treatment is well above what we would expect from the additive effects alone. This suggests there may be a \emph{positive interaction} (that light and fertiliser treatments produce a sum effect that is greater than could be predicted by looking at their individual effects).
+
+Using our one-way ANOVA design we are able to accurately estimate the mean difference between the controlled group and the combined treatment group. \textbf{But} we cannot really say anything concrete about the \emph{strength of the interaction effect} e.g.~is their a true interaction? how confident can we be in this effect? How does the strength of the interaction effect compare to the main effects?
+
+In contrast to the one-way ANOVA approach, a factorial design lets us test and compare additive effects and interaction effects
+
+\hypertarget{testing-for-interactions}{%
+\subsection{Testing for interactions}\label{testing-for-interactions}}
+
+\begin{figure}
+\centering
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-481-1.pdf}
+\caption{\label{fig:unnamed-chunk-481}A comparison of an additive model vs an interaction model}
+\end{figure}
+
+\textbf{EXERCISE -} Plot the data and determine whether you think there is any sign of an interaction effect? - Use \texttt{stat\_summary()} to make summary points and lines.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{biomass }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Fert, }\AttributeTok{y=}\NormalTok{Biomass.m2, }\AttributeTok{colour =}\NormalTok{ Light, }\AttributeTok{fill =}\NormalTok{ Light, }\AttributeTok{group =}\NormalTok{ Light))}\SpecialCharTok{+}
+    \FunctionTok{geom\_jitter}\NormalTok{(}\AttributeTok{width=}\FloatTok{0.1}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{stat\_summary}\NormalTok{(}
+        \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
+        \AttributeTok{fun =} \StringTok{"mean"}\NormalTok{,}
+        \AttributeTok{size =} \DecValTok{3}\NormalTok{,}
+        \AttributeTok{shape =} \DecValTok{23}
+\NormalTok{    )}\SpecialCharTok{+}\FunctionTok{stat\_summary}\NormalTok{(}
+        \AttributeTok{geom =} \StringTok{"line"}\NormalTok{,}
+        \AttributeTok{fun =} \StringTok{"mean"}\NormalTok{,}
+        \AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-482-1.pdf}
+
+To produce an interactive model, we need to use the \emph{separate} factors for fertiliser and light rather than the single \texttt{fl} factor. When we make this model, we include the main effects of \texttt{Light} and \texttt{Fert}, if the additive model explains sufficient variance then this will be enough, but if we suspect an interaction term we add this as \texttt{Light:Fert} written out as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ls\_2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Biomass.m2 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Fert }\SpecialCharTok{+} \CommentTok{\# main effect}
+\NormalTok{             Light }\SpecialCharTok{+} \CommentTok{\# main effect}
+\NormalTok{             Fert}\SpecialCharTok{:}\NormalTok{Light, }\CommentTok{\# interaction term}
+           \AttributeTok{data =}\NormalTok{ biomass)}
+
+\FunctionTok{summary}\NormalTok{(ls\_2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Call:
+lm(formula = Biomass.m2 ~ Fert + Light + Fert:Light, data = biomass)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-233.619  -42.842    1.356   67.961  175.381 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      355.79      23.14  15.376  < 2e-16 ***
+FertF+            93.69      32.72   2.863  0.00577 ** 
+LightL+           30.13      32.72   0.921  0.36095    
+FertF+:LightL+    95.41      46.28   2.062  0.04359 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 92.56 on 60 degrees of freedom
+Multiple R-squared:  0.4686,    Adjusted R-squared:  0.442 
+F-statistic: 17.63 on 3 and 60 DF,  p-value: 2.528e-08
+\end{verbatim}
+
+Notice the estimates of the mean differences are the same as the previous one-way ANOVA model. The fourth line now indicates \emph{how much of an effect the two factors interacting changes the mean}. Also note the standard error is larger, there is less power to accurately estimate an interaction over a main effect.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{GGally}\SpecialCharTok{::}\FunctionTok{ggcoef\_model}\NormalTok{(ls\_2,}
+                      \AttributeTok{show\_p\_values=}\ConstantTok{FALSE}\NormalTok{,}
+                      \AttributeTok{signif\_stars =} \ConstantTok{FALSE}\NormalTok{,}
+                     \AttributeTok{conf.level=}\FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-485-1.pdf}
+
+When we use a factorial combination, the last line of the table of coefficients estimates the size of the interaction effect at around 95g. So if combining the light and fertilisation treatments produced a biomass equivalent to their additive predictions, the estimate of the interaction would be \emph{zero}. Instead it is \textbf{95g more than we would expect from the additive effects alone}. This means in order to work out the estimated biomass for the treatment of light and fertiliser we must sum the additive effects of \texttt{Light}+ \texttt{Fert} and the interaction effect \texttt{Light:Fert}.
+
+\hypertarget{model-estimates-and-confidence-intervals}{%
+\subsection{Model estimates and confidence intervals}\label{model-estimates-and-confidence-intervals}}
+
+When we compare this to our one-way ANOVA model, we must add the single terms and the interaction term, this should add up to the combined treatment from our first model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# model 1}
+\FunctionTok{coef}\NormalTok{(ls\_1)[}\DecValTok{4}\NormalTok{]}
+
+\CommentTok{\# model 2}
+\FunctionTok{coef}\NormalTok{(ls\_2)[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{coef}\NormalTok{(ls\_2)[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+} \FunctionTok{coef}\NormalTok{(ls\_2)[}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{rmdwarning}
+Don't make the mistake of looking at the main effect of light treatment,
+and reporting there is no effect because the uncertainty intervals cross
+zero. The main effect of light gives the average effect across the two
+fertiliser treatments. However, because of the interaction effect, we
+know this doesn't tell the whole story - whether light has an effect
+depends on whether fertiliser has been applied.
+
+So, if you have a significant interaction term, you must consider the
+main effects, regardless of whether they are significant on their own.
+\end{rmdwarning}
+
+\hypertarget{anova-tables}{%
+\subsection{ANOVA tables}\label{anova-tables}}
+
+So you have made a linear model with an interaction term, how do you report whether this interaction is significant? How do you report the main effect terms when there is an interaction present?
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Start with the interaction}
+\end{enumerate}
+
+In previous chapters we ran the \texttt{anova()} function directly on our linear model. This works well for simple \& `balanced' designs (there are equal sample sizes in each level of a factor), but can be misleading with `unbalanced' designs or models with complex interactions.
+In order to report an \emph{F} statistic for the interaction effect, we need to carry out an \emph{F}-test of two models, one \emph{with} and one \emph{without} the interaction effect. This is easy with the function \texttt{drop1()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{drop1}\NormalTok{(ls\_2, }\AttributeTok{test =} \StringTok{"F"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Single term deletions
+
+Model:
+Biomass.m2 ~ Fert + Light + Fert:Light
+           Df Sum of Sq    RSS    AIC F value  Pr(>F)  
+<none>                  513998 583.43                  
+Fert:Light  1     36409 550407 585.81  4.2501 0.04359 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{verbatim}
+
+This \emph{F}-test is testing the \emph{null hypothesis} that there is no true interaction effect. The significance test rejects the null hypothesis (just). The \texttt{drop1()} function also provides the \textbf{Akaike information criterion (AIC)}, an alternative method of model selection (more on this later).
+
+We could now write this up as follows:
+
+\begin{quote}
+There was an interactive effect of light and fertiliser treatments (ANOVA \emph{F}\textsubscript{1,60} = 4.25, \emph{P} = 0.044) in which combining treatments produced substantially more biomass (95.4g {[}95\% CI: 2.8 - 188{]}) than expected from the additive effects alone (Fertiliser 93.7g {[}28.2 - 159.2{]}, Light 30.1g {[}-35.3 - 95.6{]}).
+\end{quote}
+
+Do not make the mistake of \emph{just} reporting the statistics, the interesting bit is the size of the effect (estimate) and the uncertainty (confidence intervals).
+
+\begin{rmdwarning}
+Remember to check the assumptions of your full model
+\end{rmdwarning}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Main effects}
+\end{enumerate}
+
+A good thing about the \texttt{drop1()} function is that if there are interactions in the model, it stops there. This is because if the interaction effect is significant, then the main effects must be included, even if they aren't significant on their own. We can make further models to test the main effects \textbf{but} these are less important because we already know the interaction term provides the main result.
+
+If we decide to include reports of the main effect then estimates and confidence intervals should come from the \emph{full} model, but we need to produce an interaction free model to produce accurate \emph{F}-values (especially for unbalanced designs, see below).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# we have to remove the interaction term before we can keep using drop1()}
+
+\NormalTok{ls\_3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Biomass.m2 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Fert }\SpecialCharTok{+}\NormalTok{ Light, }\AttributeTok{data =}\NormalTok{ biomass)}
+
+\FunctionTok{drop1}\NormalTok{(ls\_3, }\AttributeTok{test =} \StringTok{"F"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Single term deletions
+
+Model:
+Biomass.m2 ~ Fert + Light
+       Df Sum of Sq    RSS    AIC F value    Pr(>F)    
+<none>              550407 585.81                      
+Fert    1    319889 870296 613.13  35.452 1.395e-07 ***
+Light   1     96915 647323 594.19  10.741  0.001732 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{verbatim}
+
+\begin{rmdwarning}
+You can use this reduced model to get F values, BUT reports of estimates
+should come from the full model.
+\end{rmdwarning}
+
+\hypertarget{balancedunbalanced-designs}{%
+\section{Balanced/Unbalanced designs}\label{balancedunbalanced-designs}}
+
+\begin{rmdwarning}
+In an unbalanced design when you run the anova() function on your model,
+the order in which your variables were included can have an effect e.g.~
+
+lm(Fert + Light) would give a different anova table to
+
+lm(Light + Fert)
+\end{rmdwarning}
+
+In the examples above, you are unlikely to find much of a difference between running the \texttt{drop1()} function or \texttt{anova()} on the complex or reduced models. This is because these designs are `balanced' (equal numbers in each level of a predictor). When designs are not balanced then the order matters when we use \texttt{anova()} - this is because the sum of squares is calculated sequentially (in the order of the formula), and so we could get different results depending on the order in which we assemble predictors into our model!!!!!!!!
+
+\hypertarget{practice-1}{%
+\subsection{Practice}\label{practice-1}}
+
+Let's start by making a deliberately unbalanced dataset
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make three vectors and combine them into a new tibble}
+
+\NormalTok{height }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{,}\DecValTok{57}\NormalTok{,}\DecValTok{91}\NormalTok{,}\DecValTok{94}\NormalTok{,}\DecValTok{102}\NormalTok{,}\DecValTok{110}\NormalTok{,}\DecValTok{57}\NormalTok{,}\DecValTok{71}\NormalTok{,}\DecValTok{85}\NormalTok{,}\DecValTok{105}\NormalTok{,}\DecValTok{120}\NormalTok{)}
+\NormalTok{size }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"small"}\NormalTok{, }\DecValTok{2}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"large"}\NormalTok{, }\DecValTok{4}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"small"}\NormalTok{, }\DecValTok{3}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"large"}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\NormalTok{treatment }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"Control"}\NormalTok{, }\DecValTok{6}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"Removal"}\NormalTok{, }\DecValTok{5}\NormalTok{))}
+
+\NormalTok{unbalanced }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(height, size, treatment)}
+
+\NormalTok{unbalanced}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{EXERCISE -} Produce a linear model testing size and treatment against height. Try making two models swapping the order for including the two predictors and compare them with anova()**
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ treatment }\SpecialCharTok{+}\NormalTok{ size, }\AttributeTok{data =}\NormalTok{ unbalanced)}
+\FunctionTok{anova}\NormalTok{(model\_1)}
+
+\NormalTok{model\_2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(height }\SpecialCharTok{\textasciitilde{}}\NormalTok{ size }\SpecialCharTok{+}\NormalTok{ treatment, }\AttributeTok{data =}\NormalTok{ unbalanced)}
+\FunctionTok{anova}\NormalTok{(model\_2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+> anova(model_1)
+Analysis of Variance Table
+
+Response: height
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+treatment  1   35.3    35.3  0.3725    0.5586    
+size       1 4846.0  4846.0 51.0676 9.746e-05 ***
+Residuals  8  759.2    94.9                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+> anova(model_2)
+Analysis of Variance Table
+
+Response: height
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+size       1 4291.2  4291.2 45.2208 0.0001489 ***
+treatment  1  590.2   590.2  6.2193 0.0372980 *  
+Residuals  8  759.2    94.9                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{verbatim}
+
+Compare these two anova tables. Same data, same predictors, but a different conclusion just because of the order the terms were included in the model!
+
+\textbf{EXERCISE -} Now compare your two models with the drop1() function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{drop1}\NormalTok{(model\_1)}
+\FunctionTok{drop1}\NormalTok{(model\_2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Single term deletions
+
+Model:
+height ~ treatment + size
+          Df Sum of Sq    RSS    AIC
+<none>                  759.2 52.577
+treatment  1     590.2 1349.3 56.904
+size       1    4846.0 5605.2 72.569
+Single term deletions
+\end{verbatim}
+
+Because the drop1 function drops one term from the model, then adds it back in and drops a new one it doesn't matter what order they were included.
+
+\hypertarget{post-hoc}{%
+\section{post-hoc}\label{post-hoc}}
+
+In this example it is unnecessary to spend time looking at pairwise comparisons between the four possible levels, the interesting finding is to report the strength of the interaction effect. \textbf{But} it is possible to generate estimated means, and produce pairwise comparisons with the \texttt{emmeans()} package
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(ls\_2, }\AttributeTok{specs =}\NormalTok{ pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Light }\SpecialCharTok{+}\NormalTok{ Fert }\SpecialCharTok{+}\NormalTok{ Light}\SpecialCharTok{:}\NormalTok{Fert)}
+\CommentTok{\# including the argument pairwise in front of the \textasciitilde{} prompts the post{-}hoc pairwise comparisons.}
+ \CommentTok{\# $emmeans contains the estimate mean values for each possible combination (with confidence intervals)}
+ \CommentTok{\# $ contrasts contains tukey test post hoc comparisons between levels}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$emmeans
+ Light Fert emmean   SE df lower.CL upper.CL
+ L-    F-      356 23.1 60      310      402
+ L+    F-      386 23.1 60      340      432
+ L-    F+      449 23.1 60      403      496
+ L+    F+      575 23.1 60      529      621
+
+Confidence level used: 0.95 
+
+$contrasts
+ contrast          estimate   SE df t.ratio p.value
+ (L- F-) - (L+ F-)    -30.1 32.7 60 -0.921  0.7940 
+ (L- F-) - (L- F+)    -93.7 32.7 60 -2.863  0.0287 
+ (L- F-) - (L+ F+)   -219.2 32.7 60 -6.699  <.0001 
+ (L+ F-) - (L- F+)    -63.6 32.7 60 -1.943  0.2215 
+ (L+ F-) - (L+ F+)   -189.1 32.7 60 -5.779  <.0001 
+ (L- F+) - (L+ F+)   -125.5 32.7 60 -3.836  0.0017 
+
+P value adjustment: tukey method for comparing a family of 4 estimates 
+\end{verbatim}
+
+\hypertarget{continuous-linear-models}{%
+\section{Continuous Linear Models}\label{continuous-linear-models}}
+
+The previous section looked at an interaction between two categorical variables, we can also examine interactions between a factor and a continuous variable. Often referred to as ANCOVA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pollution }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/pollution.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+The data is from an experimental study of the effects of low-level atmospheric pollutants and drought on agricultural yields. The experiment aimed to see how the yields soya bean (William variety), were affected by stress and Ozone levels. Your task is to first determine whether there is any evidence of an interaction effect, and if not report the effects of the two predictors separately.
+\end{quote}
+
+\textbf{EXERCISE} -Explore the data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check the structure of the data}
+\FunctionTok{glimpse}\NormalTok{(pollution)}
+
+\CommentTok{\# check data is in a tidy format}
+\FunctionTok{head}\NormalTok{(pollution)}
+
+\CommentTok{\# check variable names}
+\FunctionTok{colnames}\NormalTok{(pollution)}
+
+\CommentTok{\# check for duplication}
+\NormalTok{pollution }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{duplicated}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{sum}\NormalTok{()}
+
+\CommentTok{\# check for typos {-} by looking at impossible values}
+\CommentTok{\# quick summary}
+
+\FunctionTok{summary}\NormalTok{(biomass)}
+
+\CommentTok{\# check for typos by looking at distinct characters/values}
+\NormalTok{pollution }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(Stress)}
+
+
+\CommentTok{\# missing values}
+\NormalTok{biomass }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{is.na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{sum}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{EXERCISE} - Visualise the data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pollution }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ O3, }\AttributeTok{y =}\NormalTok{ William))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Stress)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-500-1.pdf}
+
+\textbf{EXERCISE} - Model the data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{William\_ls1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(William }\SpecialCharTok{\textasciitilde{}}\NormalTok{ O3 }\SpecialCharTok{+}\NormalTok{ Stress }\SpecialCharTok{+}\NormalTok{ O3}\SpecialCharTok{:}\NormalTok{Stress, }\AttributeTok{data =}\NormalTok{ pollution)}
+
+\NormalTok{William\_ls1 }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{    broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(}\AttributeTok{conf.int =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 7
+##   term                  estimate std.error statistic  p.value conf.low conf.high
+##   <chr>                    <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+## 1 (Intercept)              8.49     0.0975    87.1   1.34e-33   8.29       8.69 
+## 2 O3                      -6.47     1.40      -4.61  9.29e- 5  -9.35      -3.59 
+## 3 StressWell-watered       0.264    0.138      1.92  6.64e- 2  -0.0192     0.548
+## 4 O3:StressWell-watered   -1.35     1.98      -0.680 5.03e- 1  -5.42       2.73
+\end{verbatim}
+
+\begin{verbatim}
+# A tibble: 4 x 7
+  term                  estimate std.error statistic  p.value conf.low conf.high
+  <chr>                    <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+1 (Intercept)              8.49     0.0975    87.1   1.34e-33   8.29       8.69 
+2 O3                      -6.47     1.40      -4.61  9.29e- 5  -9.35      -3.59 
+3 StressWell-watered       0.264    0.138      1.92  6.64e- 2  -0.0192     0.548
+4 O3:StressWell-watered   -1.35     1.98      -0.680 5.03e- 1  -5.42       2.73 
+\end{verbatim}
+
+It looks as though there is no strong evidence here for an interaction effect, but before we proceed any further we should check that the model is a good fit for our data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{performance}\SpecialCharTok{::}\FunctionTok{check\_model}\NormalTok{(William\_ls1)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-502-1.pdf}
+
+Everything looks pretty good, so now we could go ahead and simplify our model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{drop1}\NormalTok{(William\_ls1, }\AttributeTok{test =} \StringTok{"F"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Single term deletions
+
+Model:
+William ~ O3 + Stress + O3:Stress
+          Df Sum of Sq     RSS     AIC F value Pr(>F)
+<none>                 0.56985 -110.91               
+O3:Stress  1  0.010129 0.57998 -112.38  0.4621 0.5026
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{William\_ls2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(William }\SpecialCharTok{\textasciitilde{}}\NormalTok{ O3 }\SpecialCharTok{+}\NormalTok{ Stress, }\AttributeTok{data =}\NormalTok{ pollution) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 3 x 7
+  term               estimate std.error statistic  p.value conf.low conf.high
+  <chr>                 <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+1 (Intercept)           8.53     0.0733    116.   5.17e-38   8.38       8.68 
+2 O3                   -7.14     0.981      -7.28 7.89e- 8  -9.15      -5.13 
+3 StressWell-watered    0.178    0.0535      3.33 2.55e- 3   0.0682     0.288
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{drop1}\NormalTok{(William\_ls2, }\AttributeTok{test =} \StringTok{"F"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Model:
+William ~ O3 + Stress
+       Df Sum of Sq     RSS      AIC F value    Pr(>F)    
+<none>              0.57998 -112.379                      
+O3      1   1.13812 1.71810  -81.799  52.983 7.893e-08 ***
+Stress  1   0.23764 0.81762 -104.077  11.063  0.002547 ** 
+\end{verbatim}
+
+\textbf{EXERCISE} - Write up the results
+
+I hypothesised that plants under stress might react more negatively to pollution than non-stressed plants, however when tested I found no evidence of a negative interation effect between stress and Ozone levels (\emph{F}\textsubscript{1,27} = 0.4621, \emph{P} = 0.5). Individually however, while well-watered plants had higher yields than stressed plants (mean 0.178 {[}95\% CI: 0.0682 - 0.288{]}) (\emph{F}\textsubscript{1,28} = 11, \emph{P} = 0.003), there was a much larger effect of Ozone, where every unit increase (\(\mu\)L L\textsuperscript{-1}) produced a mean decrease in yield of 7.14 kg ha\textsuperscript{-1} {[}5.13 - 9.15{]} (\emph{F}\textsubscript{1,28} = 53, \emph{P} \textless{} 0.001).
+
+\hypertarget{summary-7}{%
+\section{Summary}\label{summary-7}}
+
+\begin{itemize}
+\item
+  Always have a good hypothesis for including an interaction
+\item
+  When models have significant interaction effects you must always consider the main terms even if they are not significant by themselves
+\item
+  Report F values from interactions as a priority
+\item
+  \textbf{IF} interactions are significant then estimates should come from the full model, while F-values should come from a reduced model (for main effects). \textbf{IF} interaction terms are not significant they can be removed (model simplification).
+\item
+  Use drop1() to avoid mistakes when using an unbalanced experiment design
+\item
+  Always report estimates and effect sizes - this is the important bit - and easy to lose sight of when models get more complicated
+\end{itemize}
 
 END
 
