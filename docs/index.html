@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Data Science for Biologists - 5023Y</title>
   <meta name="description" content="This is very brief introduction to some of the basic skills required to learn R" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Data Science for Biologists - 5023Y" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-03-04" />
+<meta name="date" content="2022-03-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 
 <link rel="next" href="getting-to-know-r-week-one.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="libs/header-attrs-2.12.2/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,7 +51,9 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/clipboard-1.7.1/clipboard.min.js"></script>
 <link href="libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
 <link href="libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
@@ -133,6 +136,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -150,436 +176,465 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#approach-and-style"><i class="fa fa-check"></i><b>1.1</b> Approach and style</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#teaching"><i class="fa fa-check"></i><b>1.2</b> Teaching</a>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#approach-and-style"><i class="fa fa-check"></i><b>1.1</b> Approach and style<span></span></a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#teaching"><i class="fa fa-check"></i><b>1.2</b> Teaching<span></span></a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#workshops"><i class="fa fa-check"></i><b>1.2.1</b> Workshops</a></li>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#workshops"><i class="fa fa-check"></i><b>1.2.1</b> Workshops<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#introduction-to-r"><i class="fa fa-check"></i><b>1.3</b> Introduction to R</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#getting-around-on-rstudio"><i class="fa fa-check"></i><b>1.4</b> Getting around on RStudio</a>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#introduction-to-r"><i class="fa fa-check"></i><b>1.3</b> Introduction to R<span></span></a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#getting-around-on-rstudio"><i class="fa fa-check"></i><b>1.4</b> Getting around on RStudio<span></span></a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#an-intro-to-rstudio"><i class="fa fa-check"></i><b>1.4.1</b> An intro to RStudio</a></li>
-<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#using-r-studio-cloud"><i class="fa fa-check"></i><b>1.4.2</b> Using R Studio Cloud</a></li>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#an-intro-to-rstudio"><i class="fa fa-check"></i><b>1.4.1</b> An intro to RStudio<span></span></a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#using-r-studio-cloud"><i class="fa fa-check"></i><b>1.4.2</b> Using R Studio Cloud<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#reading"><i class="fa fa-check"></i><b>1.5</b> Reading</a></li>
-<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#get-help"><i class="fa fa-check"></i><b>1.6</b> Get Help!</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#reading"><i class="fa fa-check"></i><b>1.5</b> Reading<span></span></a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#get-help"><i class="fa fa-check"></i><b>1.6</b> Get Help!<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html"><i class="fa fa-check"></i><b>2</b> Getting to know R: Week One</a>
+<li class="chapter" data-level="2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html"><i class="fa fa-check"></i><b>2</b> Getting to know R: Week One<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#your-first-r-command"><i class="fa fa-check"></i><b>2.1</b> Your first R command</a>
+<li class="chapter" data-level="2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#your-first-r-command"><i class="fa fa-check"></i><b>2.1</b> Your first R command<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#typos"><i class="fa fa-check"></i><b>2.1.1</b> Typos</a></li>
-<li class="chapter" data-level="2.1.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-simple-arithmetic"><i class="fa fa-check"></i><b>2.1.2</b> More simple arithmetic</a></li>
-<li class="chapter" data-level="2.1.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#try-some-maths"><i class="fa fa-check"></i><b>2.1.3</b> Try some maths</a></li>
-<li class="chapter" data-level="2.1.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#perform-some-combos"><i class="fa fa-check"></i><b>2.1.4</b> Perform some combos</a></li>
+<li class="chapter" data-level="2.1.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#typos"><i class="fa fa-check"></i><b>2.1.1</b> Typos<span></span></a></li>
+<li class="chapter" data-level="2.1.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-simple-arithmetic"><i class="fa fa-check"></i><b>2.1.2</b> More simple arithmetic<span></span></a></li>
+<li class="chapter" data-level="2.1.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#try-some-maths"><i class="fa fa-check"></i><b>2.1.3</b> Try some maths<span></span></a></li>
+<li class="chapter" data-level="2.1.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#perform-some-combos"><i class="fa fa-check"></i><b>2.1.4</b> Perform some combos<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#true-or-false-data"><i class="fa fa-check"></i><b>2.2</b> “true or false” data</a>
+<li class="chapter" data-level="2.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#true-or-false-data"><i class="fa fa-check"></i><b>2.2</b> “true or false” data<span></span></a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#assessing-mathematical-truths"><i class="fa fa-check"></i><b>2.2.1</b> Assessing mathematical truths</a></li>
+<li class="chapter" data-level="2.2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#assessing-mathematical-truths"><i class="fa fa-check"></i><b>2.2.1</b> Assessing mathematical truths<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-outputs"><i class="fa fa-check"></i><b>2.3</b> Storing outputs</a>
+<li class="chapter" data-level="2.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-outputs"><i class="fa fa-check"></i><b>2.3</b> Storing outputs<span></span></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#choosing-names"><i class="fa fa-check"></i><b>2.3.1</b> Choosing names</a></li>
+<li class="chapter" data-level="2.3.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#choosing-names"><i class="fa fa-check"></i><b>2.3.1</b> Choosing names<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#writing-scripts"><i class="fa fa-check"></i><b>2.4</b> Writing scripts</a>
+<li class="chapter" data-level="2.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#writing-scripts"><i class="fa fa-check"></i><b>2.4</b> Writing scripts<span></span></a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#commenting-on-scripts"><i class="fa fa-check"></i><b>2.4.1</b> Commenting on scripts</a></li>
-<li class="chapter" data-level="2.4.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#running-your-script"><i class="fa fa-check"></i><b>2.4.2</b> Running your script</a></li>
-<li class="chapter" data-level="2.4.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#saving-your-script"><i class="fa fa-check"></i><b>2.4.3</b> Saving your script</a></li>
+<li class="chapter" data-level="2.4.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#commenting-on-scripts"><i class="fa fa-check"></i><b>2.4.1</b> Commenting on scripts<span></span></a></li>
+<li class="chapter" data-level="2.4.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#running-your-script"><i class="fa fa-check"></i><b>2.4.2</b> Running your script<span></span></a></li>
+<li class="chapter" data-level="2.4.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#saving-your-script"><i class="fa fa-check"></i><b>2.4.3</b> Saving your script<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#error"><i class="fa fa-check"></i><b>2.5</b> Error</a></li>
-<li class="chapter" data-level="2.6" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions</a>
+<li class="chapter" data-level="2.5" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#error"><i class="fa fa-check"></i><b>2.5</b> Error<span></span></a></li>
+<li class="chapter" data-level="2.6" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions<span></span></a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-the-output-of-functions"><i class="fa fa-check"></i><b>2.6.1</b> Storing the output of functions</a></li>
-<li class="chapter" data-level="2.6.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-fun-with-functions"><i class="fa fa-check"></i><b>2.6.2</b> More fun with functions</a></li>
+<li class="chapter" data-level="2.6.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-the-output-of-functions"><i class="fa fa-check"></i><b>2.6.1</b> Storing the output of functions<span></span></a></li>
+<li class="chapter" data-level="2.6.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-fun-with-functions"><i class="fa fa-check"></i><b>2.6.2</b> More fun with functions<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#packages"><i class="fa fa-check"></i><b>2.7</b> Packages</a></li>
-<li class="chapter" data-level="2.8" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#my-first-data-visualisation"><i class="fa fa-check"></i><b>2.8</b> My first data visualisation</a></li>
-<li class="chapter" data-level="2.9" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#quitting"><i class="fa fa-check"></i><b>2.9</b> Quitting</a></li>
+<li class="chapter" data-level="2.7" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#packages"><i class="fa fa-check"></i><b>2.7</b> Packages<span></span></a></li>
+<li class="chapter" data-level="2.8" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#my-first-data-visualisation"><i class="fa fa-check"></i><b>2.8</b> My first data visualisation<span></span></a></li>
+<li class="chapter" data-level="2.9" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#quitting"><i class="fa fa-check"></i><b>2.9</b> Quitting<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html"><i class="fa fa-check"></i><b>3</b> Workflow Part One: Week Two</a>
+<li class="chapter" data-level="3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html"><i class="fa fa-check"></i><b>3</b> Workflow Part One: Week Two<span></span></a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#meet-the-penguins"><i class="fa fa-check"></i><b>3.1</b> Meet the Penguins</a>
+<li class="chapter" data-level="3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#meet-the-penguins"><i class="fa fa-check"></i><b>3.1</b> Meet the Penguins<span></span></a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#insights-from-data"><i class="fa fa-check"></i><b>3.1.1</b> Insights from data</a></li>
+<li class="chapter" data-level="3.1.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#insights-from-data"><i class="fa fa-check"></i><b>3.1.1</b> Insights from data<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-question"><i class="fa fa-check"></i><b>3.2</b> The Question?</a>
+<li class="chapter" data-level="3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-question"><i class="fa fa-check"></i><b>3.2</b> The Question?<span></span></a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#hypotheses"><i class="fa fa-check"></i><b>3.2.1</b> Hypotheses</a></li>
+<li class="chapter" data-level="3.2.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#hypotheses"><i class="fa fa-check"></i><b>3.2.1</b> Hypotheses<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#preparing-the-data"><i class="fa fa-check"></i><b>3.3</b> Preparing the data</a>
+<li class="chapter" data-level="3.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#preparing-the-data"><i class="fa fa-check"></i><b>3.3</b> Preparing the data<span></span></a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy-data"><i class="fa fa-check"></i><b>3.3.1</b> Tidy data</a></li>
-<li class="chapter" data-level="3.3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-dataset"><i class="fa fa-check"></i><b>3.3.2</b> The dataset</a></li>
+<li class="chapter" data-level="3.3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy-data"><i class="fa fa-check"></i><b>3.3.1</b> Tidy data<span></span></a></li>
+<li class="chapter" data-level="3.3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-dataset"><i class="fa fa-check"></i><b>3.3.2</b> The dataset<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#prepare-the-rstudio-workspace"><i class="fa fa-check"></i><b>3.4</b> Prepare the RStudio workspace</a>
+<li class="chapter" data-level="3.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#prepare-the-rstudio-workspace"><i class="fa fa-check"></i><b>3.4</b> Prepare the RStudio workspace<span></span></a>
 <ul>
-<li class="chapter" data-level="3.4.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#organise"><i class="fa fa-check"></i><b>3.4.1</b> Organise</a></li>
-<li class="chapter" data-level="3.4.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#create-a-new-r-script"><i class="fa fa-check"></i><b>3.4.2</b> Create a new R script</a></li>
+<li class="chapter" data-level="3.4.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#organise"><i class="fa fa-check"></i><b>3.4.1</b> Organise<span></span></a></li>
+<li class="chapter" data-level="3.4.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#create-a-new-r-script"><i class="fa fa-check"></i><b>3.4.2</b> Create a new R script<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#get-the-data-into-r"><i class="fa fa-check"></i><b>3.5</b> Get the data into R</a>
+<li class="chapter" data-level="3.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#get-the-data-into-r"><i class="fa fa-check"></i><b>3.5</b> Get the data into R<span></span></a>
 <ul>
-<li class="chapter" data-level="3.5.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#view-and-refine"><i class="fa fa-check"></i><b>3.5.1</b> View and refine</a></li>
-<li class="chapter" data-level="3.5.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#data-management"><i class="fa fa-check"></i><b>3.5.2</b> Data management</a></li>
+<li class="chapter" data-level="3.5.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#view-and-refine"><i class="fa fa-check"></i><b>3.5.1</b> View and refine<span></span></a></li>
+<li class="chapter" data-level="3.5.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#data-management"><i class="fa fa-check"></i><b>3.5.2</b> Data management<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dataframes-and-tibbles"><i class="fa fa-check"></i><b>3.6</b> Dataframes and tibbles</a></li>
-<li class="chapter" data-level="3.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean-and-tidy"><i class="fa fa-check"></i><b>3.7</b> Clean and tidy</a>
+<li class="chapter" data-level="3.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dataframes-and-tibbles"><i class="fa fa-check"></i><b>3.6</b> Dataframes and tibbles<span></span></a></li>
+<li class="chapter" data-level="3.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean-and-tidy"><i class="fa fa-check"></i><b>3.7</b> Clean and tidy<span></span></a>
 <ul>
-<li class="chapter" data-level="3.7.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy"><i class="fa fa-check"></i><b>3.7.1</b> Tidy</a></li>
-<li class="chapter" data-level="3.7.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean"><i class="fa fa-check"></i><b>3.7.2</b> Clean</a></li>
-<li class="chapter" data-level="3.7.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#refine-variable-names"><i class="fa fa-check"></i><b>3.7.3</b> Refine variable names</a></li>
-<li class="chapter" data-level="3.7.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dates"><i class="fa fa-check"></i><b>3.7.4</b> Dates</a></li>
-<li class="chapter" data-level="3.7.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#rename-some-values"><i class="fa fa-check"></i><b>3.7.5</b> Rename some values</a></li>
-<li class="chapter" data-level="3.7.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-duplication"><i class="fa fa-check"></i><b>3.7.6</b> Check for duplication</a></li>
-<li class="chapter" data-level="3.7.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-typos-or-implausible-values"><i class="fa fa-check"></i><b>3.7.7</b> Check for typos or implausible values</a></li>
-<li class="chapter" data-level="3.7.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#missing-values-na"><i class="fa fa-check"></i><b>3.7.8</b> Missing values: NA</a></li>
+<li class="chapter" data-level="3.7.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy"><i class="fa fa-check"></i><b>3.7.1</b> Tidy<span></span></a></li>
+<li class="chapter" data-level="3.7.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean"><i class="fa fa-check"></i><b>3.7.2</b> Clean<span></span></a></li>
+<li class="chapter" data-level="3.7.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#refine-variable-names"><i class="fa fa-check"></i><b>3.7.3</b> Refine variable names<span></span></a></li>
+<li class="chapter" data-level="3.7.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dates"><i class="fa fa-check"></i><b>3.7.4</b> Dates<span></span></a></li>
+<li class="chapter" data-level="3.7.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#rename-some-values"><i class="fa fa-check"></i><b>3.7.5</b> Rename some values<span></span></a></li>
+<li class="chapter" data-level="3.7.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-duplication"><i class="fa fa-check"></i><b>3.7.6</b> Check for duplication<span></span></a></li>
+<li class="chapter" data-level="3.7.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-typos-or-implausible-values"><i class="fa fa-check"></i><b>3.7.7</b> Check for typos or implausible values<span></span></a></li>
+<li class="chapter" data-level="3.7.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#missing-values-na"><i class="fa fa-check"></i><b>3.7.8</b> Missing values: NA<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#summing-up"><i class="fa fa-check"></i><b>3.8</b> Summing up</a>
+<li class="chapter" data-level="3.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#summing-up"><i class="fa fa-check"></i><b>3.8</b> Summing up<span></span></a>
 <ul>
-<li class="chapter" data-level="3.8.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#what-we-learned"><i class="fa fa-check"></i><b>3.8.1</b> What we learned</a></li>
-<li class="chapter" data-level="3.8.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#quitting-1"><i class="fa fa-check"></i><b>3.8.2</b> Quitting</a></li>
+<li class="chapter" data-level="3.8.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#what-we-learned"><i class="fa fa-check"></i><b>3.8.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="3.8.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#quitting-1"><i class="fa fa-check"></i><b>3.8.2</b> Quitting<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html"><i class="fa fa-check"></i><b>4</b> Workflow Part Two: Week Three</a>
+<li class="chapter" data-level="4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html"><i class="fa fa-check"></i><b>4</b> Workflow Part Two: Week Three<span></span></a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-insights"><i class="fa fa-check"></i><b>4.1</b> Initial insights</a></li>
-<li class="chapter" data-level="4.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#numbers-and-sex-of-the-penguins"><i class="fa fa-check"></i><b>4.2</b> Numbers and sex of the penguins</a>
+<li class="chapter" data-level="4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-insights"><i class="fa fa-check"></i><b>4.1</b> Initial insights<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#numbers-and-sex-of-the-penguins"><i class="fa fa-check"></i><b>4.2</b> Numbers and sex of the penguins<span></span></a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-a-simple-figure"><i class="fa fa-check"></i><b>4.2.1</b> Making a simple figure</a></li>
-<li class="chapter" data-level="4.2.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#challenge"><i class="fa fa-check"></i><b>4.2.2</b> Challenge</a></li>
+<li class="chapter" data-level="4.2.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-a-simple-figure"><i class="fa fa-check"></i><b>4.2.1</b> Making a simple figure<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#challenge"><i class="fa fa-check"></i><b>4.2.2</b> Challenge<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions"><i class="fa fa-check"></i><b>4.3</b> Distributions</a>
+<li class="chapter" data-level="4.3" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions"><i class="fa fa-check"></i><b>4.3</b> Distributions<span></span></a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#insights"><i class="fa fa-check"></i><b>4.3.1</b> Insights</a></li>
+<li class="chapter" data-level="4.3.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#insights"><i class="fa fa-check"></i><b>4.3.1</b> Insights<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#more-distributions"><i class="fa fa-check"></i><b>4.4</b> More distributions</a>
+<li class="chapter" data-level="4.4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#more-distributions"><i class="fa fa-check"></i><b>4.4</b> More distributions<span></span></a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-conclusions"><i class="fa fa-check"></i><b>4.4.1</b> Initial conclusions</a></li>
+<li class="chapter" data-level="4.4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-conclusions"><i class="fa fa-check"></i><b>4.4.1</b> Initial conclusions<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#data-transformation"><i class="fa fa-check"></i><b>4.5</b> Data transformation</a></li>
-<li class="chapter" data-level="4.6" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#developing-insights"><i class="fa fa-check"></i><b>4.6</b> Developing insights</a>
+<li class="chapter" data-level="4.5" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#data-transformation"><i class="fa fa-check"></i><b>4.5</b> Data transformation<span></span></a></li>
+<li class="chapter" data-level="4.6" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#developing-insights"><i class="fa fa-check"></i><b>4.6</b> Developing insights<span></span></a>
 <ul>
-<li class="chapter" data-level="4.6.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions-of-the-relative-bill-length"><i class="fa fa-check"></i><b>4.6.1</b> Distributions of the relative bill length</a></li>
+<li class="chapter" data-level="4.6.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions-of-the-relative-bill-length"><i class="fa fa-check"></i><b>4.6.1</b> Distributions of the relative bill length<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.7" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#relationshipdifferences"><i class="fa fa-check"></i><b>4.7</b> Relationship/differences</a>
+<li class="chapter" data-level="4.7" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#relationshipdifferences"><i class="fa fa-check"></i><b>4.7</b> Relationship/differences<span></span></a>
 <ul>
-<li class="chapter" data-level="4.7.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#differences"><i class="fa fa-check"></i><b>4.7.1</b> Differences</a></li>
-<li class="chapter" data-level="4.7.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#associations"><i class="fa fa-check"></i><b>4.7.2</b> Associations</a></li>
+<li class="chapter" data-level="4.7.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#differences"><i class="fa fa-check"></i><b>4.7.1</b> Differences<span></span></a></li>
+<li class="chapter" data-level="4.7.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#associations"><i class="fa fa-check"></i><b>4.7.2</b> Associations<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.8" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#sex-interactions"><i class="fa fa-check"></i><b>4.8</b> Sex interactions</a></li>
-<li class="chapter" data-level="4.9" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-our-graphs-more-attractive"><i class="fa fa-check"></i><b>4.9</b> Making our graphs more attractive</a>
+<li class="chapter" data-level="4.8" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#sex-interactions"><i class="fa fa-check"></i><b>4.8</b> Sex interactions<span></span></a></li>
+<li class="chapter" data-level="4.9" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-our-graphs-more-attractive"><i class="fa fa-check"></i><b>4.9</b> Making our graphs more attractive<span></span></a>
 <ul>
-<li class="chapter" data-level="4.9.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#saving-your-output"><i class="fa fa-check"></i><b>4.9.1</b> Saving your output</a></li>
+<li class="chapter" data-level="4.9.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#saving-your-output"><i class="fa fa-check"></i><b>4.9.1</b> Saving your output<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="4.10" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#quitting-2"><i class="fa fa-check"></i><b>4.10</b> Quitting</a></li>
+<li class="chapter" data-level="4.10" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#quitting-2"><i class="fa fa-check"></i><b>4.10</b> Quitting<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html"><i class="fa fa-check"></i><b>5</b> ggplot2 A grammar of graphics: Week Four</a>
+<li class="chapter" data-level="5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html"><i class="fa fa-check"></i><b>5</b> ggplot2 A grammar of graphics: Week Four<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#intro-to-grammar"><i class="fa fa-check"></i><b>5.1</b> Intro to grammar</a></li>
-<li class="chapter" data-level="5.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#building-a-plot"><i class="fa fa-check"></i><b>5.2</b> Building a plot</a></li>
-<li class="chapter" data-level="5.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#plot-background"><i class="fa fa-check"></i><b>5.3</b> Plot background</a></li>
-<li class="chapter" data-level="5.4" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#aesthetics---aes"><i class="fa fa-check"></i><b>5.4</b> Aesthetics - aes()</a></li>
-<li class="chapter" data-level="5.5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#geometric-representations---geom"><i class="fa fa-check"></i><b>5.5</b> Geometric representations - geom()</a></li>
-<li class="chapter" data-level="5.6" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#and"><i class="fa fa-check"></i><b>5.6</b> %&gt;% and +</a></li>
-<li class="chapter" data-level="5.7" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#colour"><i class="fa fa-check"></i><b>5.7</b> Colour</a></li>
-<li class="chapter" data-level="5.8" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-layers"><i class="fa fa-check"></i><b>5.8</b> More layers</a></li>
-<li class="chapter" data-level="5.9" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#facets"><i class="fa fa-check"></i><b>5.9</b> Facets</a></li>
-<li class="chapter" data-level="5.10" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#co-ordinate-space"><i class="fa fa-check"></i><b>5.10</b> Co-ordinate space</a></li>
-<li class="chapter" data-level="5.11" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#labels"><i class="fa fa-check"></i><b>5.11</b> Labels</a></li>
-<li class="chapter" data-level="5.12" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#themes"><i class="fa fa-check"></i><b>5.12</b> Themes</a></li>
-<li class="chapter" data-level="5.13" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#jitter"><i class="fa fa-check"></i><b>5.13</b> Jitter</a></li>
-<li class="chapter" data-level="5.14" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#boxplots"><i class="fa fa-check"></i><b>5.14</b> Boxplots</a></li>
-<li class="chapter" data-level="5.15" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#density-and-histogram"><i class="fa fa-check"></i><b>5.15</b> Density and histogram</a></li>
-<li class="chapter" data-level="5.16" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-colours"><i class="fa fa-check"></i><b>5.16</b> More Colours</a>
+<li class="chapter" data-level="5.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#intro-to-grammar"><i class="fa fa-check"></i><b>5.1</b> Intro to grammar<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#building-a-plot"><i class="fa fa-check"></i><b>5.2</b> Building a plot<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#plot-background"><i class="fa fa-check"></i><b>5.3</b> Plot background<span></span></a></li>
+<li class="chapter" data-level="5.4" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#aesthetics---aes"><i class="fa fa-check"></i><b>5.4</b> Aesthetics - aes()<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#geometric-representations---geom"><i class="fa fa-check"></i><b>5.5</b> Geometric representations - geom()<span></span></a></li>
+<li class="chapter" data-level="5.6" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#and"><i class="fa fa-check"></i><b>5.6</b> %&gt;% and +<span></span></a></li>
+<li class="chapter" data-level="5.7" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#colour"><i class="fa fa-check"></i><b>5.7</b> Colour<span></span></a></li>
+<li class="chapter" data-level="5.8" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-layers"><i class="fa fa-check"></i><b>5.8</b> More layers<span></span></a></li>
+<li class="chapter" data-level="5.9" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#facets"><i class="fa fa-check"></i><b>5.9</b> Facets<span></span></a></li>
+<li class="chapter" data-level="5.10" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#co-ordinate-space"><i class="fa fa-check"></i><b>5.10</b> Co-ordinate space<span></span></a></li>
+<li class="chapter" data-level="5.11" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#labels"><i class="fa fa-check"></i><b>5.11</b> Labels<span></span></a></li>
+<li class="chapter" data-level="5.12" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#themes"><i class="fa fa-check"></i><b>5.12</b> Themes<span></span></a></li>
+<li class="chapter" data-level="5.13" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#jitter"><i class="fa fa-check"></i><b>5.13</b> Jitter<span></span></a></li>
+<li class="chapter" data-level="5.14" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#boxplots"><i class="fa fa-check"></i><b>5.14</b> Boxplots<span></span></a></li>
+<li class="chapter" data-level="5.15" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#density-and-histogram"><i class="fa fa-check"></i><b>5.15</b> Density and histogram<span></span></a></li>
+<li class="chapter" data-level="5.16" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-colours"><i class="fa fa-check"></i><b>5.16</b> More Colours<span></span></a>
 <ul>
-<li class="chapter" data-level="5.16.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#assign-colours-to-variables"><i class="fa fa-check"></i><b>5.16.1</b> Assign colours to variables</a></li>
-<li class="chapter" data-level="5.16.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#accessibility"><i class="fa fa-check"></i><b>5.16.2</b> Accessibility</a></li>
-<li class="chapter" data-level="5.16.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#guides-to-visual-accessibility"><i class="fa fa-check"></i><b>5.16.3</b> Guides to visual accessibility</a></li>
+<li class="chapter" data-level="5.16.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#assign-colours-to-variables"><i class="fa fa-check"></i><b>5.16.1</b> Assign colours to variables<span></span></a></li>
+<li class="chapter" data-level="5.16.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#accessibility"><i class="fa fa-check"></i><b>5.16.2</b> Accessibility<span></span></a></li>
+<li class="chapter" data-level="5.16.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#guides-to-visual-accessibility"><i class="fa fa-check"></i><b>5.16.3</b> Guides to visual accessibility<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.17" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#patchwork"><i class="fa fa-check"></i><b>5.17</b> Patchwork</a></li>
-<li class="chapter" data-level="5.18" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#test"><i class="fa fa-check"></i><b>5.18</b> Test</a></li>
-<li class="chapter" data-level="5.19" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#saving"><i class="fa fa-check"></i><b>5.19</b> Saving</a></li>
-<li class="chapter" data-level="5.20" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#quitting-3"><i class="fa fa-check"></i><b>5.20</b> Quitting</a></li>
-<li class="chapter" data-level="5.21" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#summing-up-ggplot"><i class="fa fa-check"></i><b>5.21</b> Summing up ggplot</a>
+<li class="chapter" data-level="5.17" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#patchwork"><i class="fa fa-check"></i><b>5.17</b> Patchwork<span></span></a></li>
+<li class="chapter" data-level="5.18" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#test"><i class="fa fa-check"></i><b>5.18</b> Test<span></span></a></li>
+<li class="chapter" data-level="5.19" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#saving"><i class="fa fa-check"></i><b>5.19</b> Saving<span></span></a></li>
+<li class="chapter" data-level="5.20" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#quitting-3"><i class="fa fa-check"></i><b>5.20</b> Quitting<span></span></a></li>
+<li class="chapter" data-level="5.21" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#summing-up-ggplot"><i class="fa fa-check"></i><b>5.21</b> Summing up ggplot<span></span></a>
 <ul>
-<li class="chapter" data-level="5.21.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#what-we-learned-1"><i class="fa fa-check"></i><b>5.21.1</b> What we learned</a></li>
-<li class="chapter" data-level="5.21.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#further-reading-guides-and-tips"><i class="fa fa-check"></i><b>5.21.2</b> Further Reading, Guides and tips</a></li>
+<li class="chapter" data-level="5.21.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#what-we-learned-1"><i class="fa fa-check"></i><b>5.21.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="5.21.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#further-reading-guides-and-tips"><i class="fa fa-check"></i><b>5.21.2</b> Further Reading, Guides and tips<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html"><i class="fa fa-check"></i><b>6</b> Reports with Rmarkdown: Week Five</a>
+<li class="chapter" data-level="6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html"><i class="fa fa-check"></i><b>6</b> Reports with Rmarkdown: Week Five<span></span></a>
 <ul>
-<li class="chapter" data-level="6.0.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#format"><i class="fa fa-check"></i><b>6.0.1</b> Format</a></li>
-<li class="chapter" data-level="6.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#background-to-rmarkdown"><i class="fa fa-check"></i><b>6.1</b> Background to Rmarkdown</a></li>
-<li class="chapter" data-level="6.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#starting-a-new-rmd-file"><i class="fa fa-check"></i><b>6.2</b> Starting a new Rmd file</a></li>
-<li class="chapter" data-level="6.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#r-markdown-parts"><i class="fa fa-check"></i><b>6.3</b> R Markdown parts</a>
+<li class="chapter" data-level="6.0.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#format"><i class="fa fa-check"></i><b>6.0.1</b> Format<span></span></a></li>
+<li class="chapter" data-level="6.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#background-to-rmarkdown"><i class="fa fa-check"></i><b>6.1</b> Background to Rmarkdown<span></span></a></li>
+<li class="chapter" data-level="6.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#starting-a-new-rmd-file"><i class="fa fa-check"></i><b>6.2</b> Starting a new Rmd file<span></span></a></li>
+<li class="chapter" data-level="6.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#r-markdown-parts"><i class="fa fa-check"></i><b>6.3</b> R Markdown parts<span></span></a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#yaml"><i class="fa fa-check"></i><b>6.3.1</b> YAML</a></li>
-<li class="chapter" data-level="6.3.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#text"><i class="fa fa-check"></i><b>6.3.2</b> Text</a></li>
-<li class="chapter" data-level="6.3.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#code-chunks"><i class="fa fa-check"></i><b>6.3.3</b> Code Chunks</a></li>
-<li class="chapter" data-level="6.3.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#here"><i class="fa fa-check"></i><b>6.3.4</b> Here</a></li>
+<li class="chapter" data-level="6.3.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#yaml"><i class="fa fa-check"></i><b>6.3.1</b> YAML<span></span></a></li>
+<li class="chapter" data-level="6.3.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#text"><i class="fa fa-check"></i><b>6.3.2</b> Text<span></span></a></li>
+<li class="chapter" data-level="6.3.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#code-chunks"><i class="fa fa-check"></i><b>6.3.3</b> Code Chunks<span></span></a></li>
+<li class="chapter" data-level="6.3.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#here"><i class="fa fa-check"></i><b>6.3.4</b> Here<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#images"><i class="fa fa-check"></i><b>6.4</b> Images</a></li>
-<li class="chapter" data-level="6.5" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables</a></li>
-<li class="chapter" data-level="6.6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#self-contained-documents"><i class="fa fa-check"></i><b>6.6</b> Self-contained documents</a></li>
-<li class="chapter" data-level="6.7" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#source-files"><i class="fa fa-check"></i><b>6.7</b> Source files</a></li>
-<li class="chapter" data-level="6.8" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#exercise---make-your-own-rmd-document"><i class="fa fa-check"></i><b>6.8</b> Exercise - Make your own Rmd document</a></li>
-<li class="chapter" data-level="6.9" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#summing-up-rmarkdown"><i class="fa fa-check"></i><b>6.9</b> Summing up Rmarkdown</a>
+<li class="chapter" data-level="6.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#images"><i class="fa fa-check"></i><b>6.4</b> Images<span></span></a></li>
+<li class="chapter" data-level="6.5" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables<span></span></a></li>
+<li class="chapter" data-level="6.6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#self-contained-documents"><i class="fa fa-check"></i><b>6.6</b> Self-contained documents<span></span></a></li>
+<li class="chapter" data-level="6.7" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#source-files"><i class="fa fa-check"></i><b>6.7</b> Source files<span></span></a></li>
+<li class="chapter" data-level="6.8" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#exercise---make-your-own-rmd-document"><i class="fa fa-check"></i><b>6.8</b> Exercise - Make your own Rmd document<span></span></a></li>
+<li class="chapter" data-level="6.9" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#summing-up-rmarkdown"><i class="fa fa-check"></i><b>6.9</b> Summing up Rmarkdown<span></span></a>
 <ul>
-<li class="chapter" data-level="6.9.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#what-we-learned-2"><i class="fa fa-check"></i><b>6.9.1</b> What we learned</a></li>
-<li class="chapter" data-level="6.9.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#further-reading-guides-and-tips-1"><i class="fa fa-check"></i><b>6.9.2</b> Further Reading, Guides and tips</a></li>
+<li class="chapter" data-level="6.9.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#what-we-learned-2"><i class="fa fa-check"></i><b>6.9.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="6.9.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#further-reading-guides-and-tips-1"><i class="fa fa-check"></i><b>6.9.2</b> Further Reading, Guides and tips<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html"><i class="fa fa-check"></i><b>7</b> Version control with GitHub: Week Six</a>
+<li class="chapter" data-level="7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html"><i class="fa fa-check"></i><b>7</b> Version control with GitHub: Week Six<span></span></a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#lets-git-it-started"><i class="fa fa-check"></i><b>7.1</b> Let’s Git it started</a>
+<li class="chapter" data-level="7.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#lets-git-it-started"><i class="fa fa-check"></i><b>7.1</b> Let’s Git it started<span></span></a>
 <ul>
-<li class="chapter" data-level="7.1.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#will-this-be-fun"><i class="fa fa-check"></i><b>7.1.1</b> Will this be fun?</a></li>
-<li class="chapter" data-level="7.1.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#the-payoff"><i class="fa fa-check"></i><b>7.1.2</b> The Payoff</a></li>
+<li class="chapter" data-level="7.1.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#will-this-be-fun"><i class="fa fa-check"></i><b>7.1.1</b> Will this be fun?<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#the-payoff"><i class="fa fa-check"></i><b>7.1.2</b> The Payoff<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#set-up-github"><i class="fa fa-check"></i><b>7.2</b> Set up GitHub</a></li>
-<li class="chapter" data-level="7.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-1.-fork-clone-an-existing-repo-on-github-make-edits-push-back"><i class="fa fa-check"></i><b>7.3</b> <strong>Exercise 1.</strong> Fork &amp; clone an existing repo on GitHub, make edits, push back</a>
+<li class="chapter" data-level="7.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#set-up-github"><i class="fa fa-check"></i><b>7.2</b> Set up GitHub<span></span></a></li>
+<li class="chapter" data-level="7.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-1.-fork-clone-an-existing-repo-on-github-make-edits-push-back"><i class="fa fa-check"></i><b>7.3</b> <strong>Exercise 1.</strong> Fork &amp; clone an existing repo on GitHub, make edits, push back<span></span></a>
 <ul>
-<li class="chapter" data-level="7.3.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-the-hell-is-a-fork"><i class="fa fa-check"></i><b>7.3.1</b> What the hell is a fork?</a></li>
+<li class="chapter" data-level="7.3.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-the-hell-is-a-fork"><i class="fa fa-check"></i><b>7.3.1</b> What the hell is a fork?<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#talking-to-github"><i class="fa fa-check"></i><b>7.4</b> Talking to GitHub</a>
+<li class="chapter" data-level="7.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#talking-to-github"><i class="fa fa-check"></i><b>7.4</b> Talking to GitHub<span></span></a>
 <ul>
-<li class="chapter" data-level="7.4.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#see-changes"><i class="fa fa-check"></i><b>7.4.1</b> See changes</a></li>
+<li class="chapter" data-level="7.4.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#see-changes"><i class="fa fa-check"></i><b>7.4.1</b> See changes<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#how-to-use-version-control---when-to-commit-push-and-pull"><i class="fa fa-check"></i><b>7.5</b> How to use version control - when to commit, push and pull</a>
+<li class="chapter" data-level="7.5" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#how-to-use-version-control---when-to-commit-push-and-pull"><i class="fa fa-check"></i><b>7.5</b> How to use version control - when to commit, push and pull<span></span></a>
 <ul>
-<li class="chapter" data-level="7.5.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#commit"><i class="fa fa-check"></i><b>7.5.1</b> Commit</a></li>
-<li class="chapter" data-level="7.5.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#push"><i class="fa fa-check"></i><b>7.5.2</b> Push</a></li>
-<li class="chapter" data-level="7.5.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#a-couple-of-general-tips"><i class="fa fa-check"></i><b>7.5.3</b> A couple of general tips:</a></li>
-<li class="chapter" data-level="7.5.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#turn-back-time-with-git"><i class="fa fa-check"></i><b>7.5.4</b> Turn back time with Git</a></li>
+<li class="chapter" data-level="7.5.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#commit"><i class="fa fa-check"></i><b>7.5.1</b> Commit<span></span></a></li>
+<li class="chapter" data-level="7.5.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#push"><i class="fa fa-check"></i><b>7.5.2</b> Push<span></span></a></li>
+<li class="chapter" data-level="7.5.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#a-couple-of-general-tips"><i class="fa fa-check"></i><b>7.5.3</b> A couple of general tips:<span></span></a></li>
+<li class="chapter" data-level="7.5.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#turn-back-time-with-git"><i class="fa fa-check"></i><b>7.5.4</b> Turn back time with Git<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-2.-github-classrooms-enabled-r-projects-with-subfolders"><i class="fa fa-check"></i><b>7.6</b> <strong>Exercise 2.</strong> GitHub Classrooms enabled R Projects with subfolders</a></li>
-<li class="chapter" data-level="7.7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#find-your-classroom-repos"><i class="fa fa-check"></i><b>7.7</b> Find your classroom repos</a></li>
-<li class="chapter" data-level="7.8" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#glossary-github"><i class="fa fa-check"></i><b>7.8</b> Glossary-GitHub</a></li>
-<li class="chapter" data-level="7.9" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#summing-up-github"><i class="fa fa-check"></i><b>7.9</b> Summing up GitHub</a>
+<li class="chapter" data-level="7.6" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-2.-github-classrooms-enabled-r-projects-with-subfolders"><i class="fa fa-check"></i><b>7.6</b> <strong>Exercise 2.</strong> GitHub Classrooms enabled R Projects with subfolders<span></span></a></li>
+<li class="chapter" data-level="7.7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#find-your-classroom-repos"><i class="fa fa-check"></i><b>7.7</b> Find your classroom repos<span></span></a></li>
+<li class="chapter" data-level="7.8" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#glossary-github"><i class="fa fa-check"></i><b>7.8</b> Glossary-GitHub<span></span></a></li>
+<li class="chapter" data-level="7.9" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#summing-up-github"><i class="fa fa-check"></i><b>7.9</b> Summing up GitHub<span></span></a>
 <ul>
-<li class="chapter" data-level="7.9.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-we-learned-3"><i class="fa fa-check"></i><b>7.9.1</b> What we learned</a></li>
-<li class="chapter" data-level="7.9.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#further-reading-guides-and-tips-2"><i class="fa fa-check"></i><b>7.9.2</b> Further Reading, Guides and tips</a></li>
+<li class="chapter" data-level="7.9.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-we-learned-3"><i class="fa fa-check"></i><b>7.9.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="7.9.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#further-reading-guides-and-tips-2"><i class="fa fa-check"></i><b>7.9.2</b> Further Reading, Guides and tips<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html"><i class="fa fa-check"></i><b>8</b> Dealing with data: dplyr: Week Eight</a>
+<li class="chapter" data-level="8" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html"><i class="fa fa-check"></i><b>8</b> Dealing with data: dplyr: Week Eight<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#lets-get-going"><i class="fa fa-check"></i><b>8.1</b> Let’s get going</a></li>
-<li class="chapter" data-level="8.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#introduction-to-dplyr"><i class="fa fa-check"></i><b>8.2</b> Introduction to dplyr</a></li>
-<li class="chapter" data-level="8.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#select"><i class="fa fa-check"></i><b>8.3</b> select</a></li>
-<li class="chapter" data-level="8.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#mutate"><i class="fa fa-check"></i><b>8.4</b> mutate</a></li>
-<li class="chapter" data-level="8.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#filter"><i class="fa fa-check"></i><b>8.5</b> filter</a></li>
-<li class="chapter" data-level="8.6" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#arrange"><i class="fa fa-check"></i><b>8.6</b> arrange</a></li>
-<li class="chapter" data-level="8.7" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group-and-summarise"><i class="fa fa-check"></i><b>8.7</b> Group and summarise</a>
+<li class="chapter" data-level="8.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#lets-get-going"><i class="fa fa-check"></i><b>8.1</b> Let’s get going<span></span></a></li>
+<li class="chapter" data-level="8.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#introduction-to-dplyr"><i class="fa fa-check"></i><b>8.2</b> Introduction to dplyr<span></span></a></li>
+<li class="chapter" data-level="8.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#select"><i class="fa fa-check"></i><b>8.3</b> select<span></span></a></li>
+<li class="chapter" data-level="8.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#mutate"><i class="fa fa-check"></i><b>8.4</b> mutate<span></span></a></li>
+<li class="chapter" data-level="8.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#filter"><i class="fa fa-check"></i><b>8.5</b> filter<span></span></a></li>
+<li class="chapter" data-level="8.6" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#arrange"><i class="fa fa-check"></i><b>8.6</b> arrange<span></span></a></li>
+<li class="chapter" data-level="8.7" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group-and-summarise"><i class="fa fa-check"></i><b>8.7</b> Group and summarise<span></span></a>
 <ul>
-<li class="chapter" data-level="8.7.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#using-summarise"><i class="fa fa-check"></i><b>8.7.1</b> Using summarise</a></li>
-<li class="chapter" data-level="8.7.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summarize-all-columns"><i class="fa fa-check"></i><b>8.7.2</b> Summarize all columns</a></li>
-<li class="chapter" data-level="8.7.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group_by-summary"><i class="fa fa-check"></i><b>8.7.3</b> group_by summary</a></li>
-<li class="chapter" data-level="8.7.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>8.7.4</b> More than one grouping variable</a></li>
-<li class="chapter" data-level="8.7.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#remove-group_by"><i class="fa fa-check"></i><b>8.7.5</b> remove group_by</a></li>
+<li class="chapter" data-level="8.7.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#using-summarise"><i class="fa fa-check"></i><b>8.7.1</b> Using summarise<span></span></a></li>
+<li class="chapter" data-level="8.7.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summarize-all-columns"><i class="fa fa-check"></i><b>8.7.2</b> Summarize all columns<span></span></a></li>
+<li class="chapter" data-level="8.7.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group_by-summary"><i class="fa fa-check"></i><b>8.7.3</b> group_by summary<span></span></a></li>
+<li class="chapter" data-level="8.7.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>8.7.4</b> More than one grouping variable<span></span></a></li>
+<li class="chapter" data-level="8.7.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#remove-group_by"><i class="fa fa-check"></i><b>8.7.5</b> remove group_by<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html"><i class="fa fa-check"></i><b>9</b> Dealing with data part 2: Week Nine</a>
+<li class="chapter" data-level="9" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html"><i class="fa fa-check"></i><b>9</b> Dealing with data part 2: Week Nine<span></span></a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#expanding-the-data-toolkit"><i class="fa fa-check"></i><b>9.1</b> Expanding the data toolkit</a></li>
-<li class="chapter" data-level="9.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pipes"><i class="fa fa-check"></i><b>9.2</b> Pipes</a></li>
-<li class="chapter" data-level="9.3" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#strings"><i class="fa fa-check"></i><b>9.3</b> Strings</a>
+<li class="chapter" data-level="9.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#expanding-the-data-toolkit"><i class="fa fa-check"></i><b>9.1</b> Expanding the data toolkit<span></span></a></li>
+<li class="chapter" data-level="9.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pipes"><i class="fa fa-check"></i><b>9.2</b> Pipes<span></span></a></li>
+<li class="chapter" data-level="9.3" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#strings"><i class="fa fa-check"></i><b>9.3</b> Strings<span></span></a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#separate"><i class="fa fa-check"></i><b>9.3.1</b> separate</a></li>
-<li class="chapter" data-level="9.3.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#more-stringr"><i class="fa fa-check"></i><b>9.3.2</b> More stringr</a></li>
+<li class="chapter" data-level="9.3.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#separate"><i class="fa fa-check"></i><b>9.3.1</b> separate<span></span></a></li>
+<li class="chapter" data-level="9.3.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#more-stringr"><i class="fa fa-check"></i><b>9.3.2</b> More stringr<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#dates-and-times"><i class="fa fa-check"></i><b>9.4</b> Dates and times</a>
+<li class="chapter" data-level="9.4" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#dates-and-times"><i class="fa fa-check"></i><b>9.4</b> Dates and times<span></span></a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#calculations-with-dates"><i class="fa fa-check"></i><b>9.4.1</b> Calculations with dates</a></li>
+<li class="chapter" data-level="9.4.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#calculations-with-dates"><i class="fa fa-check"></i><b>9.4.1</b> Calculations with dates<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pivot"><i class="fa fa-check"></i><b>9.5</b> Pivot</a></li>
-<li class="chapter" data-level="9.6" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#summing-up-1"><i class="fa fa-check"></i><b>9.6</b> Summing up</a>
+<li class="chapter" data-level="9.5" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pivot"><i class="fa fa-check"></i><b>9.5</b> Pivot<span></span></a></li>
+<li class="chapter" data-level="9.6" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#summing-up-1"><i class="fa fa-check"></i><b>9.6</b> Summing up<span></span></a>
 <ul>
-<li class="chapter" data-level="9.6.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#what-we-learned-4"><i class="fa fa-check"></i><b>9.6.1</b> What we learned</a></li>
-<li class="chapter" data-level="9.6.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#further-reading-guides-and-tips-3"><i class="fa fa-check"></i><b>9.6.2</b> Further Reading, Guides and tips</a></li>
+<li class="chapter" data-level="9.6.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#what-we-learned-4"><i class="fa fa-check"></i><b>9.6.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="9.6.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#further-reading-guides-and-tips-3"><i class="fa fa-check"></i><b>9.6.2</b> Further Reading, Guides and tips<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html"><i class="fa fa-check"></i><b>10</b> Deeper data insights part 1: Week Ten</a>
+<li class="chapter" data-level="10" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html"><i class="fa fa-check"></i><b>10</b> Deeper data insights part 1: Week Ten<span></span></a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#variables"><i class="fa fa-check"></i><b>10.1</b> Variables</a>
+<li class="chapter" data-level="10.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#variables"><i class="fa fa-check"></i><b>10.1</b> Variables<span></span></a>
 <ul>
-<li class="chapter" data-level="10.1.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#numerical"><i class="fa fa-check"></i><b>10.1.1</b> Numerical</a></li>
-<li class="chapter" data-level="10.1.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical"><i class="fa fa-check"></i><b>10.1.2</b> Categorical</a></li>
+<li class="chapter" data-level="10.1.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#numerical"><i class="fa fa-check"></i><b>10.1.1</b> Numerical<span></span></a></li>
+<li class="chapter" data-level="10.1.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical"><i class="fa fa-check"></i><b>10.1.2</b> Categorical<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#understanding-numerical-variables"><i class="fa fa-check"></i><b>10.2</b> Understanding Numerical variables</a>
+<li class="chapter" data-level="10.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#understanding-numerical-variables"><i class="fa fa-check"></i><b>10.2</b> Understanding Numerical variables<span></span></a>
 <ul>
-<li class="chapter" data-level="10.2.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#graphing-a-numeric-variable"><i class="fa fa-check"></i><b>10.2.1</b> Graphing a numeric variable</a></li>
-<li class="chapter" data-level="10.2.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#insights-about-body-mass"><i class="fa fa-check"></i><b>10.2.2</b> Insights about body mass</a></li>
+<li class="chapter" data-level="10.2.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#graphing-a-numeric-variable"><i class="fa fa-check"></i><b>10.2.1</b> Graphing a numeric variable<span></span></a></li>
+<li class="chapter" data-level="10.2.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#insights-about-body-mass"><i class="fa fa-check"></i><b>10.2.2</b> Insights about body mass<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#descriptive-statistics"><i class="fa fa-check"></i><b>10.3</b> Descriptive statistics</a>
+<li class="chapter" data-level="10.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#descriptive-statistics"><i class="fa fa-check"></i><b>10.3</b> Descriptive statistics<span></span></a>
 <ul>
-<li class="chapter" data-level="10.3.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#central-tendency"><i class="fa fa-check"></i><b>10.3.1</b> Central tendency</a></li>
-<li class="chapter" data-level="10.3.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#dispersion"><i class="fa fa-check"></i><b>10.3.2</b> Dispersion</a></li>
-<li class="chapter" data-level="10.3.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#visualising-dispersion"><i class="fa fa-check"></i><b>10.3.3</b> Visualising dispersion</a></li>
-<li class="chapter" data-level="10.3.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#combining-histograms-and-boxplots"><i class="fa fa-check"></i><b>10.3.4</b> Combining histograms and boxplots</a></li>
-<li class="chapter" data-level="10.3.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#missing-values"><i class="fa fa-check"></i><b>10.3.5</b> Missing values</a></li>
+<li class="chapter" data-level="10.3.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#central-tendency"><i class="fa fa-check"></i><b>10.3.1</b> Central tendency<span></span></a></li>
+<li class="chapter" data-level="10.3.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#dispersion"><i class="fa fa-check"></i><b>10.3.2</b> Dispersion<span></span></a></li>
+<li class="chapter" data-level="10.3.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#visualising-dispersion"><i class="fa fa-check"></i><b>10.3.3</b> Visualising dispersion<span></span></a></li>
+<li class="chapter" data-level="10.3.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#combining-histograms-and-boxplots"><i class="fa fa-check"></i><b>10.3.4</b> Combining histograms and boxplots<span></span></a></li>
+<li class="chapter" data-level="10.3.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#missing-values"><i class="fa fa-check"></i><b>10.3.5</b> Missing values<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical-variables"><i class="fa fa-check"></i><b>10.4</b> Categorical variables</a>
+<li class="chapter" data-level="10.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical-variables"><i class="fa fa-check"></i><b>10.4</b> Categorical variables<span></span></a>
 <ul>
-<li class="chapter" data-level="10.4.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summaries"><i class="fa fa-check"></i><b>10.4.1</b> Summaries</a></li>
+<li class="chapter" data-level="10.4.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summaries"><i class="fa fa-check"></i><b>10.4.1</b> Summaries<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="10.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summing-up-2"><i class="fa fa-check"></i><b>10.5</b> Summing up</a>
+<li class="chapter" data-level="10.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summing-up-2"><i class="fa fa-check"></i><b>10.5</b> Summing up<span></span></a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#reward"><i class="fa fa-check"></i><b>10.5.1</b> Reward</a></li>
+<li class="chapter" data-level="10.5.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#reward"><i class="fa fa-check"></i><b>10.5.1</b> Reward<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html"><i class="fa fa-check"></i><b>11</b> Deeper data insights part 2: Week Eleven</a>
+<li class="chapter" data-level="11" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html"><i class="fa fa-check"></i><b>11</b> Deeper data insights part 2: Week Eleven<span></span></a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-numerical-variables"><i class="fa fa-check"></i><b>11.1</b> Associations between numerical variables</a>
+<li class="chapter" data-level="11.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-numerical-variables"><i class="fa fa-check"></i><b>11.1</b> Associations between numerical variables<span></span></a>
 <ul>
-<li class="chapter" data-level="11.1.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#correlations"><i class="fa fa-check"></i><b>11.1.1</b> Correlations</a></li>
-<li class="chapter" data-level="11.1.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#non-linear-correlations"><i class="fa fa-check"></i><b>11.1.2</b> Non-linear correlations</a></li>
-<li class="chapter" data-level="11.1.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#graphical-summaries-between-numeric-variables"><i class="fa fa-check"></i><b>11.1.3</b> Graphical summaries between numeric variables</a></li>
+<li class="chapter" data-level="11.1.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#correlations"><i class="fa fa-check"></i><b>11.1.1</b> Correlations<span></span></a></li>
+<li class="chapter" data-level="11.1.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#non-linear-correlations"><i class="fa fa-check"></i><b>11.1.2</b> Non-linear correlations<span></span></a></li>
+<li class="chapter" data-level="11.1.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#graphical-summaries-between-numeric-variables"><i class="fa fa-check"></i><b>11.1.3</b> Graphical summaries between numeric variables<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-variables"><i class="fa fa-check"></i><b>11.2</b> Associations between categorical variables</a></li>
-<li class="chapter" data-level="11.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-numerical-variables"><i class="fa fa-check"></i><b>11.3</b> Associations between Categorical-numerical variables</a></li>
-<li class="chapter" data-level="11.4" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#complexity"><i class="fa fa-check"></i><b>11.4</b> Complexity</a>
+<li class="chapter" data-level="11.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-variables"><i class="fa fa-check"></i><b>11.2</b> Associations between categorical variables<span></span></a></li>
+<li class="chapter" data-level="11.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-numerical-variables"><i class="fa fa-check"></i><b>11.3</b> Associations between Categorical-numerical variables<span></span></a></li>
+<li class="chapter" data-level="11.4" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#complexity"><i class="fa fa-check"></i><b>11.4</b> Complexity<span></span></a>
 <ul>
-<li class="chapter" data-level="11.4.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#simpsons-paradox"><i class="fa fa-check"></i><b>11.4.1</b> Simpson’s Paradox</a></li>
-<li class="chapter" data-level="11.4.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#three-or-more-variables"><i class="fa fa-check"></i><b>11.4.2</b> Three or more variables</a></li>
+<li class="chapter" data-level="11.4.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#simpsons-paradox"><i class="fa fa-check"></i><b>11.4.1</b> Simpson’s Paradox<span></span></a></li>
+<li class="chapter" data-level="11.4.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#three-or-more-variables"><i class="fa fa-check"></i><b>11.4.2</b> Three or more variables<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="11.5" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#summing-up-3"><i class="fa fa-check"></i><b>11.5</b> Summing up</a></li>
+<li class="chapter" data-level="11.5" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#summing-up-3"><i class="fa fa-check"></i><b>11.5</b> Summing up<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html"><i class="fa fa-check"></i><b>12</b> Introduction to Statistics - Spring Week One</a>
+<li class="chapter" data-level="12" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html"><i class="fa fa-check"></i><b>12</b> Introduction to Statistics - Spring Week One<span></span></a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#introduction-to-statistics"><i class="fa fa-check"></i><b>12.1</b> Introduction to statistics</a></li>
-<li class="chapter" data-level="12.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>12.2</b> Darwin’s maize data</a>
+<li class="chapter" data-level="12.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#introduction-to-statistics"><i class="fa fa-check"></i><b>12.1</b> Introduction to statistics<span></span></a></li>
+<li class="chapter" data-level="12.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>12.2</b> Darwin’s maize data<span></span></a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#description"><i class="fa fa-check"></i><b>12.2.1</b> Description</a></li>
-<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation</a></li>
-<li class="chapter" data-level="12.2.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.3</b> Comparing groups</a></li>
+<li class="chapter" data-level="12.2.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#description"><i class="fa fa-check"></i><b>12.2.1</b> Description<span></span></a></li>
+<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation<span></span></a></li>
+<li class="chapter" data-level="12.2.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.3</b> Comparing groups<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="12.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#estimation"><i class="fa fa-check"></i><b>12.3</b> Estimation</a>
+<li class="chapter" data-level="12.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#estimation"><i class="fa fa-check"></i><b>12.3</b> Estimation<span></span></a>
 <ul>
-<li class="chapter" data-level="12.3.1" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#differences-between-groups"><i class="fa fa-check"></i><b>12.3.1</b> Differences between groups</a></li>
-<li class="chapter" data-level="12.3.2" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#standard-error-of-the-difference"><i class="fa fa-check"></i><b>12.3.2</b> Standard error of the difference</a></li>
-<li class="chapter" data-level="12.3.3" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#normal-distribution"><i class="fa fa-check"></i><b>12.3.3</b> Normal distribution</a></li>
-<li class="chapter" data-level="12.3.4" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#confidence-intervals"><i class="fa fa-check"></i><b>12.3.4</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="12.3.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#differences-between-groups"><i class="fa fa-check"></i><b>12.3.1</b> Differences between groups<span></span></a></li>
+<li class="chapter" data-level="12.3.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#standard-error-of-the-difference"><i class="fa fa-check"></i><b>12.3.2</b> Standard error of the difference<span></span></a></li>
+<li class="chapter" data-level="12.3.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#normal-distribution"><i class="fa fa-check"></i><b>12.3.3</b> Normal distribution<span></span></a></li>
+<li class="chapter" data-level="12.3.4" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#confidence-intervals"><i class="fa fa-check"></i><b>12.3.4</b> Confidence Intervals<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="12.4" data-path="introduction-to-statistics-spring-week-one.html"><a href="introduction-to-statistics-spring-week-one.html#summary"><i class="fa fa-check"></i><b>12.4</b> Summary</a></li>
+<li class="chapter" data-level="12.4" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#summary"><i class="fa fa-check"></i><b>12.4</b> Summary<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html"><i class="fa fa-check"></i><b>13</b> Keeping code DRY - Spring Week One</a>
+<li class="chapter" data-level="13" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html"><i class="fa fa-check"></i><b>13</b> Keeping code DRY - Spring Week One<span></span></a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#functions-1"><i class="fa fa-check"></i><b>13.1</b> Functions</a>
+<li class="chapter" data-level="13.1" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#functions-1"><i class="fa fa-check"></i><b>13.1</b> Functions<span></span></a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#common-functions"><i class="fa fa-check"></i><b>13.1.1</b> Common functions</a></li>
-<li class="chapter" data-level="13.1.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#write-your-own-function"><i class="fa fa-check"></i><b>13.1.2</b> Write your own function</a></li>
-<li class="chapter" data-level="13.1.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-functions"><i class="fa fa-check"></i><b>13.1.3</b> More functions</a></li>
-<li class="chapter" data-level="13.1.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise"><i class="fa fa-check"></i><b>13.1.4</b> Exercise</a></li>
-<li class="chapter" data-level="13.1.5" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#custom-ggplot-themes"><i class="fa fa-check"></i><b>13.1.5</b> Custom ggplot themes</a></li>
-<li class="chapter" data-level="13.1.6" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#writing-packages"><i class="fa fa-check"></i><b>13.1.6</b> Writing Packages</a></li>
+<li class="chapter" data-level="13.1.1" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#common-functions"><i class="fa fa-check"></i><b>13.1.1</b> Common functions<span></span></a></li>
+<li class="chapter" data-level="13.1.2" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#write-your-own-function"><i class="fa fa-check"></i><b>13.1.2</b> Write your own function<span></span></a></li>
+<li class="chapter" data-level="13.1.3" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#more-functions"><i class="fa fa-check"></i><b>13.1.3</b> More functions<span></span></a></li>
+<li class="chapter" data-level="13.1.4" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#exercise"><i class="fa fa-check"></i><b>13.1.4</b> Exercise<span></span></a></li>
+<li class="chapter" data-level="13.1.5" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#custom-ggplot-themes"><i class="fa fa-check"></i><b>13.1.5</b> Custom ggplot themes<span></span></a></li>
+<li class="chapter" data-level="13.1.6" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#writing-packages"><i class="fa fa-check"></i><b>13.1.6</b> Writing Packages<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration</a>
+<li class="chapter" data-level="13.2" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration<span></span></a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops</a></li>
-<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops</a></li>
-<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R</a></li>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops<span></span></a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops<span></span></a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice</a></li>
-<li class="chapter" data-level="13.4" data-path="keeping-code-dry-spring-week-one.html"><a href="keeping-code-dry-spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary</a></li>
+<li class="chapter" data-level="13.3" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice<span></span></a></li>
+<li class="chapter" data-level="13.4" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html"><i class="fa fa-check"></i><b>14</b> Introduction to Linear Models - Spring Week Two</a>
+<li class="chapter" data-level="14" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html"><i class="fa fa-check"></i><b>14</b> Introduction to Linear Models - Spring Week Two<span></span></a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#introduction-to-linear-models"><i class="fa fa-check"></i><b>14.1</b> Introduction to Linear Models</a>
+<li class="chapter" data-level="14.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#introduction-to-linear-models"><i class="fa fa-check"></i><b>14.1</b> Introduction to Linear Models<span></span></a>
 <ul>
-<li class="chapter" data-level="14.1.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#packages-1"><i class="fa fa-check"></i><b>14.1.1</b> Packages</a></li>
+<li class="chapter" data-level="14.1.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#packages-1"><i class="fa fa-check"></i><b>14.1.1</b> Packages<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#a-linear-model-analysis-for-comparing-groups"><i class="fa fa-check"></i><b>14.2</b> A linear model analysis for comparing groups</a>
+<li class="chapter" data-level="14.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#a-linear-model-analysis-for-comparing-groups"><i class="fa fa-check"></i><b>14.2</b> A linear model analysis for comparing groups<span></span></a>
 <ul>
-<li class="chapter" data-level="14.2.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#compare-means"><i class="fa fa-check"></i><b>14.2.1</b> Compare means</a></li>
-<li class="chapter" data-level="14.2.2" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#standard-error-of-the-difference-1"><i class="fa fa-check"></i><b>14.2.2</b> Standard error of the difference</a></li>
+<li class="chapter" data-level="14.2.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#compare-means"><i class="fa fa-check"></i><b>14.2.1</b> Compare means<span></span></a></li>
+<li class="chapter" data-level="14.2.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#standard-error-of-the-difference-1"><i class="fa fa-check"></i><b>14.2.2</b> Standard error of the difference<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="14.3" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#confidence-intervals-1"><i class="fa fa-check"></i><b>14.3</b> Confidence intervals</a></li>
-<li class="chapter" data-level="14.4" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#answering-the-question"><i class="fa fa-check"></i><b>14.4</b> Answering the question</a>
+<li class="chapter" data-level="14.3" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#confidence-intervals-1"><i class="fa fa-check"></i><b>14.3</b> Confidence intervals<span></span></a></li>
+<li class="chapter" data-level="14.4" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#answering-the-question"><i class="fa fa-check"></i><b>14.4</b> Answering the question<span></span></a>
 <ul>
-<li class="chapter" data-level="14.4.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#getting-the-other-treatment-mean-and-standard-error"><i class="fa fa-check"></i><b>14.4.1</b> Getting the other treatment mean and standard error</a></li>
+<li class="chapter" data-level="14.4.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#getting-the-other-treatment-mean-and-standard-error"><i class="fa fa-check"></i><b>14.4.1</b> Getting the other treatment mean and standard error<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="14.5" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#assumption-checking"><i class="fa fa-check"></i><b>14.5</b> Assumption checking</a>
+<li class="chapter" data-level="14.5" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#assumption-checking"><i class="fa fa-check"></i><b>14.5</b> Assumption checking<span></span></a>
 <ul>
-<li class="chapter" data-level="14.5.1" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#normal-distribution-1"><i class="fa fa-check"></i><b>14.5.1</b> Normal distribution</a></li>
-<li class="chapter" data-level="14.5.2" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#equal-variance"><i class="fa fa-check"></i><b>14.5.2</b> Equal variance</a></li>
-<li class="chapter" data-level="14.5.3" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#outliers"><i class="fa fa-check"></i><b>14.5.3</b> Outliers</a></li>
+<li class="chapter" data-level="14.5.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#normal-distribution-1"><i class="fa fa-check"></i><b>14.5.1</b> Normal distribution<span></span></a></li>
+<li class="chapter" data-level="14.5.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#equal-variance"><i class="fa fa-check"></i><b>14.5.2</b> Equal variance<span></span></a></li>
+<li class="chapter" data-level="14.5.3" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#outliers"><i class="fa fa-check"></i><b>14.5.3</b> Outliers<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="14.6" data-path="introduction-to-linear-models-spring-week-two.html"><a href="introduction-to-linear-models-spring-week-two.html#summary-2"><i class="fa fa-check"></i><b>14.6</b> Summary</a></li>
+<li class="chapter" data-level="14.6" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#summary-2"><i class="fa fa-check"></i><b>14.6</b> Summary<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html"><i class="fa fa-check"></i><b>15</b> Testing - Spring Week Three</a>
+<li class="chapter" data-level="15" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html"><i class="fa fa-check"></i><b>15</b> Testing - Spring Week Three<span></span></a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#its-t-time"><i class="fa fa-check"></i><b>15.1</b> It’s t-time</a></li>
-<li class="chapter" data-level="15.2" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#students-t-test"><i class="fa fa-check"></i><b>15.2</b> Student’s <em>t</em>-test</a>
+<li class="chapter" data-level="15.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#its-t-time"><i class="fa fa-check"></i><b>15.1</b> It’s t-time<span></span></a></li>
+<li class="chapter" data-level="15.2" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#students-t-test"><i class="fa fa-check"></i><b>15.2</b> Student’s <em>t</em>-test<span></span></a>
 <ul>
-<li class="chapter" data-level="15.2.1" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#paired-t"><i class="fa fa-check"></i><b>15.2.1</b> Paired t</a></li>
+<li class="chapter" data-level="15.2.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#paired-t"><i class="fa fa-check"></i><b>15.2.1</b> Paired t<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#effect-sizes"><i class="fa fa-check"></i><b>15.3</b> Effect sizes</a>
+<li class="chapter" data-level="15.3" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#effect-sizes"><i class="fa fa-check"></i><b>15.3</b> Effect sizes<span></span></a>
 <ul>
-<li class="chapter" data-level="15.3.1" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#power"><i class="fa fa-check"></i><b>15.3.1</b> Power</a></li>
+<li class="chapter" data-level="15.3.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#power"><i class="fa fa-check"></i><b>15.3.1</b> Power<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#meta-analysis"><i class="fa fa-check"></i><b>15.4</b> Meta-analysis</a></li>
-<li class="chapter" data-level="15.5" data-path="testing-spring-week-three.html"><a href="testing-spring-week-three.html#summary-3"><i class="fa fa-check"></i><b>15.5</b> Summary</a></li>
+<li class="chapter" data-level="15.4" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#meta-analysis"><i class="fa fa-check"></i><b>15.4</b> Meta-analysis<span></span></a></li>
+<li class="chapter" data-level="15.5" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#summary-3"><i class="fa fa-check"></i><b>15.5</b> Summary<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html"><i class="fa fa-check"></i><b>16</b> Regression - Spring Week Four</a>
+<li class="chapter" data-level="16" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html"><i class="fa fa-check"></i><b>16</b> Regression - Spring Week Four<span></span></a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#introduction-to-regression"><i class="fa fa-check"></i><b>16.1</b> Introduction to Regression</a></li>
-<li class="chapter" data-level="16.2" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#linear-regression"><i class="fa fa-check"></i><b>16.2</b> Linear regression</a></li>
-<li class="chapter" data-level="16.3" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#data"><i class="fa fa-check"></i><b>16.3</b> Data</a></li>
-<li class="chapter" data-level="16.4" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#correlation"><i class="fa fa-check"></i><b>16.4</b> Correlation</a></li>
-<li class="chapter" data-level="16.5" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#regression-in-r"><i class="fa fa-check"></i><b>16.5</b> Regression in R</a>
+<li class="chapter" data-level="16.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#introduction-to-regression"><i class="fa fa-check"></i><b>16.1</b> Introduction to Regression<span></span></a></li>
+<li class="chapter" data-level="16.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#linear-regression"><i class="fa fa-check"></i><b>16.2</b> Linear regression<span></span></a></li>
+<li class="chapter" data-level="16.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#data"><i class="fa fa-check"></i><b>16.3</b> Data<span></span></a></li>
+<li class="chapter" data-level="16.4" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#correlation"><i class="fa fa-check"></i><b>16.4</b> Correlation<span></span></a></li>
+<li class="chapter" data-level="16.5" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#regression-in-r"><i class="fa fa-check"></i><b>16.5</b> Regression in R<span></span></a>
 <ul>
-<li class="chapter" data-level="16.5.1" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#summary-4"><i class="fa fa-check"></i><b>16.5.1</b> Summary</a></li>
-<li class="chapter" data-level="16.5.2" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#the-second-row"><i class="fa fa-check"></i><b>16.5.2</b> the second row</a></li>
-<li class="chapter" data-level="16.5.3" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#confidence-intervals-2"><i class="fa fa-check"></i><b>16.5.3</b> Confidence intervals</a></li>
-<li class="chapter" data-level="16.5.4" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#effect-size"><i class="fa fa-check"></i><b>16.5.4</b> Effect size</a></li>
+<li class="chapter" data-level="16.5.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#summary-4"><i class="fa fa-check"></i><b>16.5.1</b> Summary<span></span></a></li>
+<li class="chapter" data-level="16.5.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#the-second-row"><i class="fa fa-check"></i><b>16.5.2</b> the second row<span></span></a></li>
+<li class="chapter" data-level="16.5.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#confidence-intervals-2"><i class="fa fa-check"></i><b>16.5.3</b> Confidence intervals<span></span></a></li>
+<li class="chapter" data-level="16.5.4" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#effect-size"><i class="fa fa-check"></i><b>16.5.4</b> Effect size<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="16.6" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#assumptions"><i class="fa fa-check"></i><b>16.6</b> Assumptions</a>
+<li class="chapter" data-level="16.6" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#assumptions"><i class="fa fa-check"></i><b>16.6</b> Assumptions<span></span></a>
 <ul>
-<li class="chapter" data-level="16.6.1" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#normal-distribution-2"><i class="fa fa-check"></i><b>16.6.1</b> Normal distribution</a></li>
-<li class="chapter" data-level="16.6.2" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#equal-variance-1"><i class="fa fa-check"></i><b>16.6.2</b> Equal variance</a></li>
-<li class="chapter" data-level="16.6.3" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#outliers-1"><i class="fa fa-check"></i><b>16.6.3</b> Outliers</a></li>
+<li class="chapter" data-level="16.6.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#normal-distribution-2"><i class="fa fa-check"></i><b>16.6.1</b> Normal distribution<span></span></a></li>
+<li class="chapter" data-level="16.6.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#equal-variance-1"><i class="fa fa-check"></i><b>16.6.2</b> Equal variance<span></span></a></li>
+<li class="chapter" data-level="16.6.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#outliers-1"><i class="fa fa-check"></i><b>16.6.3</b> Outliers<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="16.7" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#prediction"><i class="fa fa-check"></i><b>16.7</b> Prediction</a></li>
-<li class="chapter" data-level="16.8" data-path="regression-spring-week-four.html"><a href="regression-spring-week-four.html#summary-5"><i class="fa fa-check"></i><b>16.8</b> Summary</a></li>
+<li class="chapter" data-level="16.7" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#prediction"><i class="fa fa-check"></i><b>16.7</b> Prediction<span></span></a></li>
+<li class="chapter" data-level="16.8" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#summary-5"><i class="fa fa-check"></i><b>16.8</b> Summary<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html"><i class="fa fa-check"></i><b>17</b> ANOVA - Spring Week Five</a>
+<li class="chapter" data-level="17" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html"><i class="fa fa-check"></i><b>17</b> ANOVA - Spring Week Five<span></span></a>
 <ul>
-<li class="chapter" data-level="17.1" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#anova"><i class="fa fa-check"></i><b>17.1</b> ANOVA</a></li>
-<li class="chapter" data-level="17.2" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#maize-data"><i class="fa fa-check"></i><b>17.2</b> Maize data</a>
+<li class="chapter" data-level="17.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#anova"><i class="fa fa-check"></i><b>17.1</b> ANOVA<span></span></a></li>
+<li class="chapter" data-level="17.2" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#maize-data"><i class="fa fa-check"></i><b>17.2</b> Maize data<span></span></a>
 <ul>
-<li class="chapter" data-level="17.2.1" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#the-anova-table"><i class="fa fa-check"></i><b>17.2.1</b> The ANOVA table</a></li>
+<li class="chapter" data-level="17.2.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#the-anova-table"><i class="fa fa-check"></i><b>17.2.1</b> The ANOVA table<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="17.3" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#two-way-anova"><i class="fa fa-check"></i><b>17.3</b> Two-way ANOVA</a></li>
-<li class="chapter" data-level="17.4" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#summary-6"><i class="fa fa-check"></i><b>17.4</b> Summary</a></li>
-<li class="chapter" data-level="17.5" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#practice"><i class="fa fa-check"></i><b>17.5</b> Practice</a>
+<li class="chapter" data-level="17.3" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#two-way-anova"><i class="fa fa-check"></i><b>17.3</b> Two-way ANOVA<span></span></a></li>
+<li class="chapter" data-level="17.4" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#summary-6"><i class="fa fa-check"></i><b>17.4</b> Summary<span></span></a></li>
+<li class="chapter" data-level="17.5" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#practice"><i class="fa fa-check"></i><b>17.5</b> Practice<span></span></a>
 <ul>
-<li class="chapter" data-level="17.5.1" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#our-question"><i class="fa fa-check"></i><b>17.5.1</b> Our question</a></li>
-<li class="chapter" data-level="17.5.2" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#hypothesis"><i class="fa fa-check"></i><b>17.5.2</b> Hypothesis</a></li>
+<li class="chapter" data-level="17.5.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#our-question"><i class="fa fa-check"></i><b>17.5.1</b> Our question<span></span></a></li>
+<li class="chapter" data-level="17.5.2" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#hypothesis"><i class="fa fa-check"></i><b>17.5.2</b> Hypothesis<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="17.6" data-path="anova-spring-week-five.html"><a href="anova-spring-week-five.html#importing-the-data"><i class="fa fa-check"></i><b>17.6</b> Importing the data</a></li>
+<li class="chapter" data-level="17.6" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#importing-the-data"><i class="fa fa-check"></i><b>17.6</b> Importing the data<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html"><i class="fa fa-check"></i><b>18</b> Multivariate linear models - Spring Week Six</a>
+<li class="chapter" data-level="18" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html"><i class="fa fa-check"></i><b>18</b> Multivariate linear models - Spring Week Six<span></span></a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#multivariate-linear-models"><i class="fa fa-check"></i><b>18.1</b> Multivariate linear models</a></li>
-<li class="chapter" data-level="18.2" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#factorial-linear-models"><i class="fa fa-check"></i><b>18.2</b> Factorial linear models</a>
+<li class="chapter" data-level="18.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#multivariate-linear-models"><i class="fa fa-check"></i><b>18.1</b> Multivariate linear models<span></span></a></li>
+<li class="chapter" data-level="18.2" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#factorial-linear-models"><i class="fa fa-check"></i><b>18.2</b> Factorial linear models<span></span></a>
 <ul>
-<li class="chapter" data-level="18.2.1" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#data-summary"><i class="fa fa-check"></i><b>18.2.1</b> Data summary</a></li>
-<li class="chapter" data-level="18.2.2" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#one-way-anova"><i class="fa fa-check"></i><b>18.2.2</b> One-way ANOVA</a></li>
-<li class="chapter" data-level="18.2.3" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#testing-for-interactions"><i class="fa fa-check"></i><b>18.2.3</b> Testing for interactions</a></li>
-<li class="chapter" data-level="18.2.4" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#model-estimates-and-confidence-intervals"><i class="fa fa-check"></i><b>18.2.4</b> Model estimates and confidence intervals</a></li>
-<li class="chapter" data-level="18.2.5" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#anova-tables"><i class="fa fa-check"></i><b>18.2.5</b> ANOVA tables</a></li>
+<li class="chapter" data-level="18.2.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#data-summary"><i class="fa fa-check"></i><b>18.2.1</b> Data summary<span></span></a></li>
+<li class="chapter" data-level="18.2.2" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#one-way-anova"><i class="fa fa-check"></i><b>18.2.2</b> One-way ANOVA<span></span></a></li>
+<li class="chapter" data-level="18.2.3" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#testing-for-interactions"><i class="fa fa-check"></i><b>18.2.3</b> Testing for interactions<span></span></a></li>
+<li class="chapter" data-level="18.2.4" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#model-estimates-and-confidence-intervals"><i class="fa fa-check"></i><b>18.2.4</b> Model estimates and confidence intervals<span></span></a></li>
+<li class="chapter" data-level="18.2.5" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#anova-tables"><i class="fa fa-check"></i><b>18.2.5</b> ANOVA tables<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="18.3" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#balancedunbalanced-designs"><i class="fa fa-check"></i><b>18.3</b> Balanced/Unbalanced designs</a>
+<li class="chapter" data-level="18.3" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#balancedunbalanced-designs"><i class="fa fa-check"></i><b>18.3</b> Balanced/Unbalanced designs<span></span></a>
 <ul>
-<li class="chapter" data-level="18.3.1" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#practice-1"><i class="fa fa-check"></i><b>18.3.1</b> Practice</a></li>
+<li class="chapter" data-level="18.3.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#practice-1"><i class="fa fa-check"></i><b>18.3.1</b> Practice<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="18.4" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#post-hoc"><i class="fa fa-check"></i><b>18.4</b> post-hoc</a></li>
-<li class="chapter" data-level="18.5" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#continuous-linear-models"><i class="fa fa-check"></i><b>18.5</b> Continuous Linear Models</a></li>
-<li class="chapter" data-level="18.6" data-path="multivariate-linear-models-spring-week-six.html"><a href="multivariate-linear-models-spring-week-six.html#summary-7"><i class="fa fa-check"></i><b>18.6</b> Summary</a></li>
+<li class="chapter" data-level="18.4" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#post-hoc"><i class="fa fa-check"></i><b>18.4</b> post-hoc<span></span></a></li>
+<li class="chapter" data-level="18.5" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#continuous-linear-models"><i class="fa fa-check"></i><b>18.5</b> Continuous Linear Models<span></span></a></li>
+<li class="chapter" data-level="18.6" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#summary-7"><i class="fa fa-check"></i><b>18.6</b> Summary<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="19" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html"><i class="fa fa-check"></i><b>19</b> Complexity in Linear Models - Spring Week Seven<span></span></a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model"><i class="fa fa-check"></i><b>19.1</b> Designing a Model<span></span></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#hypothesis-1"><i class="fa fa-check"></i><b>19.1.1</b> Hypothesis<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#checking-the-data"><i class="fa fa-check"></i><b>19.2</b> Checking the data<span></span></a></li>
+<li class="chapter" data-level="19.3" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model-1"><i class="fa fa-check"></i><b>19.3</b> Designing a model<span></span></a></li>
+<li class="chapter" data-level="19.4" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-checking-collinearity"><i class="fa fa-check"></i><b>19.4</b> Model checking &amp; collinearity<span></span></a>
+<ul>
+<li class="chapter" data-level="19.4.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#data-transformations"><i class="fa fa-check"></i><b>19.4.1</b> Data transformations<span></span></a></li>
+<li class="chapter" data-level="19.4.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#boxcox"><i class="fa fa-check"></i><b>19.4.2</b> Boxcox<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-selection"><i class="fa fa-check"></i><b>19.5</b> Model selection<span></span></a></li>
+<li class="chapter" data-level="19.6" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#posthoc"><i class="fa fa-check"></i><b>19.6</b> Posthoc<span></span></a></li>
+<li class="chapter" data-level="19.7" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#write-up"><i class="fa fa-check"></i><b>19.7</b> Write-up<span></span></a></li>
+<li class="chapter" data-level="19.8" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#summary-8"><i class="fa fa-check"></i><b>19.8</b> Summary<span></span></a></li>
+<li class="chapter" data-level="19.9" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#supplementary-code"><i class="fa fa-check"></i><b>19.9</b> Supplementary code<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>20</b> Generalized Linear Models<span></span></a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#maximum-likelihood-and-generalized-linear-models"><i class="fa fa-check"></i><b>20.1</b> Maximum Likelihood and Generalized Linear Models<span></span></a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#boxcox-1"><i class="fa fa-check"></i><b>20.1.1</b> BoxCox<span></span></a></li>
+<li class="chapter" data-level="20.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#transformations"><i class="fa fa-check"></i><b>20.1.2</b> Transformations<span></span></a></li>
+<li class="chapter" data-level="20.1.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#distributions-1"><i class="fa fa-check"></i><b>20.1.3</b> Distributions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#checklist"><i class="fa fa-check"></i><b>20.2</b> Checklist<span></span></a></li>
+</ul></li>
+<li><a href="references.html#references">References<span></span></a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -603,16 +658,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Data Science for Biologists - 5023Y</h1>
 <p class="author"><em>Philip Leftwich</em></p>
-<p class="date"><em>2022-03-04</em></p>
+<p class="date"><em>2022-03-11</em></p>
 </div>
-<div id="introduction" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<div id="introduction" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <script>
   addClassKlippyTo("pre.r, pre.bash");
   addKlippy('right', 'top', 'auto', '1', 'copy to clipboard', 'Copied!');
 </script>
-<div id="approach-and-style" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Approach and style</h2>
+<div id="approach-and-style" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Approach and style<a href="index.html#approach-and-style" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This book is designed to accompany the module BIO-5023Y for those new to R looking for best practices and tips. So it must be both accessible and succinct. The approach here is to provide just enough text explanation that someone very new to R can apply the code and follow what the code is doing. It is not a comprehensive textbook.</p>
 <p>A few other points:</p>
 <p>This is a code reference book accompanied by relatively brief examples - not a thorough textbook on R or data science</p>
@@ -621,8 +676,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>DON’T</strong> worry if you don’t understand everything</p>
 <p><strong>DO</strong> ask lots of questions!</p>
 </div>
-<div id="teaching" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Teaching</h2>
+<div id="teaching" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Teaching<a href="index.html#teaching" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We have:</p>
 <ul>
 <li>one lecture per week</li>
@@ -631,10 +686,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>These are both timetabled in-person sessions, and you should check <a href="https://timetabler.uea.ac.uk/Timetable">Timetabler</a> for up to-date information on scheduling. However, all lessons can be accessed remotely through Collaborate, and <strong>everything</strong> you need to complete workshops will be available on this site.</p>
 <p>If you feel unwell, or cannot attend a session in-person because you need to self-isolate then don’t worry you can access everything, and follow along in real time, or work at your own pace.</p>
 <p>Questions/issues/errors can all be posted on our <a href="https://web.yammer.com/main/groups/eyJfdHlwZSI6Ikdyb3VwIiwiaWQiOiI3OTAyMTk1NzEyMCJ9/all">Yammer</a> page.</p>
-<div id="workshops" class="section level3" number="1.2.1">
-<h3><span class="header-section-number">1.2.1</span> Workshops</h3>
+<div id="workshops" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Workshops<a href="index.html#workshops" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The workshops are the best way to learn, they teach you the practical skills you need to become an R wizard</p>
-<div class="figure"><span id="fig:unnamed-chunk-2"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
 <img src="images/wizard.png" alt="R wizards" width="80%" />
 <p class="caption">
 Figure 1.1: courtesy of Allison Horst
@@ -642,15 +697,15 @@ Figure 1.1: courtesy of Allison Horst
 </div>
 </div>
 </div>
-<div id="introduction-to-r" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Introduction to R</h2>
+<div id="introduction-to-r" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Introduction to R<a href="index.html#introduction-to-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><a href="https://www.r-project.org/">R</a> is the name of the programming language itself and <a href="img/rstudio-ide.pdf">RStudio</a> is a convenient interface.], which we will be using throughout the course in order to learn how to organise data, produce accurate data analyses &amp; data visualisations.</p>
 <p>Eventually we will also add extra tools like <a href="https://www.youtube.com/watch?v=w3jLJU7DT5E">GitHub</a> and <a href="https://rmarkdown.rstudio.com/">RMarkdown</a> for data reproducibility and collaborative programming, check out this short (and very cheesy) intro video.], which are collaboration and version control systems that we will be using throughout the course. More on this in future weeks.</p>
 <p>By the end of this module I hope you will have the tools to confidently analyze real data, make informative and beautiful data visuals, and be able to analyse lots of different types of data.</p>
 <p>The taught content this autumn will be given to you in several <strong>worksheets</strong>, these will be added to this dynamic webpage each week.</p>
 </div>
-<div id="getting-around-on-rstudio" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Getting around on RStudio</h2>
+<div id="getting-around-on-rstudio" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Getting around on RStudio<a href="index.html#getting-around-on-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>All of our sessions will run on cloud-based software. All you have to do is make a free account, and join our Workspace <code>BIO-5023Y</code> the sharing link is <a href="https://rstudio.cloud/spaces/84058/join?access_code=6c3uEkEUsNhbzUrttMcRq3SoSkQ4vKw%2FeYBoyBRu">here</a>.</p>
 <p>Once you are signed up - you will see that there are two <code>Spaces</code></p>
 <ul>
@@ -659,8 +714,8 @@ Figure 1.1: courtesy of Allison Horst
 </ul>
 <p>Make sure you are working in the class workspace - there is a limit to the hours/month on your workspace, so all assigments and project work should take place in the <code>BIO-5023Y space</code>.</p>
 <p>Watch these short explainer videos to get used to navigating the environment.</p>
-<div id="an-intro-to-rstudio" class="section level3" number="1.4.1">
-<h3><span class="header-section-number">1.4.1</span> An intro to RStudio</h3>
+<div id="an-intro-to-rstudio" class="section level3 hasAnchor" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> An intro to RStudio<a href="index.html#an-intro-to-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div style="position:relative;height:0;padding-bottom:40%">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8mWPwPBnAsY?VQ=HD720" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -671,8 +726,8 @@ Figure 1.1: courtesy of Allison Horst
 <p>Note - people often mix up R and RStudio. R is the programming language (the engine), RStudio is a handy interface/wrapper that makes things a bit easier to use.</p>
 </blockquote>
 </div>
-<div id="using-r-studio-cloud" class="section level3" number="1.4.2">
-<h3><span class="header-section-number">1.4.2</span> Using R Studio Cloud</h3>
+<div id="using-r-studio-cloud" class="section level3 hasAnchor" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> Using R Studio Cloud<a href="index.html#using-r-studio-cloud" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>RStudio Cloud works in exactly the same way as RStudio, but means you don’t have to download any software. You can access the hosted cloud server and your projects through any browser connection (Chrome works best), from any computer.</p>
 <div style="position:relative;height:0;padding-bottom:40%">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qoAKiru4_R8?VQ=HD720" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
@@ -680,13 +735,13 @@ Figure 1.1: courtesy of Allison Horst
 </div>
 </div>
 </div>
-<div id="reading" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> Reading</h2>
+<div id="reading" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Reading<a href="index.html#reading" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are lots of useful books and online resources to help develop and improve your R knowledge. Throughout this webpage I will be adding useful resources for you.</p>
-<p>The core textbook you might want to bookmark is R for Data Science <span class="citation">(<a href="references.html#ref-R4DS" role="doc-biblioref">G. G. Hadley Wickham 2020</a>)</span> but we will add others throughout the course, and their is a bibliography at the end which collects everything together!</p>
+<p>The core textbook you might want to bookmark is R for Data Science <span class="citation">(<a href="#ref-R4DS" role="doc-biblioref">G. G. Hadley Wickham 2020</a>)</span> but we will add others throughout the course, and their is a bibliography at the end which collects everything together!</p>
 </div>
-<div id="get-help" class="section level2" number="1.6">
-<h2><span class="header-section-number">1.6</span> Get Help!</h2>
+<div id="get-help" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Get Help!<a href="index.html#get-help" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are a <strong>lot</strong> of sources of information about using R out there.
 Here are a few helpful places to get help when you have an issue, or just to learn more</p>
 <ul>
@@ -702,6 +757,12 @@ Here are a few helpful places to get help when you have an issue, or just to lea
 
 </div>
 </div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R4DS" class="csl-entry">
+Hadley Wickham, Garett Grolemund. 2020. <em>R for Data Science</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>.
+</div>
+</div>
             </section>
 
           </div>
@@ -712,7 +773,6 @@ Here are a few helpful places to get help when you have an issue, or just to lea
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -731,6 +791,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -751,6 +812,10 @@ gitbook.start({
 "text": null
 },
 "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

@@ -192,7 +192,7 @@
 
 \title{Data Science for Biologists - 5023Y}
 \author{Philip Leftwich}
-\date{2022-03-04}
+\date{2022-03-11}
 
 \begin{document}
 \maketitle
@@ -3273,7 +3273,7 @@ You can also include minimal R code within back-ticks. Within the back-ticks, be
 
 ` r Sys.Date()`
 
-When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-03-04
+When typed in-line within a section of what would otherwise be Markdown text, it knows to produce an r output instead 2022-03-11
 
 The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g.~to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks \emph{earlier} in the script.
 
@@ -9382,6 +9382,567 @@ I hypothesised that plants under stress might react more negatively to pollution
 \end{itemize}
 
 END
+
+\hypertarget{complexity-in-linear-models---spring-week-seven}{%
+\chapter{Complexity in Linear Models - Spring Week Seven}\label{complexity-in-linear-models---spring-week-seven}}
+
+\hypertarget{designing-a-model}{%
+\section{Designing a Model}\label{designing-a-model}}
+
+We are introduced to the fruitfly dataset Partridge and Farquhar (1981)\footnote{\url{https://nature.com/articles/294580a0}}. From our understanding of sexual selection and reproductive biology in fruit flies, we know there is a well established `cost' to reproduction in terms of reduced longevity for female fruitflies. The data from this experiment is designed to test whether increased sexual activity affects the lifespan of male fruitflies.
+
+The flies used were an outbred stock, sexual activity was manipulated by supplying males with either new virgin females each day, previously mated females ( Inseminated, so remating rates are lower), or provide no females at all (Control). All groups were otherwise treated identically.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fruitfly }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"data/fruitfly.RDS"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  \textbf{type}: type of female companion (virgin, inseminated, control(partners = 0))
+\item
+  \textbf{longevity}: lifespan in days
+\item
+  \textbf{thorax}: length of thorax in micrometres (a proxy for body size)
+\item
+  \textbf{sleep}: percentage of the day spent sleeping
+\end{itemize}
+
+\hypertarget{hypothesis-1}{%
+\subsection{Hypothesis}\label{hypothesis-1}}
+
+Before you start any formal analysis you should think clearly about the sensible parameters to test. In this example, we are \emph{most} interested in the effect of sexual activity on longevity. But it is possible that other factors may also affect longevity and we should include these in our model as well, and we should think \textbf{hard} about what terms might reasonably be expected to \emph{interact} with sexual activity to affect longevity.
+
+\textbf{Question - Which terms and interactions do you think we should include in our model?}
+
+In this exercise I have just asked you to try and think logically about suitable predictors. For a more formal investigation you should support this with evidence where possible
+
+\begin{itemize}
+\item
+  type - should definitely be included.
+\item
+  thorax - the size of the flies could determine longevity. Carreira et al (2009)\footnote{\url{https://www.nature.com/articles/hdy2008117}}
+\item
+  sleep - sleep could easily help determine longevity. Thompson et al (2020)\footnote{\url{https://journals.biologists.com/bio/article/9/9/bio054361/225803/Sleep-length-differences-are-associated-with}}
+\item
+  type:sleep - the amount that sleep (rest) helps promote longevity could change depending on how much activity the fly engages in when awake. Chen et al (2017)\footnote{\url{https://www.nature.com/articles/s41467-017-00087-5\#}:\textasciitilde:text=In\%20this\%20study\%2C\%20we\%20show,but\%20aroused\%20females\%20sleep\%20more}
+\end{itemize}
+
+Other interactions \emph{could} be included but you should have a strong reason for them.
+
+\hypertarget{checking-the-data}{%
+\section{Checking the data}\label{checking-the-data}}
+
+You should now import, clean and tidy your data. Making sure it is in tidy format, all variables have useful names, and there are no mistakes, missing data or typos.
+
+Based on the variables you have decided to test you should start with some simple visualisations, to understand the distribution of your data, and investigate visually the relationships you wish to test.
+
+This is full two-by-two plot of the entire dataset, but you should try and follow this up with some specific plots.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{GGally}\SpecialCharTok{::}\FunctionTok{ggpairs}\NormalTok{(fruitfly)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-510-1.pdf}
+
+\textbf{EXERCISE - Think carefully about the plots you should make to investigate the potential differences and relationships you wish to investigate - examples hidden behing this dropdown}
+
+In this first figure - we can investigate whether there is an obvious difference in the longevities of males across the three treatments
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggridges)}
+
+\NormalTok{colours }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"cyan"}\NormalTok{, }\StringTok{"darkorange"}\NormalTok{, }\StringTok{"purple"}\NormalTok{)}
+
+\NormalTok{fruitfly }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ longevity, }\AttributeTok{y =}\NormalTok{ type, }\AttributeTok{fill =}\NormalTok{ type))}\SpecialCharTok{+}
+  \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-511-1.pdf}
+With careful thought we can construct figures that help us investigate the distribution of multiple potential predictors at once. Here we can overlay body size onto the three treatments. Here it does look as though larger flies have a longer lifespan than smaller flies. Is this trend enough of a deviation to reject a null hypothesis of no effect?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fruitfly }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{type, }\AttributeTok{y =}\NormalTok{ longevity, }\AttributeTok{fill =}\NormalTok{ type))}\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.4}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_jitter}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{size =}\NormalTok{ thorax),}
+              \AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{,}
+              \AttributeTok{width =} \FloatTok{0.4}\NormalTok{,}
+              \AttributeTok{shape =} \DecValTok{21}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
+    \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \StringTok{"none"}\NormalTok{,}
+         \AttributeTok{colour =} \StringTok{"none"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-512-1.pdf}
+We are also interested in the potential effect of sleep on activity, we can construct a scatter plot of sleep against longevity, while including body size as a covariate. In these faceted plots - do the data points appear to follow the trendline? Are the trendlines moving in the same direction? Investigating these can help us determine is there much evidence of a potential effect of sleep, is there evidence for whether this might be an additive effect or one which interacts with the the three treatments?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fruitfly }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{sleep, }\AttributeTok{y =}\NormalTok{ longevity, }\AttributeTok{fill =}\NormalTok{ type))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{size =}\NormalTok{ thorax,}
+                 \AttributeTok{fill =}\NormalTok{ type),}
+             \AttributeTok{shape =} \DecValTok{21}\NormalTok{,}
+             \AttributeTok{alpha =} \FloatTok{0.4}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{,}
+              \AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \StringTok{"none"}\NormalTok{,}
+         \AttributeTok{colour =} \StringTok{"none"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ type)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-513-1.pdf}
+
+\hypertarget{designing-a-model-1}{%
+\section{Designing a model}\label{designing-a-model-1}}
+
+\begin{rmdnote}
+When you include an interaction term, the numbers produced from this are
+how much \textbf{more} or \textbf{less} the mean estimate is than if you
+just combined the main effects.
+\end{rmdnote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# a full model}
+\NormalTok{flyls1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(longevity }\SpecialCharTok{\textasciitilde{}}\NormalTok{ type }\SpecialCharTok{+}\NormalTok{ thorax }\SpecialCharTok{+}\NormalTok{ sleep }\SpecialCharTok{+}\NormalTok{ type}\SpecialCharTok{:}\NormalTok{sleep, }\AttributeTok{data =}\NormalTok{ fruitfly)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 7 x 7
+  term                  estimate std.error statistic  p.value conf.low conf.high
+  <chr>                    <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+1 (Intercept)           -57.5       11.4      -5.07  1.52e- 6  -80.0    -35.0   
+2 typeInseminated         7.99       5.34      1.50  1.37e- 1   -2.59    18.6   
+3 typeVirgin            -10.9        5.47     -1.99  4.86e- 2  -21.7     -0.0664
+4 thorax                143.        13.4      10.6   6.53e-19  116.     169.    
+5 sleep                   0.0904     0.189     0.480 6.32e- 1   -0.283    0.464 
+6 typeInseminated:sleep  -0.197      0.208    -0.944 3.47e- 1   -0.609    0.216 
+7 typeVirgin:sleep       -0.112      0.217    -0.519 6.05e- 1   -0.541    0.317 
+\end{verbatim}
+
+\begin{quote}
+Note because we have included an interaction effect the number of terms is quite long and takes more consideration to understand. We can see for the individual estimates that it does not appear that the interaction is having a strong effect (estimate) and this does not appear to be different from a null hypothesis of no interaction effect. But we we should use an \emph{F} test to look at the overall effect to be sure.
+\end{quote}
+
+\textbf{Question - From the model summary table could you say what the mean longevity of a male with a 0.79mm thorax, that sleeps for 22\% of the day and is paired with virgin females would be?}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# intercept}
+\FunctionTok{coef}\NormalTok{(flyls1)[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+} 
+  
+\CommentTok{\# 1*coefficient for virgin treatment  }
+\FunctionTok{coef}\NormalTok{(flyls1)[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{+} 
+  
+\CommentTok{\# 0.79 * coefficient for thorax size  }
+\NormalTok{(}\FunctionTok{coef}\NormalTok{(flyls1)[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\FloatTok{0.79}\NormalTok{) }\SpecialCharTok{+} 
+  
+\CommentTok{\# 22 * coefficient for sleep  }
+\NormalTok{(}\FunctionTok{coef}\NormalTok{(flyls1)[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{*}\DecValTok{22}\NormalTok{) }\SpecialCharTok{+} 
+
+\CommentTok{\# 22 * 1 * coefficient for interaction}
+\NormalTok{(}\FunctionTok{coef}\NormalTok{(flyls1)[}\DecValTok{7}\NormalTok{]}\SpecialCharTok{*}\DecValTok{22}\SpecialCharTok{*}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   43.66344 days
+\end{verbatim}
+
+\hypertarget{model-checking-collinearity}{%
+\section{Model checking \& collinearity}\label{model-checking-collinearity}}
+
+Before we start playing with the terms in our model, we should check to see if this is even a good way of fitting and measuring our data. We should check the assumptions of our model are being met.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{performance}\SpecialCharTok{::}\FunctionTok{check\_model}\NormalTok{(flyls1)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-518-1.pdf}
+
+\textbf{Question - IS the assumption of homogeneity of variance met?}
+
+\begin{itemize}
+\item
+  Mostly - the reference line is fairly flat (there is a slight curve).
+\item
+  It looks as though there might be some increasing heterogeneity with larger values, though very minor.
+\end{itemize}
+
+VERDICT, pretty much ok, should be fine for making inferences.
+
+With a slight curvature this could indicate that you \emph{might} get a better fit with a transformation, or perhaps that there is a missing variable that if included in the model would improve the residuals. In this instance I wouldn't be overly concerned. See here for a great explainer on intepreting residuals\footnote{\url{https://www.qualtrics.com/support/stats-iq/analyses/regression-guides/interpreting-residual-plots-improve-regression/}}.
+
+\textbf{Question - Are the residuals normally distributed?}
+
+Yes - the QQplot looks pretty good, a very minor indication of a right skew, but nothing to worry about.
+
+\protect\hyperlink{what-is-a-quantile-quantile-qq-plot}{Interpreting QQ plots}
+
+\textbf{Question - IS their an issue with Collinearity?}
+
+This graph clearly shows there \textbf{is} collinearity. But this is not unusual when we include an \emph{interaction term}, if we see evidence of collinearity in terms that are not part of an interaction \textbf{then} we should take another look\footnote{\url{https://easystats.github.io/performance/reference/check_collinearity.html}}.
+
+What can you do about collinearity in main effects? 1) Nothing 2) Transform 3) Drop one of the terms.
+
+The \texttt{check\_performance()} function produces a visual summary of a Variance Inflation Factor produced from the \texttt{vif()} function. This is a measure of the standard error of each estimated coefficient. If this is very larger (greater than 5 or 10), this indicates the model has problems estimating the coefficient. This does not affect model predictions, but makes it more difficult to determine the estimate change from a predictor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{car}\SpecialCharTok{::}\FunctionTok{vif}\NormalTok{(flyls1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             GVIF Df GVIF^(1/(2*Df))
+type       12.479  2           1.880
+thorax      1.053  1           1.026
+sleep       8.751  1           2.958
+type:sleep 38.749  2           2.495
+\end{verbatim}
+
+\hypertarget{data-transformations}{%
+\subsection{Data transformations}\label{data-transformations}}
+
+The most common issues when trying to fit simple linear regression models is that our response variable is not normal which violates our modelling assumption. There are two things we can do in this case:
+
+\begin{itemize}
+\item
+  Variable transformation e.g \texttt{lm(sqrt(x)\ \textasciitilde{}\ y,\ data\ =\ data)}
+
+  \begin{itemize}
+  \item
+    Can sometimes fix linearity
+  \item
+    Can sometimes fix non-normality and heteroscedasticity (i.e non-constant variance)
+  \end{itemize}
+\item
+  Generalized Linear Models (GLMs) to change the error structure (i.e the assumption that residuals need to be normal - see next week.)
+\end{itemize}
+
+\hypertarget{boxcox}{%
+\subsection{Boxcox}\label{boxcox}}
+
+\begin{rmdnote}
+The BoxCox gets its name from its two inventors, George Box and David
+Cox. Implemented by the MASS package, when applied to a linear model it
+sytematically applies transformations by raising the y variable to a
+power (lambda).
+
+The R output for the boxcox() function plots a maximum likelihood curve
+(with a 95\% confidence interval - drops down as dotted lines) for the
+best transformation for fitting the data to the model.
+\end{rmdnote}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-521}Common Box-Cox Transformations}
+\centering
+\fontsize{16}{18}\selectfont
+\begin{tabular}[t]{rl}
+\toprule
+lambda value & transformation\\
+\midrule
+0.0 & log(Y)\\
+0.5 & sqrt(Y)\\
+1.0 & Y\\
+2.0 & Y\textasciicircum{}1\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# run this, pick a transformation and retest the model fit}
+\NormalTok{MASS}\SpecialCharTok{::}\FunctionTok{boxcox}\NormalTok{(flyls1)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Question - Does the fit of the model improve with a square root transformation?}
+
+Not really, despite the suggestion that a sqrt transformation would improve the model, residual fits are not really any better - so we might as well stick with the original scale.
+
+\hypertarget{model-selection}{%
+\section{Model selection}\label{model-selection}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# use drop1 function to remove top{-}level terms}
+\FunctionTok{drop1}\NormalTok{(flyls1, }\AttributeTok{test =} \StringTok{"F"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Single term deletions
+
+Model:
+longevity ~ type + thorax + sleep + type:sleep
+           Df Sum of Sq   RSS    AIC  F value Pr(>F)    
+<none>                  14994 612.39                    
+thorax      1   14347.5 29342 694.31 112.9088 <2e-16 ***
+type:sleep  2     130.1 15125 609.47   0.5121 0.6006    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+\end{verbatim}
+
+Based on this ANOVA table, we do not appear to have a strong rationale for keeping the interaction term in the model (AIC or F-test). Therefore we can confidently remove the interaction, simplifying our model and making interpretation easier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flyls2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(longevity }\SpecialCharTok{\textasciitilde{}}\NormalTok{ type }\SpecialCharTok{+}\NormalTok{ thorax }\SpecialCharTok{+}\NormalTok{ sleep, }\AttributeTok{data =}\NormalTok{ fruitfly)}
+
+\FunctionTok{drop1}\NormalTok{(flyls2, }\AttributeTok{test =} \StringTok{"F"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Question - Should we drop sleep from this model?}
+
+There is good reason to remove non-significant interactions from a model, they complicate estimates and make interpretations more difficult. For main effects things are a little more ambiguous.
+
+When the main aim is prediction, it makes sense to be cautious and retain non-significant terms, as extra terms make no difference to the R\^{}2 of a model.
+
+When the focus is on hypothesis testing, then removal of non-significant terms can help produce a `true' model, but this is optional. Generally speaking it is simpler to leave main effects in the model (you should have carefully considered the terms which were included in the first place).
+
+\hypertarget{posthoc}{%
+\section{Posthoc}\label{posthoc}}
+
+Using the \href{https://aosmith.rbind.io/2019/03/25/getting-started-with-emmeans/}{emmeans} package is a very easy way to produce the estimate mean values (rather than mean differences) for different categories \texttt{emmeans}. If the term \texttt{pairwise} is included then it will also include post-hoc pairwise comparisons between all levels with a tukey test \texttt{contrasts}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(flyls2, }\AttributeTok{specs =}\NormalTok{ pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ type }\SpecialCharTok{+}\NormalTok{ thorax }\SpecialCharTok{+}\NormalTok{ sleep)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$emmeans
+ type        thorax sleep emmean   SE  df lower.CL upper.CL
+ Control      0.821  23.5   61.3 2.26 120     56.8     65.8
+ Inseminated  0.821  23.5   64.9 1.59 120     61.8     68.1
+ Virgin       0.821  23.5   48.0 1.59 120     44.9     51.2
+
+Confidence level used: 0.95 
+
+$contrasts
+ contrast                                            estimate   SE  df t.ratio p.value
+ Control 0.82096 23.464 - Inseminated 0.82096 23.464    -3.63 2.77 120 -1.309  0.3929 
+ Control 0.82096 23.464 - Virgin 0.82096 23.464         13.25 2.76 120  4.796  <.0001 
+ Inseminated 0.82096 23.464 - Virgin 0.82096 23.464     16.87 2.25 120  7.508  <.0001 
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
+\end{verbatim}
+
+\begin{quote}
+Note - for continuous variables (sleep and thorax) - emmeans has set these to the mean value within the dataset, so comparisons are constant between categories at the average value of all continuous variables.
+\end{quote}
+
+\hypertarget{write-up}{%
+\section{Write-up}\label{write-up}}
+
+\textbf{Write-up- Can you write a Results section?}
+
+I tested the hypothesis that sexual activity is costly for male \emph{Drosophila melanogaster} fruitflies. Previous research indicated that sleep deprived males are less attractive to females, this would indicate that levels of sexual activity might be affected by sleep and impact the effect on longevity, as such this was included as an interaction term in the full model. Body size is also know to affect lifespan, as such this was included as a covariate in the mode.
+
+There was a small interaction effect of decreased lifespan with increasing sleep in the treatment groups compared to control in our samples, but this was not significantly different from no effect (F\textsubscript{2,118} = 0.512, P = 0.6), and was therefore dropped from the full model (Table 15.1).
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-527}Linear model coefficients}
+\centering
+\fontsize{16}{18}\selectfont
+\begin{tabular}[t]{lrrrrr}
+\toprule
+Predictors & Estimates & Z-value & P & Lower 95\% CI & Upper 95\% CI\\
+\midrule
+(Intercept) & -56.05 & -5.01 & 0.00 & -78.18 & -33.91\\
+typeInseminated & 3.63 & 1.31 & 0.19 & -1.86 & 9.11\\
+typeVirgin & -13.25 & -4.80 & 0.00 & -18.71 & -7.78\\
+thorax & 144.43 & 11.01 & 0.00 & 118.46 & 170.40\\
+sleep & -0.05 & -0.83 & 0.41 & -0.18 & 0.07\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+There was a significant overall effect of treatment on male longevity (F\textsubscript{2,120} = 30.1, P \textless{} 0.001), with males paired to virgin females having the lowest mean longevity (48 days, {[}95\%CI: 44.9 - 51.2{]}) (when holding body size and sleep constant), compared to control males (61.3 days {[}56.8 - 65.8{]}) and males paired with inseminated females (64.9 days {[}61.8 - 68.1 days{]}).
+
+Post hoc analysis showed that these differences were statistically significant for males paired with control females compared to the inseminated (t\textsubscript{120} = 4.8, P \textless{} 0.001) and virgin groups (t\textsubscript{120} = 7.5, P \textless{} 0.001), but there was no overall evidence of a difference between inseminated and virgin groups (t\textsubscript{120} = -1.309 P \textless{} 0.3929).
+
+Comparing the treatment effects against other predictors of longevity such as body size and sleep, I found that sleep had a very small effect on longevity (mean change -0.05 days {[}-0.18 - 0.07{]}) which was not significantly different from no effect (F\textsubscript{1,120} = 0.68, P = 0.41). Body size (taken from thorax length) was a significant predictor of longevity (F\textsubscript{1,120} = 121, P \textless{} 0.001), with each 0.1 mm increase in body size adding 14.4 days to the individual lifespan {[}11.8 - 17{]}. The effect of body size was roughly twice the size (Cohen's d = 2.01) of the treatment effects (Cohen's d = 0.82), indicating that while there is a measurable cost of sexual activity to males, it may be substantially lower than other drivers of lifespan such as body size.
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-530-1.pdf}
+
+\hypertarget{summary-8}{%
+\section{Summary}\label{summary-8}}
+
+\hypertarget{supplementary-code}{%
+\section{Supplementary code}\label{supplementary-code}}
+
+Code to pipe the tidy model summary to kable to produce a table
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\NormalTok{flyls2 }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(}\AttributeTok{conf.int =}\NormalTok{ T) }\SpecialCharTok{\%\textgreater{}\%} 
+ \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{\textasciigrave{}}\AttributeTok{std.error}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{mutate\_if}\NormalTok{(is.numeric, round, }\DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{kbl}\NormalTok{(}\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Predictors"}\NormalTok{,}
+                    \StringTok{"Estimates"}\NormalTok{,}
+                    \StringTok{"Z{-}value"}\NormalTok{,}
+                    \StringTok{"P"}\NormalTok{,}
+                    \StringTok{"Lower 95\% CI"}\NormalTok{,}
+                    \StringTok{"Upper 95\% CI"}\NormalTok{),}
+      \AttributeTok{caption =} \StringTok{"Linear model coefficients"}\NormalTok{, }
+    \AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+   \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{full\_width =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{font\_size=}\DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{sjPlot} A really nice package that helps produce model summaries for you automatically
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sjPlot)}
+\FunctionTok{tab\_model}\NormalTok{(flyls2)}
+\end{Highlighting}
+\end{Shaded}
+
+Produce phylopic images\footnote{\url{https://jacintak.github.io/post/2021-08-01-rphylopic/}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# optional extras for adding animal silhouette}
+\FunctionTok{library}\NormalTok{(rphylopic)}
+\CommentTok{\# search for the right image in the database}
+\NormalTok{fruitfly\_phylo }\OtherTok{\textless{}{-}} \FunctionTok{name\_search}\NormalTok{(}\AttributeTok{text =} \StringTok{"Drosophila melanogaster"}\NormalTok{, }\AttributeTok{options =} \StringTok{"namebankID"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]] }
+
+\CommentTok{\# name\_images(uuid = fruitfly$uid[1])}
+
+\CommentTok{\# extract the ID of thr right image}
+\NormalTok{fruitfly\_2 }\OtherTok{\textless{}{-}} \FunctionTok{name\_images}\NormalTok{(}\AttributeTok{uuid =}\NormalTok{ fruitfly\_phylo}\SpecialCharTok{$}\NormalTok{uid[}\DecValTok{1}\NormalTok{])}\SpecialCharTok{$}\NormalTok{same[[}\DecValTok{2}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{ui}
+
+\CommentTok{\# get the actual image}
+\NormalTok{fruitfly\_pic }\OtherTok{\textless{}{-}} \FunctionTok{image\_data}\NormalTok{(fruitfly\_2, }\AttributeTok{size =} \DecValTok{256}\NormalTok{)[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+Manual calculation of regression lines
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{equation1}\OtherTok{=}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{x}\SpecialCharTok{+}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{*}\FloatTok{23.5}\SpecialCharTok{+}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{1}\NormalTok{]\}}
+\NormalTok{equation2}\OtherTok{=}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{x}\SpecialCharTok{+}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{*}\FloatTok{23.5}\SpecialCharTok{+}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{2}\NormalTok{]\}}
+\NormalTok{equation3}\OtherTok{=}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{x}\SpecialCharTok{+}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{*}\FloatTok{23.5}\SpecialCharTok{+}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{+}\FunctionTok{coef}\NormalTok{(flyls2)[}\DecValTok{3}\NormalTok{]\}}
+
+
+\NormalTok{flyls2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{thorax, }\AttributeTok{y =}\NormalTok{ longevity, }\AttributeTok{colour =}\NormalTok{ type))}\SpecialCharTok{+}
+  \FunctionTok{stat\_function}\NormalTok{(}\AttributeTok{fun=}\NormalTok{equation1,}\AttributeTok{geom=}\StringTok{"line"}\NormalTok{,}\AttributeTok{color=}\StringTok{"cyan"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{stat\_function}\NormalTok{(}\AttributeTok{fun=}\NormalTok{equation2,}\AttributeTok{geom=}\StringTok{"line"}\NormalTok{,}\AttributeTok{color=}\StringTok{"darkorange"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{stat\_function}\NormalTok{(}\AttributeTok{fun=}\NormalTok{equation3,}\AttributeTok{geom=}\StringTok{"line"}\NormalTok{,}\AttributeTok{color=}\StringTok{"purple"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}\SpecialCharTok{+} 
+  \FunctionTok{add\_phylopic}\NormalTok{(fruitfly\_pic2, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{x =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{y =} \DecValTok{80}\NormalTok{, }\AttributeTok{ysize =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Code to produce a model summary plot that plots the exact slopes calculate by your model from using \texttt{augment()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# density plot of thorax length by treatment}
+\NormalTok{marginal1 }\OtherTok{\textless{}{-}}\NormalTok{ fruitfly }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ thorax, }\AttributeTok{fill =}\NormalTok{ type),}
+               \AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
+  \FunctionTok{theme\_void}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\# density plot of longevity by treatment}
+\NormalTok{marginal2 }\OtherTok{\textless{}{-}}\NormalTok{ fruitfly }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ longevity, }\AttributeTok{fill =}\NormalTok{ type),}
+               \AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
+  \FunctionTok{theme\_void}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{()}
+
+
+\CommentTok{\# create a new dataset where all sleep values are set to a constant (mean) values {-} see the emmeans table}
+
+\NormalTok{fruitfly\_2 }\OtherTok{\textless{}{-}}\NormalTok{ fruitfly }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sleep =} \FunctionTok{mean}\NormalTok{(sleep))}
+
+\CommentTok{\# use the final model to produce model predictions set to the new constant sleep dataframe}
+\NormalTok{model\_plot }\OtherTok{\textless{}{-}}\NormalTok{ broom}\SpecialCharTok{::}\FunctionTok{augment}\NormalTok{(flyls2, }\AttributeTok{newdata =}\NormalTok{ fruitfly\_2, }\AttributeTok{interval =} \StringTok{"confidence"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{thorax, }\AttributeTok{y =}\NormalTok{ .fitted, }\AttributeTok{colour =}\NormalTok{ type, }\AttributeTok{fill =}\NormalTok{ type))}\SpecialCharTok{+}
+  \FunctionTok{geom\_ribbon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin=}\NormalTok{.lower, }\AttributeTok{ymax=}\NormalTok{.upper), }\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{)}\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ fruitfly, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ thorax, }\AttributeTok{y =}\NormalTok{ longevity),}
+             \AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Lifespan in days"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Thorax"}\NormalTok{,}
+       \AttributeTok{fill =} \StringTok{"Female exposure"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{colour =} \StringTok{"none"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{add\_phylopic}\NormalTok{(fruitfly\_pic, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{x =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{y =} \DecValTok{80}\NormalTok{, }\AttributeTok{ysize =} \DecValTok{10}\NormalTok{)}
+
+
+
+\NormalTok{layout }\OtherTok{\textless{}{-}} \StringTok{"}
+\StringTok{AAA\#}
+\StringTok{BBBC}
+\StringTok{BBBC}
+\StringTok{BBBC"}
+
+
+\NormalTok{marginal1}\SpecialCharTok{+}\NormalTok{model\_plot}\SpecialCharTok{+}\NormalTok{marginal2 }\SpecialCharTok{+}\FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{design =}\NormalTok{ layout)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{generalized-linear-models}{%
+\chapter{Generalized Linear Models}\label{generalized-linear-models}}
+
+\hypertarget{maximum-likelihood-and-generalized-linear-models}{%
+\section{Maximum Likelihood and Generalized Linear Models}\label{maximum-likelihood-and-generalized-linear-models}}
+
+\hypertarget{boxcox-1}{%
+\subsection{BoxCox}\label{boxcox-1}}
+
+\hypertarget{transformations}{%
+\subsection{Transformations}\label{transformations}}
+
+\hypertarget{distributions-1}{%
+\subsection{Distributions}\label{distributions-1}}
+
+\hypertarget{checklist}{%
+\section{Checklist}\label{checklist}}
 
 *\href{https://www.rstudio.com/resources/cheatsheets/}{R Cheat Sheets}
 

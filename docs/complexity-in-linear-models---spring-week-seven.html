@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 19 Complexity in Linear Models - Spring Week Seven | Data Science for Biologists - 5023Y</title>
+  <meta name="description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 19 Complexity in Linear Models - Spring Week Seven | Data Science for Biologists - 5023Y" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 19 Complexity in Linear Models - Spring Week Seven | Data Science for Biologists - 5023Y" />
+  
+  <meta name="twitter:description" content="This is very brief introduction to some of the basic skills required to learn R" />
+  
+
+<meta name="author" content="Philip Leftwich" />
+
+
+<meta name="date" content="2022-03-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="multivariate-linear-models---spring-week-six.html"/>
+<link rel="next" href="generalized-linear-models.html"/>
+<script src="libs/header-attrs-2.12.2/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction<span></span></a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#approach-and-style"><i class="fa fa-check"></i><b>1.1</b> Approach and style<span></span></a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#teaching"><i class="fa fa-check"></i><b>1.2</b> Teaching<span></span></a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#workshops"><i class="fa fa-check"></i><b>1.2.1</b> Workshops<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#introduction-to-r"><i class="fa fa-check"></i><b>1.3</b> Introduction to R<span></span></a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#getting-around-on-rstudio"><i class="fa fa-check"></i><b>1.4</b> Getting around on RStudio<span></span></a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#an-intro-to-rstudio"><i class="fa fa-check"></i><b>1.4.1</b> An intro to RStudio<span></span></a></li>
+<li class="chapter" data-level="1.4.2" data-path="index.html"><a href="index.html#using-r-studio-cloud"><i class="fa fa-check"></i><b>1.4.2</b> Using R Studio Cloud<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#reading"><i class="fa fa-check"></i><b>1.5</b> Reading<span></span></a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#get-help"><i class="fa fa-check"></i><b>1.6</b> Get Help!<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html"><i class="fa fa-check"></i><b>2</b> Getting to know R: Week One<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#your-first-r-command"><i class="fa fa-check"></i><b>2.1</b> Your first R command<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#typos"><i class="fa fa-check"></i><b>2.1.1</b> Typos<span></span></a></li>
+<li class="chapter" data-level="2.1.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-simple-arithmetic"><i class="fa fa-check"></i><b>2.1.2</b> More simple arithmetic<span></span></a></li>
+<li class="chapter" data-level="2.1.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#try-some-maths"><i class="fa fa-check"></i><b>2.1.3</b> Try some maths<span></span></a></li>
+<li class="chapter" data-level="2.1.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#perform-some-combos"><i class="fa fa-check"></i><b>2.1.4</b> Perform some combos<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#true-or-false-data"><i class="fa fa-check"></i><b>2.2</b> “true or false” data<span></span></a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#assessing-mathematical-truths"><i class="fa fa-check"></i><b>2.2.1</b> Assessing mathematical truths<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-outputs"><i class="fa fa-check"></i><b>2.3</b> Storing outputs<span></span></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#choosing-names"><i class="fa fa-check"></i><b>2.3.1</b> Choosing names<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#writing-scripts"><i class="fa fa-check"></i><b>2.4</b> Writing scripts<span></span></a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#commenting-on-scripts"><i class="fa fa-check"></i><b>2.4.1</b> Commenting on scripts<span></span></a></li>
+<li class="chapter" data-level="2.4.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#running-your-script"><i class="fa fa-check"></i><b>2.4.2</b> Running your script<span></span></a></li>
+<li class="chapter" data-level="2.4.3" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#saving-your-script"><i class="fa fa-check"></i><b>2.4.3</b> Saving your script<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#error"><i class="fa fa-check"></i><b>2.5</b> Error<span></span></a></li>
+<li class="chapter" data-level="2.6" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#functions"><i class="fa fa-check"></i><b>2.6</b> Functions<span></span></a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#storing-the-output-of-functions"><i class="fa fa-check"></i><b>2.6.1</b> Storing the output of functions<span></span></a></li>
+<li class="chapter" data-level="2.6.2" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#more-fun-with-functions"><i class="fa fa-check"></i><b>2.6.2</b> More fun with functions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#packages"><i class="fa fa-check"></i><b>2.7</b> Packages<span></span></a></li>
+<li class="chapter" data-level="2.8" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#my-first-data-visualisation"><i class="fa fa-check"></i><b>2.8</b> My first data visualisation<span></span></a></li>
+<li class="chapter" data-level="2.9" data-path="getting-to-know-r-week-one.html"><a href="getting-to-know-r-week-one.html#quitting"><i class="fa fa-check"></i><b>2.9</b> Quitting<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html"><i class="fa fa-check"></i><b>3</b> Workflow Part One: Week Two<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#meet-the-penguins"><i class="fa fa-check"></i><b>3.1</b> Meet the Penguins<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#insights-from-data"><i class="fa fa-check"></i><b>3.1.1</b> Insights from data<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-question"><i class="fa fa-check"></i><b>3.2</b> The Question?<span></span></a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#hypotheses"><i class="fa fa-check"></i><b>3.2.1</b> Hypotheses<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#preparing-the-data"><i class="fa fa-check"></i><b>3.3</b> Preparing the data<span></span></a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy-data"><i class="fa fa-check"></i><b>3.3.1</b> Tidy data<span></span></a></li>
+<li class="chapter" data-level="3.3.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#the-dataset"><i class="fa fa-check"></i><b>3.3.2</b> The dataset<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#prepare-the-rstudio-workspace"><i class="fa fa-check"></i><b>3.4</b> Prepare the RStudio workspace<span></span></a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#organise"><i class="fa fa-check"></i><b>3.4.1</b> Organise<span></span></a></li>
+<li class="chapter" data-level="3.4.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#create-a-new-r-script"><i class="fa fa-check"></i><b>3.4.2</b> Create a new R script<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#get-the-data-into-r"><i class="fa fa-check"></i><b>3.5</b> Get the data into R<span></span></a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#view-and-refine"><i class="fa fa-check"></i><b>3.5.1</b> View and refine<span></span></a></li>
+<li class="chapter" data-level="3.5.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#data-management"><i class="fa fa-check"></i><b>3.5.2</b> Data management<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dataframes-and-tibbles"><i class="fa fa-check"></i><b>3.6</b> Dataframes and tibbles<span></span></a></li>
+<li class="chapter" data-level="3.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean-and-tidy"><i class="fa fa-check"></i><b>3.7</b> Clean and tidy<span></span></a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#tidy"><i class="fa fa-check"></i><b>3.7.1</b> Tidy<span></span></a></li>
+<li class="chapter" data-level="3.7.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#clean"><i class="fa fa-check"></i><b>3.7.2</b> Clean<span></span></a></li>
+<li class="chapter" data-level="3.7.3" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#refine-variable-names"><i class="fa fa-check"></i><b>3.7.3</b> Refine variable names<span></span></a></li>
+<li class="chapter" data-level="3.7.4" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#dates"><i class="fa fa-check"></i><b>3.7.4</b> Dates<span></span></a></li>
+<li class="chapter" data-level="3.7.5" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#rename-some-values"><i class="fa fa-check"></i><b>3.7.5</b> Rename some values<span></span></a></li>
+<li class="chapter" data-level="3.7.6" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-duplication"><i class="fa fa-check"></i><b>3.7.6</b> Check for duplication<span></span></a></li>
+<li class="chapter" data-level="3.7.7" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#check-for-typos-or-implausible-values"><i class="fa fa-check"></i><b>3.7.7</b> Check for typos or implausible values<span></span></a></li>
+<li class="chapter" data-level="3.7.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#missing-values-na"><i class="fa fa-check"></i><b>3.7.8</b> Missing values: NA<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#summing-up"><i class="fa fa-check"></i><b>3.8</b> Summing up<span></span></a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#what-we-learned"><i class="fa fa-check"></i><b>3.8.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="3.8.2" data-path="workflow-part-one-week-two.html"><a href="workflow-part-one-week-two.html#quitting-1"><i class="fa fa-check"></i><b>3.8.2</b> Quitting<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html"><i class="fa fa-check"></i><b>4</b> Workflow Part Two: Week Three<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-insights"><i class="fa fa-check"></i><b>4.1</b> Initial insights<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#numbers-and-sex-of-the-penguins"><i class="fa fa-check"></i><b>4.2</b> Numbers and sex of the penguins<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-a-simple-figure"><i class="fa fa-check"></i><b>4.2.1</b> Making a simple figure<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#challenge"><i class="fa fa-check"></i><b>4.2.2</b> Challenge<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions"><i class="fa fa-check"></i><b>4.3</b> Distributions<span></span></a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#insights"><i class="fa fa-check"></i><b>4.3.1</b> Insights<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#more-distributions"><i class="fa fa-check"></i><b>4.4</b> More distributions<span></span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#initial-conclusions"><i class="fa fa-check"></i><b>4.4.1</b> Initial conclusions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#data-transformation"><i class="fa fa-check"></i><b>4.5</b> Data transformation<span></span></a></li>
+<li class="chapter" data-level="4.6" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#developing-insights"><i class="fa fa-check"></i><b>4.6</b> Developing insights<span></span></a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#distributions-of-the-relative-bill-length"><i class="fa fa-check"></i><b>4.6.1</b> Distributions of the relative bill length<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#relationshipdifferences"><i class="fa fa-check"></i><b>4.7</b> Relationship/differences<span></span></a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#differences"><i class="fa fa-check"></i><b>4.7.1</b> Differences<span></span></a></li>
+<li class="chapter" data-level="4.7.2" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#associations"><i class="fa fa-check"></i><b>4.7.2</b> Associations<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#sex-interactions"><i class="fa fa-check"></i><b>4.8</b> Sex interactions<span></span></a></li>
+<li class="chapter" data-level="4.9" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#making-our-graphs-more-attractive"><i class="fa fa-check"></i><b>4.9</b> Making our graphs more attractive<span></span></a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#saving-your-output"><i class="fa fa-check"></i><b>4.9.1</b> Saving your output<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="workflow-part-two-week-three.html"><a href="workflow-part-two-week-three.html#quitting-2"><i class="fa fa-check"></i><b>4.10</b> Quitting<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html"><i class="fa fa-check"></i><b>5</b> ggplot2 A grammar of graphics: Week Four<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#intro-to-grammar"><i class="fa fa-check"></i><b>5.1</b> Intro to grammar<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#building-a-plot"><i class="fa fa-check"></i><b>5.2</b> Building a plot<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#plot-background"><i class="fa fa-check"></i><b>5.3</b> Plot background<span></span></a></li>
+<li class="chapter" data-level="5.4" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#aesthetics---aes"><i class="fa fa-check"></i><b>5.4</b> Aesthetics - aes()<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#geometric-representations---geom"><i class="fa fa-check"></i><b>5.5</b> Geometric representations - geom()<span></span></a></li>
+<li class="chapter" data-level="5.6" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#and"><i class="fa fa-check"></i><b>5.6</b> %&gt;% and +<span></span></a></li>
+<li class="chapter" data-level="5.7" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#colour"><i class="fa fa-check"></i><b>5.7</b> Colour<span></span></a></li>
+<li class="chapter" data-level="5.8" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-layers"><i class="fa fa-check"></i><b>5.8</b> More layers<span></span></a></li>
+<li class="chapter" data-level="5.9" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#facets"><i class="fa fa-check"></i><b>5.9</b> Facets<span></span></a></li>
+<li class="chapter" data-level="5.10" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#co-ordinate-space"><i class="fa fa-check"></i><b>5.10</b> Co-ordinate space<span></span></a></li>
+<li class="chapter" data-level="5.11" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#labels"><i class="fa fa-check"></i><b>5.11</b> Labels<span></span></a></li>
+<li class="chapter" data-level="5.12" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#themes"><i class="fa fa-check"></i><b>5.12</b> Themes<span></span></a></li>
+<li class="chapter" data-level="5.13" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#jitter"><i class="fa fa-check"></i><b>5.13</b> Jitter<span></span></a></li>
+<li class="chapter" data-level="5.14" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#boxplots"><i class="fa fa-check"></i><b>5.14</b> Boxplots<span></span></a></li>
+<li class="chapter" data-level="5.15" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#density-and-histogram"><i class="fa fa-check"></i><b>5.15</b> Density and histogram<span></span></a></li>
+<li class="chapter" data-level="5.16" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#more-colours"><i class="fa fa-check"></i><b>5.16</b> More Colours<span></span></a>
+<ul>
+<li class="chapter" data-level="5.16.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#assign-colours-to-variables"><i class="fa fa-check"></i><b>5.16.1</b> Assign colours to variables<span></span></a></li>
+<li class="chapter" data-level="5.16.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#accessibility"><i class="fa fa-check"></i><b>5.16.2</b> Accessibility<span></span></a></li>
+<li class="chapter" data-level="5.16.3" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#guides-to-visual-accessibility"><i class="fa fa-check"></i><b>5.16.3</b> Guides to visual accessibility<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.17" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#patchwork"><i class="fa fa-check"></i><b>5.17</b> Patchwork<span></span></a></li>
+<li class="chapter" data-level="5.18" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#test"><i class="fa fa-check"></i><b>5.18</b> Test<span></span></a></li>
+<li class="chapter" data-level="5.19" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#saving"><i class="fa fa-check"></i><b>5.19</b> Saving<span></span></a></li>
+<li class="chapter" data-level="5.20" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#quitting-3"><i class="fa fa-check"></i><b>5.20</b> Quitting<span></span></a></li>
+<li class="chapter" data-level="5.21" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#summing-up-ggplot"><i class="fa fa-check"></i><b>5.21</b> Summing up ggplot<span></span></a>
+<ul>
+<li class="chapter" data-level="5.21.1" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#what-we-learned-1"><i class="fa fa-check"></i><b>5.21.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="5.21.2" data-path="ggplot2-a-grammar-of-graphics-week-four.html"><a href="ggplot2-a-grammar-of-graphics-week-four.html#further-reading-guides-and-tips"><i class="fa fa-check"></i><b>5.21.2</b> Further Reading, Guides and tips<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html"><i class="fa fa-check"></i><b>6</b> Reports with Rmarkdown: Week Five<span></span></a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#format"><i class="fa fa-check"></i><b>6.0.1</b> Format<span></span></a></li>
+<li class="chapter" data-level="6.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#background-to-rmarkdown"><i class="fa fa-check"></i><b>6.1</b> Background to Rmarkdown<span></span></a></li>
+<li class="chapter" data-level="6.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#starting-a-new-rmd-file"><i class="fa fa-check"></i><b>6.2</b> Starting a new Rmd file<span></span></a></li>
+<li class="chapter" data-level="6.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#r-markdown-parts"><i class="fa fa-check"></i><b>6.3</b> R Markdown parts<span></span></a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#yaml"><i class="fa fa-check"></i><b>6.3.1</b> YAML<span></span></a></li>
+<li class="chapter" data-level="6.3.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#text"><i class="fa fa-check"></i><b>6.3.2</b> Text<span></span></a></li>
+<li class="chapter" data-level="6.3.3" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#code-chunks"><i class="fa fa-check"></i><b>6.3.3</b> Code Chunks<span></span></a></li>
+<li class="chapter" data-level="6.3.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#here"><i class="fa fa-check"></i><b>6.3.4</b> Here<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#images"><i class="fa fa-check"></i><b>6.4</b> Images<span></span></a></li>
+<li class="chapter" data-level="6.5" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables<span></span></a></li>
+<li class="chapter" data-level="6.6" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#self-contained-documents"><i class="fa fa-check"></i><b>6.6</b> Self-contained documents<span></span></a></li>
+<li class="chapter" data-level="6.7" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#source-files"><i class="fa fa-check"></i><b>6.7</b> Source files<span></span></a></li>
+<li class="chapter" data-level="6.8" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#exercise---make-your-own-rmd-document"><i class="fa fa-check"></i><b>6.8</b> Exercise - Make your own Rmd document<span></span></a></li>
+<li class="chapter" data-level="6.9" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#summing-up-rmarkdown"><i class="fa fa-check"></i><b>6.9</b> Summing up Rmarkdown<span></span></a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#what-we-learned-2"><i class="fa fa-check"></i><b>6.9.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="6.9.2" data-path="reports-with-rmarkdown-week-five.html"><a href="reports-with-rmarkdown-week-five.html#further-reading-guides-and-tips-1"><i class="fa fa-check"></i><b>6.9.2</b> Further Reading, Guides and tips<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html"><i class="fa fa-check"></i><b>7</b> Version control with GitHub: Week Six<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#lets-git-it-started"><i class="fa fa-check"></i><b>7.1</b> Let’s Git it started<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#will-this-be-fun"><i class="fa fa-check"></i><b>7.1.1</b> Will this be fun?<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#the-payoff"><i class="fa fa-check"></i><b>7.1.2</b> The Payoff<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#set-up-github"><i class="fa fa-check"></i><b>7.2</b> Set up GitHub<span></span></a></li>
+<li class="chapter" data-level="7.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-1.-fork-clone-an-existing-repo-on-github-make-edits-push-back"><i class="fa fa-check"></i><b>7.3</b> <strong>Exercise 1.</strong> Fork &amp; clone an existing repo on GitHub, make edits, push back<span></span></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-the-hell-is-a-fork"><i class="fa fa-check"></i><b>7.3.1</b> What the hell is a fork?<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#talking-to-github"><i class="fa fa-check"></i><b>7.4</b> Talking to GitHub<span></span></a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#see-changes"><i class="fa fa-check"></i><b>7.4.1</b> See changes<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#how-to-use-version-control---when-to-commit-push-and-pull"><i class="fa fa-check"></i><b>7.5</b> How to use version control - when to commit, push and pull<span></span></a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#commit"><i class="fa fa-check"></i><b>7.5.1</b> Commit<span></span></a></li>
+<li class="chapter" data-level="7.5.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#push"><i class="fa fa-check"></i><b>7.5.2</b> Push<span></span></a></li>
+<li class="chapter" data-level="7.5.3" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#a-couple-of-general-tips"><i class="fa fa-check"></i><b>7.5.3</b> A couple of general tips:<span></span></a></li>
+<li class="chapter" data-level="7.5.4" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#turn-back-time-with-git"><i class="fa fa-check"></i><b>7.5.4</b> Turn back time with Git<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#exercise-2.-github-classrooms-enabled-r-projects-with-subfolders"><i class="fa fa-check"></i><b>7.6</b> <strong>Exercise 2.</strong> GitHub Classrooms enabled R Projects with subfolders<span></span></a></li>
+<li class="chapter" data-level="7.7" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#find-your-classroom-repos"><i class="fa fa-check"></i><b>7.7</b> Find your classroom repos<span></span></a></li>
+<li class="chapter" data-level="7.8" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#glossary-github"><i class="fa fa-check"></i><b>7.8</b> Glossary-GitHub<span></span></a></li>
+<li class="chapter" data-level="7.9" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#summing-up-github"><i class="fa fa-check"></i><b>7.9</b> Summing up GitHub<span></span></a>
+<ul>
+<li class="chapter" data-level="7.9.1" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#what-we-learned-3"><i class="fa fa-check"></i><b>7.9.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="7.9.2" data-path="version-control-with-github-week-six.html"><a href="version-control-with-github-week-six.html#further-reading-guides-and-tips-2"><i class="fa fa-check"></i><b>7.9.2</b> Further Reading, Guides and tips<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html"><i class="fa fa-check"></i><b>8</b> Dealing with data: dplyr: Week Eight<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#lets-get-going"><i class="fa fa-check"></i><b>8.1</b> Let’s get going<span></span></a></li>
+<li class="chapter" data-level="8.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#introduction-to-dplyr"><i class="fa fa-check"></i><b>8.2</b> Introduction to dplyr<span></span></a></li>
+<li class="chapter" data-level="8.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#select"><i class="fa fa-check"></i><b>8.3</b> select<span></span></a></li>
+<li class="chapter" data-level="8.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#mutate"><i class="fa fa-check"></i><b>8.4</b> mutate<span></span></a></li>
+<li class="chapter" data-level="8.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#filter"><i class="fa fa-check"></i><b>8.5</b> filter<span></span></a></li>
+<li class="chapter" data-level="8.6" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#arrange"><i class="fa fa-check"></i><b>8.6</b> arrange<span></span></a></li>
+<li class="chapter" data-level="8.7" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group-and-summarise"><i class="fa fa-check"></i><b>8.7</b> Group and summarise<span></span></a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#using-summarise"><i class="fa fa-check"></i><b>8.7.1</b> Using summarise<span></span></a></li>
+<li class="chapter" data-level="8.7.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summarize-all-columns"><i class="fa fa-check"></i><b>8.7.2</b> Summarize all columns<span></span></a></li>
+<li class="chapter" data-level="8.7.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#group_by-summary"><i class="fa fa-check"></i><b>8.7.3</b> group_by summary<span></span></a></li>
+<li class="chapter" data-level="8.7.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>8.7.4</b> More than one grouping variable<span></span></a></li>
+<li class="chapter" data-level="8.7.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#remove-group_by"><i class="fa fa-check"></i><b>8.7.5</b> remove group_by<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html"><i class="fa fa-check"></i><b>9</b> Dealing with data part 2: Week Nine<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#expanding-the-data-toolkit"><i class="fa fa-check"></i><b>9.1</b> Expanding the data toolkit<span></span></a></li>
+<li class="chapter" data-level="9.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pipes"><i class="fa fa-check"></i><b>9.2</b> Pipes<span></span></a></li>
+<li class="chapter" data-level="9.3" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#strings"><i class="fa fa-check"></i><b>9.3</b> Strings<span></span></a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#separate"><i class="fa fa-check"></i><b>9.3.1</b> separate<span></span></a></li>
+<li class="chapter" data-level="9.3.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#more-stringr"><i class="fa fa-check"></i><b>9.3.2</b> More stringr<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#dates-and-times"><i class="fa fa-check"></i><b>9.4</b> Dates and times<span></span></a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#calculations-with-dates"><i class="fa fa-check"></i><b>9.4.1</b> Calculations with dates<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pivot"><i class="fa fa-check"></i><b>9.5</b> Pivot<span></span></a></li>
+<li class="chapter" data-level="9.6" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#summing-up-1"><i class="fa fa-check"></i><b>9.6</b> Summing up<span></span></a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#what-we-learned-4"><i class="fa fa-check"></i><b>9.6.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="9.6.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#further-reading-guides-and-tips-3"><i class="fa fa-check"></i><b>9.6.2</b> Further Reading, Guides and tips<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html"><i class="fa fa-check"></i><b>10</b> Deeper data insights part 1: Week Ten<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#variables"><i class="fa fa-check"></i><b>10.1</b> Variables<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#numerical"><i class="fa fa-check"></i><b>10.1.1</b> Numerical<span></span></a></li>
+<li class="chapter" data-level="10.1.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical"><i class="fa fa-check"></i><b>10.1.2</b> Categorical<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#understanding-numerical-variables"><i class="fa fa-check"></i><b>10.2</b> Understanding Numerical variables<span></span></a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#graphing-a-numeric-variable"><i class="fa fa-check"></i><b>10.2.1</b> Graphing a numeric variable<span></span></a></li>
+<li class="chapter" data-level="10.2.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#insights-about-body-mass"><i class="fa fa-check"></i><b>10.2.2</b> Insights about body mass<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#descriptive-statistics"><i class="fa fa-check"></i><b>10.3</b> Descriptive statistics<span></span></a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#central-tendency"><i class="fa fa-check"></i><b>10.3.1</b> Central tendency<span></span></a></li>
+<li class="chapter" data-level="10.3.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#dispersion"><i class="fa fa-check"></i><b>10.3.2</b> Dispersion<span></span></a></li>
+<li class="chapter" data-level="10.3.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#visualising-dispersion"><i class="fa fa-check"></i><b>10.3.3</b> Visualising dispersion<span></span></a></li>
+<li class="chapter" data-level="10.3.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#combining-histograms-and-boxplots"><i class="fa fa-check"></i><b>10.3.4</b> Combining histograms and boxplots<span></span></a></li>
+<li class="chapter" data-level="10.3.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#missing-values"><i class="fa fa-check"></i><b>10.3.5</b> Missing values<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical-variables"><i class="fa fa-check"></i><b>10.4</b> Categorical variables<span></span></a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summaries"><i class="fa fa-check"></i><b>10.4.1</b> Summaries<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summing-up-2"><i class="fa fa-check"></i><b>10.5</b> Summing up<span></span></a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#reward"><i class="fa fa-check"></i><b>10.5.1</b> Reward<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html"><i class="fa fa-check"></i><b>11</b> Deeper data insights part 2: Week Eleven<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-numerical-variables"><i class="fa fa-check"></i><b>11.1</b> Associations between numerical variables<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#correlations"><i class="fa fa-check"></i><b>11.1.1</b> Correlations<span></span></a></li>
+<li class="chapter" data-level="11.1.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#non-linear-correlations"><i class="fa fa-check"></i><b>11.1.2</b> Non-linear correlations<span></span></a></li>
+<li class="chapter" data-level="11.1.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#graphical-summaries-between-numeric-variables"><i class="fa fa-check"></i><b>11.1.3</b> Graphical summaries between numeric variables<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-variables"><i class="fa fa-check"></i><b>11.2</b> Associations between categorical variables<span></span></a></li>
+<li class="chapter" data-level="11.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-numerical-variables"><i class="fa fa-check"></i><b>11.3</b> Associations between Categorical-numerical variables<span></span></a></li>
+<li class="chapter" data-level="11.4" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#complexity"><i class="fa fa-check"></i><b>11.4</b> Complexity<span></span></a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#simpsons-paradox"><i class="fa fa-check"></i><b>11.4.1</b> Simpson’s Paradox<span></span></a></li>
+<li class="chapter" data-level="11.4.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#three-or-more-variables"><i class="fa fa-check"></i><b>11.4.2</b> Three or more variables<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#summing-up-3"><i class="fa fa-check"></i><b>11.5</b> Summing up<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html"><i class="fa fa-check"></i><b>12</b> Introduction to Statistics - Spring Week One<span></span></a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#introduction-to-statistics"><i class="fa fa-check"></i><b>12.1</b> Introduction to statistics<span></span></a></li>
+<li class="chapter" data-level="12.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>12.2</b> Darwin’s maize data<span></span></a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#description"><i class="fa fa-check"></i><b>12.2.1</b> Description<span></span></a></li>
+<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation<span></span></a></li>
+<li class="chapter" data-level="12.2.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.3</b> Comparing groups<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#estimation"><i class="fa fa-check"></i><b>12.3</b> Estimation<span></span></a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#differences-between-groups"><i class="fa fa-check"></i><b>12.3.1</b> Differences between groups<span></span></a></li>
+<li class="chapter" data-level="12.3.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#standard-error-of-the-difference"><i class="fa fa-check"></i><b>12.3.2</b> Standard error of the difference<span></span></a></li>
+<li class="chapter" data-level="12.3.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#normal-distribution"><i class="fa fa-check"></i><b>12.3.3</b> Normal distribution<span></span></a></li>
+<li class="chapter" data-level="12.3.4" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#confidence-intervals"><i class="fa fa-check"></i><b>12.3.4</b> Confidence Intervals<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#summary"><i class="fa fa-check"></i><b>12.4</b> Summary<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html"><i class="fa fa-check"></i><b>13</b> Keeping code DRY - Spring Week One<span></span></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#functions-1"><i class="fa fa-check"></i><b>13.1</b> Functions<span></span></a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#common-functions"><i class="fa fa-check"></i><b>13.1.1</b> Common functions<span></span></a></li>
+<li class="chapter" data-level="13.1.2" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#write-your-own-function"><i class="fa fa-check"></i><b>13.1.2</b> Write your own function<span></span></a></li>
+<li class="chapter" data-level="13.1.3" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#more-functions"><i class="fa fa-check"></i><b>13.1.3</b> More functions<span></span></a></li>
+<li class="chapter" data-level="13.1.4" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#exercise"><i class="fa fa-check"></i><b>13.1.4</b> Exercise<span></span></a></li>
+<li class="chapter" data-level="13.1.5" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#custom-ggplot-themes"><i class="fa fa-check"></i><b>13.1.5</b> Custom ggplot themes<span></span></a></li>
+<li class="chapter" data-level="13.1.6" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#writing-packages"><i class="fa fa-check"></i><b>13.1.6</b> Writing Packages<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration<span></span></a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops<span></span></a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops<span></span></a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice<span></span></a></li>
+<li class="chapter" data-level="13.4" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html"><i class="fa fa-check"></i><b>14</b> Introduction to Linear Models - Spring Week Two<span></span></a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#introduction-to-linear-models"><i class="fa fa-check"></i><b>14.1</b> Introduction to Linear Models<span></span></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#packages-1"><i class="fa fa-check"></i><b>14.1.1</b> Packages<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#a-linear-model-analysis-for-comparing-groups"><i class="fa fa-check"></i><b>14.2</b> A linear model analysis for comparing groups<span></span></a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#compare-means"><i class="fa fa-check"></i><b>14.2.1</b> Compare means<span></span></a></li>
+<li class="chapter" data-level="14.2.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#standard-error-of-the-difference-1"><i class="fa fa-check"></i><b>14.2.2</b> Standard error of the difference<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#confidence-intervals-1"><i class="fa fa-check"></i><b>14.3</b> Confidence intervals<span></span></a></li>
+<li class="chapter" data-level="14.4" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#answering-the-question"><i class="fa fa-check"></i><b>14.4</b> Answering the question<span></span></a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#getting-the-other-treatment-mean-and-standard-error"><i class="fa fa-check"></i><b>14.4.1</b> Getting the other treatment mean and standard error<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#assumption-checking"><i class="fa fa-check"></i><b>14.5</b> Assumption checking<span></span></a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#normal-distribution-1"><i class="fa fa-check"></i><b>14.5.1</b> Normal distribution<span></span></a></li>
+<li class="chapter" data-level="14.5.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#equal-variance"><i class="fa fa-check"></i><b>14.5.2</b> Equal variance<span></span></a></li>
+<li class="chapter" data-level="14.5.3" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#outliers"><i class="fa fa-check"></i><b>14.5.3</b> Outliers<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#summary-2"><i class="fa fa-check"></i><b>14.6</b> Summary<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html"><i class="fa fa-check"></i><b>15</b> Testing - Spring Week Three<span></span></a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#its-t-time"><i class="fa fa-check"></i><b>15.1</b> It’s t-time<span></span></a></li>
+<li class="chapter" data-level="15.2" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#students-t-test"><i class="fa fa-check"></i><b>15.2</b> Student’s <em>t</em>-test<span></span></a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#paired-t"><i class="fa fa-check"></i><b>15.2.1</b> Paired t<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#effect-sizes"><i class="fa fa-check"></i><b>15.3</b> Effect sizes<span></span></a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#power"><i class="fa fa-check"></i><b>15.3.1</b> Power<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#meta-analysis"><i class="fa fa-check"></i><b>15.4</b> Meta-analysis<span></span></a></li>
+<li class="chapter" data-level="15.5" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#summary-3"><i class="fa fa-check"></i><b>15.5</b> Summary<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html"><i class="fa fa-check"></i><b>16</b> Regression - Spring Week Four<span></span></a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#introduction-to-regression"><i class="fa fa-check"></i><b>16.1</b> Introduction to Regression<span></span></a></li>
+<li class="chapter" data-level="16.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#linear-regression"><i class="fa fa-check"></i><b>16.2</b> Linear regression<span></span></a></li>
+<li class="chapter" data-level="16.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#data"><i class="fa fa-check"></i><b>16.3</b> Data<span></span></a></li>
+<li class="chapter" data-level="16.4" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#correlation"><i class="fa fa-check"></i><b>16.4</b> Correlation<span></span></a></li>
+<li class="chapter" data-level="16.5" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#regression-in-r"><i class="fa fa-check"></i><b>16.5</b> Regression in R<span></span></a>
+<ul>
+<li class="chapter" data-level="16.5.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#summary-4"><i class="fa fa-check"></i><b>16.5.1</b> Summary<span></span></a></li>
+<li class="chapter" data-level="16.5.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#the-second-row"><i class="fa fa-check"></i><b>16.5.2</b> the second row<span></span></a></li>
+<li class="chapter" data-level="16.5.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#confidence-intervals-2"><i class="fa fa-check"></i><b>16.5.3</b> Confidence intervals<span></span></a></li>
+<li class="chapter" data-level="16.5.4" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#effect-size"><i class="fa fa-check"></i><b>16.5.4</b> Effect size<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="16.6" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#assumptions"><i class="fa fa-check"></i><b>16.6</b> Assumptions<span></span></a>
+<ul>
+<li class="chapter" data-level="16.6.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#normal-distribution-2"><i class="fa fa-check"></i><b>16.6.1</b> Normal distribution<span></span></a></li>
+<li class="chapter" data-level="16.6.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#equal-variance-1"><i class="fa fa-check"></i><b>16.6.2</b> Equal variance<span></span></a></li>
+<li class="chapter" data-level="16.6.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#outliers-1"><i class="fa fa-check"></i><b>16.6.3</b> Outliers<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="16.7" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#prediction"><i class="fa fa-check"></i><b>16.7</b> Prediction<span></span></a></li>
+<li class="chapter" data-level="16.8" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#summary-5"><i class="fa fa-check"></i><b>16.8</b> Summary<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html"><i class="fa fa-check"></i><b>17</b> ANOVA - Spring Week Five<span></span></a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#anova"><i class="fa fa-check"></i><b>17.1</b> ANOVA<span></span></a></li>
+<li class="chapter" data-level="17.2" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#maize-data"><i class="fa fa-check"></i><b>17.2</b> Maize data<span></span></a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#the-anova-table"><i class="fa fa-check"></i><b>17.2.1</b> The ANOVA table<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#two-way-anova"><i class="fa fa-check"></i><b>17.3</b> Two-way ANOVA<span></span></a></li>
+<li class="chapter" data-level="17.4" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#summary-6"><i class="fa fa-check"></i><b>17.4</b> Summary<span></span></a></li>
+<li class="chapter" data-level="17.5" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#practice"><i class="fa fa-check"></i><b>17.5</b> Practice<span></span></a>
+<ul>
+<li class="chapter" data-level="17.5.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#our-question"><i class="fa fa-check"></i><b>17.5.1</b> Our question<span></span></a></li>
+<li class="chapter" data-level="17.5.2" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#hypothesis"><i class="fa fa-check"></i><b>17.5.2</b> Hypothesis<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="17.6" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#importing-the-data"><i class="fa fa-check"></i><b>17.6</b> Importing the data<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html"><i class="fa fa-check"></i><b>18</b> Multivariate linear models - Spring Week Six<span></span></a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#multivariate-linear-models"><i class="fa fa-check"></i><b>18.1</b> Multivariate linear models<span></span></a></li>
+<li class="chapter" data-level="18.2" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#factorial-linear-models"><i class="fa fa-check"></i><b>18.2</b> Factorial linear models<span></span></a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#data-summary"><i class="fa fa-check"></i><b>18.2.1</b> Data summary<span></span></a></li>
+<li class="chapter" data-level="18.2.2" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#one-way-anova"><i class="fa fa-check"></i><b>18.2.2</b> One-way ANOVA<span></span></a></li>
+<li class="chapter" data-level="18.2.3" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#testing-for-interactions"><i class="fa fa-check"></i><b>18.2.3</b> Testing for interactions<span></span></a></li>
+<li class="chapter" data-level="18.2.4" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#model-estimates-and-confidence-intervals"><i class="fa fa-check"></i><b>18.2.4</b> Model estimates and confidence intervals<span></span></a></li>
+<li class="chapter" data-level="18.2.5" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#anova-tables"><i class="fa fa-check"></i><b>18.2.5</b> ANOVA tables<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#balancedunbalanced-designs"><i class="fa fa-check"></i><b>18.3</b> Balanced/Unbalanced designs<span></span></a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#practice-1"><i class="fa fa-check"></i><b>18.3.1</b> Practice<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#post-hoc"><i class="fa fa-check"></i><b>18.4</b> post-hoc<span></span></a></li>
+<li class="chapter" data-level="18.5" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#continuous-linear-models"><i class="fa fa-check"></i><b>18.5</b> Continuous Linear Models<span></span></a></li>
+<li class="chapter" data-level="18.6" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#summary-7"><i class="fa fa-check"></i><b>18.6</b> Summary<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html"><i class="fa fa-check"></i><b>19</b> Complexity in Linear Models - Spring Week Seven<span></span></a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model"><i class="fa fa-check"></i><b>19.1</b> Designing a Model<span></span></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#hypothesis-1"><i class="fa fa-check"></i><b>19.1.1</b> Hypothesis<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#checking-the-data"><i class="fa fa-check"></i><b>19.2</b> Checking the data<span></span></a></li>
+<li class="chapter" data-level="19.3" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model-1"><i class="fa fa-check"></i><b>19.3</b> Designing a model<span></span></a></li>
+<li class="chapter" data-level="19.4" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-checking-collinearity"><i class="fa fa-check"></i><b>19.4</b> Model checking &amp; collinearity<span></span></a>
+<ul>
+<li class="chapter" data-level="19.4.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#data-transformations"><i class="fa fa-check"></i><b>19.4.1</b> Data transformations<span></span></a></li>
+<li class="chapter" data-level="19.4.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#boxcox"><i class="fa fa-check"></i><b>19.4.2</b> Boxcox<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-selection"><i class="fa fa-check"></i><b>19.5</b> Model selection<span></span></a></li>
+<li class="chapter" data-level="19.6" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#posthoc"><i class="fa fa-check"></i><b>19.6</b> Posthoc<span></span></a></li>
+<li class="chapter" data-level="19.7" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#write-up"><i class="fa fa-check"></i><b>19.7</b> Write-up<span></span></a></li>
+<li class="chapter" data-level="19.8" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#summary-8"><i class="fa fa-check"></i><b>19.8</b> Summary<span></span></a></li>
+<li class="chapter" data-level="19.9" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#supplementary-code"><i class="fa fa-check"></i><b>19.9</b> Supplementary code<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>20</b> Generalized Linear Models<span></span></a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#maximum-likelihood-and-generalized-linear-models"><i class="fa fa-check"></i><b>20.1</b> Maximum Likelihood and Generalized Linear Models<span></span></a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#boxcox-1"><i class="fa fa-check"></i><b>20.1.1</b> BoxCox<span></span></a></li>
+<li class="chapter" data-level="20.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#transformations"><i class="fa fa-check"></i><b>20.1.2</b> Transformations<span></span></a></li>
+<li class="chapter" data-level="20.1.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#distributions-1"><i class="fa fa-check"></i><b>20.1.3</b> Distributions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#checklist"><i class="fa fa-check"></i><b>20.2</b> Checklist<span></span></a></li>
+</ul></li>
+<li><a href="references.html#references">References<span></span></a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science for Biologists - 5023Y</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="complexity-in-linear-models---spring-week-seven" class="section level1 hasAnchor" number="19">
+<h1><span class="header-section-number">Chapter 19</span> Complexity in Linear Models - Spring Week Seven<a href="complexity-in-linear-models---spring-week-seven.html#complexity-in-linear-models---spring-week-seven" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<script>
+  addClassKlippyTo("pre.r, pre.bash");
+  addKlippy('right', 'top', 'auto', '1', 'copy to clipboard', 'Copied!');
+</script>
+<div id="designing-a-model" class="section level2 hasAnchor" number="19.1">
+<h2><span class="header-section-number">19.1</span> Designing a Model<a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We are introduced to the fruitfly dataset Partridge and Farquhar (1981)<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>. From our understanding of sexual selection and reproductive biology in fruit flies, we know there is a well established ‘cost’ to reproduction in terms of reduced longevity for female fruitflies. The data from this experiment is designed to test whether increased sexual activity affects the lifespan of male fruitflies.</p>
+<p>The flies used were an outbred stock, sexual activity was manipulated by supplying males with either new virgin females each day, previously mated females ( Inseminated, so remating rates are lower), or provide no females at all (Control). All groups were otherwise treated identically.</p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb413-1" aria-hidden="true" tabindex="-1"></a>fruitfly <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;data/fruitfly.RDS&quot;</span>)</span></code></pre></div>
+<ul>
+<li><p><strong>type</strong>: type of female companion (virgin, inseminated, control(partners = 0))</p></li>
+<li><p><strong>longevity</strong>: lifespan in days</p></li>
+<li><p><strong>thorax</strong>: length of thorax in micrometres (a proxy for body size)</p></li>
+<li><p><strong>sleep</strong>: percentage of the day spent sleeping</p></li>
+</ul>
+<div id="hypothesis-1" class="section level3 hasAnchor" number="19.1.1">
+<h3><span class="header-section-number">19.1.1</span> Hypothesis<a href="complexity-in-linear-models---spring-week-seven.html#hypothesis-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before you start any formal analysis you should think clearly about the sensible parameters to test. In this example, we are <em>most</em> interested in the effect of sexual activity on longevity. But it is possible that other factors may also affect longevity and we should include these in our model as well, and we should think <strong>hard</strong> about what terms might reasonably be expected to <em>interact</em> with sexual activity to affect longevity.</p>
+<details>
+<summary>
+<strong>Question - Which terms and interactions do you think we should include in our model?</strong>
+</summary>
+<p>In this exercise I have just asked you to try and think logically about suitable predictors. For a more formal investigation you should support this with evidence where possible</p>
+<ul>
+<li><p>type - should definitely be included.</p></li>
+<li><p>thorax - the size of the flies could determine longevity. Carreira et al (2009)<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a></p></li>
+<li><p>sleep - sleep could easily help determine longevity. Thompson et al (2020)<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></p></li>
+<li><p>type:sleep - the amount that sleep (rest) helps promote longevity could change depending on how much activity the fly engages in when awake. Chen et al (2017)<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a></p></li>
+</ul>
+<p>Other interactions <em>could</em> be included but you should have a strong reason for them.</p>
+</details>
+</div>
+</div>
+<div id="checking-the-data" class="section level2 hasAnchor" number="19.2">
+<h2><span class="header-section-number">19.2</span> Checking the data<a href="complexity-in-linear-models---spring-week-seven.html#checking-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You should now import, clean and tidy your data. Making sure it is in tidy format, all variables have useful names, and there are no mistakes, missing data or typos.</p>
+<p>Based on the variables you have decided to test you should start with some simple visualisations, to understand the distribution of your data, and investigate visually the relationships you wish to test.</p>
+<p>This is full two-by-two plot of the entire dataset, but you should try and follow this up with some specific plots.</p>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb414-1" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggpairs</span>(fruitfly)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-510-1.png" width="672" /></p>
+<details>
+<summary>
+<strong>EXERCISE - Think carefully about the plots you should make to investigate the potential differences and relationships you wish to investigate - examples hidden behing this dropdown</strong>
+</summary>
+<p>In this first figure - we can investigate whether there is an obvious difference in the longevities of males across the three treatments</p>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb415-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb415-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-3" aria-hidden="true" tabindex="-1"></a>colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;cyan&quot;</span>, <span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;purple&quot;</span>)</span>
+<span id="cb415-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb415-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-5" aria-hidden="true" tabindex="-1"></a>fruitfly <span class="sc">%&gt;%</span> </span>
+<span id="cb415-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> longevity, <span class="at">y =</span> type, <span class="at">fill =</span> type))<span class="sc">+</span></span>
+<span id="cb415-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb415-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb415-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb415-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb415-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-511"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-511-1.png" alt="A density distribution of longevity across the three sexual activity treatments" width="672" />
+<p class="caption">
+Figure 19.1: A density distribution of longevity across the three sexual activity treatments
+</p>
+</div>
+<p>With careful thought we can construct figures that help us investigate the distribution of multiple potential predictors at once. Here we can overlay body size onto the three treatments. Here it does look as though larger flies have a longer lifespan than smaller flies. Is this trend enough of a deviation to reject a null hypothesis of no effect?</p>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-1" aria-hidden="true" tabindex="-1"></a>fruitfly <span class="sc">%&gt;%</span> </span>
+<span id="cb416-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>type, <span class="at">y =</span> longevity, <span class="at">fill =</span> type))<span class="sc">+</span></span>
+<span id="cb416-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>)<span class="sc">+</span></span>
+<span id="cb416-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">size =</span> thorax),</span>
+<span id="cb416-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.6</span>,</span>
+<span id="cb416-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.4</span>,</span>
+<span id="cb416-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">shape =</span> <span class="dv">21</span>)<span class="sc">+</span></span>
+<span id="cb416-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb416-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb416-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">colour =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
+<span id="cb416-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb416-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-512"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-512-1.png" alt="A boxplot of longevity across three treatments of sexual activity. Individual points represent individual males, where the size of each point represents thorax length." width="672" />
+<p class="caption">
+Figure 19.2: A boxplot of longevity across three treatments of sexual activity. Individual points represent individual males, where the size of each point represents thorax length.
+</p>
+</div>
+<p>We are also interested in the potential effect of sleep on activity, we can construct a scatter plot of sleep against longevity, while including body size as a covariate. In these faceted plots - do the data points appear to follow the trendline? Are the trendlines moving in the same direction? Investigating these can help us determine is there much evidence of a potential effect of sleep, is there evidence for whether this might be an additive effect or one which interacts with the the three treatments?</p>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-1" aria-hidden="true" tabindex="-1"></a>fruitfly <span class="sc">%&gt;%</span> </span>
+<span id="cb417-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>sleep, <span class="at">y =</span> longevity, <span class="at">fill =</span> type))<span class="sc">+</span></span>
+<span id="cb417-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> thorax,</span>
+<span id="cb417-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> type),</span>
+<span id="cb417-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb417-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.4</span>)<span class="sc">+</span></span>
+<span id="cb417-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb417-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
+<span id="cb417-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb417-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb417-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">colour =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
+<span id="cb417-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> type)<span class="sc">+</span></span>
+<span id="cb417-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb417-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-513"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-513-1.png" alt="A scatter plot of proportion of time spent sleeping against longevity with a linear model trendline. Points represent individual flies, and the size of each point represents thorax length (mm)." width="672" />
+<p class="caption">
+Figure 19.3: A scatter plot of proportion of time spent sleeping against longevity with a linear model trendline. Points represent individual flies, and the size of each point represents thorax length (mm).
+</p>
+</div>
+</details>
+</div>
+<div id="designing-a-model-1" class="section level2 hasAnchor" number="19.3">
+<h2><span class="header-section-number">19.3</span> Designing a model<a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="rmdnote">
+<p>
+When you include an interaction term, the numbers produced from this are how much <strong>more</strong> or <strong>less</strong> the mean estimate is than if you just combined the main effects.
+</p>
+</div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a full model</span></span>
+<span id="cb418-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb418-2" aria-hidden="true" tabindex="-1"></a>flyls1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(longevity <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep <span class="sc">+</span> type<span class="sc">:</span>sleep, <span class="at">data =</span> fruitfly)</span></code></pre></div>
+<pre><code># A tibble: 7 x 7
+  term                  estimate std.error statistic  p.value conf.low conf.high
+  &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)           -57.5       11.4      -5.07  1.52e- 6  -80.0    -35.0   
+2 typeInseminated         7.99       5.34      1.50  1.37e- 1   -2.59    18.6   
+3 typeVirgin            -10.9        5.47     -1.99  4.86e- 2  -21.7     -0.0664
+4 thorax                143.        13.4      10.6   6.53e-19  116.     169.    
+5 sleep                   0.0904     0.189     0.480 6.32e- 1   -0.283    0.464 
+6 typeInseminated:sleep  -0.197      0.208    -0.944 3.47e- 1   -0.609    0.216 
+7 typeVirgin:sleep       -0.112      0.217    -0.519 6.05e- 1   -0.541    0.317 </code></pre>
+<blockquote>
+<p>Note because we have included an interaction effect the number of terms is quite long and takes more consideration to understand. We can see for the individual estimates that it does not appear that the interaction is having a strong effect (estimate) and this does not appear to be different from a null hypothesis of no interaction effect. But we we should use an <em>F</em> test to look at the overall effect to be sure.</p>
+</blockquote>
+<details>
+<summary>
+<strong>Question - From the model summary table could you say what the mean longevity of a male with a 0.79mm thorax, that sleeps for 22% of the day and is paired with virgin females would be?</strong>
+</summary>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="co"># intercept</span></span>
+<span id="cb420-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(flyls1)[<span class="dv">1</span>] <span class="sc">+</span> </span>
+<span id="cb420-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb420-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1*coefficient for virgin treatment  </span></span>
+<span id="cb420-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(flyls1)[<span class="dv">3</span>] <span class="sc">+</span> </span>
+<span id="cb420-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb420-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.79 * coefficient for thorax size  </span></span>
+<span id="cb420-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-8" aria-hidden="true" tabindex="-1"></a>(<span class="fu">coef</span>(flyls1)[<span class="dv">4</span>]<span class="sc">*</span><span class="fl">0.79</span>) <span class="sc">+</span> </span>
+<span id="cb420-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb420-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 22 * coefficient for sleep  </span></span>
+<span id="cb420-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-11" aria-hidden="true" tabindex="-1"></a>(<span class="fu">coef</span>(flyls1)[<span class="dv">5</span>]<span class="sc">*</span><span class="dv">22</span>) <span class="sc">+</span> </span>
+<span id="cb420-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb420-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 22 * 1 * coefficient for interaction</span></span>
+<span id="cb420-14"><a href="complexity-in-linear-models---spring-week-seven.html#cb420-14" aria-hidden="true" tabindex="-1"></a>(<span class="fu">coef</span>(flyls1)[<span class="dv">7</span>]<span class="sc">*</span><span class="dv">22</span><span class="sc">*</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>   43.66344 days
+</code></pre>
+</details>
+</div>
+<div id="model-checking-collinearity" class="section level2 hasAnchor" number="19.4">
+<h2><span class="header-section-number">19.4</span> Model checking &amp; collinearity<a href="complexity-in-linear-models---spring-week-seven.html#model-checking-collinearity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before we start playing with the terms in our model, we should check to see if this is even a good way of fitting and measuring our data. We should check the assumptions of our model are being met.</p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb422-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(flyls1)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-518-1.png" width="672" /></p>
+<details>
+<summary>
+<strong>Question - IS the assumption of homogeneity of variance met?</strong>
+</summary>
+<ul>
+<li><p>Mostly - the reference line is fairly flat (there is a slight curve).</p></li>
+<li><p>It looks as though there might be some increasing heterogeneity with larger values, though very minor.</p></li>
+</ul>
+<p>VERDICT, pretty much ok, should be fine for making inferences.</p>
+<p>With a slight curvature this could indicate that you <em>might</em> get a better fit with a transformation, or perhaps that there is a missing variable that if included in the model would improve the residuals. In this instance I wouldn’t be overly concerned. See here for a great explainer on intepreting residuals<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>.</p>
+</details>
+<details>
+<summary>
+<strong>Question - Are the residuals normally distributed?</strong>
+</summary>
+<p>Yes - the QQplot looks pretty good, a very minor indication of a right skew, but nothing to worry about.</p>
+<p><a href="introduction-to-linear-models---spring-week-two.html#what-is-a-quantile-quantile-qq-plot">Interpreting QQ plots</a></p>
+</details>
+<details>
+<summary>
+<strong>Question - IS their an issue with Collinearity?</strong>
+</summary>
+<p>This graph clearly shows there <strong>is</strong> collinearity. But this is not unusual when we include an <em>interaction term</em>, if we see evidence of collinearity in terms that are not part of an interaction <strong>then</strong> we should take another look<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>.</p>
+<p>What can you do about collinearity in main effects? 1) Nothing 2) Transform 3) Drop one of the terms.</p>
+<p>The <code>check_performance()</code> function produces a visual summary of a Variance Inflation Factor produced from the <code>vif()</code> function. This is a measure of the standard error of each estimated coefficient. If this is very larger (greater than 5 or 10), this indicates the model has problems estimating the coefficient. This does not affect model predictions, but makes it more difficult to determine the estimate change from a predictor.</p>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb423-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">vif</span>(flyls1)</span></code></pre></div>
+<pre><code>             GVIF Df GVIF^(1/(2*Df))
+type       12.479  2           1.880
+thorax      1.053  1           1.026
+sleep       8.751  1           2.958
+type:sleep 38.749  2           2.495
+</code></pre>
+</details>
+<div id="data-transformations" class="section level3 hasAnchor" number="19.4.1">
+<h3><span class="header-section-number">19.4.1</span> Data transformations<a href="complexity-in-linear-models---spring-week-seven.html#data-transformations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The most common issues when trying to fit simple linear regression models is that our response variable is not normal which violates our modelling assumption. There are two things we can do in this case:</p>
+<ul>
+<li><p>Variable transformation e.g <code>lm(sqrt(x) ~ y, data = data)</code></p>
+<ul>
+<li><p>Can sometimes fix linearity</p></li>
+<li><p>Can sometimes fix non-normality and heteroscedasticity (i.e non-constant variance)</p></li>
+</ul></li>
+<li><p>Generalized Linear Models (GLMs) to change the error structure (i.e the assumption that residuals need to be normal - see next week.)</p></li>
+</ul>
+</div>
+<div id="boxcox" class="section level3 hasAnchor" number="19.4.2">
+<h3><span class="header-section-number">19.4.2</span> Boxcox<a href="complexity-in-linear-models---spring-week-seven.html#boxcox" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="rmdnote">
+<p>
+The BoxCox gets its name from its two inventors, George Box and David Cox. Implemented by the MASS package, when applied to a linear model it sytematically applies transformations by raising the y variable to a power (lambda).
+</p>
+<p>
+The R output for the boxcox() function plots a maximum likelihood curve (with a 95% confidence interval - drops down as dotted lines) for the best transformation for fitting the data to the model.
+</p>
+</div>
+<table class="table" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-521">Table 19.1: </span>Common Box-Cox Transformations
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+lambda value
+</th>
+<th style="text-align:left;">
+transformation
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:left;">
+log(Y)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:left;">
+sqrt(Y)
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:left;">
+Y
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:left;">
+Y^1
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run this, pick a transformation and retest the model fit</span></span>
+<span id="cb425-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb425-2" aria-hidden="true" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">boxcox</span>(flyls1)</span></code></pre></div>
+<details>
+<summary>
+<strong>Question - Does the fit of the model improve with a square root transformation?</strong>
+</summary>
+<p>Not really, despite the suggestion that a sqrt transformation would improve the model, residual fits are not really any better - so we might as well stick with the original scale.</p>
+</details>
+</div>
+</div>
+<div id="model-selection" class="section level2 hasAnchor" number="19.5">
+<h2><span class="header-section-number">19.5</span> Model selection<a href="complexity-in-linear-models---spring-week-seven.html#model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb426-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use drop1 function to remove top-level terms</span></span>
+<span id="cb426-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb426-2" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(flyls1, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<pre><code>Single term deletions
+
+Model:
+longevity ~ type + thorax + sleep + type:sleep
+           Df Sum of Sq   RSS    AIC  F value Pr(&gt;F)    
+&lt;none&gt;                  14994 612.39                    
+thorax      1   14347.5 29342 694.31 112.9088 &lt;2e-16 ***
+type:sleep  2     130.1 15125 609.47   0.5121 0.6006    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</code></pre>
+<p>Based on this ANOVA table, we do not appear to have a strong rationale for keeping the interaction term in the model (AIC or F-test). Therefore we can confidently remove the interaction, simplifying our model and making interpretation easier.</p>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb428-1" aria-hidden="true" tabindex="-1"></a>flyls2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(longevity <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep, <span class="at">data =</span> fruitfly)</span>
+<span id="cb428-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb428-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb428-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb428-3" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(flyls2, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<details>
+<summary>
+<strong>Question - Should we drop sleep from this model?</strong>
+</summary>
+<p>There is good reason to remove non-significant interactions from a model, they complicate estimates and make interpretations more difficult. For main effects things are a little more ambiguous.</p>
+<p>When the main aim is prediction, it makes sense to be cautious and retain non-significant terms, as extra terms make no difference to the R^2 of a model.</p>
+<p>When the focus is on hypothesis testing, then removal of non-significant terms can help produce a ‘true’ model, but this is optional. Generally speaking it is simpler to leave main effects in the model (you should have carefully considered the terms which were included in the first place).</p>
+</details>
+</div>
+<div id="posthoc" class="section level2 hasAnchor" number="19.6">
+<h2><span class="header-section-number">19.6</span> Posthoc<a href="complexity-in-linear-models---spring-week-seven.html#posthoc" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Using the <a href="https://aosmith.rbind.io/2019/03/25/getting-started-with-emmeans/">emmeans</a> package is a very easy way to produce the estimate mean values (rather than mean differences) for different categories <code>emmeans</code>. If the term <code>pairwise</code> is included then it will also include post-hoc pairwise comparisons between all levels with a tukey test <code>contrasts</code>.</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb429-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(flyls2, <span class="at">specs =</span> pairwise <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep)</span></code></pre></div>
+<pre><code>$emmeans
+ type        thorax sleep emmean   SE  df lower.CL upper.CL
+ Control      0.821  23.5   61.3 2.26 120     56.8     65.8
+ Inseminated  0.821  23.5   64.9 1.59 120     61.8     68.1
+ Virgin       0.821  23.5   48.0 1.59 120     44.9     51.2
+
+Confidence level used: 0.95 
+
+$contrasts
+ contrast                                            estimate   SE  df t.ratio p.value
+ Control 0.82096 23.464 - Inseminated 0.82096 23.464    -3.63 2.77 120 -1.309  0.3929 
+ Control 0.82096 23.464 - Virgin 0.82096 23.464         13.25 2.76 120  4.796  &lt;.0001 
+ Inseminated 0.82096 23.464 - Virgin 0.82096 23.464     16.87 2.25 120  7.508  &lt;.0001 
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
+</code></pre>
+<blockquote>
+<p>Note - for continuous variables (sleep and thorax) - emmeans has set these to the mean value within the dataset, so comparisons are constant between categories at the average value of all continuous variables.</p>
+</blockquote>
+</div>
+<div id="write-up" class="section level2 hasAnchor" number="19.7">
+<h2><span class="header-section-number">19.7</span> Write-up<a href="complexity-in-linear-models---spring-week-seven.html#write-up" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<details>
+<summary>
+<strong>Write-up- Can you write a Results section?</strong>
+</summary>
+<p>I tested the hypothesis that sexual activity is costly for male <em>Drosophila melanogaster</em> fruitflies. Previous research indicated that sleep deprived males are less attractive to females, this would indicate that levels of sexual activity might be affected by sleep and impact the effect on longevity, as such this was included as an interaction term in the full model. Body size is also know to affect lifespan, as such this was included as a covariate in the mode.</p>
+<p>There was a small interaction effect of decreased lifespan with increasing sleep in the treatment groups compared to control in our samples, but this was not significantly different from no effect (F<sub>2,118</sub> = 0.512, P = 0.6), and was therefore dropped from the full model (Table 15.1).</p>
+<table class="table" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-527">Table 19.2: </span>Linear model coefficients
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Predictors
+</th>
+<th style="text-align:right;">
+Estimates
+</th>
+<th style="text-align:right;">
+Z-value
+</th>
+<th style="text-align:right;">
+P
+</th>
+<th style="text-align:right;">
+Lower 95% CI
+</th>
+<th style="text-align:right;">
+Upper 95% CI
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-56.05
+</td>
+<td style="text-align:right;">
+-5.01
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+-78.18
+</td>
+<td style="text-align:right;">
+-33.91
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+typeInseminated
+</td>
+<td style="text-align:right;">
+3.63
+</td>
+<td style="text-align:right;">
+1.31
+</td>
+<td style="text-align:right;">
+0.19
+</td>
+<td style="text-align:right;">
+-1.86
+</td>
+<td style="text-align:right;">
+9.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+typeVirgin
+</td>
+<td style="text-align:right;">
+-13.25
+</td>
+<td style="text-align:right;">
+-4.80
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+-18.71
+</td>
+<td style="text-align:right;">
+-7.78
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+thorax
+</td>
+<td style="text-align:right;">
+144.43
+</td>
+<td style="text-align:right;">
+11.01
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+118.46
+</td>
+<td style="text-align:right;">
+170.40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sleep
+</td>
+<td style="text-align:right;">
+-0.05
+</td>
+<td style="text-align:right;">
+-0.83
+</td>
+<td style="text-align:right;">
+0.41
+</td>
+<td style="text-align:right;">
+-0.18
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+</tr>
+</tbody>
+</table>
+<p>There was a significant overall effect of treatment on male longevity (F<sub>2,120</sub> = 30.1, P &lt; 0.001), with males paired to virgin females having the lowest mean longevity (48 days, [95%CI: 44.9 - 51.2]) (when holding body size and sleep constant), compared to control males (61.3 days [56.8 - 65.8]) and males paired with inseminated females (64.9 days [61.8 - 68.1 days]).</p>
+<p>Post hoc analysis showed that these differences were statistically significant for males paired with control females compared to the inseminated (t<sub>120</sub> = 4.8, P &lt; 0.001) and virgin groups (t<sub>120</sub> = 7.5, P &lt; 0.001), but there was no overall evidence of a difference between inseminated and virgin groups (t<sub>120</sub> = -1.309 P &lt; 0.3929).</p>
+<p>Comparing the treatment effects against other predictors of longevity such as body size and sleep, I found that sleep had a very small effect on longevity (mean change -0.05 days [-0.18 - 0.07]) which was not significantly different from no effect (F<sub>1,120</sub> = 0.68, P = 0.41). Body size (taken from thorax length) was a significant predictor of longevity (F<sub>1,120</sub> = 121, P &lt; 0.001), with each 0.1 mm increase in body size adding 14.4 days to the individual lifespan [11.8 - 17]. The effect of body size was roughly twice the size (Cohen’s d = 2.01) of the treatment effects (Cohen’s d = 0.82), indicating that while there is a measurable cost of sexual activity to males, it may be substantially lower than other drivers of lifespan such as body size.</p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-530-1.png" width="672" /></p>
+</details>
+</div>
+<div id="summary-8" class="section level2 hasAnchor" number="19.8">
+<h2><span class="header-section-number">19.8</span> Summary<a href="complexity-in-linear-models---spring-week-seven.html#summary-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="supplementary-code" class="section level2 hasAnchor" number="19.9">
+<h2><span class="header-section-number">19.9</span> Supplementary code<a href="complexity-in-linear-models---spring-week-seven.html#supplementary-code" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Code to pipe the tidy model summary to kable to produce a table</p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb431-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-2" aria-hidden="true" tabindex="-1"></a>flyls2 <span class="sc">%&gt;%</span> broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">conf.int =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb431-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">std.error</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb431-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate_if</span>(is.numeric, round, <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb431-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Predictors&quot;</span>,</span>
+<span id="cb431-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Estimates&quot;</span>,</span>
+<span id="cb431-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Z-value&quot;</span>,</span>
+<span id="cb431-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;P&quot;</span>,</span>
+<span id="cb431-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Lower 95% CI&quot;</span>,</span>
+<span id="cb431-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Upper 95% CI&quot;</span>),</span>
+<span id="cb431-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">&quot;Linear model coefficients&quot;</span>, </span>
+<span id="cb431-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb431-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="at">font_size=</span><span class="dv">16</span>)</span></code></pre></div>
+<p><code>sjPlot</code> A really nice package that helps produce model summaries for you automatically</p>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb432-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(flyls2)</span></code></pre></div>
+<p>Produce phylopic images<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="co"># optional extras for adding animal silhouette</span></span>
+<span id="cb433-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb433-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-3" aria-hidden="true" tabindex="-1"></a><span class="co"># search for the right image in the database</span></span>
+<span id="cb433-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-4" aria-hidden="true" tabindex="-1"></a>fruitfly_phylo <span class="ot">&lt;-</span> <span class="fu">name_search</span>(<span class="at">text =</span> <span class="st">&quot;Drosophila melanogaster&quot;</span>, <span class="at">options =</span> <span class="st">&quot;namebankID&quot;</span>)[[<span class="dv">1</span>]] </span>
+<span id="cb433-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb433-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-6" aria-hidden="true" tabindex="-1"></a><span class="co"># name_images(uuid = fruitfly$uid[1])</span></span>
+<span id="cb433-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb433-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-8" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the ID of thr right image</span></span>
+<span id="cb433-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-9" aria-hidden="true" tabindex="-1"></a>fruitfly_2 <span class="ot">&lt;-</span> <span class="fu">name_images</span>(<span class="at">uuid =</span> fruitfly_phylo<span class="sc">$</span>uid[<span class="dv">1</span>])<span class="sc">$</span>same[[<span class="dv">2</span>]]<span class="sc">$</span>ui</span>
+<span id="cb433-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb433-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-11" aria-hidden="true" tabindex="-1"></a><span class="co"># get the actual image</span></span>
+<span id="cb433-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-12" aria-hidden="true" tabindex="-1"></a>fruitfly_pic <span class="ot">&lt;-</span> <span class="fu">image_data</span>(fruitfly_2, <span class="at">size =</span> <span class="dv">256</span>)[[<span class="dv">1</span>]]</span></code></pre></div>
+<p>Manual calculation of regression lines</p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-1" aria-hidden="true" tabindex="-1"></a>equation1<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">coef</span>(flyls2)[<span class="dv">4</span>]<span class="sc">*</span>x<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">5</span>]<span class="sc">*</span><span class="fl">23.5</span><span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">1</span>]}</span>
+<span id="cb434-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-2" aria-hidden="true" tabindex="-1"></a>equation2<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">coef</span>(flyls2)[<span class="dv">4</span>]<span class="sc">*</span>x<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">5</span>]<span class="sc">*</span><span class="fl">23.5</span><span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">2</span>]}</span>
+<span id="cb434-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-3" aria-hidden="true" tabindex="-1"></a>equation3<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">coef</span>(flyls2)[<span class="dv">4</span>]<span class="sc">*</span>x<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">5</span>]<span class="sc">*</span><span class="fl">23.5</span><span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">3</span>]}</span>
+<span id="cb434-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb434-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb434-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-6" aria-hidden="true" tabindex="-1"></a>flyls2 <span class="sc">%&gt;%</span> </span>
+<span id="cb434-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>thorax, <span class="at">y =</span> longevity, <span class="at">colour =</span> type))<span class="sc">+</span></span>
+<span id="cb434-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>equation1,<span class="at">geom=</span><span class="st">&quot;line&quot;</span>,<span class="at">color=</span><span class="st">&quot;cyan&quot;</span>)<span class="sc">+</span></span>
+<span id="cb434-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>equation2,<span class="at">geom=</span><span class="st">&quot;line&quot;</span>,<span class="at">color=</span><span class="st">&quot;darkorange&quot;</span>)<span class="sc">+</span></span>
+<span id="cb434-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>equation3,<span class="at">geom=</span><span class="st">&quot;line&quot;</span>,<span class="at">color=</span><span class="st">&quot;purple&quot;</span>)<span class="sc">+</span></span>
+<span id="cb434-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb434-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb434-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb434-14"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span> </span>
+<span id="cb434-15"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic</span>(fruitfly_pic2, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">x =</span> <span class="fl">0.7</span>, <span class="at">y =</span> <span class="dv">80</span>, <span class="at">ysize =</span> <span class="dv">10</span>)</span></code></pre></div>
+<p>Code to produce a model summary plot that plots the exact slopes calculate by your model from using <code>augment()</code></p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot of thorax length by treatment</span></span>
+<span id="cb435-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-2" aria-hidden="true" tabindex="-1"></a>marginal1 <span class="ot">&lt;-</span> fruitfly <span class="sc">%&gt;%</span> </span>
+<span id="cb435-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb435-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> thorax, <span class="at">fill =</span> type),</span>
+<span id="cb435-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb435-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb435-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
+<span id="cb435-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb435-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-10" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot of longevity by treatment</span></span>
+<span id="cb435-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-11" aria-hidden="true" tabindex="-1"></a>marginal2 <span class="ot">&lt;-</span> fruitfly <span class="sc">%&gt;%</span> </span>
+<span id="cb435-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb435-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> longevity, <span class="at">fill =</span> type),</span>
+<span id="cb435-14"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb435-15"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb435-16"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
+<span id="cb435-17"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span>
+<span id="cb435-18"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-19"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-20"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-20" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new dataset where all sleep values are set to a constant (mean) values - see the emmeans table</span></span>
+<span id="cb435-21"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-22"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-22" aria-hidden="true" tabindex="-1"></a>fruitfly_2 <span class="ot">&lt;-</span> fruitfly <span class="sc">%&gt;%</span> </span>
+<span id="cb435-23"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sleep =</span> <span class="fu">mean</span>(sleep))</span>
+<span id="cb435-24"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-25"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-25" aria-hidden="true" tabindex="-1"></a><span class="co"># use the final model to produce model predictions set to the new constant sleep dataframe</span></span>
+<span id="cb435-26"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-26" aria-hidden="true" tabindex="-1"></a>model_plot <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">augment</span>(flyls2, <span class="at">newdata =</span> fruitfly_2, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb435-27"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>thorax, <span class="at">y =</span> .fitted, <span class="at">colour =</span> type, <span class="at">fill =</span> type))<span class="sc">+</span></span>
+<span id="cb435-28"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lower, <span class="at">ymax=</span>.upper), <span class="at">alpha =</span> <span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb435-29"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
+<span id="cb435-30"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> fruitfly, <span class="fu">aes</span>(<span class="at">x =</span> thorax, <span class="at">y =</span> longevity),</span>
+<span id="cb435-31"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
+<span id="cb435-32"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb435-33"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb435-34"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Lifespan in days&quot;</span>,</span>
+<span id="cb435-35"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Thorax&quot;</span>,</span>
+<span id="cb435-36"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Female exposure&quot;</span>)<span class="sc">+</span></span>
+<span id="cb435-37"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
+<span id="cb435-38"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb435-39"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
+<span id="cb435-40"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic</span>(fruitfly_pic, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">x =</span> <span class="fl">0.7</span>, <span class="at">y =</span> <span class="dv">80</span>, <span class="at">ysize =</span> <span class="dv">10</span>)</span>
+<span id="cb435-41"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-42"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-43"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-44"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-44" aria-hidden="true" tabindex="-1"></a>layout <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb435-45"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-45" aria-hidden="true" tabindex="-1"></a><span class="st">AAA#</span></span>
+<span id="cb435-46"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-46" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC</span></span>
+<span id="cb435-47"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-47" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC</span></span>
+<span id="cb435-48"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-48" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC&quot;</span></span>
+<span id="cb435-49"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-50"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-51"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-51" aria-hidden="true" tabindex="-1"></a>marginal1<span class="sc">+</span>model_plot<span class="sc">+</span>marginal2 <span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">design =</span> layout)</span></code></pre></div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="8">
+<li id="fn8"><p><a href="https://nature.com/articles/294580a0" class="uri">https://nature.com/articles/294580a0</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p><a href="https://www.nature.com/articles/hdy2008117" class="uri">https://www.nature.com/articles/hdy2008117</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p><a href="https://journals.biologists.com/bio/article/9/9/bio054361/225803/Sleep-length-differences-are-associated-with" class="uri">https://journals.biologists.com/bio/article/9/9/bio054361/225803/Sleep-length-differences-are-associated-with</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p><a href="https://www.nature.com/articles/s41467-017-00087-5#" class="uri">https://www.nature.com/articles/s41467-017-00087-5#</a>:~:text=In%20this%20study%2C%20we%20show,but%20aroused%20females%20sleep%20more<a href="complexity-in-linear-models---spring-week-seven.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p><a href="https://www.qualtrics.com/support/stats-iq/analyses/regression-guides/interpreting-residual-plots-improve-regression/" class="uri">https://www.qualtrics.com/support/stats-iq/analyses/regression-guides/interpreting-residual-plots-improve-regression/</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p><a href="https://easystats.github.io/performance/reference/check_collinearity.html" class="uri">https://easystats.github.io/performance/reference/check_collinearity.html</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p><a href="https://jacintak.github.io/post/2021-08-01-rphylopic/" class="uri">https://jacintak.github.io/post/2021-08-01-rphylopic/</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref14" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="multivariate-linear-models---spring-week-six.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generalized-linear-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/14-Complexities-in-models.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
