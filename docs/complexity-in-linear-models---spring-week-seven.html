@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-03-11" />
+<meta name="date" content="2022-03-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -616,12 +616,15 @@ div.csl-indent {
 <li class="chapter" data-level="19.4" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-checking-collinearity"><i class="fa fa-check"></i><b>19.4</b> Model checking &amp; collinearity<span></span></a>
 <ul>
 <li class="chapter" data-level="19.4.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#data-transformations"><i class="fa fa-check"></i><b>19.4.1</b> Data transformations<span></span></a></li>
-<li class="chapter" data-level="19.4.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#boxcox"><i class="fa fa-check"></i><b>19.4.2</b> Boxcox<span></span></a></li>
+<li class="chapter" data-level="19.4.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#boxcox"><i class="fa fa-check"></i><b>19.4.2</b> BoxCox<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="19.5" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-selection"><i class="fa fa-check"></i><b>19.5</b> Model selection<span></span></a></li>
 <li class="chapter" data-level="19.6" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#posthoc"><i class="fa fa-check"></i><b>19.6</b> Posthoc<span></span></a></li>
 <li class="chapter" data-level="19.7" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#write-up"><i class="fa fa-check"></i><b>19.7</b> Write-up<span></span></a></li>
-<li class="chapter" data-level="19.8" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#summary-8"><i class="fa fa-check"></i><b>19.8</b> Summary<span></span></a></li>
+<li class="chapter" data-level="19.8" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#summary-8"><i class="fa fa-check"></i><b>19.8</b> Summary<span></span></a>
+<ul>
+<li class="chapter" data-level="19.8.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#checklist"><i class="fa fa-check"></i><b>19.8.1</b> Checklist<span></span></a></li>
+</ul></li>
 <li class="chapter" data-level="19.9" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#supplementary-code"><i class="fa fa-check"></i><b>19.9</b> Supplementary code<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="20" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>20</b> Generalized Linear Models<span></span></a>
@@ -632,7 +635,7 @@ div.csl-indent {
 <li class="chapter" data-level="20.1.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#transformations"><i class="fa fa-check"></i><b>20.1.2</b> Transformations<span></span></a></li>
 <li class="chapter" data-level="20.1.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#distributions-1"><i class="fa fa-check"></i><b>20.1.3</b> Distributions<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="20.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#checklist"><i class="fa fa-check"></i><b>20.2</b> Checklist<span></span></a></li>
+<li class="chapter" data-level="20.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#checklist-1"><i class="fa fa-check"></i><b>20.2</b> Checklist<span></span></a></li>
 </ul></li>
 <li><a href="references.html#references">References<span></span></a></li>
 <li class="divider"></li>
@@ -820,7 +823,7 @@ When you include an interaction term, the numbers produced from this are how muc
 </details>
 <details>
 <summary>
-<strong>Question - Are the residuals normally distributed?</strong>
+<strong>Question - ARE the residuals normally distributed?</strong>
 </summary>
 <p>Yes - the QQplot looks pretty good, a very minor indication of a right skew, but nothing to worry about.</p>
 <p><a href="introduction-to-linear-models---spring-week-two.html#what-is-a-quantile-quantile-qq-plot">Interpreting QQ plots</a></p>
@@ -853,7 +856,7 @@ type:sleep 38.749  2           2.495
 </ul>
 </div>
 <div id="boxcox" class="section level3 hasAnchor" number="19.4.2">
-<h3><span class="header-section-number">19.4.2</span> Boxcox<a href="complexity-in-linear-models---spring-week-seven.html#boxcox" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">19.4.2</span> BoxCox<a href="complexity-in-linear-models---spring-week-seven.html#boxcox" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="rmdnote">
 <p>
 The BoxCox gets its name from its two inventors, George Box and David Cox. Implemented by the MASS package, when applied to a linear model it sytematically applies transformations by raising the y variable to a power (lambda).
@@ -940,19 +943,31 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 <div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb428-1" aria-hidden="true" tabindex="-1"></a>flyls2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(longevity <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep, <span class="at">data =</span> fruitfly)</span>
 <span id="cb428-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb428-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb428-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb428-3" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(flyls2, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<pre><code>Single term deletions
+
+Model:
+longevity ~ type + thorax + sleep
+       Df Sum of Sq   RSS    AIC  F value    Pr(&gt;F)    
+&lt;none&gt;              15125 609.47                       
+type    2    7576.9 22701 656.23  30.0578 2.617e-11 ***
+thorax  1   15282.8 30407 694.77 121.2556 &lt; 2.2e-16 ***
+sleep   1      86.3 15211 608.18   0.6846    0.4097    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></pre>
 <details>
 <summary>
 <strong>Question - Should we drop sleep from this model?</strong>
 </summary>
-<p>There is good reason to remove non-significant interactions from a model, they complicate estimates and make interpretations more difficult. For main effects things are a little more ambiguous.</p>
+<p>There is good reason to remove non-significant <em>interaction terms</em> from a model, they complicate estimates and make interpretations more difficult. For <strong>main</strong> effects things are a little more ambiguous.</p>
 <p>When the main aim is prediction, it makes sense to be cautious and retain non-significant terms, as extra terms make no difference to the R^2 of a model.</p>
-<p>When the focus is on hypothesis testing, then removal of non-significant terms can help produce a ‘true’ model, but this is optional. Generally speaking it is simpler to leave main effects in the model (you should have carefully considered the terms which were included in the first place).</p>
+<p>When the focus is on hypothesis testing, then removal of non-significant terms can help produce a ‘true’ model, but this is optional. Generally speaking it is often simpler to leave main effects in the model (you should have carefully considered the terms which were included in the first place).</p>
+<p>In this example we can also see that AIC has not really changed - so the quality of the model is also not improved vby dropping this term.</p>
 </details>
 </div>
 <div id="posthoc" class="section level2 hasAnchor" number="19.6">
 <h2><span class="header-section-number">19.6</span> Posthoc<a href="complexity-in-linear-models---spring-week-seven.html#posthoc" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Using the <a href="https://aosmith.rbind.io/2019/03/25/getting-started-with-emmeans/">emmeans</a> package is a very easy way to produce the estimate mean values (rather than mean differences) for different categories <code>emmeans</code>. If the term <code>pairwise</code> is included then it will also include post-hoc pairwise comparisons between all levels with a tukey test <code>contrasts</code>.</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb429-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(flyls2, <span class="at">specs =</span> pairwise <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep)</span></code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb430-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(flyls2, <span class="at">specs =</span> pairwise <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep)</span></code></pre></div>
 <pre><code>$emmeans
  type        thorax sleep emmean   SE  df lower.CL upper.CL
  Control      0.821  23.5   61.3 2.26 120     56.8     65.8
@@ -1110,115 +1125,141 @@ sleep
 </tr>
 </tbody>
 </table>
-<p>There was a significant overall effect of treatment on male longevity (F<sub>2,120</sub> = 30.1, P &lt; 0.001), with males paired to virgin females having the lowest mean longevity (48 days, [95%CI: 44.9 - 51.2]) (when holding body size and sleep constant), compared to control males (61.3 days [56.8 - 65.8]) and males paired with inseminated females (64.9 days [61.8 - 68.1 days]).</p>
-<p>Post hoc analysis showed that these differences were statistically significant for males paired with control females compared to the inseminated (t<sub>120</sub> = 4.8, P &lt; 0.001) and virgin groups (t<sub>120</sub> = 7.5, P &lt; 0.001), but there was no overall evidence of a difference between inseminated and virgin groups (t<sub>120</sub> = -1.309 P &lt; 0.3929).</p>
-<p>Comparing the treatment effects against other predictors of longevity such as body size and sleep, I found that sleep had a very small effect on longevity (mean change -0.05 days [-0.18 - 0.07]) which was not significantly different from no effect (F<sub>1,120</sub> = 0.68, P = 0.41). Body size (taken from thorax length) was a significant predictor of longevity (F<sub>1,120</sub> = 121, P &lt; 0.001), with each 0.1 mm increase in body size adding 14.4 days to the individual lifespan [11.8 - 17]. The effect of body size was roughly twice the size (Cohen’s d = 2.01) of the treatment effects (Cohen’s d = 0.82), indicating that while there is a measurable cost of sexual activity to males, it may be substantially lower than other drivers of lifespan such as body size.</p>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-530-1.png" width="672" /></p>
+<p>There was a significant overall effect of treatment on male longevity (Linear model: F<sub>2,120</sub> = 30.1, P &lt; 0.001), with males paired to virgin females having the lowest mean longevity (48 days, [95%CI: 44.9 - 51.2]) (when holding body size and sleep constant), compared to control males (61.3 days [56.8 - 65.8]) and males paired with inseminated females (64.9 days [61.8 - 68.1 days]).</p>
+<p>Post hoc analysis showed that these differences were statistically significant for males paired with control females compared to the inseminated (Tukey test: t<sub>120</sub> = 4.8, P &lt; 0.001) and virgin groups (t<sub>120</sub> = 7.5, P &lt; 0.001), but there was no overall evidence of a difference between inseminated and virgin groups (t<sub>120</sub> = -1.309 P &lt; 0.3929) (Figure 19.4).</p>
+<p>Comparing the treatment effects against other predictors of longevity such as body size and sleep, I found that sleep had a very small effect on longevity (mean change -0.05 days [-0.18 - 0.07]) which was not significantly different from no effect (Linear model: F<sub>1,120</sub> = 0.68, P = 0.41). Body size (taken from thorax length) was a significant predictor of longevity (F<sub>1,120</sub> = 121, P &lt; 0.001), with each 0.1 mm increase in body size adding 14.4 days to the individual lifespan [11.8 - 17]. It appears as though body size has a stronger effect on longevity than treatment, indicating that while there is a measurable cost of sexual activity to males, it may be less severe than in females (not compared here), and less severe than other measurable predictors.</p>
+<blockquote>
+<p>Note - there are formal measures of partial effect sizes for complex linear models, but they are not often reported in papers, and become increasingly complicated to produce and ensure they are robust, so I have not tried to compute these here.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></p>
+</blockquote>
+<blockquote>
+<p>Note - for the effect of thorax, I could also have reported t from the summary - as it is a single <code>level</code>, continuous effect so here F = t^2.</p>
+</blockquote>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-530"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-530-1.png" alt=" A scatter plot of longevity against body size across three treatments of differening male sexual activity. Fitted model slopes are from the reduced linear model (main effects only of thorax size, sleep and treatment group), with 95% confidence intervals, circles are individual data points. Marginal plots are density plot distributions for thorax length and longevity split by treatments." width="672" />
+<p class="caption">
+Figure 19.4:  A scatter plot of longevity against body size across three treatments of differening male sexual activity. Fitted model slopes are from the reduced linear model (main effects only of thorax size, sleep and treatment group), with 95% confidence intervals, circles are individual data points. Marginal plots are density plot distributions for thorax length and longevity split by treatments.
+</p>
+</div>
 </details>
 </div>
 <div id="summary-8" class="section level2 hasAnchor" number="19.8">
 <h2><span class="header-section-number">19.8</span> Summary<a href="complexity-in-linear-models---spring-week-seven.html#summary-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this chapter we have worked with our scientific knowledge to develop testable hypotheses and built statistical models to formally assess them. We now have a working pipeline for tackling complex datasets, developing insights and producing and explaining robust linear models.</p>
+<div id="checklist" class="section level3 hasAnchor" number="19.8.1">
+<h3><span class="header-section-number">19.8.1</span> Checklist<a href="complexity-in-linear-models---spring-week-seven.html#checklist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>Think carefully about the hypotheses to test, use your scientific knowledge and background reading to support this</p></li>
+<li><p>Import, clean and understand your dataset: use data visuals to investigate trends and determine if there is clear support for your hypotheses</p></li>
+<li><p>Fit a linear model, including interaction terms with caution</p></li>
+<li><p>Investigate the fit of your model, understand that parameters may never be perfect, but that classic patterns in residuals may indicate a poorly fitting model - sometimes this can be fixed with careful consideration of missing variables or through data transformation</p></li>
+<li><p>Test the removal of any interaction terms from a model, look at AIC and significance tests</p></li>
+<li><p>Make sure you understand the output of a model summary, sense check this against the graphs you have made</p></li>
+<li><p>The direction and size of any effects are the priority - produce estimates and uncertainties. Make sure the observations are clear.</p></li>
+<li><p>Write-up your significance test results, taking care to report not just significance (and all required parts of a significance test). Do you know <em>what</em> to report? Within a complex model - reporting <em>t</em> will indicate the slope of the line for that single term against the intercept, <em>F</em> is the overall effect of a predictor across all levels, <em>post-hoc</em> if you wish to compare across all levels.</p></li>
+<li><p>Well described tables and figures can enhance your results sections - take the time to make sure these are informative and attractive.</p></li>
+</ul>
+</div>
 </div>
 <div id="supplementary-code" class="section level2 hasAnchor" number="19.9">
 <h2><span class="header-section-number">19.9</span> Supplementary code<a href="complexity-in-linear-models---spring-week-seven.html#supplementary-code" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Code to pipe the tidy model summary to kable to produce a table</p>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb431-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-2" aria-hidden="true" tabindex="-1"></a>flyls2 <span class="sc">%&gt;%</span> broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">conf.int =</span> T) <span class="sc">%&gt;%</span> </span>
-<span id="cb431-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">std.error</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb431-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate_if</span>(is.numeric, round, <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb431-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Predictors&quot;</span>,</span>
-<span id="cb431-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Estimates&quot;</span>,</span>
-<span id="cb431-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Z-value&quot;</span>,</span>
-<span id="cb431-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;P&quot;</span>,</span>
-<span id="cb431-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Lower 95% CI&quot;</span>,</span>
-<span id="cb431-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Upper 95% CI&quot;</span>),</span>
-<span id="cb431-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">&quot;Linear model coefficients&quot;</span>, </span>
-<span id="cb431-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb431-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb431-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="at">font_size=</span><span class="dv">16</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb432-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-2" aria-hidden="true" tabindex="-1"></a>flyls2 <span class="sc">%&gt;%</span> broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">conf.int =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb432-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">std.error</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb432-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate_if</span>(is.numeric, round, <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb432-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Predictors&quot;</span>,</span>
+<span id="cb432-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Estimates&quot;</span>,</span>
+<span id="cb432-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Z-value&quot;</span>,</span>
+<span id="cb432-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;P&quot;</span>,</span>
+<span id="cb432-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Lower 95% CI&quot;</span>,</span>
+<span id="cb432-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Upper 95% CI&quot;</span>),</span>
+<span id="cb432-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">&quot;Linear model coefficients&quot;</span>, </span>
+<span id="cb432-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">booktabs =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb432-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="at">font_size=</span><span class="dv">16</span>)</span></code></pre></div>
 <p><code>sjPlot</code> A really nice package that helps produce model summaries for you automatically</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
-<span id="cb432-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb432-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(flyls2)</span></code></pre></div>
-<p>Produce phylopic images<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="co"># optional extras for adding animal silhouette</span></span>
-<span id="cb433-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rphylopic)</span>
-<span id="cb433-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-3" aria-hidden="true" tabindex="-1"></a><span class="co"># search for the right image in the database</span></span>
-<span id="cb433-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-4" aria-hidden="true" tabindex="-1"></a>fruitfly_phylo <span class="ot">&lt;-</span> <span class="fu">name_search</span>(<span class="at">text =</span> <span class="st">&quot;Drosophila melanogaster&quot;</span>, <span class="at">options =</span> <span class="st">&quot;namebankID&quot;</span>)[[<span class="dv">1</span>]] </span>
-<span id="cb433-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb433-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-6" aria-hidden="true" tabindex="-1"></a><span class="co"># name_images(uuid = fruitfly$uid[1])</span></span>
-<span id="cb433-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb433-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-8" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the ID of thr right image</span></span>
-<span id="cb433-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-9" aria-hidden="true" tabindex="-1"></a>fruitfly_2 <span class="ot">&lt;-</span> <span class="fu">name_images</span>(<span class="at">uuid =</span> fruitfly_phylo<span class="sc">$</span>uid[<span class="dv">1</span>])<span class="sc">$</span>same[[<span class="dv">2</span>]]<span class="sc">$</span>ui</span>
-<span id="cb433-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb433-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-11" aria-hidden="true" tabindex="-1"></a><span class="co"># get the actual image</span></span>
-<span id="cb433-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-12" aria-hidden="true" tabindex="-1"></a>fruitfly_pic <span class="ot">&lt;-</span> <span class="fu">image_data</span>(fruitfly_2, <span class="at">size =</span> <span class="dv">256</span>)[[<span class="dv">1</span>]]</span></code></pre></div>
-<p>Manual calculation of regression lines</p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-1" aria-hidden="true" tabindex="-1"></a>equation1<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">coef</span>(flyls2)[<span class="dv">4</span>]<span class="sc">*</span>x<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">5</span>]<span class="sc">*</span><span class="fl">23.5</span><span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">1</span>]}</span>
-<span id="cb434-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-2" aria-hidden="true" tabindex="-1"></a>equation2<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">coef</span>(flyls2)[<span class="dv">4</span>]<span class="sc">*</span>x<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">5</span>]<span class="sc">*</span><span class="fl">23.5</span><span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">2</span>]}</span>
-<span id="cb434-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-3" aria-hidden="true" tabindex="-1"></a>equation3<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">coef</span>(flyls2)[<span class="dv">4</span>]<span class="sc">*</span>x<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">5</span>]<span class="sc">*</span><span class="fl">23.5</span><span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">3</span>]}</span>
-<span id="cb434-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-4" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb433-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb433-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(flyls2)</span></code></pre></div>
+<p>Produce phylopic images<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a></p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="co"># optional extras for adding animal silhouette</span></span>
+<span id="cb434-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rphylopic)</span>
+<span id="cb434-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-3" aria-hidden="true" tabindex="-1"></a><span class="co"># search for the right image in the database</span></span>
+<span id="cb434-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-4" aria-hidden="true" tabindex="-1"></a>fruitfly_phylo <span class="ot">&lt;-</span> <span class="fu">name_search</span>(<span class="at">text =</span> <span class="st">&quot;Drosophila melanogaster&quot;</span>, <span class="at">options =</span> <span class="st">&quot;namebankID&quot;</span>)[[<span class="dv">1</span>]] </span>
 <span id="cb434-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb434-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-6" aria-hidden="true" tabindex="-1"></a>flyls2 <span class="sc">%&gt;%</span> </span>
-<span id="cb434-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>thorax, <span class="at">y =</span> longevity, <span class="at">colour =</span> type))<span class="sc">+</span></span>
-<span id="cb434-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>equation1,<span class="at">geom=</span><span class="st">&quot;line&quot;</span>,<span class="at">color=</span><span class="st">&quot;cyan&quot;</span>)<span class="sc">+</span></span>
-<span id="cb434-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>equation2,<span class="at">geom=</span><span class="st">&quot;line&quot;</span>,<span class="at">color=</span><span class="st">&quot;darkorange&quot;</span>)<span class="sc">+</span></span>
-<span id="cb434-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>equation3,<span class="at">geom=</span><span class="st">&quot;line&quot;</span>,<span class="at">color=</span><span class="st">&quot;purple&quot;</span>)<span class="sc">+</span></span>
-<span id="cb434-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb434-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
-<span id="cb434-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb434-14"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span> </span>
-<span id="cb434-15"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic</span>(fruitfly_pic2, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">x =</span> <span class="fl">0.7</span>, <span class="at">y =</span> <span class="dv">80</span>, <span class="at">ysize =</span> <span class="dv">10</span>)</span></code></pre></div>
+<span id="cb434-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-6" aria-hidden="true" tabindex="-1"></a><span class="co"># name_images(uuid = fruitfly$uid[1])</span></span>
+<span id="cb434-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb434-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-8" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the ID of thr right image</span></span>
+<span id="cb434-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-9" aria-hidden="true" tabindex="-1"></a>fruitfly_2 <span class="ot">&lt;-</span> <span class="fu">name_images</span>(<span class="at">uuid =</span> fruitfly_phylo<span class="sc">$</span>uid[<span class="dv">1</span>])<span class="sc">$</span>same[[<span class="dv">2</span>]]<span class="sc">$</span>ui</span>
+<span id="cb434-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb434-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-11" aria-hidden="true" tabindex="-1"></a><span class="co"># get the actual image</span></span>
+<span id="cb434-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb434-12" aria-hidden="true" tabindex="-1"></a>fruitfly_pic <span class="ot">&lt;-</span> <span class="fu">image_data</span>(fruitfly_2, <span class="at">size =</span> <span class="dv">256</span>)[[<span class="dv">1</span>]]</span></code></pre></div>
+<p>Manual calculation of regression lines</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-1" aria-hidden="true" tabindex="-1"></a>equation1<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">coef</span>(flyls2)[<span class="dv">4</span>]<span class="sc">*</span>x<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">5</span>]<span class="sc">*</span><span class="fl">23.5</span><span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">1</span>]}</span>
+<span id="cb435-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-2" aria-hidden="true" tabindex="-1"></a>equation2<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">coef</span>(flyls2)[<span class="dv">4</span>]<span class="sc">*</span>x<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">5</span>]<span class="sc">*</span><span class="fl">23.5</span><span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">2</span>]}</span>
+<span id="cb435-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-3" aria-hidden="true" tabindex="-1"></a>equation3<span class="ot">=</span><span class="cf">function</span>(x){<span class="fu">coef</span>(flyls2)[<span class="dv">4</span>]<span class="sc">*</span>x<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">5</span>]<span class="sc">*</span><span class="fl">23.5</span><span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(flyls2)[<span class="dv">3</span>]}</span>
+<span id="cb435-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-6" aria-hidden="true" tabindex="-1"></a>flyls2 <span class="sc">%&gt;%</span> </span>
+<span id="cb435-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>thorax, <span class="at">y =</span> longevity, <span class="at">colour =</span> type))<span class="sc">+</span></span>
+<span id="cb435-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>equation1,<span class="at">geom=</span><span class="st">&quot;line&quot;</span>,<span class="at">color=</span><span class="st">&quot;cyan&quot;</span>)<span class="sc">+</span></span>
+<span id="cb435-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>equation2,<span class="at">geom=</span><span class="st">&quot;line&quot;</span>,<span class="at">color=</span><span class="st">&quot;darkorange&quot;</span>)<span class="sc">+</span></span>
+<span id="cb435-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>equation3,<span class="at">geom=</span><span class="st">&quot;line&quot;</span>,<span class="at">color=</span><span class="st">&quot;purple&quot;</span>)<span class="sc">+</span></span>
+<span id="cb435-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb435-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb435-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb435-14"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span> </span>
+<span id="cb435-15"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic</span>(fruitfly_pic2, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">x =</span> <span class="fl">0.7</span>, <span class="at">y =</span> <span class="dv">80</span>, <span class="at">ysize =</span> <span class="dv">10</span>)</span></code></pre></div>
 <p>Code to produce a model summary plot that plots the exact slopes calculate by your model from using <code>augment()</code></p>
-<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot of thorax length by treatment</span></span>
-<span id="cb435-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-2" aria-hidden="true" tabindex="-1"></a>marginal1 <span class="ot">&lt;-</span> fruitfly <span class="sc">%&gt;%</span> </span>
-<span id="cb435-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
-<span id="cb435-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> thorax, <span class="at">fill =</span> type),</span>
-<span id="cb435-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
-<span id="cb435-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
-<span id="cb435-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
-<span id="cb435-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb435-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-10" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot of longevity by treatment</span></span>
-<span id="cb435-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-11" aria-hidden="true" tabindex="-1"></a>marginal2 <span class="ot">&lt;-</span> fruitfly <span class="sc">%&gt;%</span> </span>
-<span id="cb435-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
-<span id="cb435-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> longevity, <span class="at">fill =</span> type),</span>
-<span id="cb435-14"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
-<span id="cb435-15"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
-<span id="cb435-16"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
-<span id="cb435-17"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span>
-<span id="cb435-18"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-19"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-20"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-20" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new dataset where all sleep values are set to a constant (mean) values - see the emmeans table</span></span>
-<span id="cb435-21"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-22"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-22" aria-hidden="true" tabindex="-1"></a>fruitfly_2 <span class="ot">&lt;-</span> fruitfly <span class="sc">%&gt;%</span> </span>
-<span id="cb435-23"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sleep =</span> <span class="fu">mean</span>(sleep))</span>
-<span id="cb435-24"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-25"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-25" aria-hidden="true" tabindex="-1"></a><span class="co"># use the final model to produce model predictions set to the new constant sleep dataframe</span></span>
-<span id="cb435-26"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-26" aria-hidden="true" tabindex="-1"></a>model_plot <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">augment</span>(flyls2, <span class="at">newdata =</span> fruitfly_2, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb435-27"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>thorax, <span class="at">y =</span> .fitted, <span class="at">colour =</span> type, <span class="at">fill =</span> type))<span class="sc">+</span></span>
-<span id="cb435-28"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lower, <span class="at">ymax=</span>.upper), <span class="at">alpha =</span> <span class="fl">0.2</span>)<span class="sc">+</span></span>
-<span id="cb435-29"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
-<span id="cb435-30"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> fruitfly, <span class="fu">aes</span>(<span class="at">x =</span> thorax, <span class="at">y =</span> longevity),</span>
-<span id="cb435-31"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
-<span id="cb435-32"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
-<span id="cb435-33"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
-<span id="cb435-34"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Lifespan in days&quot;</span>,</span>
-<span id="cb435-35"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Thorax&quot;</span>,</span>
-<span id="cb435-36"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Female exposure&quot;</span>)<span class="sc">+</span></span>
-<span id="cb435-37"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
-<span id="cb435-38"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb435-39"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
-<span id="cb435-40"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic</span>(fruitfly_pic, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">x =</span> <span class="fl">0.7</span>, <span class="at">y =</span> <span class="dv">80</span>, <span class="at">ysize =</span> <span class="dv">10</span>)</span>
-<span id="cb435-41"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-42"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-43"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-44"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-44" aria-hidden="true" tabindex="-1"></a>layout <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb435-45"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-45" aria-hidden="true" tabindex="-1"></a><span class="st">AAA#</span></span>
-<span id="cb435-46"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-46" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC</span></span>
-<span id="cb435-47"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-47" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC</span></span>
-<span id="cb435-48"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-48" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC&quot;</span></span>
-<span id="cb435-49"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-50"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb435-51"><a href="complexity-in-linear-models---spring-week-seven.html#cb435-51" aria-hidden="true" tabindex="-1"></a>marginal1<span class="sc">+</span>model_plot<span class="sc">+</span>marginal2 <span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">design =</span> layout)</span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-1" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot of thorax length by treatment</span></span>
+<span id="cb436-2"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-2" aria-hidden="true" tabindex="-1"></a>marginal1 <span class="ot">&lt;-</span> fruitfly <span class="sc">%&gt;%</span> </span>
+<span id="cb436-3"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb436-4"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> thorax, <span class="at">fill =</span> type),</span>
+<span id="cb436-5"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb436-6"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb436-7"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
+<span id="cb436-8"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb436-9"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-10"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-10" aria-hidden="true" tabindex="-1"></a><span class="co"># density plot of longevity by treatment</span></span>
+<span id="cb436-11"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-11" aria-hidden="true" tabindex="-1"></a>marginal2 <span class="ot">&lt;-</span> fruitfly <span class="sc">%&gt;%</span> </span>
+<span id="cb436-12"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb436-13"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> longevity, <span class="at">fill =</span> type),</span>
+<span id="cb436-14"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb436-15"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb436-16"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
+<span id="cb436-17"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span>
+<span id="cb436-18"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-19"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-20"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-20" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new dataset where all sleep values are set to a constant (mean) values - see the emmeans table</span></span>
+<span id="cb436-21"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-22"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-22" aria-hidden="true" tabindex="-1"></a>fruitfly_2 <span class="ot">&lt;-</span> fruitfly <span class="sc">%&gt;%</span> </span>
+<span id="cb436-23"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sleep =</span> <span class="fu">mean</span>(sleep))</span>
+<span id="cb436-24"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-25"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-25" aria-hidden="true" tabindex="-1"></a><span class="co"># use the final model to produce model predictions set to the new constant sleep dataframe</span></span>
+<span id="cb436-26"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-26" aria-hidden="true" tabindex="-1"></a>model_plot <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">augment</span>(flyls2, <span class="at">newdata =</span> fruitfly_2, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb436-27"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>thorax, <span class="at">y =</span> .fitted, <span class="at">colour =</span> type, <span class="at">fill =</span> type))<span class="sc">+</span></span>
+<span id="cb436-28"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lower, <span class="at">ymax=</span>.upper), <span class="at">alpha =</span> <span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb436-29"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
+<span id="cb436-30"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> fruitfly, <span class="fu">aes</span>(<span class="at">x =</span> thorax, <span class="at">y =</span> longevity),</span>
+<span id="cb436-31"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
+<span id="cb436-32"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb436-33"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colours)<span class="sc">+</span></span>
+<span id="cb436-34"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Lifespan in days&quot;</span>,</span>
+<span id="cb436-35"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Thorax&quot;</span>,</span>
+<span id="cb436-36"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">&quot;Female exposure&quot;</span>)<span class="sc">+</span></span>
+<span id="cb436-37"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
+<span id="cb436-38"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb436-39"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)<span class="sc">+</span></span>
+<span id="cb436-40"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_phylopic</span>(fruitfly_pic, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">x =</span> <span class="fl">0.7</span>, <span class="at">y =</span> <span class="dv">80</span>, <span class="at">ysize =</span> <span class="dv">10</span>)</span>
+<span id="cb436-41"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-42"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-43"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-44"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-44" aria-hidden="true" tabindex="-1"></a>layout <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb436-45"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-45" aria-hidden="true" tabindex="-1"></a><span class="st">AAA#</span></span>
+<span id="cb436-46"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-46" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC</span></span>
+<span id="cb436-47"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-47" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC</span></span>
+<span id="cb436-48"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-48" aria-hidden="true" tabindex="-1"></a><span class="st">BBBC&quot;</span></span>
+<span id="cb436-49"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-50"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb436-51"><a href="complexity-in-linear-models---spring-week-seven.html#cb436-51" aria-hidden="true" tabindex="-1"></a>marginal1<span class="sc">+</span>model_plot<span class="sc">+</span>marginal2 <span class="sc">+</span><span class="fu">plot_layout</span>(<span class="at">design =</span> layout)</span></code></pre></div>
 </div>
 </div>
 <div class="footnotes">
@@ -1230,7 +1271,8 @@ sleep
 <li id="fn11"><p><a href="https://www.nature.com/articles/s41467-017-00087-5#" class="uri">https://www.nature.com/articles/s41467-017-00087-5#</a>:~:text=In%20this%20study%2C%20we%20show,but%20aroused%20females%20sleep%20more<a href="complexity-in-linear-models---spring-week-seven.html#fnref11" class="footnote-back">↩︎</a></p></li>
 <li id="fn12"><p><a href="https://www.qualtrics.com/support/stats-iq/analyses/regression-guides/interpreting-residual-plots-improve-regression/" class="uri">https://www.qualtrics.com/support/stats-iq/analyses/regression-guides/interpreting-residual-plots-improve-regression/</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref12" class="footnote-back">↩︎</a></p></li>
 <li id="fn13"><p><a href="https://easystats.github.io/performance/reference/check_collinearity.html" class="uri">https://easystats.github.io/performance/reference/check_collinearity.html</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p><a href="https://jacintak.github.io/post/2021-08-01-rphylopic/" class="uri">https://jacintak.github.io/post/2021-08-01-rphylopic/</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p><a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00863/full" class="uri">https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00863/full</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref14" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p><a href="https://jacintak.github.io/post/2021-08-01-rphylopic/" class="uri">https://jacintak.github.io/post/2021-08-01-rphylopic/</a><a href="complexity-in-linear-models---spring-week-seven.html#fnref15" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

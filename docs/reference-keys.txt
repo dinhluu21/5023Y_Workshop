@@ -32,6 +32,7 @@ fig:unnamed-chunk-512
 fig:unnamed-chunk-513
 tab:unnamed-chunk-521
 tab:unnamed-chunk-527
+fig:unnamed-chunk-530
 introduction
 approach-and-style
 teaching
@@ -335,10 +336,11 @@ model-selection
 posthoc
 write-up
 summary-8
+checklist
 supplementary-code
 generalized-linear-models
 maximum-likelihood-and-generalized-linear-models
 boxcox-1
 transformations
 distributions-1
-checklist
+checklist-1

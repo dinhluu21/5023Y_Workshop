@@ -208,7 +208,7 @@ With a slight curvature this could indicate that you *might* get a better fit wi
 
 </details>
 
-<details><summary>**Question - Are the residuals normally distributed?**</summary>
+<details><summary>**Question - ARE the residuals normally distributed?**</summary>
 
 Yes - the QQplot looks pretty good, a very minor indication of a right skew, but nothing to worry about. 
 
@@ -253,7 +253,7 @@ The most common issues when trying to fit simple linear regression models is tha
     
 * Generalized Linear Models (GLMs) to change the error structure (i.e the assumption that residuals need to be normal - see next week.)
 
-### Boxcox
+### BoxCox
 
 ```{block, type="rmdnote"}
 The BoxCox gets its name from its two inventors, George Box and David Cox. 
@@ -279,7 +279,7 @@ box %>%
 
 ```
 
-```{r}
+```{r, fig.cap = "standard curve fitted by maximum likelihood, dashed lines represent the 95% confidence interval range for picking the 'best' transformation for the dependent variable"}
 # run this, pick a transformation and retest the model fit
 MASS::boxcox(flyls1)
 
@@ -329,14 +329,29 @@ flyls2 <- lm(longevity ~ type + thorax + sleep, data = fruitfly)
 drop1(flyls2, test = "F")
 
 ```
+```
+Single term deletions
+
+Model:
+longevity ~ type + thorax + sleep
+       Df Sum of Sq   RSS    AIC  F value    Pr(>F)    
+<none>              15125 609.47                       
+type    2    7576.9 22701 656.23  30.0578 2.617e-11 ***
+thorax  1   15282.8 30407 694.77 121.2556 < 2.2e-16 ***
+sleep   1      86.3 15211 608.18   0.6846    0.4097    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
 
 <details><summary>**Question - Should we drop sleep from this model?**</summary>
 
-There is good reason to remove non-significant interactions from a model, they complicate estimates and make interpretations more difficult. For main effects things are a little more ambiguous. 
+There is good reason to remove non-significant *interaction terms* from a model, they complicate estimates and make interpretations more difficult. For **main** effects things are a little more ambiguous. 
 
 When the main aim is prediction, it makes sense to be cautious and retain non-significant terms, as extra terms make no difference to the R^2 of a model. 
 
-When the focus is on hypothesis testing, then removal of non-significant terms can help produce a 'true' model, but this is optional. Generally speaking it is simpler to leave main effects in the model (you should have carefully considered the terms which were included in the first place). 
+When the focus is on hypothesis testing, then removal of non-significant terms can help produce a 'true' model, but this is optional. Generally speaking it is often simpler to leave main effects in the model (you should have carefully considered the terms which were included in the first place). 
+
+In this example we can also see that AIC has not really changed - so the quality of the model is also not improved vby dropping this term. 
 
 </details>
 
@@ -394,11 +409,15 @@ kbl(col.names = c("Predictors",
    kable_styling(full_width = FALSE, font_size=16)
 ```
 
-There was a significant overall effect of treatment on male longevity (F~2,120~ = 30.1, P < 0.001), with males paired to virgin females having the lowest mean longevity (48 days, [95%CI: 44.9 - 51.2]) (when holding body size and sleep constant), compared to control males (61.3 days [56.8 - 65.8]) and males paired with inseminated females (64.9 days [61.8 - 68.1 days]). 
+There was a significant overall effect of treatment on male longevity (Linear model: F~2,120~ = 30.1, P < 0.001), with males paired to virgin females having the lowest mean longevity (48 days, [95%CI: 44.9 - 51.2]) (when holding body size and sleep constant), compared to control males (61.3 days [56.8 - 65.8]) and males paired with inseminated females (64.9 days [61.8 - 68.1 days]). 
 
-Post hoc analysis showed that these differences were statistically significant for males paired with control females compared to the inseminated (t~120~ = 4.8, P < 0.001)  and virgin groups (t~120~ = 7.5, P < 0.001), but there was no overall evidence of a difference between inseminated and virgin groups (t~120~ = -1.309  P < 0.3929). 
+Post hoc analysis showed that these differences were statistically significant for males paired with control females compared to the inseminated (Tukey test: t~120~ = 4.8, P < 0.001)  and virgin groups (t~120~ = 7.5, P < 0.001), but there was no overall evidence of a difference between inseminated and virgin groups (t~120~ = -1.309  P < 0.3929) (Figure 19.4). 
 
-Comparing the treatment effects against other predictors of longevity such as body size and sleep, I found that sleep had a very small effect on longevity (mean change -0.05 days [-0.18 - 0.07]) which was not significantly different from no effect (F~1,120~ = 0.68, P = 0.41). Body size (taken from thorax length) was a significant predictor of longevity (F~1,120~ = 121, P < 0.001), with each 0.1 mm increase in body size adding 14.4 days to the individual lifespan [11.8 - 17]. The effect of body size was roughly twice the size (Cohen's d = 2.01) of the treatment effects (Cohen's d = 0.82), indicating that while there is a measurable cost of sexual activity to males, it may be substantially lower than other drivers of lifespan such as body size. 
+Comparing the treatment effects against other predictors of longevity such as body size and sleep, I found that sleep had a very small effect on longevity (mean change -0.05 days [-0.18 - 0.07]) which was not significantly different from no effect (Linear model: F~1,120~ = 0.68, P = 0.41). Body size (taken from thorax length) was a significant predictor of longevity (F~1,120~ = 121, P < 0.001), with each 0.1 mm increase in body size adding 14.4 days to the individual lifespan [11.8 - 17]. It appears as though body size has a stronger effect on longevity than treatment, indicating that while there is a measurable cost of sexual activity to males, it may be less severe than in females (not compared here), and less severe than other measurable predictors. 
+
+> Note - there are formal measures of partial effect sizes for complex linear models, but they are not often reported in papers, and become increasingly complicated to produce and ensure they are robust, so I have not tried to compute these here.^[https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00863/full]
+
+> Note - for the effect of thorax, I could also have reported t from the summary - as it is a single `level`, continuous effect so here F = t^2. 
 
 ```{r, echo = F, eval = TRUE}
 
@@ -435,7 +454,7 @@ flyls2 %>%
 
 ```
 
-```{r, echo = F, eval = TRUE, message = F, warning = F, fig.cap = ""}
+```{r, echo = F, eval = TRUE, message = F, warning = F, fig.cap = " A scatter plot of longevity against body size across three treatments of differening male sexual activity. Fitted model slopes are from the reduced linear model (main effects only of thorax size, sleep and treatment group), with 95% confidence intervals, circles are individual data points. Marginal plots are density plot distributions for thorax length and longevity split by treatments."}
 
 # density plot of thorax length by treatment
 marginal1 <- fruitfly %>% 
@@ -471,8 +490,8 @@ model_plot <- broom::augment(flyls2, newdata = fruitfly_2, interval = "confidenc
   scale_colour_manual(values = colours)+
   scale_fill_manual(values = colours)+
   labs(y = "Lifespan in days",
-       x = "Thorax",
-       fill = "Female exposure")+
+       x = "Thorax length (mm)",
+       fill = "Type of female exposure")+
   guides(colour = "none")+
   theme_classic()+
   theme(legend.position = "none")+
@@ -495,6 +514,29 @@ marginal1+model_plot+marginal2 +plot_layout(design = layout)
 
 
 ## Summary
+
+In this chapter we have worked with our scientific knowledge to develop testable hypotheses and built statistical models to formally assess them. We now have a working pipeline for tackling complex datasets, developing insights and producing and explaining robust linear models. 
+
+### Checklist
+
+* Think carefully about the hypotheses to test, use your scientific knowledge and background reading to support this
+
+* Import, clean and understand your dataset: use data visuals to investigate trends and determine if there is clear support for your hypotheses
+
+* Fit a linear model, including interaction terms with caution
+
+* Investigate the fit of your model, understand that parameters may never be perfect, but that classic patterns in residuals may indicate a poorly fitting model - sometimes this can be fixed with careful consideration of missing variables or through data transformation
+
+* Test the removal of any interaction terms from a model, look at AIC and significance tests
+
+* Make sure you understand the output of a model summary, sense check this against the graphs you have made
+
+* The direction and size of any effects are the priority - produce estimates and uncertainties. Make sure the observations are clear.
+
+* Write-up your significance test results, taking care to report not just significance (and all required parts of a significance test). Do you know *what* to report? Within a complex model - reporting *t* will indicate the slope of the line for that single term against the intercept, *F* is the overall effect of a predictor across all levels, *post-hoc* if you wish to compare across all levels. 
+
+* Well described tables and figures can enhance your results sections - take the time to make sure these are informative and attractive. 
+
 
 ## Supplementary code
 
@@ -624,6 +666,11 @@ marginal1+model_plot+marginal2 +plot_layout(design = layout)
 # Generalized Linear Models
 
 ## Maximum Likelihood and Generalized Linear Models
+
+```{r, echo = F}
+eta_squared(aov(flyls1, test= "Chisq")) # partial eta for glms
+
+```
 
 ### BoxCox
 
