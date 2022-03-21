@@ -339,17 +339,6 @@ summary-8
 checklist
 supplementary-code
 generalized-linear-models
-maximum-likelihood-and-generalized-linear-models
-boxcox-1
-transformations
-distributions-1
-checklist-1
-fig:unnamed-chunk-6
-fig:unnamed-chunk-7
-fig:unnamed-chunk-8
-tab:unnamed-chunk-16
-tab:unnamed-chunk-22
-fig:unnamed-chunk-25
 motivation
 generalised-linear-models-glms
 workflow-for-fitting-a-glm
@@ -359,7 +348,8 @@ estimates-and-intervals
 interpretation
 overdispersion
 logistic-regression-for-binary-data
-probability-from-a-binomial-model
+interpreting-model-coefficients
+emmeans
 changes-in-probability
 predictions
 assumptions-1

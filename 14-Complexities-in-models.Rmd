@@ -685,7 +685,7 @@ If assumptions 1-3 are violated we can often *transform* our response variable
 to try and fix this (Box-Cox & transformation).
 However, in a lot of other cases this is either not possible (e.g binary output) 
 or we want to explicitly model the underlying distribution (e.g count data). 
-Instead, we can use *Generalised* Linear Models (GLMs) that let us change the *error structure* (assumption 3) to something other than a normal distribution.
+Instead, we can use *Generalized* Linear Models (GLMs) that let us change the *error structure* (assumption 3) to something other than a normal distribution.
 
 ## Generalised Linear Models (GLMs)
 
@@ -865,7 +865,7 @@ The **Poisson** distribution has the following characteristics:
 * **Mean** = $\lambda$  
 * **Variance** = $\lambda$
 
-So we model the variance as equal to the mean - as the mean increases so does the mean. 
+So we model the variance as equal to the mean - as the mean increases so does the variance. 
 
 ```{r, eval = T, echo=F}
 #cols <- c("#F4ABAB", "#91CDF2", "#5AA566", "#A57C42")
@@ -888,7 +888,7 @@ So for the Poisson regression case we assume that the mean and variance are the 
 Hence, as the mean *increases*, the variance *increases* also (**heteroscedascity**).
 This may or may not be a sensible assumption so watch out! Just because a Poisson distribution *usually* fits well for count data, doesn't mean that a Gaussian distribution *can't* always work.
 
-Recall the link function between the predictors and the mean and the rules of logarithms (if $\log{\lambda} = k$, then $\lambda = e^k$):
+Recall the link function between the predictors and the mean and the rules of logarithms (if $\log{\lambda} = k$(value of predictors), then $\lambda = e^k$):
 
 $$
 \begin{aligned}
@@ -971,7 +971,9 @@ cuckoo_ls1 <- lm(Beg ~ Mass+Species+Mass:Species, data=cuckoo)
 ```
 
 ```{r, eval = T}
-performance::check_model(cuckoo_ls1)
+performance::check_model(cuckoo_ls1, 
+                         check = c("homogeneity",
+                                   "qq"))
 ```
 
 
@@ -1017,7 +1019,6 @@ $$
 \begin{aligned}
     \log{\lambda} & = \beta_0 + \beta_1 M_i + (\beta_2 \times 1)  + (\beta_3 \times M_i \times 1)\\
     \log{\lambda} & = \beta_0 + \beta_1 M_i + \beta_2 + \beta_3M_i\\
- 
 \end{aligned}
 $$
 
@@ -1048,7 +1049,7 @@ ggplot(aes(x=Mass, y=.fitted, colour=Species)) +
 
 ```
 
-We get an exponential curve in the scale of the original data, which is the **same** as a straight line in the log-scaled version of the data. So if we fit the same model without specifying `type.predict = "response"`  Then we get the fitted generalized linear response.
+We get an exponential curve in the scale of the original data, which is the **same** as a straight line in the log-scaled version of the data. So if we fit the same model without specifying `type.predict = "response"`  Then we get the fitted generalized linear response (Y is on a log scale).
 
 ```{r, eval = TRUE}
 broom::augment(cuckoo_glm1) %>% 
@@ -1103,13 +1104,13 @@ Number of Fisher Scoring iterations: 6
 
 A reminder of how to interpret the regression coefficients of a model with an interaction term
 
-- Intercept = $\beta 0$ (intercept for the **reference\baseline** so here the **log** of the mean number of begging calls for **cuckoos** when mass = 0)
+* Intercept = $\beta 0$ (intercept for the **reference or baseline** so here the **log** of the mean number of begging calls for **cuckoos** when mass is 0)
 
-- Mass = $\beta1$ (slope: the change in the **log** mean count of begging calls for every gram of bodyweight for **cuckoos**)
+* Mass = $\beta1$ (slope: the change in the **log** mean count of begging calls for every gram of bodyweight for **cuckoos**)
 
-- SpeciesWarbler = $\beta2$ (the **log** mean increase/decrease in begging call rate of the **warblers** relative to cuckoos) 
+* SpeciesWarbler = $\beta2$ (the **log** mean increase/decrease in begging call rate of the **warblers** relative to cuckoos) 
 
-- Mass:SpeciesWarbler =$\beta3$ (the **log** mean increase/decrease in the **slope** for **warblers** relative to cuckoos)
+* Mass:SpeciesWarbler =$\beta3$ (the **log** mean increase/decrease in the **slope** for **warblers** relative to cuckoos)
 
 > Note - because this is a Poisson distribution where variance is fixed with the mean we are using z scores. Estimates are on a log scale because of the link function - this means so are any S.E. or confidence intervals
 
@@ -1147,7 +1148,14 @@ broom::tidy(cuckoo_glm1,
 
 ### Interpretation
 
-It is **very important** to remember whether you are describing the results on the log-link scale or the original scale. It would usually make more sense to provide answers on the original scale, but this means you must first exponentiate the relationshio between response predictors as described above when writing the results. 
+It is **very important** to remember whether you are describing the results on the log-link scale or the original scale. It would usually make more sense to provide answers on the original scale, but this means you must first exponentiate the relationship between response predictors as described above when writing the results. 
+
+```{block, type = "rmdwarning"}
+The default coefficients from the model summary are on a log scale, and are additive as such these can be added and subtracted from each other (just like ordinary least squares regression) to work out log-estimates. 
+BUT if you exponentiate the terms of the model you get values on the 'response' scale, but these are now changes in 'rate' and are multiplicative. 
+
+Also remember that as Poisson models have 'fixed variance' z- and Chisquare distributions are used instead of t- and F.
+```
 
 In this example we wished to infer the relationship between begging rates and mass in these two species. 
 
@@ -1243,7 +1251,7 @@ $$
 * **Mean** = $p$  
 * **Variance** = $p(1 - p)$
 
-```{r bernplot, echo=F, fig.width=9, fig.height=3}
+```{r bernplot, echo=F, eval = T, fig.width=9, fig.height=3}
 par(mfrow = c(1, 3))
 x <- 0:1
 p <- c(0.1, 0.5, 0.8)
@@ -1299,6 +1307,10 @@ To implement the logistic regression model in R, we choose `family=binomial(link
 
 ```
 glm(response ~ explanatory, family=binomial(link=logit))
+```
+
+```{r, eval=TRUE, echo=FALSE, out.width="80%", fig.alt= "Space shuttle at launch"}
+knitr::include_graphics("images/space-shuttle.jpg")
 ```
 
 [The Challenger Disaster](https://en.wikipedia.org/wiki/Space_Shuttle_Challenger_disaster#O-ring_concerns)
@@ -1408,7 +1420,36 @@ When the temperature is 0&deg;F the mean *log-odds* are 23.77 [95%CI: 7.24-	58.1
 
 For every rise in the temperature by 1&deg;F, the *log-odds* of a critical incident fall by 0.37.
 
-### Probability from a binomial model
+### Interpreting model coefficients
+
+We first consider why we are dealing with odds  $\frac{p}{1-p}$ instead of just $p$. They contain the same information, so the choice is somewhat arbitrary, however we’ve been using probabilities for so long that it feels unnatural to switch to odds. There are good reasons for this, however. Odds  $\frac{p}{1-p}$ can take on any value from 0 to ∞ and so part of our translation of $p$ to an unrestricted domain is already done ($P$ is restricted to 0-1). Take a look at some examples below: 
+
++----------------+-------------------------------------------+------------------------+
+|  Probability   |               Odds                        |      Verbiage          |
++================+===========================================+========================+
+|   $p=.95$      |  $\frac{95}{5} = \frac{19}{1} = 19$       |   19 to 1 odds for     |
++----------------+-------------------------------------------+------------------------+
+|   $p=.75$      |  $\frac{75}{25} = \frac{3}{1} = 3$        |   3 to 1 odds for      |
++----------------+-------------------------------------------+------------------------+
+|   $p=.50$      |  $\frac{50}{50} = \frac{1}{1} = 1$        |   1 to 1 odds          |
++----------------+-------------------------------------------+------------------------+
+|   $p=.25$      |  $\frac{25}{75} = \frac{1}{3} = 0.33$     |  3 to 1 odds against   |
++----------------+-------------------------------------------+------------------------+
+|   $p=.05$      |  $\frac{95}{5}  = \frac{1}{19} = 0.0526$  |  19 to 1 odds against  |
++----------------+-------------------------------------------+------------------------+
+
+When we use a binomial model, we produce the 'log-odds', this produces a fully unconstrained linear regression as anything less than 1, can now occupy an infinite negative value -∞ to ∞. 
+
+$$\log\left(\frac{p}{1-p}\right)	=	\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}
+$$
+
+$$\frac{p}{1-p}	=	e^{\beta_{0}}e^{\beta_{1}x_{1}}e^{\beta_{2}x_{2}}
+$$
+We can interpret $\beta_{1}$ and $\beta_{2}$ as the increase in the log odds for every unit increase in $x_{1}$ and $x_{2}$. We could alternatively interpret $\beta_{1}$ and $\beta_{2}$ using the notion that a one unit change in $x_{1}$ as a percent change of $e^{\beta_{1}}$ in the odds. That is to say, $e^{\beta_{1}}$ is the odds ratio of that change. 
+
+If you want to find out more about [Odds and log-odds head here](https://www.youtube.com/watch?v=8nm0G-1uJzA)
+
+### Emmeans
 
 If we use the `emmeans()` function it will convert *log-odds* to estimate the probability of o-ring failure at the mean value of x (temperature).
 But how does it do this?
@@ -1426,11 +1467,13 @@ $$
 Which produces the following result and we can confirm the risk of an o-ring failure on an *average* day is 0.15
 
 ```{r}
-estimate_at_69.6 <- exp(coef(binary_model)[1]+coef(binary_model)[2]*69.6)
+odds_at_69.6 <- exp(coef(binary_model)[1]+coef(binary_model)[2]*69.6)
+# To convert from odds to a probability, divide the odds by one plus the odds
 
-estimate_at_69.6/(1+estimate_at_69.6)
-
+probability <-  odds_at_69.6/(1+odds_at_69.6)
+probability
 ```
+
 
 ### Changes in probability
 
@@ -1467,11 +1510,31 @@ augment_glm(binary_model)
 
 ```
 
+```{r, echo  = FALSE, eval = TRUE}
+augment_glm <- function(mod, predict = NULL){
+  fam <- family(mod)
+  ilink <- fam$linkinv
+  
+  broom::augment(mod, newdata = predict, se_fit=T)%>%
+    mutate(.lower = ilink(.fitted - 1.96*.se.fit),
+           .upper = ilink(.fitted + 1.96*.se.fit), 
+           .fitted=ilink(.fitted))
+}
+
+
+```
+
+Alternatively we can also do this calculation via emmeans
+
+```{r}
+emmeans::emmeans(binary_model, specs = ~ temp, at=list(temp=c(66:27)), type='response') 
+
+```
 
 <details><summary>**EXERCISE - Use the augment_glm function to make a ggplot of the changing probability of O-ring failure with temperature**</summary>
 
 
-```{r}
+```{r, eval = T}
 
 augment_glm(binary_model) %>% 
   ggplot(aes(x=temp, y=oring_binary))+geom_line(aes(x=temp, y=.fitted))+
@@ -1522,7 +1585,11 @@ All analyses were carried out in R (ver 4.1.3) (R Core Team 2021) with the follo
 
 Results: I found a significant negative relationship between temperature and probability of o-ring failure (logit-odds = -0.37 [95%CI: -0.88 - -0.12], *z* = -2.1, d.f = 21, *P* = 0.036). At an average temperature of 69.6&deg;F the probability of o-ring failure was estimated at 0.15[0.03-0.45], but this rose to a near certainty of failure 0.99[0.43-1] at 36&deg;F.
 
->Note you could use drop1( test = "Chisq") here, but as there is only one, continuous variable, we can also report directly from the summary table. 
+> Note you could use drop1( test = "Chisq") here, but as there is only one, continuous variable, we can also report directly from the summary table. 
+
+```{r}
+drop1(binary_model, test="Chisq")
+```
 
 ## Summary
 
@@ -1536,10 +1603,39 @@ Extensions include:
 
 * **mixed models**;
 * **survival models**;
-* **generalised additive models** (GAMs).
+* **generalized additive models** (GAMs).
 
+For more information on Poisson and Binomial GLMs check out:
+
+https://bookdown.org/dereksonderegger/571/11-binomial-regression.html#confidence-intervals-1
+
+
+https://bookdown.org/ronsarafian/IntrotoDS/glm.html#poisson-regression
 
 ## Final checklist
 
+* Think carefully about the hypotheses to test, use your scientific knowledge and background reading to support this
+
+* Import, clean and understand your dataset: use data visuals to investigate trends and determine if there is clear support for your hypotheses
+
+* **Decide on the appropriate error structure for your model (Gaussian = continuous, Poisson = count, Binomial = binary)**
+
+* **Start with canonical link functions, but these can be altered if needed**
+
+* Fit a (generalized) linear model, including interaction terms with caution
+
+* Investigate the fit of your model, understand that parameters may never be perfect, but that classic patterns in residuals may indicate a poorly fitting model - sometimes this can be fixed with careful consideration of missing variables or through data transformation
+
+* **Check for overdispersion in Poisson models where variance is not estimated, but expected to be equal to the mean - may have to use quasi-likelihood fitting** 
+
+* Test the removal of any interaction terms from a model, look at AIC and significance tests (Remember test = "F" for Gaussian and Quasilikelihood models, "Chisq" for Poisson and Binomial models)
+
+* Make sure you understand the output of a model summary, sense check this against the graphs you have made - Do estimates need converting back to the original response scale?
+
+* The direction and size of any effects are the priority - produce estimates and uncertainties. Make sure the observations are clear.
+
+* Write-up your significance test results, taking care to report not just significance (and all required parts of a significance test). Do you know *what* to report? Within a complex model - reporting *t/z* will indicate the slope of the line for that single term against the intercept, *F/Chi* is the overall effect of a predictor across all levels, *post-hoc* if you wish to compare across all levels. 
+
+* Well described tables and figures can enhance your results sections - take the time to make sure these are informative and attractive. 
 
 

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 16 Generalized Linear Models | Data Science for Biologists - 5023Y</title>
+  <title>Chapter 20 Generalized Linear Models | Data Science for Biologists - 5023Y</title>
   <meta name="description" content="This is very brief introduction to some of the basic skills required to learn R" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 16 Generalized Linear Models | Data Science for Biologists - 5023Y" />
+  <meta property="og:title" content="Chapter 20 Generalized Linear Models | Data Science for Biologists - 5023Y" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 16 Generalized Linear Models | Data Science for Biologists - 5023Y" />
+  <meta name="twitter:title" content="Chapter 20 Generalized Linear Models | Data Science for Biologists - 5023Y" />
   
   <meta name="twitter:description" content="This is very brief introduction to some of the basic skills required to learn R" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Philip Leftwich" />
 
 
-<meta name="date" content="2022-03-18" />
+<meta name="date" content="2022-03-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -58,6 +58,13 @@
 <link href="libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
 <link href="libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
 <script src="libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
@@ -129,6 +136,28 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -376,242 +405,255 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.7.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#more-than-one-grouping-variable"><i class="fa fa-check"></i><b>8.7.4</b> More than one grouping variable<span></span></a></li>
 <li class="chapter" data-level="8.7.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#remove-group_by"><i class="fa fa-check"></i><b>8.7.5</b> remove group_by<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.8" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#expanding-the-data-toolkit"><i class="fa fa-check"></i><b>8.8</b> Expanding the data toolkit<span></span></a></li>
-<li class="chapter" data-level="8.9" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#pipes"><i class="fa fa-check"></i><b>8.9</b> Pipes<span></span></a></li>
-<li class="chapter" data-level="8.10" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#strings"><i class="fa fa-check"></i><b>8.10</b> Strings<span></span></a>
-<ul>
-<li class="chapter" data-level="8.10.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#separate"><i class="fa fa-check"></i><b>8.10.1</b> separate<span></span></a></li>
-<li class="chapter" data-level="8.10.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#more-stringr"><i class="fa fa-check"></i><b>8.10.2</b> More stringr<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.11" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#dates-and-times"><i class="fa fa-check"></i><b>8.11</b> Dates and times<span></span></a>
+<li class="chapter" data-level="9" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html"><i class="fa fa-check"></i><b>9</b> Dealing with data part 2: Week Nine<span></span></a>
 <ul>
-<li class="chapter" data-level="8.11.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#calculations-with-dates"><i class="fa fa-check"></i><b>8.11.1</b> Calculations with dates<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.12" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#pivot"><i class="fa fa-check"></i><b>8.12</b> Pivot<span></span></a></li>
-<li class="chapter" data-level="8.13" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summing-up-1"><i class="fa fa-check"></i><b>8.13</b> Summing up<span></span></a>
+<li class="chapter" data-level="9.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#expanding-the-data-toolkit"><i class="fa fa-check"></i><b>9.1</b> Expanding the data toolkit<span></span></a></li>
+<li class="chapter" data-level="9.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pipes"><i class="fa fa-check"></i><b>9.2</b> Pipes<span></span></a></li>
+<li class="chapter" data-level="9.3" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#strings"><i class="fa fa-check"></i><b>9.3</b> Strings<span></span></a>
 <ul>
-<li class="chapter" data-level="8.13.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#what-we-learned-4"><i class="fa fa-check"></i><b>8.13.1</b> What we learned<span></span></a></li>
-<li class="chapter" data-level="8.13.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#further-reading-guides-and-tips-3"><i class="fa fa-check"></i><b>8.13.2</b> Further Reading, Guides and tips<span></span></a></li>
+<li class="chapter" data-level="9.3.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#separate"><i class="fa fa-check"></i><b>9.3.1</b> separate<span></span></a></li>
+<li class="chapter" data-level="9.3.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#more-stringr"><i class="fa fa-check"></i><b>9.3.2</b> More stringr<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.14" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#variables"><i class="fa fa-check"></i><b>8.14</b> Variables<span></span></a>
+<li class="chapter" data-level="9.4" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#dates-and-times"><i class="fa fa-check"></i><b>9.4</b> Dates and times<span></span></a>
 <ul>
-<li class="chapter" data-level="8.14.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#numerical"><i class="fa fa-check"></i><b>8.14.1</b> Numerical<span></span></a></li>
-<li class="chapter" data-level="8.14.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#categorical"><i class="fa fa-check"></i><b>8.14.2</b> Categorical<span></span></a></li>
+<li class="chapter" data-level="9.4.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#calculations-with-dates"><i class="fa fa-check"></i><b>9.4.1</b> Calculations with dates<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.15" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#understanding-numerical-variables"><i class="fa fa-check"></i><b>8.15</b> Understanding Numerical variables<span></span></a>
+<li class="chapter" data-level="9.5" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#pivot"><i class="fa fa-check"></i><b>9.5</b> Pivot<span></span></a></li>
+<li class="chapter" data-level="9.6" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#summing-up-1"><i class="fa fa-check"></i><b>9.6</b> Summing up<span></span></a>
 <ul>
-<li class="chapter" data-level="8.15.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#graphing-a-numeric-variable"><i class="fa fa-check"></i><b>8.15.1</b> Graphing a numeric variable<span></span></a></li>
-<li class="chapter" data-level="8.15.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#insights-about-body-mass"><i class="fa fa-check"></i><b>8.15.2</b> Insights about body mass<span></span></a></li>
+<li class="chapter" data-level="9.6.1" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#what-we-learned-4"><i class="fa fa-check"></i><b>9.6.1</b> What we learned<span></span></a></li>
+<li class="chapter" data-level="9.6.2" data-path="dealing-with-data-part-2-week-nine.html"><a href="dealing-with-data-part-2-week-nine.html#further-reading-guides-and-tips-3"><i class="fa fa-check"></i><b>9.6.2</b> Further Reading, Guides and tips<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.16" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#descriptive-statistics"><i class="fa fa-check"></i><b>8.16</b> Descriptive statistics<span></span></a>
+</ul></li>
+<li class="chapter" data-level="10" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html"><i class="fa fa-check"></i><b>10</b> Deeper data insights part 1: Week Ten<span></span></a>
 <ul>
-<li class="chapter" data-level="8.16.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#central-tendency"><i class="fa fa-check"></i><b>8.16.1</b> Central tendency<span></span></a></li>
-<li class="chapter" data-level="8.16.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#dispersion"><i class="fa fa-check"></i><b>8.16.2</b> Dispersion<span></span></a></li>
-<li class="chapter" data-level="8.16.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#visualising-dispersion"><i class="fa fa-check"></i><b>8.16.3</b> Visualising dispersion<span></span></a></li>
-<li class="chapter" data-level="8.16.4" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#combining-histograms-and-boxplots"><i class="fa fa-check"></i><b>8.16.4</b> Combining histograms and boxplots<span></span></a></li>
-<li class="chapter" data-level="8.16.5" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#missing-values"><i class="fa fa-check"></i><b>8.16.5</b> Missing values<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="8.17" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#categorical-variables"><i class="fa fa-check"></i><b>8.17</b> Categorical variables<span></span></a>
+<li class="chapter" data-level="10.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#variables"><i class="fa fa-check"></i><b>10.1</b> Variables<span></span></a>
 <ul>
-<li class="chapter" data-level="8.17.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summaries"><i class="fa fa-check"></i><b>8.17.1</b> Summaries<span></span></a></li>
+<li class="chapter" data-level="10.1.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#numerical"><i class="fa fa-check"></i><b>10.1.1</b> Numerical<span></span></a></li>
+<li class="chapter" data-level="10.1.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical"><i class="fa fa-check"></i><b>10.1.2</b> Categorical<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.18" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summing-up-2"><i class="fa fa-check"></i><b>8.18</b> Summing up<span></span></a>
+<li class="chapter" data-level="10.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#understanding-numerical-variables"><i class="fa fa-check"></i><b>10.2</b> Understanding Numerical variables<span></span></a>
 <ul>
-<li class="chapter" data-level="8.18.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#reward"><i class="fa fa-check"></i><b>8.18.1</b> Reward<span></span></a></li>
+<li class="chapter" data-level="10.2.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#graphing-a-numeric-variable"><i class="fa fa-check"></i><b>10.2.1</b> Graphing a numeric variable<span></span></a></li>
+<li class="chapter" data-level="10.2.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#insights-about-body-mass"><i class="fa fa-check"></i><b>10.2.2</b> Insights about body mass<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.19" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#associations-between-numerical-variables"><i class="fa fa-check"></i><b>8.19</b> Associations between numerical variables<span></span></a>
+<li class="chapter" data-level="10.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#descriptive-statistics"><i class="fa fa-check"></i><b>10.3</b> Descriptive statistics<span></span></a>
 <ul>
-<li class="chapter" data-level="8.19.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#correlations"><i class="fa fa-check"></i><b>8.19.1</b> Correlations<span></span></a></li>
-<li class="chapter" data-level="8.19.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#non-linear-correlations"><i class="fa fa-check"></i><b>8.19.2</b> Non-linear correlations<span></span></a></li>
-<li class="chapter" data-level="8.19.3" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#graphical-summaries-between-numeric-variables"><i class="fa fa-check"></i><b>8.19.3</b> Graphical summaries between numeric variables<span></span></a></li>
+<li class="chapter" data-level="10.3.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#central-tendency"><i class="fa fa-check"></i><b>10.3.1</b> Central tendency<span></span></a></li>
+<li class="chapter" data-level="10.3.2" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#dispersion"><i class="fa fa-check"></i><b>10.3.2</b> Dispersion<span></span></a></li>
+<li class="chapter" data-level="10.3.3" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#visualising-dispersion"><i class="fa fa-check"></i><b>10.3.3</b> Visualising dispersion<span></span></a></li>
+<li class="chapter" data-level="10.3.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#combining-histograms-and-boxplots"><i class="fa fa-check"></i><b>10.3.4</b> Combining histograms and boxplots<span></span></a></li>
+<li class="chapter" data-level="10.3.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#missing-values"><i class="fa fa-check"></i><b>10.3.5</b> Missing values<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.20" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#associations-between-categorical-variables"><i class="fa fa-check"></i><b>8.20</b> Associations between categorical variables<span></span></a></li>
-<li class="chapter" data-level="8.21" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#associations-between-categorical-numerical-variables"><i class="fa fa-check"></i><b>8.21</b> Associations between Categorical-numerical variables<span></span></a></li>
-<li class="chapter" data-level="8.22" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#complexity"><i class="fa fa-check"></i><b>8.22</b> Complexity<span></span></a>
+<li class="chapter" data-level="10.4" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#categorical-variables"><i class="fa fa-check"></i><b>10.4</b> Categorical variables<span></span></a>
 <ul>
-<li class="chapter" data-level="8.22.1" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#simpsons-paradox"><i class="fa fa-check"></i><b>8.22.1</b> Simpson’s Paradox<span></span></a></li>
-<li class="chapter" data-level="8.22.2" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#three-or-more-variables"><i class="fa fa-check"></i><b>8.22.2</b> Three or more variables<span></span></a></li>
+<li class="chapter" data-level="10.4.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summaries"><i class="fa fa-check"></i><b>10.4.1</b> Summaries<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.23" data-path="dealing-with-data-dplyr-week-eight.html"><a href="dealing-with-data-dplyr-week-eight.html#summing-up-3"><i class="fa fa-check"></i><b>8.23</b> Summing up<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html"><i class="fa fa-check"></i><b>9</b> Introduction to Statistics - Spring Week One<span></span></a>
+<li class="chapter" data-level="10.5" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#summing-up-2"><i class="fa fa-check"></i><b>10.5</b> Summing up<span></span></a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#introduction-to-statistics"><i class="fa fa-check"></i><b>9.1</b> Introduction to statistics<span></span></a></li>
-<li class="chapter" data-level="9.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>9.2</b> Darwin’s maize data<span></span></a>
-<ul>
-<li class="chapter" data-level="9.2.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#description"><i class="fa fa-check"></i><b>9.2.1</b> Description<span></span></a></li>
-<li class="chapter" data-level="9.2.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#visualisation"><i class="fa fa-check"></i><b>9.2.2</b> Visualisation<span></span></a></li>
-<li class="chapter" data-level="9.2.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>9.2.3</b> Comparing groups<span></span></a></li>
+<li class="chapter" data-level="10.5.1" data-path="deeper-data-insights-part-1-week-ten.html"><a href="deeper-data-insights-part-1-week-ten.html#reward"><i class="fa fa-check"></i><b>10.5.1</b> Reward<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#estimation"><i class="fa fa-check"></i><b>9.3</b> Estimation<span></span></a>
-<ul>
-<li class="chapter" data-level="9.3.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#differences-between-groups"><i class="fa fa-check"></i><b>9.3.1</b> Differences between groups<span></span></a></li>
-<li class="chapter" data-level="9.3.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#standard-error-of-the-difference"><i class="fa fa-check"></i><b>9.3.2</b> Standard error of the difference<span></span></a></li>
-<li class="chapter" data-level="9.3.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#normal-distribution"><i class="fa fa-check"></i><b>9.3.3</b> Normal distribution<span></span></a></li>
-<li class="chapter" data-level="9.3.4" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#confidence-intervals"><i class="fa fa-check"></i><b>9.3.4</b> Confidence Intervals<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#summary"><i class="fa fa-check"></i><b>9.4</b> Summary<span></span></a></li>
-<li class="chapter" data-level="9.5" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#functions-1"><i class="fa fa-check"></i><b>9.5</b> Functions<span></span></a>
+<li class="chapter" data-level="11" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html"><i class="fa fa-check"></i><b>11</b> Deeper data insights part 2: Week Eleven<span></span></a>
 <ul>
-<li class="chapter" data-level="9.5.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#common-functions"><i class="fa fa-check"></i><b>9.5.1</b> Common functions<span></span></a></li>
-<li class="chapter" data-level="9.5.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#write-your-own-function"><i class="fa fa-check"></i><b>9.5.2</b> Write your own function<span></span></a></li>
-<li class="chapter" data-level="9.5.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#more-functions"><i class="fa fa-check"></i><b>9.5.3</b> More functions<span></span></a></li>
-<li class="chapter" data-level="9.5.4" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#exercise"><i class="fa fa-check"></i><b>9.5.4</b> Exercise<span></span></a></li>
-<li class="chapter" data-level="9.5.5" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#custom-ggplot-themes"><i class="fa fa-check"></i><b>9.5.5</b> Custom ggplot themes<span></span></a></li>
-<li class="chapter" data-level="9.5.6" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#writing-packages"><i class="fa fa-check"></i><b>9.5.6</b> Writing Packages<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="9.6" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#iteration"><i class="fa fa-check"></i><b>9.6</b> Iteration<span></span></a>
+<li class="chapter" data-level="11.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-numerical-variables"><i class="fa fa-check"></i><b>11.1</b> Associations between numerical variables<span></span></a>
 <ul>
-<li class="chapter" data-level="9.6.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>9.6.1</b> For Loops<span></span></a></li>
-<li class="chapter" data-level="9.6.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>9.6.2</b> Exercise for For Loops<span></span></a></li>
-<li class="chapter" data-level="9.6.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>9.6.3</b> Iteration in R<span></span></a></li>
+<li class="chapter" data-level="11.1.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#correlations"><i class="fa fa-check"></i><b>11.1.1</b> Correlations<span></span></a></li>
+<li class="chapter" data-level="11.1.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#non-linear-correlations"><i class="fa fa-check"></i><b>11.1.2</b> Non-linear correlations<span></span></a></li>
+<li class="chapter" data-level="11.1.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#graphical-summaries-between-numeric-variables"><i class="fa fa-check"></i><b>11.1.3</b> Graphical summaries between numeric variables<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9.7" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>9.7</b> More Practice<span></span></a></li>
-<li class="chapter" data-level="9.8" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>9.8</b> Summary<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html"><i class="fa fa-check"></i><b>10</b> Introduction to Linear Models - Spring Week Two<span></span></a>
+<li class="chapter" data-level="11.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-variables"><i class="fa fa-check"></i><b>11.2</b> Associations between categorical variables<span></span></a></li>
+<li class="chapter" data-level="11.3" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#associations-between-categorical-numerical-variables"><i class="fa fa-check"></i><b>11.3</b> Associations between Categorical-numerical variables<span></span></a></li>
+<li class="chapter" data-level="11.4" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#complexity"><i class="fa fa-check"></i><b>11.4</b> Complexity<span></span></a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#introduction-to-linear-models"><i class="fa fa-check"></i><b>10.1</b> Introduction to Linear Models<span></span></a>
-<ul>
-<li class="chapter" data-level="10.1.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#packages-1"><i class="fa fa-check"></i><b>10.1.1</b> Packages<span></span></a></li>
+<li class="chapter" data-level="11.4.1" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#simpsons-paradox"><i class="fa fa-check"></i><b>11.4.1</b> Simpson’s Paradox<span></span></a></li>
+<li class="chapter" data-level="11.4.2" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#three-or-more-variables"><i class="fa fa-check"></i><b>11.4.2</b> Three or more variables<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#a-linear-model-analysis-for-comparing-groups"><i class="fa fa-check"></i><b>10.2</b> A linear model analysis for comparing groups<span></span></a>
-<ul>
-<li class="chapter" data-level="10.2.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#compare-means"><i class="fa fa-check"></i><b>10.2.1</b> Compare means<span></span></a></li>
-<li class="chapter" data-level="10.2.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#standard-error-of-the-difference-1"><i class="fa fa-check"></i><b>10.2.2</b> Standard error of the difference<span></span></a></li>
+<li class="chapter" data-level="11.5" data-path="deeper-data-insights-part-2-week-eleven.html"><a href="deeper-data-insights-part-2-week-eleven.html#summing-up-3"><i class="fa fa-check"></i><b>11.5</b> Summing up<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#confidence-intervals-1"><i class="fa fa-check"></i><b>10.3</b> Confidence intervals<span></span></a></li>
-<li class="chapter" data-level="10.4" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#answering-the-question"><i class="fa fa-check"></i><b>10.4</b> Answering the question<span></span></a>
+<li class="chapter" data-level="12" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html"><i class="fa fa-check"></i><b>12</b> Introduction to Statistics - Spring Week One<span></span></a>
 <ul>
-<li class="chapter" data-level="10.4.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#getting-the-other-treatment-mean-and-standard-error"><i class="fa fa-check"></i><b>10.4.1</b> Getting the other treatment mean and standard error<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="10.5" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#assumption-checking"><i class="fa fa-check"></i><b>10.5</b> Assumption checking<span></span></a>
+<li class="chapter" data-level="12.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#introduction-to-statistics"><i class="fa fa-check"></i><b>12.1</b> Introduction to statistics<span></span></a></li>
+<li class="chapter" data-level="12.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#darwins-maize-data"><i class="fa fa-check"></i><b>12.2</b> Darwin’s maize data<span></span></a>
 <ul>
-<li class="chapter" data-level="10.5.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#normal-distribution-1"><i class="fa fa-check"></i><b>10.5.1</b> Normal distribution<span></span></a></li>
-<li class="chapter" data-level="10.5.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#equal-variance"><i class="fa fa-check"></i><b>10.5.2</b> Equal variance<span></span></a></li>
-<li class="chapter" data-level="10.5.3" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#outliers"><i class="fa fa-check"></i><b>10.5.3</b> Outliers<span></span></a></li>
+<li class="chapter" data-level="12.2.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#description"><i class="fa fa-check"></i><b>12.2.1</b> Description<span></span></a></li>
+<li class="chapter" data-level="12.2.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation<span></span></a></li>
+<li class="chapter" data-level="12.2.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#comparing-groups"><i class="fa fa-check"></i><b>12.2.3</b> Comparing groups<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="10.6" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#summary-2"><i class="fa fa-check"></i><b>10.6</b> Summary<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html"><i class="fa fa-check"></i><b>11</b> Testing - Spring Week Three<span></span></a>
+<li class="chapter" data-level="12.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#estimation"><i class="fa fa-check"></i><b>12.3</b> Estimation<span></span></a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#its-t-time"><i class="fa fa-check"></i><b>11.1</b> It’s t-time<span></span></a></li>
-<li class="chapter" data-level="11.2" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#students-t-test"><i class="fa fa-check"></i><b>11.2</b> Student’s <em>t</em>-test<span></span></a>
-<ul>
-<li class="chapter" data-level="11.2.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#paired-t"><i class="fa fa-check"></i><b>11.2.1</b> Paired t<span></span></a></li>
+<li class="chapter" data-level="12.3.1" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#differences-between-groups"><i class="fa fa-check"></i><b>12.3.1</b> Differences between groups<span></span></a></li>
+<li class="chapter" data-level="12.3.2" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#standard-error-of-the-difference"><i class="fa fa-check"></i><b>12.3.2</b> Standard error of the difference<span></span></a></li>
+<li class="chapter" data-level="12.3.3" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#normal-distribution"><i class="fa fa-check"></i><b>12.3.3</b> Normal distribution<span></span></a></li>
+<li class="chapter" data-level="12.3.4" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#confidence-intervals"><i class="fa fa-check"></i><b>12.3.4</b> Confidence Intervals<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#effect-sizes"><i class="fa fa-check"></i><b>11.3</b> Effect sizes<span></span></a>
-<ul>
-<li class="chapter" data-level="11.3.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#power"><i class="fa fa-check"></i><b>11.3.1</b> Power<span></span></a></li>
+<li class="chapter" data-level="12.4" data-path="introduction-to-statistics---spring-week-one.html"><a href="introduction-to-statistics---spring-week-one.html#summary"><i class="fa fa-check"></i><b>12.4</b> Summary<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#meta-analysis"><i class="fa fa-check"></i><b>11.4</b> Meta-analysis<span></span></a></li>
-<li class="chapter" data-level="11.5" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#summary-3"><i class="fa fa-check"></i><b>11.5</b> Summary<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html"><i class="fa fa-check"></i><b>12</b> Regression - Spring Week Four<span></span></a>
+<li class="chapter" data-level="13" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html"><i class="fa fa-check"></i><b>13</b> Keeping code DRY - Spring Week One<span></span></a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#introduction-to-regression"><i class="fa fa-check"></i><b>12.1</b> Introduction to Regression<span></span></a></li>
-<li class="chapter" data-level="12.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#linear-regression"><i class="fa fa-check"></i><b>12.2</b> Linear regression<span></span></a></li>
-<li class="chapter" data-level="12.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#data"><i class="fa fa-check"></i><b>12.3</b> Data<span></span></a></li>
-<li class="chapter" data-level="12.4" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#correlation"><i class="fa fa-check"></i><b>12.4</b> Correlation<span></span></a></li>
-<li class="chapter" data-level="12.5" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#regression-in-r"><i class="fa fa-check"></i><b>12.5</b> Regression in R<span></span></a>
+<li class="chapter" data-level="13.1" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#functions-1"><i class="fa fa-check"></i><b>13.1</b> Functions<span></span></a>
 <ul>
-<li class="chapter" data-level="12.5.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#summary-4"><i class="fa fa-check"></i><b>12.5.1</b> Summary<span></span></a></li>
-<li class="chapter" data-level="12.5.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#the-second-row"><i class="fa fa-check"></i><b>12.5.2</b> the second row<span></span></a></li>
-<li class="chapter" data-level="12.5.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#confidence-intervals-2"><i class="fa fa-check"></i><b>12.5.3</b> Confidence intervals<span></span></a></li>
-<li class="chapter" data-level="12.5.4" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#effect-size"><i class="fa fa-check"></i><b>12.5.4</b> Effect size<span></span></a></li>
+<li class="chapter" data-level="13.1.1" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#common-functions"><i class="fa fa-check"></i><b>13.1.1</b> Common functions<span></span></a></li>
+<li class="chapter" data-level="13.1.2" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#write-your-own-function"><i class="fa fa-check"></i><b>13.1.2</b> Write your own function<span></span></a></li>
+<li class="chapter" data-level="13.1.3" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#more-functions"><i class="fa fa-check"></i><b>13.1.3</b> More functions<span></span></a></li>
+<li class="chapter" data-level="13.1.4" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#exercise"><i class="fa fa-check"></i><b>13.1.4</b> Exercise<span></span></a></li>
+<li class="chapter" data-level="13.1.5" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#custom-ggplot-themes"><i class="fa fa-check"></i><b>13.1.5</b> Custom ggplot themes<span></span></a></li>
+<li class="chapter" data-level="13.1.6" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#writing-packages"><i class="fa fa-check"></i><b>13.1.6</b> Writing Packages<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="12.6" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#assumptions"><i class="fa fa-check"></i><b>12.6</b> Assumptions<span></span></a>
+<li class="chapter" data-level="13.2" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#iteration"><i class="fa fa-check"></i><b>13.2</b> Iteration<span></span></a>
 <ul>
-<li class="chapter" data-level="12.6.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#normal-distribution-2"><i class="fa fa-check"></i><b>12.6.1</b> Normal distribution<span></span></a></li>
-<li class="chapter" data-level="12.6.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#equal-variance-1"><i class="fa fa-check"></i><b>12.6.2</b> Equal variance<span></span></a></li>
-<li class="chapter" data-level="12.6.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#outliers-1"><i class="fa fa-check"></i><b>12.6.3</b> Outliers<span></span></a></li>
+<li class="chapter" data-level="13.2.1" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#for-loops"><i class="fa fa-check"></i><b>13.2.1</b> For Loops<span></span></a></li>
+<li class="chapter" data-level="13.2.2" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#exercise-for-for-loops"><i class="fa fa-check"></i><b>13.2.2</b> Exercise for For Loops<span></span></a></li>
+<li class="chapter" data-level="13.2.3" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#iteration-in-r"><i class="fa fa-check"></i><b>13.2.3</b> Iteration in R<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="12.7" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#prediction"><i class="fa fa-check"></i><b>12.7</b> Prediction<span></span></a></li>
-<li class="chapter" data-level="12.8" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#summary-5"><i class="fa fa-check"></i><b>12.8</b> Summary<span></span></a></li>
+<li class="chapter" data-level="13.3" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#more-practice"><i class="fa fa-check"></i><b>13.3</b> More Practice<span></span></a></li>
+<li class="chapter" data-level="13.4" data-path="keeping-code-dry---spring-week-one.html"><a href="keeping-code-dry---spring-week-one.html#summary-1"><i class="fa fa-check"></i><b>13.4</b> Summary<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html"><i class="fa fa-check"></i><b>13</b> ANOVA - Spring Week Five<span></span></a>
+<li class="chapter" data-level="14" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html"><i class="fa fa-check"></i><b>14</b> Introduction to Linear Models - Spring Week Two<span></span></a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#anova"><i class="fa fa-check"></i><b>13.1</b> ANOVA<span></span></a></li>
-<li class="chapter" data-level="13.2" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#maize-data"><i class="fa fa-check"></i><b>13.2</b> Maize data<span></span></a>
+<li class="chapter" data-level="14.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#introduction-to-linear-models"><i class="fa fa-check"></i><b>14.1</b> Introduction to Linear Models<span></span></a>
 <ul>
-<li class="chapter" data-level="13.2.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#the-anova-table"><i class="fa fa-check"></i><b>13.2.1</b> The ANOVA table<span></span></a></li>
+<li class="chapter" data-level="14.1.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#packages-1"><i class="fa fa-check"></i><b>14.1.1</b> Packages<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#two-way-anova"><i class="fa fa-check"></i><b>13.3</b> Two-way ANOVA<span></span></a></li>
-<li class="chapter" data-level="13.4" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#summary-6"><i class="fa fa-check"></i><b>13.4</b> Summary<span></span></a></li>
-<li class="chapter" data-level="13.5" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#practice"><i class="fa fa-check"></i><b>13.5</b> Practice<span></span></a>
+<li class="chapter" data-level="14.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#a-linear-model-analysis-for-comparing-groups"><i class="fa fa-check"></i><b>14.2</b> A linear model analysis for comparing groups<span></span></a>
 <ul>
-<li class="chapter" data-level="13.5.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#our-question"><i class="fa fa-check"></i><b>13.5.1</b> Our question<span></span></a></li>
-<li class="chapter" data-level="13.5.2" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#hypothesis"><i class="fa fa-check"></i><b>13.5.2</b> Hypothesis<span></span></a></li>
+<li class="chapter" data-level="14.2.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#compare-means"><i class="fa fa-check"></i><b>14.2.1</b> Compare means<span></span></a></li>
+<li class="chapter" data-level="14.2.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#standard-error-of-the-difference-1"><i class="fa fa-check"></i><b>14.2.2</b> Standard error of the difference<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="13.6" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#importing-the-data"><i class="fa fa-check"></i><b>13.6</b> Importing the data<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="14" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html"><i class="fa fa-check"></i><b>14</b> Multivariate linear models - Spring Week Six<span></span></a>
+<li class="chapter" data-level="14.3" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#confidence-intervals-1"><i class="fa fa-check"></i><b>14.3</b> Confidence intervals<span></span></a></li>
+<li class="chapter" data-level="14.4" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#answering-the-question"><i class="fa fa-check"></i><b>14.4</b> Answering the question<span></span></a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#multivariate-linear-models"><i class="fa fa-check"></i><b>14.1</b> Multivariate linear models<span></span></a></li>
-<li class="chapter" data-level="14.2" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#factorial-linear-models"><i class="fa fa-check"></i><b>14.2</b> Factorial linear models<span></span></a>
-<ul>
-<li class="chapter" data-level="14.2.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#data-summary"><i class="fa fa-check"></i><b>14.2.1</b> Data summary<span></span></a></li>
-<li class="chapter" data-level="14.2.2" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#one-way-anova"><i class="fa fa-check"></i><b>14.2.2</b> One-way ANOVA<span></span></a></li>
-<li class="chapter" data-level="14.2.3" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#testing-for-interactions"><i class="fa fa-check"></i><b>14.2.3</b> Testing for interactions<span></span></a></li>
-<li class="chapter" data-level="14.2.4" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#model-estimates-and-confidence-intervals"><i class="fa fa-check"></i><b>14.2.4</b> Model estimates and confidence intervals<span></span></a></li>
-<li class="chapter" data-level="14.2.5" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#anova-tables"><i class="fa fa-check"></i><b>14.2.5</b> ANOVA tables<span></span></a></li>
+<li class="chapter" data-level="14.4.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#getting-the-other-treatment-mean-and-standard-error"><i class="fa fa-check"></i><b>14.4.1</b> Getting the other treatment mean and standard error<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="14.3" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#balancedunbalanced-designs"><i class="fa fa-check"></i><b>14.3</b> Balanced/Unbalanced designs<span></span></a>
+<li class="chapter" data-level="14.5" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#assumption-checking"><i class="fa fa-check"></i><b>14.5</b> Assumption checking<span></span></a>
 <ul>
-<li class="chapter" data-level="14.3.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#practice-1"><i class="fa fa-check"></i><b>14.3.1</b> Practice<span></span></a></li>
+<li class="chapter" data-level="14.5.1" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#normal-distribution-1"><i class="fa fa-check"></i><b>14.5.1</b> Normal distribution<span></span></a></li>
+<li class="chapter" data-level="14.5.2" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#equal-variance"><i class="fa fa-check"></i><b>14.5.2</b> Equal variance<span></span></a></li>
+<li class="chapter" data-level="14.5.3" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#outliers"><i class="fa fa-check"></i><b>14.5.3</b> Outliers<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="14.4" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#post-hoc"><i class="fa fa-check"></i><b>14.4</b> post-hoc<span></span></a></li>
-<li class="chapter" data-level="14.5" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#continuous-linear-models"><i class="fa fa-check"></i><b>14.5</b> Continuous Linear Models<span></span></a></li>
-<li class="chapter" data-level="14.6" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#summary-7"><i class="fa fa-check"></i><b>14.6</b> Summary<span></span></a></li>
+<li class="chapter" data-level="14.6" data-path="introduction-to-linear-models---spring-week-two.html"><a href="introduction-to-linear-models---spring-week-two.html#summary-2"><i class="fa fa-check"></i><b>14.6</b> Summary<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html"><i class="fa fa-check"></i><b>15</b> Complexity in Linear Models - Spring Week Seven<span></span></a>
+<li class="chapter" data-level="15" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html"><i class="fa fa-check"></i><b>15</b> Testing - Spring Week Three<span></span></a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model"><i class="fa fa-check"></i><b>15.1</b> Designing a Model<span></span></a>
+<li class="chapter" data-level="15.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#its-t-time"><i class="fa fa-check"></i><b>15.1</b> It’s t-time<span></span></a></li>
+<li class="chapter" data-level="15.2" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#students-t-test"><i class="fa fa-check"></i><b>15.2</b> Student’s <em>t</em>-test<span></span></a>
 <ul>
-<li class="chapter" data-level="15.1.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#hypothesis-1"><i class="fa fa-check"></i><b>15.1.1</b> Hypothesis<span></span></a></li>
+<li class="chapter" data-level="15.2.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#paired-t"><i class="fa fa-check"></i><b>15.2.1</b> Paired t<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="15.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#checking-the-data"><i class="fa fa-check"></i><b>15.2</b> Checking the data<span></span></a></li>
-<li class="chapter" data-level="15.3" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model-1"><i class="fa fa-check"></i><b>15.3</b> Designing a model<span></span></a></li>
-<li class="chapter" data-level="15.4" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-checking-collinearity"><i class="fa fa-check"></i><b>15.4</b> Model checking &amp; collinearity<span></span></a>
+<li class="chapter" data-level="15.3" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#effect-sizes"><i class="fa fa-check"></i><b>15.3</b> Effect sizes<span></span></a>
 <ul>
-<li class="chapter" data-level="15.4.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#data-transformations"><i class="fa fa-check"></i><b>15.4.1</b> Data transformations<span></span></a></li>
-<li class="chapter" data-level="15.4.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#boxcox"><i class="fa fa-check"></i><b>15.4.2</b> BoxCox<span></span></a></li>
+<li class="chapter" data-level="15.3.1" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#power"><i class="fa fa-check"></i><b>15.3.1</b> Power<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="15.5" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-selection"><i class="fa fa-check"></i><b>15.5</b> Model selection<span></span></a></li>
-<li class="chapter" data-level="15.6" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#posthoc"><i class="fa fa-check"></i><b>15.6</b> Posthoc<span></span></a></li>
-<li class="chapter" data-level="15.7" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#write-up"><i class="fa fa-check"></i><b>15.7</b> Write-up<span></span></a></li>
-<li class="chapter" data-level="15.8" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#summary-8"><i class="fa fa-check"></i><b>15.8</b> Summary<span></span></a>
+<li class="chapter" data-level="15.4" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#meta-analysis"><i class="fa fa-check"></i><b>15.4</b> Meta-analysis<span></span></a></li>
+<li class="chapter" data-level="15.5" data-path="testing---spring-week-three.html"><a href="testing---spring-week-three.html#summary-3"><i class="fa fa-check"></i><b>15.5</b> Summary<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html"><i class="fa fa-check"></i><b>16</b> Regression - Spring Week Four<span></span></a>
 <ul>
-<li class="chapter" data-level="15.8.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#checklist"><i class="fa fa-check"></i><b>15.8.1</b> Checklist<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="15.9" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#supplementary-code"><i class="fa fa-check"></i><b>15.9</b> Supplementary code<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="16" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>16</b> Generalized Linear Models<span></span></a>
+<li class="chapter" data-level="16.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#introduction-to-regression"><i class="fa fa-check"></i><b>16.1</b> Introduction to Regression<span></span></a></li>
+<li class="chapter" data-level="16.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#linear-regression"><i class="fa fa-check"></i><b>16.2</b> Linear regression<span></span></a></li>
+<li class="chapter" data-level="16.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#data"><i class="fa fa-check"></i><b>16.3</b> Data<span></span></a></li>
+<li class="chapter" data-level="16.4" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#correlation"><i class="fa fa-check"></i><b>16.4</b> Correlation<span></span></a></li>
+<li class="chapter" data-level="16.5" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#regression-in-r"><i class="fa fa-check"></i><b>16.5</b> Regression in R<span></span></a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#motivation"><i class="fa fa-check"></i><b>16.1</b> Motivation<span></span></a></li>
-<li class="chapter" data-level="16.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#generalised-linear-models-glms"><i class="fa fa-check"></i><b>16.2</b> Generalised Linear Models (GLMs)<span></span></a>
-<ul>
-<li class="chapter" data-level="16.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#workflow-for-fitting-a-glm"><i class="fa fa-check"></i><b>16.2.1</b> Workflow for fitting a GLM<span></span></a></li>
+<li class="chapter" data-level="16.5.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#summary-4"><i class="fa fa-check"></i><b>16.5.1</b> Summary<span></span></a></li>
+<li class="chapter" data-level="16.5.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#the-second-row"><i class="fa fa-check"></i><b>16.5.2</b> the second row<span></span></a></li>
+<li class="chapter" data-level="16.5.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#confidence-intervals-2"><i class="fa fa-check"></i><b>16.5.3</b> Confidence intervals<span></span></a></li>
+<li class="chapter" data-level="16.5.4" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#effect-size"><i class="fa fa-check"></i><b>16.5.4</b> Effect size<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="16.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-for-count-data-or-rate-data"><i class="fa fa-check"></i><b>16.3</b> Poisson regression (for count data or rate data)<span></span></a></li>
-<li class="chapter" data-level="16.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example-cuckoos"><i class="fa fa-check"></i><b>16.4</b> Example: Cuckoos<span></span></a></li>
-<li class="chapter" data-level="16.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#estimates-and-intervals"><i class="fa fa-check"></i><b>16.5</b> Estimates and Intervals<span></span></a>
+<li class="chapter" data-level="16.6" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#assumptions"><i class="fa fa-check"></i><b>16.6</b> Assumptions<span></span></a>
 <ul>
-<li class="chapter" data-level="16.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretation"><i class="fa fa-check"></i><b>16.5.1</b> Interpretation<span></span></a></li>
+<li class="chapter" data-level="16.6.1" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#normal-distribution-2"><i class="fa fa-check"></i><b>16.6.1</b> Normal distribution<span></span></a></li>
+<li class="chapter" data-level="16.6.2" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#equal-variance-1"><i class="fa fa-check"></i><b>16.6.2</b> Equal variance<span></span></a></li>
+<li class="chapter" data-level="16.6.3" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#outliers-1"><i class="fa fa-check"></i><b>16.6.3</b> Outliers<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="16.6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#overdispersion"><i class="fa fa-check"></i><b>16.6</b> Overdispersion<span></span></a></li>
-<li class="chapter" data-level="16.7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#logistic-regression-for-binary-data"><i class="fa fa-check"></i><b>16.7</b> Logistic regression (for binary data)<span></span></a>
+<li class="chapter" data-level="16.7" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#prediction"><i class="fa fa-check"></i><b>16.7</b> Prediction<span></span></a></li>
+<li class="chapter" data-level="16.8" data-path="regression---spring-week-four.html"><a href="regression---spring-week-four.html#summary-5"><i class="fa fa-check"></i><b>16.8</b> Summary<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html"><i class="fa fa-check"></i><b>17</b> ANOVA - Spring Week Five<span></span></a>
 <ul>
-<li class="chapter" data-level="16.7.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#probability-from-a-binomial-model"><i class="fa fa-check"></i><b>16.7.1</b> Probability from a binomial model<span></span></a></li>
-<li class="chapter" data-level="16.7.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#changes-in-probability"><i class="fa fa-check"></i><b>16.7.2</b> Changes in probability<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="16.8" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#predictions"><i class="fa fa-check"></i><b>16.8</b> Predictions<span></span></a>
+<li class="chapter" data-level="17.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#anova"><i class="fa fa-check"></i><b>17.1</b> ANOVA<span></span></a></li>
+<li class="chapter" data-level="17.2" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#maize-data"><i class="fa fa-check"></i><b>17.2</b> Maize data<span></span></a>
 <ul>
-<li class="chapter" data-level="16.8.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#assumptions-1"><i class="fa fa-check"></i><b>16.8.1</b> Assumptions<span></span></a></li>
-<li class="chapter" data-level="16.8.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#write-up-1"><i class="fa fa-check"></i><b>16.8.2</b> Write-up<span></span></a></li>
+<li class="chapter" data-level="17.2.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#the-anova-table"><i class="fa fa-check"></i><b>17.2.1</b> The ANOVA table<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="16.9" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#summary-9"><i class="fa fa-check"></i><b>16.9</b> Summary<span></span></a></li>
-<li class="chapter" data-level="16.10" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#final-checklist"><i class="fa fa-check"></i><b>16.10</b> Final checklist<span></span></a></li>
+<li class="chapter" data-level="17.3" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#two-way-anova"><i class="fa fa-check"></i><b>17.3</b> Two-way ANOVA<span></span></a></li>
+<li class="chapter" data-level="17.4" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#summary-6"><i class="fa fa-check"></i><b>17.4</b> Summary<span></span></a></li>
+<li class="chapter" data-level="17.5" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#practice"><i class="fa fa-check"></i><b>17.5</b> Practice<span></span></a>
+<ul>
+<li class="chapter" data-level="17.5.1" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#our-question"><i class="fa fa-check"></i><b>17.5.1</b> Our question<span></span></a></li>
+<li class="chapter" data-level="17.5.2" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#hypothesis"><i class="fa fa-check"></i><b>17.5.2</b> Hypothesis<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="17.6" data-path="anova---spring-week-five.html"><a href="anova---spring-week-five.html#importing-the-data"><i class="fa fa-check"></i><b>17.6</b> Importing the data<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html"><i class="fa fa-check"></i><b>18</b> Multivariate linear models - Spring Week Six<span></span></a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#multivariate-linear-models"><i class="fa fa-check"></i><b>18.1</b> Multivariate linear models<span></span></a></li>
+<li class="chapter" data-level="18.2" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#factorial-linear-models"><i class="fa fa-check"></i><b>18.2</b> Factorial linear models<span></span></a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#data-summary"><i class="fa fa-check"></i><b>18.2.1</b> Data summary<span></span></a></li>
+<li class="chapter" data-level="18.2.2" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#one-way-anova"><i class="fa fa-check"></i><b>18.2.2</b> One-way ANOVA<span></span></a></li>
+<li class="chapter" data-level="18.2.3" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#testing-for-interactions"><i class="fa fa-check"></i><b>18.2.3</b> Testing for interactions<span></span></a></li>
+<li class="chapter" data-level="18.2.4" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#model-estimates-and-confidence-intervals"><i class="fa fa-check"></i><b>18.2.4</b> Model estimates and confidence intervals<span></span></a></li>
+<li class="chapter" data-level="18.2.5" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#anova-tables"><i class="fa fa-check"></i><b>18.2.5</b> ANOVA tables<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#balancedunbalanced-designs"><i class="fa fa-check"></i><b>18.3</b> Balanced/Unbalanced designs<span></span></a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#practice-1"><i class="fa fa-check"></i><b>18.3.1</b> Practice<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#post-hoc"><i class="fa fa-check"></i><b>18.4</b> post-hoc<span></span></a></li>
+<li class="chapter" data-level="18.5" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#continuous-linear-models"><i class="fa fa-check"></i><b>18.5</b> Continuous Linear Models<span></span></a></li>
+<li class="chapter" data-level="18.6" data-path="multivariate-linear-models---spring-week-six.html"><a href="multivariate-linear-models---spring-week-six.html#summary-7"><i class="fa fa-check"></i><b>18.6</b> Summary<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html"><i class="fa fa-check"></i><b>19</b> Complexity in Linear Models - Spring Week Seven<span></span></a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model"><i class="fa fa-check"></i><b>19.1</b> Designing a Model<span></span></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#hypothesis-1"><i class="fa fa-check"></i><b>19.1.1</b> Hypothesis<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#checking-the-data"><i class="fa fa-check"></i><b>19.2</b> Checking the data<span></span></a></li>
+<li class="chapter" data-level="19.3" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#designing-a-model-1"><i class="fa fa-check"></i><b>19.3</b> Designing a model<span></span></a></li>
+<li class="chapter" data-level="19.4" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-checking-collinearity"><i class="fa fa-check"></i><b>19.4</b> Model checking &amp; collinearity<span></span></a>
+<ul>
+<li class="chapter" data-level="19.4.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#data-transformations"><i class="fa fa-check"></i><b>19.4.1</b> Data transformations<span></span></a></li>
+<li class="chapter" data-level="19.4.2" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#boxcox"><i class="fa fa-check"></i><b>19.4.2</b> BoxCox<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#model-selection"><i class="fa fa-check"></i><b>19.5</b> Model selection<span></span></a></li>
+<li class="chapter" data-level="19.6" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#posthoc"><i class="fa fa-check"></i><b>19.6</b> Posthoc<span></span></a></li>
+<li class="chapter" data-level="19.7" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#write-up"><i class="fa fa-check"></i><b>19.7</b> Write-up<span></span></a></li>
+<li class="chapter" data-level="19.8" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#summary-8"><i class="fa fa-check"></i><b>19.8</b> Summary<span></span></a>
+<ul>
+<li class="chapter" data-level="19.8.1" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#checklist"><i class="fa fa-check"></i><b>19.8.1</b> Checklist<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="19.9" data-path="complexity-in-linear-models---spring-week-seven.html"><a href="complexity-in-linear-models---spring-week-seven.html#supplementary-code"><i class="fa fa-check"></i><b>19.9</b> Supplementary code<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>20</b> Generalized Linear Models<span></span></a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#motivation"><i class="fa fa-check"></i><b>20.1</b> Motivation<span></span></a></li>
+<li class="chapter" data-level="20.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#generalised-linear-models-glms"><i class="fa fa-check"></i><b>20.2</b> Generalised Linear Models (GLMs)<span></span></a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#workflow-for-fitting-a-glm"><i class="fa fa-check"></i><b>20.2.1</b> Workflow for fitting a GLM<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression-for-count-data-or-rate-data"><i class="fa fa-check"></i><b>20.3</b> Poisson regression (for count data or rate data)<span></span></a></li>
+<li class="chapter" data-level="20.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#example-cuckoos"><i class="fa fa-check"></i><b>20.4</b> Example: Cuckoos<span></span></a></li>
+<li class="chapter" data-level="20.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#estimates-and-intervals"><i class="fa fa-check"></i><b>20.5</b> Estimates and Intervals<span></span></a>
+<ul>
+<li class="chapter" data-level="20.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretation"><i class="fa fa-check"></i><b>20.5.1</b> Interpretation<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="20.6" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#overdispersion"><i class="fa fa-check"></i><b>20.6</b> Overdispersion<span></span></a></li>
+<li class="chapter" data-level="20.7" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#logistic-regression-for-binary-data"><i class="fa fa-check"></i><b>20.7</b> Logistic regression (for binary data)<span></span></a>
+<ul>
+<li class="chapter" data-level="20.7.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpreting-model-coefficients"><i class="fa fa-check"></i><b>20.7.1</b> Interpreting model coefficients<span></span></a></li>
+<li class="chapter" data-level="20.7.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#emmeans"><i class="fa fa-check"></i><b>20.7.2</b> Emmeans<span></span></a></li>
+<li class="chapter" data-level="20.7.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#changes-in-probability"><i class="fa fa-check"></i><b>20.7.3</b> Changes in probability<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="20.8" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#predictions"><i class="fa fa-check"></i><b>20.8</b> Predictions<span></span></a>
+<ul>
+<li class="chapter" data-level="20.8.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#assumptions-1"><i class="fa fa-check"></i><b>20.8.1</b> Assumptions<span></span></a></li>
+<li class="chapter" data-level="20.8.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#write-up-1"><i class="fa fa-check"></i><b>20.8.2</b> Write-up<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="20.9" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#summary-9"><i class="fa fa-check"></i><b>20.9</b> Summary<span></span></a></li>
+<li class="chapter" data-level="20.10" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#final-checklist"><i class="fa fa-check"></i><b>20.10</b> Final checklist<span></span></a></li>
 </ul></li>
 <li><a href="references.html#references">References<span></span></a></li>
 <li class="divider"></li>
@@ -634,10 +676,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="generalized-linear-models" class="section level1 hasAnchor" number="16">
-<h1><span class="header-section-number">Chapter 16</span> Generalized Linear Models<a href="generalized-linear-models.html#generalized-linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="motivation" class="section level2 hasAnchor" number="16.1">
-<h2><span class="header-section-number">16.1</span> Motivation<a href="generalized-linear-models.html#motivation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="generalized-linear-models" class="section level1 hasAnchor" number="20">
+<h1><span class="header-section-number">Chapter 20</span> Generalized Linear Models<a href="generalized-linear-models.html#generalized-linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="motivation" class="section level2 hasAnchor" number="20.1">
+<h2><span class="header-section-number">20.1</span> Motivation<a href="generalized-linear-models.html#motivation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the previous workshop we have seen that linear models are a powerful modelling tool.
 However, we have to satisfy the following assumptions:</p>
 <ol style="list-style-type: decimal">
@@ -651,10 +693,10 @@ However, we have to satisfy the following assumptions:</p>
 to try and fix this (Box-Cox &amp; transformation).
 However, in a lot of other cases this is either not possible (e.g binary output)
 or we want to explicitly model the underlying distribution (e.g count data).
-Instead, we can use <em>Generalised</em> Linear Models (GLMs) that let us change the <em>error structure</em> (assumption 3) to something other than a normal distribution.</p>
+Instead, we can use <em>Generalized</em> Linear Models (GLMs) that let us change the <em>error structure</em> (assumption 3) to something other than a normal distribution.</p>
 </div>
-<div id="generalised-linear-models-glms" class="section level2 hasAnchor" number="16.2">
-<h2><span class="header-section-number">16.2</span> Generalised Linear Models (GLMs)<a href="generalized-linear-models.html#generalised-linear-models-glms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="generalised-linear-models-glms" class="section level2 hasAnchor" number="20.2">
+<h2><span class="header-section-number">20.2</span> Generalised Linear Models (GLMs)<a href="generalized-linear-models.html#generalised-linear-models-glms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Generalised Linear Models</strong> (GLMs) have:</p>
 <ol style="list-style-type: decimal">
 <li>A linear predictor.</li>
@@ -686,9 +728,9 @@ However, when we provide distributions where the mean and variance are expected 
 </p>
 </div>
 <p>The simple linear regression model we have used so far is a special cases of a GLM:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="generalized-linear-models.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> weight)</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="generalized-linear-models.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> weight)</span></code></pre></div>
 <p>is equivalent to</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="generalized-linear-models.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(height <span class="sc">~</span> weight, <span class="at">family=</span><span class="fu">gaussian</span>(<span class="at">link=</span>identity))</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalized-linear-models.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(height <span class="sc">~</span> weight, <span class="at">family=</span><span class="fu">gaussian</span>(<span class="at">link=</span>identity))</span></code></pre></div>
 <p>Compared to <a href="https://www.rdocumentation.org/packages/stats/versions/3.5.1/topics/lm"><code>lm()</code></a>, the <a href="https://www.rdocumentation.org/packages/stats/versions/3.5.1/topics/glm"><code>glm()</code></a> function takes an additional argument called <a href="https://www.rdocumentation.org/packages/stats/versions/3.5.1/topics/family"><code>family</code></a>, which
 specifies the error structure <strong>and</strong> link function.</p>
 <p>The default <strong>link function</strong> for the normal (Gaussian) distribution is the <strong>identity</strong>, <em>where no transformation is needed</em>i.e. for mean <span class="math inline">\(\mu\)</span> we have:</p>
@@ -738,8 +780,8 @@ specifies the error structure <strong>and</strong> link function.</p>
 <summary>
 <strong>EXERCISE - Using the fruitfly data introduced last week fit a linear model with lifespan as a response variable and sleep, type and thorax as explanatory variables. Compare this to a glm fitted with a gaussian error distribution and identity link for the mean</strong>
 </summary>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="generalized-linear-models.html#cb27-1" aria-hidden="true" tabindex="-1"></a>flyls <span class="ot">&lt;-</span> <span class="fu">lm</span>(longevity <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep, <span class="at">data =</span> fruitfly)</span>
-<span id="cb27-2"><a href="generalized-linear-models.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(flyls)</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="generalized-linear-models.html#cb439-1" aria-hidden="true" tabindex="-1"></a>flyls <span class="ot">&lt;-</span> <span class="fu">lm</span>(longevity <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep, <span class="at">data =</span> fruitfly)</span>
+<span id="cb439-2"><a href="generalized-linear-models.html#cb439-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(flyls)</span></code></pre></div>
 <pre><code>Call:
 lm(formula = longevity ~ type + thorax + sleep, data = fruitfly)
 
@@ -760,10 +802,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 11.23 on 120 degrees of freedom
 Multiple R-squared:  0.6046,    Adjusted R-squared:  0.5914 
 F-statistic: 45.88 on 4 and 120 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="generalized-linear-models.html#cb29-1" aria-hidden="true" tabindex="-1"></a>flyglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(longevity <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep, </span>
-<span id="cb29-2"><a href="generalized-linear-models.html#cb29-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">family =</span> <span class="fu">gaussian</span>(<span class="at">link =</span> <span class="st">&quot;identity&quot;</span>),</span>
-<span id="cb29-3"><a href="generalized-linear-models.html#cb29-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> fruitfly)</span>
-<span id="cb29-4"><a href="generalized-linear-models.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(flyglm)</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="generalized-linear-models.html#cb441-1" aria-hidden="true" tabindex="-1"></a>flyglm <span class="ot">&lt;-</span> <span class="fu">glm</span>(longevity <span class="sc">~</span> type <span class="sc">+</span> thorax <span class="sc">+</span> sleep, </span>
+<span id="cb441-2"><a href="generalized-linear-models.html#cb441-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">family =</span> <span class="fu">gaussian</span>(<span class="at">link =</span> <span class="st">&quot;identity&quot;</span>),</span>
+<span id="cb441-3"><a href="generalized-linear-models.html#cb441-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> fruitfly)</span>
+<span id="cb441-4"><a href="generalized-linear-models.html#cb441-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(flyglm)</span></code></pre></div>
 <pre><code>glm(formula = longevity ~ type + thorax + sleep, family = gaussian(link = &quot;identity&quot;), 
     data = fruitfly)
 
@@ -790,8 +832,8 @@ AIC: 966.2
 Number of Fisher Scoring iterations: 2</code></pre>
 <p>They are exactly the same. This is not surprising, as the maximum likelihood being fitted here is the same as an ordinary least squares model.</p>
 </details>
-<div id="workflow-for-fitting-a-glm" class="section level3 hasAnchor" number="16.2.1">
-<h3><span class="header-section-number">16.2.1</span> Workflow for fitting a GLM<a href="generalized-linear-models.html#workflow-for-fitting-a-glm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="workflow-for-fitting-a-glm" class="section level3 hasAnchor" number="20.2.1">
+<h3><span class="header-section-number">20.2.1</span> Workflow for fitting a GLM<a href="generalized-linear-models.html#workflow-for-fitting-a-glm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Exploratory data analysis</li>
 <li>Choose suitable error term</li>
@@ -814,8 +856,8 @@ GLMs model the mean and variability independently. So a link function produces a
 </div>
 </div>
 </div>
-<div id="poisson-regression-for-count-data-or-rate-data" class="section level2 hasAnchor" number="16.3">
-<h2><span class="header-section-number">16.3</span> Poisson regression (for count data or rate data)<a href="generalized-linear-models.html#poisson-regression-for-count-data-or-rate-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="poisson-regression-for-count-data-or-rate-data" class="section level2 hasAnchor" number="20.3">
+<h2><span class="header-section-number">20.3</span> Poisson regression (for count data or rate data)<a href="generalized-linear-models.html#poisson-regression-for-count-data-or-rate-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Count or rate data are ubiquitous in the life sciences (e.g number of parasites per microlitre of blood, number of species counted in a particular area). These type of data are <strong>discrete</strong> and <strong>non-negative</strong>.
 In such cases assuming our response variable to be normally distributed is not typically sensible.
 The Poisson distribution lets us model count data explicitly.</p>
@@ -843,13 +885,13 @@ Y &amp; \sim \mathcal{Pois}(\lambda) \\
 </li>
 <li><strong>Variance</strong> = <span class="math inline">\(\lambda\)</span></li>
 </ul>
-<p>So we model the variance as equal to the mean - as the mean increases so does the mean.</p>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>So we model the variance as equal to the mean - as the mean increases so does the variance.</p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-543-1.png" width="672" /></p>
 <p><img src="images/poisson.png" title="Poisson distribution on an exponential line" alt="Poisson distribution on an exponential line" width="80%" /></p>
 <p>So for the Poisson regression case we assume that the mean and variance are the same.
 Hence, as the mean <em>increases</em>, the variance <em>increases</em> also (<strong>heteroscedascity</strong>).
 This may or may not be a sensible assumption so watch out! Just because a Poisson distribution <em>usually</em> fits well for count data, doesn’t mean that a Gaussian distribution <em>can’t</em> always work.</p>
-<p>Recall the link function between the predictors and the mean and the rules of logarithms (if <span class="math inline">\(\log{\lambda} = k\)</span>, then <span class="math inline">\(\lambda = e^k\)</span>):</p>
+<p>Recall the link function between the predictors and the mean and the rules of logarithms (if <span class="math inline">\(\log{\lambda} = k\)</span>(value of predictors), then <span class="math inline">\(\lambda = e^k\)</span>):</p>
 <p><span class="math display">\[
 \begin{aligned}
 \log{\lambda} &amp; = \beta_0 + \beta_1X \\
@@ -858,23 +900,23 @@ This may or may not be a sensible assumption so watch out! Just because a Poisso
 \]</span>
 Thus we are effectively modelling the observed counts (on the original scale) using an exponential mean function.</p>
 </div>
-<div id="example-cuckoos" class="section level2 hasAnchor" number="16.4">
-<h2><span class="header-section-number">16.4</span> Example: Cuckoos<a href="generalized-linear-models.html#example-cuckoos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="example-cuckoos" class="section level2 hasAnchor" number="20.4">
+<h2><span class="header-section-number">20.4</span> Example: Cuckoos<a href="generalized-linear-models.html#example-cuckoos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In a study by <a href="http://www.nature.com/nature/journal/v397/n6721/abs/397667a0.html">Kilner <em>et al.</em> (1999)</a>, the authors
 studied the begging rate of nestlings in relation to total mass of the brood of <strong>reed warbler chicks</strong> and <strong>cuckoo chicks</strong>.
 The question of interest is:</p>
 <blockquote>
 <p>How does nestling mass affect begging rates between the different species?</p>
 </blockquote>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="generalized-linear-models.html#cb31-1" aria-hidden="true" tabindex="-1"></a>cuckoo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/cuckoo.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="generalized-linear-models.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cuckoo)</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalized-linear-models.html#cb443-1" aria-hidden="true" tabindex="-1"></a>cuckoo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/cuckoo.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="generalized-linear-models.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cuckoo)</span></code></pre></div>
 <p>The data columns are:</p>
 <ul>
 <li><strong>Mass</strong>: nestling mass of chick in grams</li>
 <li><strong>Beg</strong>: begging calls per 6 secs</li>
 <li><strong>Species</strong>: Warbler or Cuckoo</li>
 </ul>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-550-1.png" width="672" /></p>
 <p>There seem to be a relationship between mass and begging calls and it could
 be different between species. It is tempting to fit a linear model to this data.
 In fact, this is what the authors
@@ -884,11 +926,13 @@ of the original paper did; <strong>reed warbler chicks</strong> (solid circles, 
 <p>This model is inadequate. It is predicting <strong>negative</strong> begging calls <em>within</em> the
 range of the observed data, which clearly does not make any sense.</p>
 <p>Let us display the model diagnostics plots for this linear model.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="generalized-linear-models.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit model</span></span>
-<span id="cb33-2"><a href="generalized-linear-models.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="do">## There is an interaction term here, it is reasonable to think that how calling rates change with size might be different between the two species.</span></span>
-<span id="cb33-3"><a href="generalized-linear-models.html#cb33-3" aria-hidden="true" tabindex="-1"></a>cuckoo_ls1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Beg <span class="sc">~</span> Mass<span class="sc">+</span>Species<span class="sc">+</span>Mass<span class="sc">:</span>Species, <span class="at">data=</span>cuckoo) </span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="generalized-linear-models.html#cb34-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(cuckoo_ls1)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="generalized-linear-models.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit model</span></span>
+<span id="cb445-2"><a href="generalized-linear-models.html#cb445-2" aria-hidden="true" tabindex="-1"></a><span class="do">## There is an interaction term here, it is reasonable to think that how calling rates change with size might be different between the two species.</span></span>
+<span id="cb445-3"><a href="generalized-linear-models.html#cb445-3" aria-hidden="true" tabindex="-1"></a>cuckoo_ls1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Beg <span class="sc">~</span> Mass<span class="sc">+</span>Species<span class="sc">+</span>Mass<span class="sc">:</span>Species, <span class="at">data=</span>cuckoo) </span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="generalized-linear-models.html#cb446-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(cuckoo_ls1, </span>
+<span id="cb446-2"><a href="generalized-linear-models.html#cb446-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">check =</span> <span class="fu">c</span>(<span class="st">&quot;homogeneity&quot;</span>,</span>
+<span id="cb446-3"><a href="generalized-linear-models.html#cb446-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;qq&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-553-1.png" width="672" /></p>
 <p>The residuals plot depicts a strong “funnelling” effect, highlighting that the model assumptions are violated.
 We should therefore try a different model structure.</p>
 <p>The response variable in this case is a classic <strong>count data</strong>: <strong>discrete</strong> and bounded below by zero (i.e we cannot have negative counts). We will therefore try a <strong>Poisson model</strong> using the canonical <strong>log</strong> link function for the mean:</p>
@@ -920,44 +964,43 @@ both species have the same slope for the relationship between begging rate and m
 <li><p><strong>Intercept</strong> = <span class="math inline">\(\beta_0\)</span>, <strong>Gradient</strong> = <span class="math inline">\(\beta_1\)</span></p></li>
 <li><p><strong>Warbler</strong> (<span class="math inline">\(S_i=1\)</span>)</p></li>
 </ul>
-$$
-<span class="math display">\[\begin{aligned}
+<p><span class="math display">\[
+\begin{aligned}
     \log{\lambda} &amp; = \beta_0 + \beta_1 M_i + (\beta_2 \times 1)  + (\beta_3 \times M_i \times 1)\\
     \log{\lambda} &amp; = \beta_0 + \beta_1 M_i + \beta_2 + \beta_3M_i\\
- 
-\end{aligned}\]</span>
-<p>$$</p>
+\end{aligned}
+\]</span></p>
 <p>Fit the model with the interaction term in R:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="generalized-linear-models.html#cb35-1" aria-hidden="true" tabindex="-1"></a>cuckoo_glm1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Beg <span class="sc">~</span> Mass <span class="sc">+</span> Species <span class="sc">+</span> Mass<span class="sc">:</span>Species, <span class="at">data=</span>cuckoo, <span class="at">family=</span><span class="fu">poisson</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>))</span>
-<span id="cb35-2"><a href="generalized-linear-models.html#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="generalized-linear-models.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cuckoo_glm1)</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="generalized-linear-models.html#cb447-1" aria-hidden="true" tabindex="-1"></a>cuckoo_glm1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Beg <span class="sc">~</span> Mass <span class="sc">+</span> Species <span class="sc">+</span> Mass<span class="sc">:</span>Species, <span class="at">data=</span>cuckoo, <span class="at">family=</span><span class="fu">poisson</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>))</span>
+<span id="cb447-2"><a href="generalized-linear-models.html#cb447-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb447-3"><a href="generalized-linear-models.html#cb447-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cuckoo_glm1)</span></code></pre></div>
 <blockquote>
 <p>Note there appears to be a negative interaction effect for Species:Mass, indicating that Begging calls do not increase with mass as much as you would expect for Warblers as compared to Cuckoos.</p>
 </blockquote>
 <p>Plot the mean regression line for each species:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="generalized-linear-models.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using augment allows you to generate fitted outcomes from the regression, make sure to set the predictions onto the response scale in order to &#39;back transform` the data onto the original scale</span></span>
-<span id="cb36-2"><a href="generalized-linear-models.html#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="generalized-linear-models.html#cb36-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">augment</span>(cuckoo_glm1, <span class="at">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-4"><a href="generalized-linear-models.html#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Mass, <span class="at">y=</span>.fitted, <span class="at">colour=</span>Species)) <span class="sc">+</span> </span>
-<span id="cb36-5"><a href="generalized-linear-models.html#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb36-6"><a href="generalized-linear-models.html#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb36-7"><a href="generalized-linear-models.html#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;green3&quot;</span>,<span class="st">&quot;turquoise3&quot;</span>))<span class="sc">+</span></span>
-<span id="cb36-8"><a href="generalized-linear-models.html#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
-<p>We get an exponential curve in the scale of the original data, which is the <strong>same</strong> as a straight line in the log-scaled version of the data. So if we fit the same model without specifying <code>type.predict = "response"</code> Then we get the fitted generalized linear response.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="generalized-linear-models.html#cb37-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">augment</span>(cuckoo_glm1) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-2"><a href="generalized-linear-models.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Mass, <span class="at">y=</span>.fitted, <span class="at">colour=</span>Species)) <span class="sc">+</span> </span>
-<span id="cb37-3"><a href="generalized-linear-models.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb37-4"><a href="generalized-linear-models.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb37-5"><a href="generalized-linear-models.html#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;green3&quot;</span>,<span class="st">&quot;turquoise3&quot;</span>))<span class="sc">+</span></span>
-<span id="cb37-6"><a href="generalized-linear-models.html#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="generalized-linear-models.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using augment allows you to generate fitted outcomes from the regression, make sure to set the predictions onto the response scale in order to &#39;back transform` the data onto the original scale</span></span>
+<span id="cb448-2"><a href="generalized-linear-models.html#cb448-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb448-3"><a href="generalized-linear-models.html#cb448-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">augment</span>(cuckoo_glm1, <span class="at">type.predict =</span> <span class="st">&quot;response&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb448-4"><a href="generalized-linear-models.html#cb448-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Mass, <span class="at">y=</span>.fitted, <span class="at">colour=</span>Species)) <span class="sc">+</span> </span>
+<span id="cb448-5"><a href="generalized-linear-models.html#cb448-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb448-6"><a href="generalized-linear-models.html#cb448-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb448-7"><a href="generalized-linear-models.html#cb448-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;green3&quot;</span>,<span class="st">&quot;turquoise3&quot;</span>))<span class="sc">+</span></span>
+<span id="cb448-8"><a href="generalized-linear-models.html#cb448-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-556-1.png" width="672" /></p>
+<p>We get an exponential curve in the scale of the original data, which is the <strong>same</strong> as a straight line in the log-scaled version of the data. So if we fit the same model without specifying <code>type.predict = "response"</code> Then we get the fitted generalized linear response (Y is on a log scale).</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="generalized-linear-models.html#cb449-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">augment</span>(cuckoo_glm1) <span class="sc">%&gt;%</span> </span>
+<span id="cb449-2"><a href="generalized-linear-models.html#cb449-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Mass, <span class="at">y=</span>.fitted, <span class="at">colour=</span>Species)) <span class="sc">+</span> </span>
+<span id="cb449-3"><a href="generalized-linear-models.html#cb449-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb449-4"><a href="generalized-linear-models.html#cb449-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb449-5"><a href="generalized-linear-models.html#cb449-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;green3&quot;</span>,<span class="st">&quot;turquoise3&quot;</span>))<span class="sc">+</span></span>
+<span id="cb449-6"><a href="generalized-linear-models.html#cb449-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-557-1.png" width="672" /></p>
 <p>Compare the new Poisson model fits to the ordinary least squares model. We can see that although the homogeneity of variance is far from perfect, the curvature in the model has been drastically reduced (this makes sense as now we have a model fitted to exponential data), and the qqplot is within acceptable confidence intervals.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="generalized-linear-models.html#cb38-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(cuckoo_glm1, </span>
-<span id="cb38-2"><a href="generalized-linear-models.html#cb38-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">check =</span> <span class="fu">c</span>(<span class="st">&quot;homogeneity&quot;</span>,</span>
-<span id="cb38-3"><a href="generalized-linear-models.html#cb38-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;qq&quot;</span>))</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="generalized-linear-models.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cuckoo_glm1)</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="generalized-linear-models.html#cb450-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(cuckoo_glm1, </span>
+<span id="cb450-2"><a href="generalized-linear-models.html#cb450-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">check =</span> <span class="fu">c</span>(<span class="st">&quot;homogeneity&quot;</span>,</span>
+<span id="cb450-3"><a href="generalized-linear-models.html#cb450-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;qq&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-558-1.png" width="672" /></p>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="generalized-linear-models.html#cb451-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cuckoo_glm1)</span></code></pre></div>
 <pre><code>Call:
 glm(formula = Beg ~ Mass + Species + Mass:Species, family = poisson(link = &quot;log&quot;), 
     data = cuckoo)
@@ -984,7 +1027,7 @@ AIC: 615.83
 Number of Fisher Scoring iterations: 6</code></pre>
 <p>A reminder of how to interpret the regression coefficients of a model with an interaction term</p>
 <ul>
-<li><p>Intercept = <span class="math inline">\(\beta 0\)</span> (intercept for the <strong>reference* so here the </strong>log** of the mean number of begging calls for <strong>cuckoos</strong> when mass = 0)</p></li>
+<li><p>Intercept = <span class="math inline">\(\beta 0\)</span> (intercept for the <strong>reference or baseline</strong> so here the <strong>log</strong> of the mean number of begging calls for <strong>cuckoos</strong> when mass is 0)</p></li>
 <li><p>Mass = <span class="math inline">\(\beta1\)</span> (slope: the change in the <strong>log</strong> mean count of begging calls for every gram of bodyweight for <strong>cuckoos</strong>)</p></li>
 <li><p>SpeciesWarbler = <span class="math inline">\(\beta2\)</span> (the <strong>log</strong> mean increase/decrease in begging call rate of the <strong>warblers</strong> relative to cuckoos)</p></li>
 <li><p>Mass:SpeciesWarbler =<span class="math inline">\(\beta3\)</span> (the <strong>log</strong> mean increase/decrease in the <strong>slope</strong> for <strong>warblers</strong> relative to cuckoos)</p></li>
@@ -993,20 +1036,20 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <p>Note - because this is a Poisson distribution where variance is fixed with the mean we are using z scores. Estimates are on a log scale because of the link function - this means so are any S.E. or confidence intervals</p>
 </blockquote>
 </div>
-<div id="estimates-and-intervals" class="section level2 hasAnchor" number="16.5">
-<h2><span class="header-section-number">16.5</span> Estimates and Intervals<a href="generalized-linear-models.html#estimates-and-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="estimates-and-intervals" class="section level2 hasAnchor" number="20.5">
+<h2><span class="header-section-number">20.5</span> Estimates and Intervals<a href="generalized-linear-models.html#estimates-and-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Remember that not only is this <strong>Poisson</strong> model fitting variance using a Poisson and not Normal distribution. It is also relating the predictors to the response variable with a “<em>log-link</em>” this means we need to exponentiate our estimates to get them on the same scale as the response (y) variable. Until you do this all the model estimates are logn(y).</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="generalized-linear-models.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cuckoo_glm1)[<span class="dv">1</span>]) <span class="do">### Intercept - Incidence rate at Mass=0, and Species = Cuckoo</span></span>
-<span id="cb41-2"><a href="generalized-linear-models.html#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="generalized-linear-models.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cuckoo_glm1)[<span class="dv">2</span>]) <span class="do">### Change in the average incidence rate with Mass </span></span>
-<span id="cb41-4"><a href="generalized-linear-models.html#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-5"><a href="generalized-linear-models.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cuckoo_glm1)[<span class="dv">3</span>]) <span class="do">### Change in the incidence rate intercept when Species = Warbler and Mass = 0</span></span>
-<span id="cb41-6"><a href="generalized-linear-models.html#cb41-6" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb41-7"><a href="generalized-linear-models.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cuckoo_glm1)[<span class="dv">4</span>]) <span class="do">### The extra change in incidence rate for each unit increase in Mass when Species = Warbler (the interaction effect)</span></span></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="generalized-linear-models.html#cb453-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cuckoo_glm1)[<span class="dv">1</span>]) <span class="do">### Intercept - Incidence rate at Mass=0, and Species = Cuckoo</span></span>
+<span id="cb453-2"><a href="generalized-linear-models.html#cb453-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb453-3"><a href="generalized-linear-models.html#cb453-3" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cuckoo_glm1)[<span class="dv">2</span>]) <span class="do">### Change in the average incidence rate with Mass </span></span>
+<span id="cb453-4"><a href="generalized-linear-models.html#cb453-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb453-5"><a href="generalized-linear-models.html#cb453-5" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cuckoo_glm1)[<span class="dv">3</span>]) <span class="do">### Change in the incidence rate intercept when Species = Warbler and Mass = 0</span></span>
+<span id="cb453-6"><a href="generalized-linear-models.html#cb453-6" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb453-7"><a href="generalized-linear-models.html#cb453-7" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(cuckoo_glm1)[<span class="dv">4</span>]) <span class="do">### The extra change in incidence rate for each unit increase in Mass when Species = Warbler (the interaction effect)</span></span></code></pre></div>
 <p>Luckily when you tidy your models up with <code>broom</code> you can specify that you want to put model predictions on the response variable scale by specifying exponentiate=T which will remove the log transformation, and allow easy calculation of confidence intervals.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="generalized-linear-models.html#cb42-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(cuckoo_glm1, </span>
-<span id="cb42-2"><a href="generalized-linear-models.html#cb42-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">exponentiate=</span>T, </span>
-<span id="cb42-3"><a href="generalized-linear-models.html#cb42-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">conf.int=</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="generalized-linear-models.html#cb454-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(cuckoo_glm1, </span>
+<span id="cb454-2"><a href="generalized-linear-models.html#cb454-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">exponentiate=</span>T, </span>
+<span id="cb454-3"><a href="generalized-linear-models.html#cb454-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">conf.int=</span>T)</span></code></pre></div>
 <table class=" lightable-minimal" style="font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1128,21 +1171,29 @@ Mass:SpeciesWarbler
 </tr>
 </tbody>
 </table>
-<div id="interpretation" class="section level3 hasAnchor" number="16.5.1">
-<h3><span class="header-section-number">16.5.1</span> Interpretation<a href="generalized-linear-models.html#interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>It is <strong>very important</strong> to remember whether you are describing the results on the log-link scale or the original scale. It would usually make more sense to provide answers on the original scale, but this means you must first exponentiate the relationshio between response predictors as described above when writing the results.</p>
+<div id="interpretation" class="section level3 hasAnchor" number="20.5.1">
+<h3><span class="header-section-number">20.5.1</span> Interpretation<a href="generalized-linear-models.html#interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It is <strong>very important</strong> to remember whether you are describing the results on the log-link scale or the original scale. It would usually make more sense to provide answers on the original scale, but this means you must first exponentiate the relationship between response predictors as described above when writing the results.</p>
+<div class="rmdwarning">
+<p>
+The default coefficients from the model summary are on a log scale, and are additive as such these can be added and subtracted from each other (just like ordinary least squares regression) to work out log-estimates. BUT if you exponentiate the terms of the model you get values on the ‘response’ scale, but these are now changes in ‘rate’ and are multiplicative.
+</p>
+<p>
+Also remember that as Poisson models have ‘fixed variance’ z- and Chisquare distributions are used instead of t- and F.
+</p>
+</div>
 <p>In this example we wished to infer the relationship between begging rates and mass in these two species.</p>
 <p>I hypothesised that the rate of begging in chicks would increase as their body size increased. Interestingly I found there was a significant interaction effect with mass and species, where Warbler chicks increased their calling rate with mass at a rate that was only 0.98 [95%CI: 0.96-0.99] that of Cuckoo chicks (Poisson GLM: <span class="math inline">\(\chi^2\)</span><sub>1,47</sub> = 6.77, <em>P</em> = 0.009). This meant that while at hatching Warbler chicks start with a mean call rate that is higher than their parasitic brood mates, this quickly reverses as they grow.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="generalized-linear-models.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For a fixed  mean-variance model we use a Chisquare distribution</span></span>
-<span id="cb43-2"><a href="generalized-linear-models.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(cuckoo_glm1, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span>
-<span id="cb43-3"><a href="generalized-linear-models.html#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-4"><a href="generalized-linear-models.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># emmeans can be another handy function - if you specify response then here it provideds the average call rate for each species, at the average value for any continuous measures - so here the average call rate for both species at an average body mass of 20.3</span></span>
-<span id="cb43-5"><a href="generalized-linear-models.html#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="generalized-linear-models.html#cb43-6" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(cuckoo_glm1, <span class="at">specs =</span> <span class="sc">~</span> Species<span class="sc">:</span>Mass, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="generalized-linear-models.html#cb455-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For a fixed  mean-variance model we use a Chisquare distribution</span></span>
+<span id="cb455-2"><a href="generalized-linear-models.html#cb455-2" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(cuckoo_glm1, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span>
+<span id="cb455-3"><a href="generalized-linear-models.html#cb455-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-4"><a href="generalized-linear-models.html#cb455-4" aria-hidden="true" tabindex="-1"></a><span class="co"># emmeans can be another handy function - if you specify response then here it provideds the average call rate for each species, at the average value for any continuous measures - so here the average call rate for both species at an average body mass of 20.3</span></span>
+<span id="cb455-5"><a href="generalized-linear-models.html#cb455-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-6"><a href="generalized-linear-models.html#cb455-6" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(cuckoo_glm1, <span class="at">specs =</span> <span class="sc">~</span> Species<span class="sc">:</span>Mass, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="overdispersion" class="section level2 hasAnchor" number="16.6">
-<h2><span class="header-section-number">16.6</span> Overdispersion<a href="generalized-linear-models.html#overdispersion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="overdispersion" class="section level2 hasAnchor" number="20.6">
+<h2><span class="header-section-number">20.6</span> Overdispersion<a href="generalized-linear-models.html#overdispersion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There is one <strong>extra</strong> check we need to apply to a Poisson model and that’s for <strong>overdispersion</strong></p>
 <p>Poisson (and binomial models) assume that the variance is <em>equal to the mean.</em></p>
 <p>However, if there is <strong>residual deviance that is bigger than the residual degrees of freedom</strong> then there is <em>more</em> variance than we expect from the prediction of the mean by our model.</p>
@@ -1150,7 +1201,7 @@ Mass:SpeciesWarbler
 <p>Overdispersion statistic values <strong>&gt; 1 = Overdispersed</strong></p>
 <p>Overdispersion is a result of larger than expected variance for that mean under a Poisson distribution, this is clearly an issue with our model!</p>
 <p>Luckily a simple fix is to fit a <em>quasi-likelihood</em> model which accounts for this, think of “quasi” as “sort of but not completely” Poisson.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="generalized-linear-models.html#cb44-1" aria-hidden="true" tabindex="-1"></a>cuckoo_glm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Beg <span class="sc">~</span> Mass<span class="sc">+</span>Species<span class="sc">+</span>Mass<span class="sc">:</span>Species, <span class="at">data=</span>cuckoo, <span class="at">family=</span><span class="fu">quasipoisson</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="generalized-linear-models.html#cb456-1" aria-hidden="true" tabindex="-1"></a>cuckoo_glm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Beg <span class="sc">~</span> Mass<span class="sc">+</span>Species<span class="sc">+</span>Mass<span class="sc">:</span>Species, <span class="at">data=</span>cuckoo, <span class="at">family=</span><span class="fu">quasipoisson</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>))</span></code></pre></div>
 <pre><code>Call:
 glm(formula = Beg ~ Mass + Species + Mass:Species, family = quasipoisson(link = &quot;log&quot;), 
     data = cuckoo)
@@ -1187,8 +1238,8 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <p>The initial model also included an interaction term between species and mass, but this was removed from the final model as removal of this term did not significantly alter the fit of the model (ANOVA).</p>
 <p>All analyses were carried out in R (ver 4.1.3) (R Core Team 2021) with the following packages; tidyverse (Wickham et al 2019), performance (Lüdecke et al 2021) for checking model assumptions, and MASS (Venables &amp; Ripley 2002) for model comparisons.</p>
 </div>
-<div id="logistic-regression-for-binary-data" class="section level2 hasAnchor" number="16.7">
-<h2><span class="header-section-number">16.7</span> Logistic regression (for binary data)<a href="generalized-linear-models.html#logistic-regression-for-binary-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="logistic-regression-for-binary-data" class="section level2 hasAnchor" number="20.7">
+<h2><span class="header-section-number">20.7</span> Logistic regression (for binary data)<a href="generalized-linear-models.html#logistic-regression-for-binary-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When our response variable is binary, we can use a glm with a <strong>binomial</strong> error distribution</p>
 <p>So far we have only considered continuous and discrete data as response variables. What if our response is a categorical variable (e.g passing or failing an exam, voting yes or no in a referendum, whether an egg has successfully fledged or been predated, infected/uninfected, alive/dead)?</p>
 <p>We can model the <strong>probability</strong> <span class="math inline">\(p\)</span> of being in a particular class as a function of other
@@ -1204,6 +1255,7 @@ Y \sim \mathcal{Bern}(p)
 </li>
 <li><strong>Variance</strong> = <span class="math inline">\(p(1 - p)\)</span></li>
 </ul>
+<p><img src="bookdown-demo_files/figure-html/bernplot-1.png" width="864" /></p>
 <p>Let us now place the Gaussian (simple linear regression), Poisson and logistic models next to each other:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1231,13 +1283,14 @@ p = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}
 <p>Note how <span class="math inline">\(p\)</span> can only vary between 0 and 1.</p>
 <p>To implement the logistic regression model in R, we choose <code>family=binomial(link=logit)</code> (the Bernoulli distribution is a special case of the Binomial distribution).</p>
 <pre><code>glm(response ~ explanatory, family=binomial(link=logit))</code></pre>
+<p><img src="images/space-shuttle.jpg" title="Space shuttle at launch" alt="Space shuttle at launch" width="80%" /></p>
 <p><a href="https://en.wikipedia.org/wiki/Space_Shuttle_Challenger_disaster#O-ring_concerns">The Challenger Disaster</a></p>
 <p>In 1985, NASA made the decision to send the first civilian into space.</p>
 <p>This decision brought a huge amount of public attention to the STS-51-L mission, which would be Challenger’s 25th trip to space and school teacher Christa McAuliffe’s 1st. On the afternoon of January 28th, 1986 students around America tuned in to watch McAuliffe and six other astronauts launch from Cape Canaveral, Florida. 73 seconds into the flight, the shuttle experienced a critical failure and broke apart in mid air, resulting in the deaths of all seven crewmembers: Christa McAuliffe, Dick Scobee, Judy Resnik, Ellison Onizuka, Ronald McNair, Gregory Jarvis, and Michael Smith.</p>
 <p>After an investigation into the incident, it was discovered that the failure was caused by an O-ring in the solid rocket booster. Additionally, it was revealed that such an incident was foreseeable.</p>
 <p>In this half of the worksheet we will discuss how the right statistical model could have predicted the critical failure of an O-ring on that day.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="generalized-linear-models.html#cb47-1" aria-hidden="true" tabindex="-1"></a>Challenger <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/Challenger.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="generalized-linear-models.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Challenger)</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="generalized-linear-models.html#cb459-1" aria-hidden="true" tabindex="-1"></a>Challenger <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/Challenger.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="generalized-linear-models.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Challenger)</span></code></pre></div>
 <p>The data columns are:</p>
 <ul>
 <li><p><strong>oring_tot</strong>: Total number of orings on the flight</p></li>
@@ -1247,26 +1300,26 @@ p = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}
 </ul>
 <p>It was frequently discussed issue that temperature might play a role in the critical safety of the o-rings on the shuttles.
 One of the biggest mistakes made in assessing the flight risk for the Challenger was to only look at the flights <strong>where a failure had occurred</strong></p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="generalized-linear-models.html#cb49-1" aria-hidden="true" tabindex="-1"></a>Challenger <span class="sc">%&gt;%</span> </span>
-<span id="cb49-2"><a href="generalized-linear-models.html#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(oring_dt <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-3"><a href="generalized-linear-models.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>oring_dt, <span class="at">x=</span>temp))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb49-4"><a href="generalized-linear-models.html#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Temperature on flight launches where an O-ring incident occurred&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="generalized-linear-models.html#cb461-1" aria-hidden="true" tabindex="-1"></a>Challenger <span class="sc">%&gt;%</span> </span>
+<span id="cb461-2"><a href="generalized-linear-models.html#cb461-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(oring_dt <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb461-3"><a href="generalized-linear-models.html#cb461-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>oring_dt, <span class="at">x=</span>temp))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb461-4"><a href="generalized-linear-models.html#cb461-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Temperature on flight launches where an O-ring incident occurred&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-572-1.png" width="672" /></p>
 <p>From this it was concluded that temperature did not appear to affect o-ring risk of failure, as o-ring failures were detected at a range of different temperatures.</p>
 <p>However when we compare this to the full data that was available a very different picture emerges.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="generalized-linear-models.html#cb50-1" aria-hidden="true" tabindex="-1"></a>Challenger <span class="sc">%&gt;%</span> </span>
-<span id="cb50-2"><a href="generalized-linear-models.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>oring_dt, </span>
-<span id="cb50-3"><a href="generalized-linear-models.html#cb50-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x=</span>temp))<span class="sc">+</span></span>
-<span id="cb50-4"><a href="generalized-linear-models.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb50-5"><a href="generalized-linear-models.html#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)<span class="sc">+</span></span>
-<span id="cb50-6"><a href="generalized-linear-models.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;All launch data&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="generalized-linear-models.html#cb462-1" aria-hidden="true" tabindex="-1"></a>Challenger <span class="sc">%&gt;%</span> </span>
+<span id="cb462-2"><a href="generalized-linear-models.html#cb462-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>oring_dt, </span>
+<span id="cb462-3"><a href="generalized-linear-models.html#cb462-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x=</span>temp))<span class="sc">+</span></span>
+<span id="cb462-4"><a href="generalized-linear-models.html#cb462-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb462-5"><a href="generalized-linear-models.html#cb462-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)<span class="sc">+</span></span>
+<span id="cb462-6"><a href="generalized-linear-models.html#cb462-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;All launch data&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-573-1.png" width="672" /></p>
 <p>When we include the flights without incident <em>and</em> those with incident, we can see that there is a very clear relationship between temperature and the risk of an o-ring failure. It has been argued that the clear presentation of this data should have allowed even the casual observer to determine the high risk of disaster.</p>
 <p>However if we want to understand the actual relationship between temperature and risk then there are several issues with fitting a linear model here - once again the data is an integer, and bounded by zero (our model predicts negative failure rates within the observed data range).</p>
 <p>We COULD consider this as suitable for a Poisson model - but if we are really interested in determining the binary risk of <strong>having a flight with o-ring failure vs. no failure</strong>. Then we should implement a GLM with a Binomial distribution.</p>
 <p>We can use dplyr to generate a binary column of no incident ‘0’ and fail ‘1’ for anything &gt;0.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="generalized-linear-models.html#cb51-1" aria-hidden="true" tabindex="-1"></a>Challenger <span class="ot">&lt;-</span> Challenger <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href="generalized-linear-models.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">oring_binary =</span> <span class="fu">ifelse</span>(oring_dt <span class="sc">==</span><span class="st">&#39;0&#39;</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="generalized-linear-models.html#cb463-1" aria-hidden="true" tabindex="-1"></a>Challenger <span class="ot">&lt;-</span> Challenger <span class="sc">%&gt;%</span> </span>
+<span id="cb463-2"><a href="generalized-linear-models.html#cb463-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">oring_binary =</span> <span class="fu">ifelse</span>(oring_dt <span class="sc">==</span><span class="st">&#39;0&#39;</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div>
 <p>Fitting a binary GLM</p>
 <table class=" lightable-minimal" style="font-family: &quot;Trebuchet MS&quot;, verdana, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1351,7 +1404,7 @@ temp
 \log\left[ \frac { P( \operatorname{oring\_binary} = fail) }{ 1 - P( \operatorname{oring\_binary} = fail) } \right] = \beta_{0} + \beta_{1}(\operatorname{temp})
 \]</span>
 Which in R will look like this:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="generalized-linear-models.html#cb52-1" aria-hidden="true" tabindex="-1"></a>binary_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(oring_binary<span class="sc">~</span>temp, <span class="at">family=</span>binomial, <span class="at">data=</span>Challenger)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="generalized-linear-models.html#cb464-1" aria-hidden="true" tabindex="-1"></a>binary_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(oring_binary<span class="sc">~</span>temp, <span class="at">family=</span>binomial, <span class="at">data=</span>Challenger)</span></code></pre></div>
 <ul>
 <li>Intercept = <span class="math inline">\(\beta_{0}\)</span> = 23.77</li>
 </ul>
@@ -1360,53 +1413,110 @@ Which in R will look like this:</p>
 <li>Temp = <span class="math inline">\(\beta_{1}\)</span> = -0.37 [95%CI: -0.87 - -0.12]</li>
 </ul>
 <p>For every rise in the temperature by 1°F, the <em>log-odds</em> of a critical incident fall by 0.37.</p>
-<div id="probability-from-a-binomial-model" class="section level3 hasAnchor" number="16.7.1">
-<h3><span class="header-section-number">16.7.1</span> Probability from a binomial model<a href="generalized-linear-models.html#probability-from-a-binomial-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="interpreting-model-coefficients" class="section level3 hasAnchor" number="20.7.1">
+<h3><span class="header-section-number">20.7.1</span> Interpreting model coefficients<a href="generalized-linear-models.html#interpreting-model-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We first consider why we are dealing with odds <span class="math inline">\(\frac{p}{1-p}\)</span> instead of just <span class="math inline">\(p\)</span>. They contain the same information, so the choice is somewhat arbitrary, however we’ve been using probabilities for so long that it feels unnatural to switch to odds. There are good reasons for this, however. Odds <span class="math inline">\(\frac{p}{1-p}\)</span> can take on any value from 0 to ∞ and so part of our translation of <span class="math inline">\(p\)</span> to an unrestricted domain is already done (<span class="math inline">\(P\)</span> is restricted to 0-1). Take a look at some examples below:</p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="51%" />
+<col width="29%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Probability</th>
+<th>Odds</th>
+<th>Verbiage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(p=.95\)</span></td>
+<td><span class="math inline">\(\frac{95}{5} = \frac{19}{1} = 19\)</span></td>
+<td>19 to 1 odds for</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(p=.75\)</span></td>
+<td><span class="math inline">\(\frac{75}{25} = \frac{3}{1} = 3\)</span></td>
+<td>3 to 1 odds for</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(p=.50\)</span></td>
+<td><span class="math inline">\(\frac{50}{50} = \frac{1}{1} = 1\)</span></td>
+<td>1 to 1 odds</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(p=.25\)</span></td>
+<td><span class="math inline">\(\frac{25}{75} = \frac{1}{3} = 0.33\)</span></td>
+<td>3 to 1 odds against</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(p=.05\)</span></td>
+<td><span class="math inline">\(\frac{95}{5} = \frac{1}{19} = 0.0526\)</span></td>
+<td>19 to 1 odds against</td>
+</tr>
+</tbody>
+</table>
+<p>When we use a binomial model, we produce the ‘log-odds,’ this produces a fully unconstrained linear regression as anything less than 1, can now occupy an infinite negative value -∞ to ∞.</p>
+<p><span class="math display">\[\log\left(\frac{p}{1-p}\right)    =   \beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}
+\]</span></p>
+<p><span class="math display">\[\frac{p}{1-p} =   e^{\beta_{0}}e^{\beta_{1}x_{1}}e^{\beta_{2}x_{2}}
+\]</span>
+We can interpret <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> as the increase in the log odds for every unit increase in <span class="math inline">\(x_{1}\)</span> and <span class="math inline">\(x_{2}\)</span>. We could alternatively interpret <span class="math inline">\(\beta_{1}\)</span> and <span class="math inline">\(\beta_{2}\)</span> using the notion that a one unit change in <span class="math inline">\(x_{1}\)</span> as a percent change of <span class="math inline">\(e^{\beta_{1}}\)</span> in the odds. That is to say, <span class="math inline">\(e^{\beta_{1}}\)</span> is the odds ratio of that change.</p>
+<p>If you want to find out more about <a href="https://www.youtube.com/watch?v=8nm0G-1uJzA">Odds and log-odds head here</a></p>
+</div>
+<div id="emmeans" class="section level3 hasAnchor" number="20.7.2">
+<h3><span class="header-section-number">20.7.2</span> Emmeans<a href="generalized-linear-models.html#emmeans" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If we use the <code>emmeans()</code> function it will convert <em>log-odds</em> to estimate the probability of o-ring failure at the mean value of x (temperature).
 But how does it do this?</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="generalized-linear-models.html#cb53-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(binary_model, <span class="at">specs=</span><span class="sc">~</span>temp, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="generalized-linear-models.html#cb465-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(binary_model, <span class="at">specs=</span><span class="sc">~</span>temp, <span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 <p>This is the equation to work out probability using the <strong>exponent</strong> of the linear regression equation:</p>
 <p><span class="math display">\[
 P(\operatorname{risk of failure at }  X=69)\left[ \frac{e^{23.77+(-0.37 \times 69.6)}}{1+e^{23.77+(-0.37 \times 69.6)}} \right]
 \]</span></p>
 <p>Which produces the following result and we can confirm the risk of an o-ring failure on an <em>average</em> day is 0.15</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="generalized-linear-models.html#cb54-1" aria-hidden="true" tabindex="-1"></a>estimate_at_69<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(binary_model)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(binary_model)[<span class="dv">2</span>]<span class="sc">*</span><span class="fl">69.6</span>)</span>
-<span id="cb54-2"><a href="generalized-linear-models.html#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-3"><a href="generalized-linear-models.html#cb54-3" aria-hidden="true" tabindex="-1"></a>estimate_at_69<span class="fl">.6</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>estimate_at_69<span class="fl">.6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="generalized-linear-models.html#cb466-1" aria-hidden="true" tabindex="-1"></a>odds_at_69<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(binary_model)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(binary_model)[<span class="dv">2</span>]<span class="sc">*</span><span class="fl">69.6</span>)</span>
+<span id="cb466-2"><a href="generalized-linear-models.html#cb466-2" aria-hidden="true" tabindex="-1"></a><span class="co"># To convert from odds to a probability, divide the odds by one plus the odds</span></span>
+<span id="cb466-3"><a href="generalized-linear-models.html#cb466-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb466-4"><a href="generalized-linear-models.html#cb466-4" aria-hidden="true" tabindex="-1"></a>probability <span class="ot">&lt;-</span>  odds_at_69<span class="fl">.6</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>odds_at_69<span class="fl">.6</span>)</span>
+<span id="cb466-5"><a href="generalized-linear-models.html#cb466-5" aria-hidden="true" tabindex="-1"></a>probability</span></code></pre></div>
 </div>
-<div id="changes-in-probability" class="section level3 hasAnchor" number="16.7.2">
-<h3><span class="header-section-number">16.7.2</span> Changes in probability<a href="generalized-linear-models.html#changes-in-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="changes-in-probability" class="section level3 hasAnchor" number="20.7.3">
+<h3><span class="header-section-number">20.7.3</span> Changes in probability<a href="generalized-linear-models.html#changes-in-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A useful <em>rule-of-thumb</em> can be the <strong>divide-by-four</strong> rule.</p>
 <p>This can be described as the <strong>maximum</strong> difference in probability for a unit change in <span class="math inline">\(X\)</span> is <span class="math inline">\(\beta/4\)</span>.</p>
 <p>In our example the <strong>maximum difference</strong> in probability from a one degree change in Temp is <span class="math inline">\(-0.37/4 = -0.09\)</span></p>
 <p>So the <strong>maximum difference</strong> in probability of failure corresponding to a one degree change is 9%</p>
 <p>If you want to augment your data with the model, you can use the <code>augment()</code> function, remembering to specify <code>type.predict = "response</code> to get probabilities of o-ring failure (not log odds).</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="generalized-linear-models.html#cb55-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">augment</span>(binary_model, <span class="at">type.predict=</span><span class="st">&quot;response&quot;</span>, <span class="at">se_fit =</span> T) </span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="generalized-linear-models.html#cb467-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">augment</span>(binary_model, <span class="at">type.predict=</span><span class="st">&quot;response&quot;</span>, <span class="at">se_fit =</span> T) </span></code></pre></div>
 <p>Annoyingly a limitation of the augment function is that it won’t produce 95% CI for predictions on glms. But I have written a short function to do this
 Don’t worry if this is a lot to get your head around - the main thing is use this code to produce 95% CI.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="generalized-linear-models.html#cb56-1" aria-hidden="true" tabindex="-1"></a>augment_glm <span class="ot">&lt;-</span> <span class="cf">function</span>(mod, <span class="at">predict =</span> <span class="cn">NULL</span>){</span>
-<span id="cb56-2"><a href="generalized-linear-models.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  fam <span class="ot">&lt;-</span> <span class="fu">family</span>(mod)</span>
-<span id="cb56-3"><a href="generalized-linear-models.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  ilink <span class="ot">&lt;-</span> fam<span class="sc">$</span>linkinv</span>
-<span id="cb56-4"><a href="generalized-linear-models.html#cb56-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb56-5"><a href="generalized-linear-models.html#cb56-5" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">augment</span>(mod, <span class="at">newdata =</span> predict, <span class="at">se_fit=</span>T)<span class="sc">%&gt;%</span></span>
-<span id="cb56-6"><a href="generalized-linear-models.html#cb56-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">.lower =</span> <span class="fu">ilink</span>(.fitted <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>.se.fit),</span>
-<span id="cb56-7"><a href="generalized-linear-models.html#cb56-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">.upper =</span> <span class="fu">ilink</span>(.fitted <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>.se.fit), </span>
-<span id="cb56-8"><a href="generalized-linear-models.html#cb56-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">.fitted=</span><span class="fu">ilink</span>(.fitted))</span>
-<span id="cb56-9"><a href="generalized-linear-models.html#cb56-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb56-10"><a href="generalized-linear-models.html#cb56-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-11"><a href="generalized-linear-models.html#cb56-11" aria-hidden="true" tabindex="-1"></a><span class="fu">augment_glm</span>(binary_model)</span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="generalized-linear-models.html#cb468-1" aria-hidden="true" tabindex="-1"></a>augment_glm <span class="ot">&lt;-</span> <span class="cf">function</span>(mod, <span class="at">predict =</span> <span class="cn">NULL</span>){</span>
+<span id="cb468-2"><a href="generalized-linear-models.html#cb468-2" aria-hidden="true" tabindex="-1"></a>  fam <span class="ot">&lt;-</span> <span class="fu">family</span>(mod)</span>
+<span id="cb468-3"><a href="generalized-linear-models.html#cb468-3" aria-hidden="true" tabindex="-1"></a>  ilink <span class="ot">&lt;-</span> fam<span class="sc">$</span>linkinv</span>
+<span id="cb468-4"><a href="generalized-linear-models.html#cb468-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb468-5"><a href="generalized-linear-models.html#cb468-5" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">augment</span>(mod, <span class="at">newdata =</span> predict, <span class="at">se_fit=</span>T)<span class="sc">%&gt;%</span></span>
+<span id="cb468-6"><a href="generalized-linear-models.html#cb468-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">.lower =</span> <span class="fu">ilink</span>(.fitted <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>.se.fit),</span>
+<span id="cb468-7"><a href="generalized-linear-models.html#cb468-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">.upper =</span> <span class="fu">ilink</span>(.fitted <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>.se.fit), </span>
+<span id="cb468-8"><a href="generalized-linear-models.html#cb468-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">.fitted=</span><span class="fu">ilink</span>(.fitted))</span>
+<span id="cb468-9"><a href="generalized-linear-models.html#cb468-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb468-10"><a href="generalized-linear-models.html#cb468-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb468-11"><a href="generalized-linear-models.html#cb468-11" aria-hidden="true" tabindex="-1"></a><span class="fu">augment_glm</span>(binary_model)</span></code></pre></div>
+<p>Alternatively we can also do this calculation via emmeans</p>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="generalized-linear-models.html#cb469-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(binary_model, <span class="at">specs =</span> <span class="sc">~</span> temp, <span class="at">at=</span><span class="fu">list</span>(<span class="at">temp=</span><span class="fu">c</span>(<span class="dv">66</span><span class="sc">:</span><span class="dv">27</span>)), <span class="at">type=</span><span class="st">&#39;response&#39;</span>) </span></code></pre></div>
 <details>
 <summary>
 <strong>EXERCISE - Use the augment_glm function to make a ggplot of the changing probability of O-ring failure with temperature</strong>
 </summary>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="generalized-linear-models.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment_glm</span>(binary_model) <span class="sc">%&gt;%</span> </span>
-<span id="cb57-2"><a href="generalized-linear-models.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>temp, <span class="at">y=</span>oring_binary))<span class="sc">+</span><span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>temp, <span class="at">y=</span>.fitted))<span class="sc">+</span></span>
-<span id="cb57-3"><a href="generalized-linear-models.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lower, <span class="at">ymax=</span>.upper), <span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="generalized-linear-models.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment_glm</span>(binary_model) <span class="sc">%&gt;%</span> </span>
+<span id="cb470-2"><a href="generalized-linear-models.html#cb470-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>temp, <span class="at">y=</span>oring_binary))<span class="sc">+</span><span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span>temp, <span class="at">y=</span>.fitted))<span class="sc">+</span></span>
+<span id="cb470-3"><a href="generalized-linear-models.html#cb470-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lower, <span class="at">ymax=</span>.upper), <span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-584-1.png" width="672" />
 </details>
 </div>
 </div>
-<div id="predictions" class="section level2 hasAnchor" number="16.8">
-<h2><span class="header-section-number">16.8</span> Predictions<a href="generalized-linear-models.html#predictions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="predictions" class="section level2 hasAnchor" number="20.8">
+<h2><span class="header-section-number">20.8</span> Predictions<a href="generalized-linear-models.html#predictions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>On the day the Challenger launched the outside air temperature was 36°F</p>
 <p>We can use augment to add our model to new data - and make predictions about the risk of o-ring failure</p>
 <details>
@@ -1414,35 +1524,36 @@ Don’t worry if this is a lot to get your head around - the main thing is use t
 <strong>Question - make a new dataset with the temperature on the day of the Challenger launch - what was the probability of o-ring failure?</strong>
 </summary>
 <p>First - we make a new dataset with the temperature on the day of the Challenger Launch <strong>36°F</strong></p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="generalized-linear-models.html#cb58-1" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">temp=</span><span class="dv">36</span>, <span class="at">oring_binary=</span><span class="dv">1</span>)</span>
-<span id="cb58-2"><a href="generalized-linear-models.html#cb58-2" aria-hidden="true" tabindex="-1"></a>new_data</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="generalized-linear-models.html#cb471-1" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">temp=</span><span class="dv">36</span>, <span class="at">oring_binary=</span><span class="dv">1</span>)</span>
+<span id="cb471-2"><a href="generalized-linear-models.html#cb471-2" aria-hidden="true" tabindex="-1"></a>new_data</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##    temp oring_binary
 ##   &lt;dbl&gt;        &lt;dbl&gt;
 ## 1    36            1</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="generalized-linear-models.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment_glm</span>(binary_model, new_data)</span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="generalized-linear-models.html#cb473-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment_glm</span>(binary_model, new_data)</span></code></pre></div>
 <pre><code># A tibble: 1 x 6
    temp oring_binary .fitted .se.fit .lower .upper
   &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
 1    36            1    1.00    5.54  0.431   1.00</code></pre>
 <p>We can see from our fitted model, an O-ring failure on the day of the Challenger launch could have been predicted with a probability of &gt;0.999 [95%CI: 0.43-1]</p>
 </details>
-<div id="assumptions-1" class="section level3 hasAnchor" number="16.8.1">
-<h3><span class="header-section-number">16.8.1</span> Assumptions<a href="generalized-linear-models.html#assumptions-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="assumptions-1" class="section level3 hasAnchor" number="20.8.1">
+<h3><span class="header-section-number">20.8.1</span> Assumptions<a href="generalized-linear-models.html#assumptions-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The standard model checks for a binary model do not hold (check them), they are usually a mess! There are alternative methods of looking at how well your binary model works, but well not cover these here.</p>
 </div>
-<div id="write-up-1" class="section level3 hasAnchor" number="16.8.2">
-<h3><span class="header-section-number">16.8.2</span> Write-up<a href="generalized-linear-models.html#write-up-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="write-up-1" class="section level3 hasAnchor" number="20.8.2">
+<h3><span class="header-section-number">20.8.2</span> Write-up<a href="generalized-linear-models.html#write-up-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Analysis: I used a Binomial logit-link Generalized Linear Model to analyse the effect of temperature on the likelihood of O-ring failure.</p>
 <p>All analyses were carried out in R (ver 4.1.3) (R Core Team 2021) with the following packages; tidyverse (Wickham et al 2019).</p>
 <p>Results: I found a significant negative relationship between temperature and probability of o-ring failure (logit-odds = -0.37 [95%CI: -0.88 - -0.12], <em>z</em> = -2.1, d.f = 21, <em>P</em> = 0.036). At an average temperature of 69.6°F the probability of o-ring failure was estimated at 0.15[0.03-0.45], but this rose to a near certainty of failure 0.99[0.43-1] at 36°F.</p>
 <blockquote>
 <p>Note you could use drop1( test = “Chisq”) here, but as there is only one, continuous variable, we can also report directly from the summary table.</p>
 </blockquote>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="generalized-linear-models.html#cb475-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(binary_model, <span class="at">test=</span><span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="summary-9" class="section level2 hasAnchor" number="16.9">
-<h2><span class="header-section-number">16.9</span> Summary<a href="generalized-linear-models.html#summary-9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="summary-9" class="section level2 hasAnchor" number="20.9">
+<h2><span class="header-section-number">20.9</span> Summary<a href="generalized-linear-models.html#summary-9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>GLMs</strong> are powerful and flexible.</p>
 <p>They can be used to fit a wide variety of data types.</p>
 <p>Model checking becomes trickier.</p>
@@ -1450,11 +1561,28 @@ Don’t worry if this is a lot to get your head around - the main thing is use t
 <ul>
 <li><strong>mixed models</strong>;</li>
 <li><strong>survival models</strong>;</li>
-<li><strong>generalised additive models</strong> (GAMs).</li>
+<li><strong>generalized additive models</strong> (GAMs).</li>
 </ul>
+<p>For more information on Poisson and Binomial GLMs check out:</p>
+<p><a href="https://bookdown.org/dereksonderegger/571/11-binomial-regression.html#confidence-intervals-1" class="uri">https://bookdown.org/dereksonderegger/571/11-binomial-regression.html#confidence-intervals-1</a></p>
+<p><a href="https://bookdown.org/ronsarafian/IntrotoDS/glm.html#poisson-regression" class="uri">https://bookdown.org/ronsarafian/IntrotoDS/glm.html#poisson-regression</a></p>
 </div>
-<div id="final-checklist" class="section level2 hasAnchor" number="16.10">
-<h2><span class="header-section-number">16.10</span> Final checklist<a href="generalized-linear-models.html#final-checklist" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="final-checklist" class="section level2 hasAnchor" number="20.10">
+<h2><span class="header-section-number">20.10</span> Final checklist<a href="generalized-linear-models.html#final-checklist" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Think carefully about the hypotheses to test, use your scientific knowledge and background reading to support this</p></li>
+<li><p>Import, clean and understand your dataset: use data visuals to investigate trends and determine if there is clear support for your hypotheses</p></li>
+<li><p><strong>Decide on the appropriate error structure for your model (Gaussian = continuous, Poisson = count, Binomial = binary)</strong></p></li>
+<li><p><strong>Start with canonical link functions, but these can be altered if needed</strong></p></li>
+<li><p>Fit a (generalized) linear model, including interaction terms with caution</p></li>
+<li><p>Investigate the fit of your model, understand that parameters may never be perfect, but that classic patterns in residuals may indicate a poorly fitting model - sometimes this can be fixed with careful consideration of missing variables or through data transformation</p></li>
+<li><p><strong>Check for overdispersion in Poisson models where variance is not estimated, but expected to be equal to the mean - may have to use quasi-likelihood fitting</strong></p></li>
+<li><p>Test the removal of any interaction terms from a model, look at AIC and significance tests (Remember test = “F” for Gaussian and Quasilikelihood models, “Chisq” for Poisson and Binomial models)</p></li>
+<li><p>Make sure you understand the output of a model summary, sense check this against the graphs you have made - Do estimates need converting back to the original response scale?</p></li>
+<li><p>The direction and size of any effects are the priority - produce estimates and uncertainties. Make sure the observations are clear.</p></li>
+<li><p>Write-up your significance test results, taking care to report not just significance (and all required parts of a significance test). Do you know <em>what</em> to report? Within a complex model - reporting <em>t/z</em> will indicate the slope of the line for that single term against the intercept, <em>F/Chi</em> is the overall effect of a predictor across all levels, <em>post-hoc</em> if you wish to compare across all levels.</p></li>
+<li><p>Well described tables and figures can enhance your results sections - take the time to make sure these are informative and attractive.</p></li>
+</ul>
 
 </div>
 </div>
