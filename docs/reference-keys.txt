@@ -356,3 +356,16 @@ assumptions-1
 write-up-1
 summary-9
 final-checklist
+appendix---installing-r-rstudio
+a.1-why-should-i-install-r-on-my-computer
+a.2-windows
+a.2-mac
+a.3-chromebook
+a.4-latex
+a.5---github
+appendix---updating-r
+updating-rstudio
+updating-packages
+updating-r
+appendix---next-steps-in-r
+appendix---building-a-data-driven-cv
